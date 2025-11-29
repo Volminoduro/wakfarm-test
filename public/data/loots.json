@@ -1,0 +1,21 @@
+[
+    {
+        "monsterId": 4,
+        "loots": [
+            {
+                "itemId": 6256,
+                "rate": 0.25,
+                "quantity": 1,
+                "stele": 0,
+                "steleIntervention": 0
+            },
+            {
+                "itemId": 6256,
+                "rate": 0.50,
+                "quantity": 2,
+                "stele": 0,
+                "steleIntervention": 0
+            }   
+        ]
+    }
+]

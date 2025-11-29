@@ -1,0 +1,20 @@
+{
+    "items":[
+        {
+            "id": 6256,
+            "name": "Épée de Bois"
+        }
+    ],
+    "monsters":[
+        {
+            "id": 4,
+            "name": "Tofu"
+        }
+    ],
+    "instances":[
+        {
+            "id": 27,
+            "name": "Le Tofulailler"
+        }
+    ]
+}
