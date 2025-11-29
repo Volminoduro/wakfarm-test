@@ -28,5 +28,11 @@
             "id": 28,
             "name": "La Plaine Herbeuse"
         }
+    ],
+    "divers": [
+        {
+            "id": "niveau_reduit",
+            "name": "niv."
+        }
     ]
 }

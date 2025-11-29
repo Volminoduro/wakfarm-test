@@ -37,6 +37,9 @@ export const useDataStore = defineStore('data', {
           if (Array.isArray(rawNames.instances)) {
             rawNames.instances.forEach(e => { if (e && e.id != null) namesMap.instances[e.id] = e.name })
           }
+          if (Array.isArray(rawNames.divers)) {
+            rawNames.divers.forEach(e => { if (e && e.id != null) namesMap.divers[e.id] = e.name })
+          }
 
           // If rawNames is a flat map of id->string, merge into instances map for backward compatibility
           Object.keys(rawNames).forEach(k => {
