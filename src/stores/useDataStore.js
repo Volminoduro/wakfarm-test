@@ -3,13 +3,7 @@ import axios from 'axios'
 
 export const useDataStore = defineStore('data', {
   state: () => ({
-    instances: [],
-      instancesRefined: [],
-    items: [],
-    monsters: [],
-    mapping: {},
-    loots: [],
-    prices: {},
+    instancesRefined: [],
     names: {},
     loaded: false
   }),
@@ -27,42 +21,70 @@ export const useDataStore = defineStore('data', {
           axios.get(`${basePath}names/${lang}.json`)
         ])
 
-        this.instances = instRes.data
-        this.items = itemRes.data
-        this.monsters = monsterRes.data
-        this.mapping = mappingRes.data
-        this.loots = lootRes.data
-        this.prices = priceRes.data
-        this.names = nameRes.data
-        this.createInstanceData();
+        // Normalize names into per-type maps so you can do:
+        // dataStore.names.items[itemId], dataStore.names.monsters[monsterId], dataStore.names.instances[instanceId]
+        const rawNames = nameRes.data
+        const namesMap = { items: {}, monsters: {}, instances: {} }
+
+        if (rawNames && typeof rawNames === 'object') {
+          // If structure already grouped by type (common case)
+          if (Array.isArray(rawNames.items)) {
+            rawNames.items.forEach(e => { if (e && e.id != null) namesMap.items[e.id] = e.name })
+          }
+          if (Array.isArray(rawNames.monsters)) {
+            rawNames.monsters.forEach(e => { if (e && e.id != null) namesMap.monsters[e.id] = e.name })
+          }
+          if (Array.isArray(rawNames.instances)) {
+            rawNames.instances.forEach(e => { if (e && e.id != null) namesMap.instances[e.id] = e.name })
+          }
+
+          // If rawNames is a flat map of id->string, merge into instances map for backward compatibility
+          Object.keys(rawNames).forEach(k => {
+            const v = rawNames[k]
+            if (typeof v === 'string') {
+              // ambiguous: store under instances as fallback
+              namesMap.instances[k] = v
+            }
+          })
+        }
+
+        this.names = namesMap
+
+        // Process and store only instancesRefined (pass raw data)
+        this.createInstanceData(
+          instRes.data,
+          mappingRes.data,
+          lootRes.data,
+          priceRes.data
+        )
         this.loaded = true
       } catch (e) {
         console.error("Erreur chargement données", e)
       }
     },
 
-    createInstanceData(){
+    createInstanceData(instances, mapping, loots, prices){
       // Build a lookup map for prices: { itemId: price }
       let priceMap = {};
-      if (Array.isArray(this.prices)) {
-        this.prices.forEach(p => {
+      if (Array.isArray(prices)) {
+        prices.forEach(p => {
           priceMap[p.itemId] = p.price
         })
-      } else if (this.prices && typeof this.prices === 'object') {
+      } else if (prices && typeof prices === 'object') {
         // if already an object map
-        priceMap = this.prices
+        priceMap = prices
       }
 
-      console.log("this.prices :", this.prices);
+      console.log("prices :", prices);
 
       // For each instance, gather all loot entries (from mapping -> loots)
-      const instancesRefined = this.instances.map(inst => ({
+      const instancesRefined = instances.map(inst => ({
         id: inst.id,
         level: inst.level,
-        loots: this.mapping
+        loots: mapping
           .filter(m => m.instanceId === inst.id)
           .map(m => {
-            const monsterLoots = this.loots
+            const monsterLoots = loots
               .filter(loot => loot.monsterId === m.monsterId)
               .map(loot => loot.loots)
             // Multiply quantity by monster count (m.number) and attach price

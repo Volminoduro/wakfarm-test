@@ -21,7 +21,7 @@
         :key="inst.id" 
         class="border p-4 rounded shadow hover:shadow-md transition bg-white">
         
-        <h3 class="font-bold text-lg">{{ dataStore.names[inst.name_key] || inst.name_key }}</h3>
+        <h3 class="font-bold text-lg">{{ dataStore.names.instances[inst.id]}}</h3>
         <p class="text-gray-600">Niv. {{ inst.level }}</p>
         
         <div class="mt-4 text-right">
@@ -59,8 +59,10 @@ onMounted(() => {
 // Calculer et trier les instances dynamiquement
 const sortedInstances = computed(() => {
   if (!dataStore.loaded) return []
+
+  console.log('dataStore.names:', dataStore.names)
  
-  return dataStore.instances.map(inst => {
+  return dataStore.instancesRefined.map(inst => {
     return {
       ...inst,
       computedValue: dataStore.calculateRunValue(inst.id, globalStore.config)
