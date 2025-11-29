@@ -75,8 +75,6 @@ export const useDataStore = defineStore('data', {
         priceMap = prices
       }
 
-      console.log("prices :", prices);
-
       // For each instance, gather all loot entries (from mapping -> loots)
       const instancesRefined = instances.map(inst => ({
         id: inst.id,
@@ -97,26 +95,102 @@ export const useDataStore = defineStore('data', {
           .flat()
       }))
 
-      this.instancesRefined = instancesRefined
-      console.log("instancesRefined :", instancesRefined);
+      // For each instance, build per-item subtotal and totalKamas
+      const enriched = instancesRefined.map(inst => {
+        const perItem = {}
+        inst.loots.forEach(l => {
+          const id = l.itemId
+          const price = l.price || 0
+          const qty = l.quantity || 0
+          const rate = l.rate || 0
+          const value = price * rate * qty
 
-      return instancesRefined;
+          if (!perItem[id]) {
+            perItem[id] = {
+              itemId: id,
+              name: this.names && this.names.items ? this.names.items[id] || null : null,
+              price: price,
+              quantity: 0,
+              subtotal: 0
+            }
+          }
+
+          perItem[id].quantity += qty
+          perItem[id].subtotal += value
+        })
+
+        const itemsBreakdown = Object.values(perItem).map(it => ({
+          ...it,
+          subtotal: Math.floor(it.subtotal),
+          avg: Math.round((it.subtotal || 0) / (it.quantity || 1))
+        })).sort((a, b) => b.subtotal - a.subtotal)
+
+        const totalKamas = itemsBreakdown.reduce((s, it) => s + it.subtotal, 0)
+
+        return {
+          id: inst.id,
+          level: inst.level,
+          loots: inst.loots,
+          items: itemsBreakdown,
+          totalKamas: Math.floor(totalKamas)
+        }
+      })
+
+      this.instancesRefined = enriched
+
+      return enriched;
     },
 
     // Fonction clé : Estime les kamas pour une instance donnée
     calculateRunValue(instanceId, config) {
-        if (!this.loaded) return 0;
+      if (!this.loaded) return 0;
 
-        let totalKamas = 0;
+      // Prefer precomputed totalKamas if present
+      const inst = this.instancesRefined.find(i => i.id === instanceId)
+      if (inst && typeof inst.totalKamas === 'number') return inst.totalKamas
 
-        this.instancesRefined.filter(inst => inst.id === instanceId).forEach(inst => {
-            inst.loots.forEach(loot => {
-                console.log("loot :", loot);
-                totalKamas += loot.price * (loot.rate) * loot.quantity;
-            });
-        });
+      // Fallback: compute from loots
+      let totalKamas = 0
+      this.instancesRefined.filter(i => i.id === instanceId).forEach(i => {
+        i.loots.forEach(loot => {
+          totalKamas += (loot.price || 0) * (loot.rate || 0) * (loot.quantity || 0)
+        })
+      })
 
-        return Math.floor(totalKamas);
+      return Math.floor(totalKamas)
+    },
+
+    async loadNames(lang = 'fr') {
+      try {
+        const basePath = import.meta.env.BASE_URL
+        const nameRes = await axios.get(`${basePath}names/${lang}.json`)
+
+        const rawNames = nameRes.data
+        const namesMap = { items: {}, monsters: {}, instances: {} }
+
+        if (rawNames && typeof rawNames === 'object') {
+          if (Array.isArray(rawNames.items)) {
+            rawNames.items.forEach(e => { if (e && e.id != null) namesMap.items[e.id] = e.name })
+          }
+          if (Array.isArray(rawNames.monsters)) {
+            rawNames.monsters.forEach(e => { if (e && e.id != null) namesMap.monsters[e.id] = e.name })
+          }
+          if (Array.isArray(rawNames.instances)) {
+            rawNames.instances.forEach(e => { if (e && e.id != null) namesMap.instances[e.id] = e.name })
+          }
+
+          Object.keys(rawNames).forEach(k => {
+            const v = rawNames[k]
+            if (typeof v === 'string') {
+              namesMap.instances[k] = v
+            }
+          })
+        }
+
+        this.names = namesMap
+      } catch (e) {
+        console.error("Erreur chargement langue", e)
+      }
     }
   }
 })

@@ -10,12 +10,24 @@
                 "steleIntervention": 0
             },
             {
-                "itemId": 6256,
+                "itemId": 6257,
                 "rate": 0.50,
                 "quantity": 2,
                 "stele": 0,
                 "steleIntervention": 0
             }   
+        ]
+    },
+    {
+        "monsterId": 3,
+        "loots": [
+            {
+                "itemId": 6256,
+                "rate": 0.10,
+                "quantity": 1,
+                "stele": 0,
+                "steleIntervention": 0
+            }
         ]
     }
 ]

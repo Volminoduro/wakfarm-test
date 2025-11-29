@@ -2,11 +2,11 @@
     "items":[
         {
             "id": 6256,
-            "name": "Épée de Bois"
+            "name": "Wooden Sword"
         },
         {
             "id": 6257,
-            "name": "Bouclier de Bois"
+            "name": "Wooden Shield"
         }
     ],
     "monsters":[
@@ -16,17 +16,17 @@
         },
         {
             "id": 3,
-            "name": "Larve"
+            "name": "Larva"
         }
     ],
     "instances":[
         {
             "id": 27,
-            "name": "Le Tofulailler"
+            "name": "The Tofulailler"
         },
         {
             "id": 28,
-            "name": "La Plaine Herbeuse"
+            "name": "The Grassy Plain"
         }
     ]
 }

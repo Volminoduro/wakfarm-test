@@ -2,5 +2,9 @@
     {
         "itemId": 6256,
         "price": 100
+    },
+    {
+        "itemId": 6257,
+        "price": 150
     }
 ]
