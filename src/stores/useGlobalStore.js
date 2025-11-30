@@ -10,6 +10,7 @@ export const useGlobalStore = defineStore('global', () => {
     steles: 0,
     isBooster: true,
     intervention: false,
+    isModulated: true,
     server: 'pandora'
   }
 

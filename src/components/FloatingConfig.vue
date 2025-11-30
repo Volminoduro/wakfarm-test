@@ -7,9 +7,10 @@
         <tr>
           <th class="text-center font-medium pb-4">Stasis</th>
           <th class="text-center font-medium pb-4">Stèles</th>
-          <th class="text-center font-medium pb-4">Booster</th>
-          <th class="text-center font-medium pb-4">Intervention</th>
-          <th class="text-center font-medium pb-4">Serveur</th>
+            <th class="text-center font-medium pb-4">Booster</th>
+              <th class="text-center font-medium pb-4">Modulé</th>
+              <th class="text-center font-medium pb-4">Intervention</th>
+              <th class="text-center font-medium pb-4">Serveur</th>
         </tr>
       </thead>
       <tbody>
@@ -37,6 +38,14 @@
               id="booster"
               type="checkbox" 
               v-model="store.config.isBooster"
+              class="w-5 h-5"
+            />
+          </td>
+          <td class="text-center">
+            <input 
+              id="isModulated"
+              type="checkbox" 
+              v-model="store.config.isModulated"
               class="w-5 h-5"
             />
           </td>

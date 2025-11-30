@@ -3,7 +3,7 @@
     <!-- Header clickable: toggles expand/collapse -->
     <div @click="emit('toggle')" class="cursor-pointer px-4 py-3 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 truncate">
-        <div class="font-bold truncate">{{ names.instances[instance.id] || ('Instance ' + instance.id) }} ( {{ names.divers['niveau_reduit'] }} {{ instance.level }})</div>
+        <div class="font-bold truncate">{{ names.instances[instance.id] || ('Instance ' + instance.id) }} ({{ names.divers['niveau_reduit'] }} {{ instance.level }})</div>
       </div>
 
       <div class="flex items-center gap-4">
@@ -20,7 +20,7 @@
         <ul class="divide-y">
           <li v-for="(item, idx) in instance.items" :key="item.itemId" class="py-2 flex justify-between items-center">
             <div class="flex items-center gap-3">
-              <div class="font-medium">{{ names.items[item.itemId] || ('#' + item.itemId) }} x{{ item.quantity }}</div>
+              <div class="font-medium">{{ names.items[item.itemId] || ('#' + item.itemId) }} x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%)</div>
             </div>
             <div class="font-semibold">{{ formatNumber(item.subtotal) }} K</div>
           </li>

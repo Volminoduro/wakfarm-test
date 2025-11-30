@@ -1,11 +1,19 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { useGlobalStore } from './useGlobalStore'
+import { watch } from 'vue'
 
 export const useDataStore = defineStore('data', {
   state: () => ({
     instancesRefined: [],
     names: {},
-    loaded: false
+    loaded: false,
+    // keep raw fetched data so we can recompute when config changes
+    _rawInstances: [],
+    _rawMapping: [],
+    _rawLoots: [],
+    _rawPrices: {},
+    _hasConfigWatcher: false
   }),
   actions: {
     async loadAllData(server, lang = 'fr') {
@@ -24,7 +32,7 @@ export const useDataStore = defineStore('data', {
         // Normalize names into per-type maps so you can do:
         // dataStore.names.items[itemId], dataStore.names.monsters[monsterId], dataStore.names.instances[instanceId]
         const rawNames = nameRes.data
-        const namesMap = { items: {}, monsters: {}, instances: {} }
+        const namesMap = { items: {}, monsters: {}, instances: {}, divers: {} }
 
         if (rawNames && typeof rawNames === 'object') {
           // If structure already grouped by type (common case)
@@ -53,20 +61,106 @@ export const useDataStore = defineStore('data', {
 
         this.names = namesMap
 
+        // Store raw fetched data so we can recompute when global config changes
+        this._rawInstances = instRes.data
+        this._rawMapping = mappingRes.data
+        this._rawLoots = lootRes.data
+        this._rawPrices = priceRes.data
+
         // Process and store only instancesRefined (pass raw data)
         this.createInstanceData(
-          instRes.data,
-          mappingRes.data,
-          lootRes.data,
-          priceRes.data
+          this._rawInstances,
+          this._rawMapping,
+          this._rawLoots,
+          this._rawPrices
         )
         this.loaded = true
+
+        // Setup a single watcher to recompute instances when global config changes
+        const globalStore = useGlobalStore()
+        if (!this._hasConfigWatcher) {
+          this._hasConfigWatcher = true
+          watch(
+            () => globalStore.config,
+            (newVal) => {
+              try {
+                this.createInstanceData(this._rawInstances, this._rawMapping, this._rawLoots, this._rawPrices)
+              } catch (e) {
+                console.error('Erreur recompute instances after config change', e)
+              }
+            },
+            { deep: true }
+          )
+        }
       } catch (e) {
         console.error("Erreur chargement données", e)
       }
     },
 
+    getStasisBonus(steles, isModulated){
+      if(isModulated) {
+        switch(steles){
+          case 1: return 0.60
+          case 2: return 1.00
+          case 3: return 1.40
+          case 4: return 2.50
+          case 5: return 4.00
+          case 6: return 5.50
+          case 7: return 6.00
+          case 8: return 6.50
+          case 9: return 6.80
+          case 10: return 7.10
+        }
+      } else {
+        switch(steles){
+          case 1: return 0.60
+          case 2: return 1.00
+          case 3: return 1.20
+          case 4: return 1.60
+          case 5: return 1.88
+          case 6: return 2.00
+          case 7: return 2.05
+          case 8: return 2.10
+          case 9: return 2.15
+          case 10: return 2.20
+        }
+      }
+    },
+
     createInstanceData(instances, mapping, loots, prices){
+      // access global config for rate adjustments
+      const globalStore = useGlobalStore()
+
+      // helper: compute adjusted rate depending on stasis, steles, booster, intervention and modulation
+      const computeAdjustedRate = (baseRate, cfg = {}) => {
+        const stasis = Number(cfg.stasis || 0)
+        const steles = Number(cfg.steles || 0)
+        const isModulated = !!cfg.isModulated
+        const intervention = !!cfg.intervention
+
+        const stasisFactor = this.getStasisBonus(stasis, isModulated)
+        const stelesBonus = 1
+
+        var boosterBonus = 1
+        if(globalStore.config.isBooster === true){
+          if(globalStore.config.server === 'ogrest' || globalStore.config.server === 'neo-ogrest'){ 
+            boosterBonus = 1.50
+          } else {
+            boosterBonus = 1.25
+          }
+        }
+        
+        const interventionBonus = intervention ? 1.10 : 1
+
+        let adjusted = baseRate * stasisFactor * stelesBonus * boosterBonus * interventionBonus
+
+        // clamp to reasonable bounds to avoid runaway values
+        const max = 1
+        if (adjusted > max) adjusted = max
+
+        console.log(`Base rate: ${baseRate}, Adjusted rate: ${adjusted} (stasis: ${stasis}, modulated: ${isModulated}, boosterBonus: ${boosterBonus}, intervention: ${intervention})`)
+        return adjusted
+      }
       // Build a lookup map for prices: { itemId: price }
       let priceMap = {};
       if (Array.isArray(prices)) {
@@ -105,13 +199,15 @@ export const useDataStore = defineStore('data', {
           const id = l.itemId
           const price = l.price || 0
           const qty = l.quantity || 0
-          const rate = l.rate || 0
-          const value = price * rate * qty
+          const baseRate = l.rate || 0
+          const adjustedRate = computeAdjustedRate(baseRate, globalStore.config)
+          const value = price * adjustedRate * qty
 
           if (!perItem[id]) {
             perItem[id] = {
               itemId: id,
               name: this.names && this.names.items ? this.names.items[id] || null : null,
+              rate: adjustedRate,
               price: price,
               quantity: 0,
               subtotal: 0
@@ -124,8 +220,7 @@ export const useDataStore = defineStore('data', {
 
         const itemsBreakdown = Object.values(perItem).map(it => ({
           ...it,
-          subtotal: Math.floor(it.subtotal),
-          avg: Math.round((it.subtotal || 0) / (it.quantity || 1))
+          subtotal: Math.floor(it.subtotal)
         })).sort((a, b) => b.subtotal - a.subtotal)
 
         const totalKamas = itemsBreakdown.reduce((s, it) => s + it.subtotal, 0)
@@ -144,32 +239,13 @@ export const useDataStore = defineStore('data', {
       return enriched;
     },
 
-    // Fonction clé : Estime les kamas pour une instance donnée
-    calculateRunValue(instanceId, config) {
-      if (!this.loaded) return 0;
-
-      // Prefer precomputed totalKamas if present
-      const inst = this.instancesRefined.find(i => i.id === instanceId)
-      if (inst && typeof inst.totalKamas === 'number') return inst.totalKamas
-
-      // Fallback: compute from loots
-      let totalKamas = 0
-      this.instancesRefined.filter(i => i.id === instanceId).forEach(i => {
-        i.loots.forEach(loot => {
-          totalKamas += (loot.price || 0) * (loot.rate || 0) * (loot.quantity || 0)
-        })
-      })
-
-      return Math.floor(totalKamas)
-    },
-
     async loadNames(lang = 'fr') {
       try {
         const basePath = import.meta.env.BASE_URL
         const nameRes = await axios.get(`${basePath}names/${lang}.json`)
 
         const rawNames = nameRes.data
-        const namesMap = { items: {}, monsters: {}, instances: {} }
+        const namesMap = { items: {}, monsters: {}, instances: {}, divers: {} }
 
         if (rawNames && typeof rawNames === 'object') {
           if (Array.isArray(rawNames.items)) {
@@ -180,6 +256,9 @@ export const useDataStore = defineStore('data', {
           }
           if (Array.isArray(rawNames.instances)) {
             rawNames.instances.forEach(e => { if (e && e.id != null) namesMap.instances[e.id] = e.name })
+          }
+          if (Array.isArray(rawNames.divers)) {
+            rawNames.divers.forEach(e => { if (e && e.id != null) namesMap.divers[e.id] = e.name })
           }
 
           Object.keys(rawNames).forEach(k => {
