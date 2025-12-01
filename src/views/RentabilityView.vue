@@ -1,41 +1,43 @@
 <template>
   <div>
     <!-- Sub Navigation -->
-    <nav class="px-8 py-3 flex items-center bg-slate-800/50 border-b border-slate-700">
+    <nav class="px-8 flex items-center bg-slate-800/50 border-b border-slate-700">
       <button 
         @click="emit('change-sub-tab', 'run')" 
-        :class="['px-6 py-3 text-base transition-all', subTab === 'run' ? 'border-b-2 border-amber-300 font-semibold text-amber-300' : 'text-slate-400 hover:text-amber-200']">
+        :class="['flex-1 py-4 transition-all font-semibold text-base', subTab === 'run' ? 'border-b-2 border-amber-300 text-amber-300' : 'text-slate-400 hover:text-amber-200']">
         Kamas / Run
       </button>
       <button 
         @click="emit('change-sub-tab', 'time')" 
-        :class="['px-6 py-3 text-base transition-all', subTab === 'time' ? 'border-b-2 border-amber-300 font-semibold text-amber-300' : 'text-slate-400 hover:text-amber-200']">
+        :class="['flex-1 py-4 transition-all font-semibold text-base', subTab === 'time' ? 'border-b-2 border-amber-300 text-amber-300' : 'text-slate-400 hover:text-amber-200']">
         Kamas / Heure
       </button>
-      
+    </nav>
+    
+    <!-- Toggle All Button -->
+    <div v-if="subTab === 'run'" class="px-8 py-4 bg-slate-800/30 border-b border-slate-700">
       <button 
-        v-if="subTab === 'run'" 
         @click="emit('toggle-all')" 
-        :class="['px-6 py-3 text-base transition-all', 'text-slate-400 hover:text-amber-200']" 
+        class="px-5 py-3 text-sm transition-all text-slate-400 hover:text-amber-200 hover:bg-slate-700 rounded" 
         :title="allExpanded ? 'Tout réduire' : 'Tout développer'">
         <span class="flex items-center gap-2">
-          <svg v-if="!allExpanded" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <svg v-if="!allExpanded" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           {{ allExpanded ? 'Tout réduire' : 'Tout développer' }}
         </span>
       </button>
-    </nav>
+    </div>
     
     <!-- Kamas / Run -->
-    <div v-if="subTab === 'run'" class="px-8 py-4 max-w-[1920px] mx-auto">
+    <div v-if="subTab === 'run'" class="px-8 py-6 max-w-[1920px] mx-auto">
       <div v-if="!dataStore.loaded" class="text-center">
         <p class="text-amber-400 text-lg">Chargement des données...</p>
       </div>
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <InstanceCard 
           v-for="inst in sortedInstances" 
           :key="inst.id"

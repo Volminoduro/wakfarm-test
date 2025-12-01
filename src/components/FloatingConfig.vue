@@ -28,7 +28,7 @@
               <select 
                 id="stasis"
                 v-model.number="store.config.stasis" 
-                class="border border-amber-500/30 bg-slate-700 text-slate-200 px-4 py-4 rounded text-base w-[40px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
+                class="border border-amber-500/30 bg-slate-700 text-slate-200 px-5 py-4 rounded text-base w-[40px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
               >
                 <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
               </select>
@@ -39,7 +39,7 @@
               <select 
                 id="steles"
                 v-model.number="store.config.steles" 
-                class="border border-amber-500/30 bg-slate-700 text-slate-200 px-4 py-4 rounded text-base w-[40px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
+                class="border border-amber-500/30 bg-slate-700 text-slate-200 px-5 py-4 rounded text-base w-[40px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
               >
                 <option v-for="n in 5" :key="n" :value="n - 1">{{ n - 1 }}</option>
               </select>
@@ -50,7 +50,7 @@
               <select 
                 id="steleIntervention"
                 v-model.number="store.config.steleIntervention" 
-                class="border border-amber-500/30 bg-slate-700 text-slate-200 px-4 py-4 rounded text-base w-[40px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
+                class="border border-amber-500/30 bg-slate-700 text-slate-200 px-5 py-4 rounded text-base w-[40px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
               >
                 <option v-for="n in 4" :key="n" :value="n - 1">{{ n - 1 }}</option>
               </select>
@@ -69,7 +69,7 @@
               <select 
                 id="server"
                 v-model="store.config.server" 
-                class="border border-amber-500/30 bg-slate-700 text-slate-200 px-4 py-4 rounded text-base w-[125px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
+                class="border border-amber-500/30 bg-slate-700 text-slate-200 px-5 py-4 rounded text-base w-[125px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
               >
                 <option v-for="server in dataStore.servers" :key="server.id" :value="server.id">
                   {{ t(server.name_key) }}
@@ -88,13 +88,13 @@
         <tr>
           <td colspan="2" class="px-2">
             <div class="flex justify-center">
-              <div class="input-wrapper" style="width: 160px;">
+              <div class="input-wrapper" style="width: 180px;">
                 <input
                   type="text"
                   :value="formatInputNumber(store.config.minItemProfit)"
                   @input="updateMinItemProfit"
-                  class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded px-4 py-4 text-base focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none kamas-input-padding"
-                  style="width: 160px;"
+                  class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded px-5 py-4 text-base focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none kamas-input-padding"
+                  style="width: 180px;"
                 />
                 <span class="kamas-icon">₭</span>
               </div>
@@ -102,13 +102,13 @@
           </td>
           <td colspan="2" class="px-2">
             <div class="flex justify-center">
-              <div class="input-wrapper" style="width: 100px;">
+              <div class="input-wrapper" style="width: 80px;">
                 <input
                   type="text"
                   :value="formatRateInput(store.config.minDropRatePercent)"
                   @input="updateMinDropRate"
-                  class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded px-4 py-4 text-base focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none rate-input-padding"
-                  style="width: 100px;"
+                  class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded px-5 py-4 text-base focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none rate-input-padding"
+                  style="width: 80px;"
                 />
                 <span class="rate-icon">%</span>
               </div>
@@ -116,13 +116,13 @@
           </td>
           <td colspan="2" class="px-2">
             <div class="flex justify-center">
-              <div class="input-wrapper" style="width: 160px;">
+              <div class="input-wrapper" style="width: 180px;">
                 <input
                   type="text"
                   :value="formatInputNumber(store.config.minInstanceTotal)"
                   @input="updateMinInstanceTotal"
-                  class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded px-4 py-4 text-base focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none kamas-input-padding"
-                  style="width: 160px;"
+                  class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded px-5 py-4 text-base focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none kamas-input-padding"
+                  style="width: 180px;"
                 />
                 <span class="kamas-icon">₭</span>
               </div>

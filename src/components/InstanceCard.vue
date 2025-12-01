@@ -1,7 +1,7 @@
 <template>
   <div class="border-2 border-amber-500 rounded-lg shadow-lg hover:shadow-xl transition bg-slate-800 overflow-hidden hover:border-amber-400">
     <!-- Header clickable: toggles expand/collapse -->
-    <div @click="emit('toggle')" class="cursor-pointer px-4 py-3 flex items-center justify-between gap-4">
+    <div @click="emit('toggle')" class="cursor-pointer px-5 py-4 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 truncate">
         <div class="font-bold truncate text-slate-200">{{ names.instances[instance.id] || ('Instance ' + instance.id) }} ({{ names.divers['niveau_reduit'] }} {{ instance.level }})</div>
       </div>
@@ -16,9 +16,9 @@
     </div>
 
     <transition name="slide">
-      <div v-if="isExpanded" class="px-4 py-3 bg-slate-900/50">
+      <div v-if="isExpanded" class="px-5 py-4 bg-slate-900/50">
         <ul class="divide-y divide-slate-700">
-          <li v-for="(item, idx) in instance.items" :key="item.itemId" class="py-2 flex justify-between items-center">
+          <li v-for="(item, idx) in instance.items" :key="item.itemId" class="py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
               <div class="font-medium text-slate-300">
                 <span class="font-bold" :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
