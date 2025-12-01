@@ -36,7 +36,7 @@
         },
         {
             "id": "config_title",
-            "name": "Configuración de Run"
+            "name": "Configuración (predeterminado)"
         },
         {
             "id": "config_stasis",
@@ -64,15 +64,15 @@
         },
         {
             "id": "config_min_profit",
-            "name": "Beneficio mín"
+            "name": "Beneficio mín."
         },
         {
             "id": "config_min_rate",
-            "name": "Tasa mín (%)"
+            "name": "Tasa mín."
         },
         {
             "id": "config_min_total",
-            "name": "Total instancia mín"
+            "name": "Total instancia mín."
         },
         {
             "id": "server_pandora",

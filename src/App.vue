@@ -76,15 +76,11 @@ watch(expanded, (val) => {
   <div class="min-h-screen flex flex-col bg-slate-900">
     <AppHeader 
       :mainTab="mainTab"
-      :subTab="subTab"
-      :allExpanded="allExpanded"
       @change-main-tab="mainTab = $event"
-      @change-sub-tab="subTab = $event"
-      @toggle-all="toggleAll"
     />
     
     <!-- Main Content with top padding for fixed header -->
-    <main class="flex-grow" style="padding-top: 310px;">
+    <main class="flex-grow">
       <div v-if="!dataStore.loaded" class="p-8 text-center">
         <p class="text-amber-400 text-lg">Chargement des données...</p>
       </div>
@@ -94,7 +90,10 @@ watch(expanded, (val) => {
         v-if="mainTab === 'rentability'"
         :subTab="subTab"
         :expanded="expanded"
+        :allExpanded="allExpanded"
         @toggleExpand="toggleExpand"
+        @change-sub-tab="subTab = $event"
+        @toggle-all="toggleAll"
       />
 
       <!-- Runs Tab -->
@@ -107,18 +106,3 @@ watch(expanded, (val) => {
     <AppFooter />
   </div>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>

@@ -1,11 +1,11 @@
 <template>
-  <div class="flex gap-2">
+  <div class="flex gap-3">
     <button
       v-for="lang in languages"
       :key="lang.code"
       @click="handleChange(lang.code)"
       :class="[
-        'px-3 py-1 rounded transition-all text-lg',
+        'px-4 py-2 rounded transition-all text-xl',
         currentLanguage === lang.code 
           ? 'bg-amber-500 shadow-lg ring-2 ring-amber-400 scale-110' 
           : 'bg-slate-700 hover:bg-slate-600 opacity-70 hover:opacity-100'
@@ -52,4 +52,3 @@ onMounted(async () => {
   await dataStore.loadNames(currentLanguage.value)
 })
 </script>
-

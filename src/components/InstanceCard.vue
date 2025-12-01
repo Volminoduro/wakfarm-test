@@ -1,31 +1,31 @@
 <template>
-  <div class="border-2 border-gray-300 rounded-lg shadow-sm hover:shadow-md transition bg-white overflow-hidden hover:bg-blue-50">
+  <div class="border-2 border-amber-500 rounded-lg shadow-lg hover:shadow-xl transition bg-slate-800 overflow-hidden hover:border-amber-400">
     <!-- Header clickable: toggles expand/collapse -->
     <div @click="emit('toggle')" class="cursor-pointer px-4 py-3 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 truncate">
-        <div class="font-bold truncate">{{ names.instances[instance.id] || ('Instance ' + instance.id) }} ({{ names.divers['niveau_reduit'] }} {{ instance.level }})</div>
+        <div class="font-bold truncate text-slate-200">{{ names.instances[instance.id] || ('Instance ' + instance.id) }} ({{ names.divers['niveau_reduit'] }} {{ instance.level }})</div>
       </div>
 
       <div class="flex items-center gap-4">
-        <div class="text-yellow-600 font-bold text-lg">{{ formatNumber(instance.totalKamas) }} ₭</div>
+        <div class="text-amber-400 font-bold text-lg">{{ formatNumber(instance.totalKamas) }} ₭</div>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-          :class="isExpanded ? 'rotate-90' : ''" class="transition-transform text-blue-600">
+          :class="isExpanded ? 'rotate-90' : ''" class="transition-transform text-amber-400">
           <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/>
         </svg>
       </div>
     </div>
 
     <transition name="slide">
-      <div v-if="isExpanded" class="px-4 py-3">
-        <ul class="divide-y">
+      <div v-if="isExpanded" class="px-4 py-3 bg-slate-900/50">
+        <ul class="divide-y divide-slate-700">
           <li v-for="(item, idx) in instance.items" :key="item.itemId" class="py-2 flex justify-between items-center">
             <div class="flex items-center gap-3">
-              <div class="font-medium">
+              <div class="font-medium text-slate-300">
                 <span class="font-bold" :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
                 <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
               </div>
             </div>
-            <div class="font-semibold">{{ formatNumber(item.subtotal) }} ₭</div>
+            <div class="font-semibold text-amber-300">{{ formatNumber(item.subtotal) }} ₭</div>
           </li>
         </ul>
       </div>

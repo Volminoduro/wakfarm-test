@@ -13,6 +13,3 @@ import { ref } from 'vue'
 // État pour la gestion des prix
 const customPrices = ref({})
 </script>
-
-<style scoped>
-</style>

@@ -36,7 +36,7 @@
         },
         {
             "id": "config_title",
-            "name": "Run Settings"
+            "name": "Settings (default)"
         },
         {
             "id": "config_stasis",
@@ -64,15 +64,15 @@
         },
         {
             "id": "config_min_profit",
-            "name": "Min profit"
+            "name": "Min. profit"
         },
         {
             "id": "config_min_rate",
-            "name": "Min rate (%)"
+            "name": "Min. rate"
         },
         {
             "id": "config_min_total",
-            "name": "Min instance total"
+            "name": "Min. instance total"
         },
         {
             "id": "server_pandora",

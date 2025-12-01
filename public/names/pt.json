@@ -36,7 +36,7 @@
         },
         {
             "id": "config_title",
-            "name": "Configurações de Run"
+            "name": "Configurações (padrão)"
         },
         {
             "id": "config_stasis",
@@ -57,22 +57,22 @@
         {
             "id": "config_modulated",
             "name": "Modulado"
-        }
+        },
         {
             "id": "config_server",
             "name": "Servidor"
         },
         {
             "id": "config_min_profit",
-            "name": "Lucro mín"
+            "name": "Lucro mín."
         },
         {
             "id": "config_min_rate",
-            "name": "Taxa mín (%)"
+            "name": "Taxa mín."
         },
         {
             "id": "config_min_total",
-            "name": "Total instância mín"
+            "name": "Total instância mín."
         },
         {
             "id": "server_pandora",

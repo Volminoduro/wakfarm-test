@@ -13,6 +13,3 @@ import { ref } from 'vue'
 // État pour la gestion des runs
 const runs = ref([])
 </script>
-
-<style scoped>
-</style>
