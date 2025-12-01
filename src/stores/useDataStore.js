@@ -7,6 +7,7 @@ export const useDataStore = defineStore('data', {
   state: () => ({
     instancesRefined: [],
     names: {},
+    servers: [],
     loaded: false,
     // keep raw fetched data so we can recompute when config changes
     _rawInstances: [],
@@ -20,14 +21,15 @@ export const useDataStore = defineStore('data', {
     async loadAllData(server, lang = 'fr') {
       try {
         const basePath = import.meta.env.BASE_URL
-        const [instRes, itemRes, monsterRes, mappingRes, lootRes, priceRes, nameRes] = await Promise.all([
+        const [instRes, itemRes, monsterRes, mappingRes, lootRes, priceRes, nameRes, serversRes] = await Promise.all([
           axios.get(`${basePath}data/instances.json`),
           axios.get(`${basePath}data/items.json`),
           axios.get(`${basePath}data/monsters.json`),
           axios.get(`${basePath}data/mapping.json`),
           axios.get(`${basePath}data/loots.json`),
           axios.get(`${basePath}data/prices_${server}.json`),
-          axios.get(`${basePath}names/${lang}.json`)
+          axios.get(`${basePath}names/${lang}.json`),
+          axios.get(`${basePath}data/servers.json`)
         ])
 
         // Normalize names into per-type maps so you can do:
@@ -61,6 +63,7 @@ export const useDataStore = defineStore('data', {
         }
 
         this.names = namesMap
+        this.servers = serversRes.data || []
 
         // Store raw fetched data so we can recompute when global config changes
         this._rawInstances = instRes.data

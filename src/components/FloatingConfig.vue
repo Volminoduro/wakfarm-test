@@ -71,10 +71,9 @@
                 v-model="store.config.server" 
                 class="border border-amber-500/30 bg-slate-700 text-slate-200 px-4 py-4 rounded text-base w-[125px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
               >
-                <option value="pandora">{{ t('server_pandora') }}</option>
-                <option value="ogrest">{{ t('server_ogrest') }}</option>
-                <option value="neo-ogrest">{{ t('server_neo_ogrest') }}</option>
-                <option value="neo-pandora">{{ t('server_neo_pandora') }}</option>
+                <option v-for="server in dataStore.servers" :key="server.id" :value="server.id">
+                  {{ t(server.name_key) }}
+                </option>
               </select>
             </div>
           </td>

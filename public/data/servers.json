@@ -1,0 +1,18 @@
+[
+  {
+    "id": "pandora",
+    "name_key": "server_pandora"
+  },
+  {
+    "id": "ogrest",
+    "name_key": "server_ogrest"
+  },
+  {
+    "id": "neo-ogrest",
+    "name_key": "server_neo_ogrest"
+  },
+  {
+    "id": "neo-pandora",
+    "name_key": "server_neo_pandora"
+  }
+]

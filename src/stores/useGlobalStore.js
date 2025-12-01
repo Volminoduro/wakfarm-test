@@ -12,9 +12,9 @@ export const useGlobalStore = defineStore('global', () => {
     isBooster: true,
     isModulated: true,
     // Filters
-    minItemProfit: 0,
-    minDropRatePercent: 0,
-    minInstanceTotal: 0,
+    minItemProfit: null,
+    minDropRatePercent: null,
+    minInstanceTotal: null,
     server: 'pandora'
   }
 
