@@ -8,5 +8,10 @@
     "id": 28,
     "level": 12,
     "isDungeon": false
+  },
+  {
+    "id": 29,
+    "level": 14,
+    "isDungeon": true
   }
 ]

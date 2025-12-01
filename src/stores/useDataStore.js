@@ -173,24 +173,30 @@ export const useDataStore = defineStore('data', {
       }
 
       // For each instance, gather all loot entries (from mapping -> loots)
-      const instancesRefined = instances.map(inst => ({
-        id: inst.id,
-        level: inst.level,
-        loots: mapping
-          .filter(m => m.instanceId === inst.id)
-          .map(m => {
+      const instancesRefined = instances.map(inst => {
+        // Find mapping for this instance
+        const instanceMapping = mapping.find(m => m.instanceId === inst.id)
+        
+        let allLoots = []
+        if (instanceMapping && instanceMapping.monsters) {
+          instanceMapping.monsters.forEach(monster => {
             const monsterLoots = loots
-              .filter(loot => loot.monsterId === m.monsterId)
+              .filter(loot => loot.monsterId === monster.monsterId)
               .map(loot => loot.loots)
-            // Multiply quantity by monster count (m.number) and attach price
-            return monsterLoots.flat().map(lootEntry => ({
+            allLoots.push(...monsterLoots.flat().map(lootEntry => ({
               ...lootEntry,
-              quantity: lootEntry.quantity * m.number,
+              quantity: lootEntry.quantity * monster.number,
               price: priceMap[lootEntry.itemId] || 0
-            }))
+            })))
           })
-          .flat()
-      }))
+        }
+        
+        return {
+          id: inst.id,
+          level: inst.level,
+          loots: allLoots
+        }
+      })
 
       // For each instance, build per-item subtotal and totalKamas
       const enriched = instancesRefined.map(inst => {
@@ -201,7 +207,7 @@ export const useDataStore = defineStore('data', {
           const qty = l.quantity || 0
           const baseRate = l.rate || 0
           const adjustedRate = computeAdjustedRate(baseRate, globalStore.config)
-          const value = price * adjustedRate * qty
+          const value = Math.floor(price * adjustedRate * qty)
 
           if (!perItem[id]) {
             perItem[id] = {
@@ -218,10 +224,13 @@ export const useDataStore = defineStore('data', {
           perItem[id].subtotal += value
         })
 
-        const itemsBreakdown = Object.values(perItem).map(it => ({
-          ...it,
-          subtotal: Math.floor(it.subtotal)
-        })).sort((a, b) => b.subtotal - a.subtotal)
+        // apply item filters from global config
+        const minProfit = Number(globalStore.config.minItemProfit || 0)
+        const minDrop = Number(globalStore.config.minDropRatePercent || 0) / 100
+
+        const itemsBreakdown = Object.values(perItem)
+          .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDrop)
+          .sort((a, b) => b.subtotal - a.subtotal)
 
         const totalKamas = itemsBreakdown.reduce((s, it) => s + it.subtotal, 0)
 
@@ -234,7 +243,11 @@ export const useDataStore = defineStore('data', {
         }
       })
 
-      this.instancesRefined = enriched
+      // apply instance-level filter (minInstanceTotal)
+      const minInstanceTotal = Number(globalStore.config.minInstanceTotal || 0)
+      const filteredEnriched = enriched.filter(inst => (inst.totalKamas || 0) >= minInstanceTotal)
+
+      this.instancesRefined = filteredEnriched
 
       return enriched;
     },

@@ -1,12 +1,21 @@
 [
   {
     "instanceId": 27,
-    "monsterId": 4,
-    "number": 3
+    "monsters": [
+      { "monsterId": 4, "number": 3 }
+    ]
   },
   {
     "instanceId": 28,
-    "monsterId": 3,
-    "number": 3
+    "monsters": [
+      { "monsterId": 3, "number": 3 }
+    ]
+  },
+  {
+    "instanceId": 29,
+    "monsters": [
+      { "monsterId": 4, "number": 5 },
+      { "monsterId": 3, "number": 6 }
+    ]
   }
 ]

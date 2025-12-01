@@ -72,6 +72,50 @@
         </tr>
       </tbody>
     </table>
+    
+    <!-- Filters: two extra lines -->
+    <div class="mt-4">
+      <div class="grid grid-cols-2 gap-4 mb-3">
+        <!-- Min item profit -->
+        <div>
+          <label class="text-sm font-medium">Profit min (kamas)</label>
+          <input
+            type="number"
+            v-model.number="store.config.minItemProfit"
+            min="0"
+            step="1"
+            class="mt-1 block w-full border border-gray-300 px-3 py-2 rounded"
+          />
+        </div>
+
+        <!-- Min drop rate (percent) -->
+        <div>
+          <label class="text-sm font-medium">Taux min (%)</label>
+          <input
+            type="number"
+            v-model.number="store.config.minDropRatePercent"
+            min="0"
+            max="100"
+            step="0.1"
+            class="mt-1 block w-full border border-gray-300 px-3 py-2 rounded"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4">
+        <!-- Min instance total -->
+        <div>
+          <label class="text-sm font-medium">Total instance min (kamas)</label>
+          <input
+            type="number"
+            v-model.number="store.config.minInstanceTotal"
+            min="0"
+            step="1"
+            class="mt-1 block w-1/2 border border-gray-300 px-3 py-2 rounded"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

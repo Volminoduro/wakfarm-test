@@ -11,6 +11,10 @@ export const useGlobalStore = defineStore('global', () => {
     isBooster: true,
     intervention: false,
     isModulated: true,
+    // Filters
+    minItemProfit: 0,
+    minDropRatePercent: 0,
+    minInstanceTotal: 0,
     server: 'pandora'
   }
 
