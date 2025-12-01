@@ -20,7 +20,10 @@
         <ul class="divide-y">
           <li v-for="(item, idx) in instance.items" :key="item.itemId" class="py-2 flex justify-between items-center">
             <div class="flex items-center gap-3">
-              <div class="font-medium">{{ names.items[item.itemId] || ('#' + item.itemId) }} x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</div>
+              <div class="font-medium">
+                <span class="font-bold" :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
+                <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
+              </div>
             </div>
             <div class="font-semibold">{{ formatNumber(item.subtotal) }} K</div>
           </li>
@@ -61,6 +64,20 @@ function getSteleInfo(item) {
     parts.push(`st.i.${item.steleIntervention}`)
   }
   return parts.length > 0 ? ', ' + parts.join(', ') : ''
+}
+
+function getRarityColor(rarity) {
+  const colors = {
+    0: '#FFFFFF',
+    1: '#FFFFFF',
+    2: '#00EE8C',
+    3: '#FF913C',
+    4: '#FFDF78',
+    5: '#6A42A2',
+    6: '#8DC6E1',
+    7: '#FF88B8'
+  }
+  return colors[rarity] || '#FFFFFF'
 }
 </script>
 

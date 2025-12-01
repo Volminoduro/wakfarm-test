@@ -10,6 +10,7 @@ export const useDataStore = defineStore('data', {
     loaded: false,
     // keep raw fetched data so we can recompute when config changes
     _rawInstances: [],
+    _rawItems: [],
     _rawMapping: [],
     _rawLoots: [],
     _rawPrices: {},
@@ -63,6 +64,7 @@ export const useDataStore = defineStore('data', {
 
         // Store raw fetched data so we can recompute when global config changes
         this._rawInstances = instRes.data
+        this._rawItems = itemRes.data
         this._rawMapping = mappingRes.data
         this._rawLoots = lootRes.data
         this._rawPrices = priceRes.data
@@ -70,6 +72,7 @@ export const useDataStore = defineStore('data', {
         // Process and store only instancesRefined (pass raw data)
         this.createInstanceData(
           this._rawInstances,
+          this._rawItems,
           this._rawMapping,
           this._rawLoots,
           this._rawPrices
@@ -84,7 +87,7 @@ export const useDataStore = defineStore('data', {
             () => globalStore.config,
             (newVal) => {
               try {
-                this.createInstanceData(this._rawInstances, this._rawMapping, this._rawLoots, this._rawPrices)
+                this.createInstanceData(this._rawInstances, this._rawItems, this._rawMapping, this._rawLoots, this._rawPrices)
               } catch (e) {
                 console.error('Erreur recompute instances after config change', e)
               }
@@ -127,9 +130,17 @@ export const useDataStore = defineStore('data', {
       }
     },
 
-    createInstanceData(instances, mapping, loots, prices){
+    createInstanceData(instances, items, mapping, loots, prices){
       // access global config for rate adjustments
       const globalStore = useGlobalStore()
+
+      // Build a lookup map for item rarity: { itemId: rarity }
+      const itemRarityMap = {}
+      if (Array.isArray(items)) {
+        items.forEach(item => {
+          itemRarityMap[item.id] = item.rarity || 0
+        })
+      }
 
       // helper: compute adjusted rate depending on stasis, steles, booster, intervention and modulation
       const computeAdjustedRate = (baseRate, cfg = {}) => {
@@ -188,8 +199,10 @@ export const useDataStore = defineStore('data', {
               .filter(lootEntry => {
                 const configSteles = Number(globalStore.config.steles || 0)
                 const configSteleIntervention = Number(globalStore.config.steleIntervention || 0)
+                const configStasis = Number(globalStore.config.stasis || 0)
                 const lootStele = Number(lootEntry.stele || 0)
                 const lootSteleIntervention = Number(lootEntry.steleIntervention || 0)
+                const itemRarity = itemRarityMap[lootEntry.itemId] || 0
                 
                 // Include loot only if its stele requirements are <= config
                 const steleOk = lootStele <= configSteles
@@ -199,7 +212,10 @@ export const useDataStore = defineStore('data', {
                   ? lootSteleIntervention <= configSteleIntervention
                   : lootSteleIntervention === 0
                 
-                return steleOk && steleInterventionOk
+                // If rarity > 3, require stasis >= 3
+                const rarityOk = itemRarity > 3 ? configStasis >= 3 : true
+                
+                return steleOk && steleInterventionOk && rarityOk
               })
               .map(lootEntry => ({
                 ...lootEntry,
@@ -236,7 +252,8 @@ export const useDataStore = defineStore('data', {
               quantity: 0,
               subtotal: 0,
               stele: l.stele || 0,
-              steleIntervention: l.steleIntervention || 0
+              steleIntervention: l.steleIntervention || 0,
+              rarity: itemRarityMap[id] || 0
             }
           }
 
