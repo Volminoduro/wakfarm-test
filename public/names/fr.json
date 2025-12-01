@@ -36,7 +36,7 @@
         },
         {
             "id": "config_title",
-            "name": "Paramètres de Run"
+            "name": "Paramètres (défaut)"
         },
         {
             "id": "config_stasis",
@@ -64,7 +64,7 @@
         },
         {
             "id": "config_min_profit",
-            "name": "Profit min (kamas)"
+            "name": "Profit min"
         },
         {
             "id": "config_min_rate",
@@ -72,7 +72,7 @@
         },
         {
             "id": "config_min_total",
-            "name": "Total instance min (kamas)"
+            "name": "Total instance min"
         },
         {
             "id": "server_pandora",

@@ -64,7 +64,7 @@
         },
         {
             "id": "config_min_profit",
-            "name": "Beneficio mín (kamas)"
+            "name": "Beneficio mín"
         },
         {
             "id": "config_min_rate",
@@ -72,7 +72,7 @@
         },
         {
             "id": "config_min_total",
-            "name": "Total instancia mín (kamas)"
+            "name": "Total instancia mín"
         },
         {
             "id": "server_pandora",

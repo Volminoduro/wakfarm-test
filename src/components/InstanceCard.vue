@@ -7,7 +7,7 @@
       </div>
 
       <div class="flex items-center gap-4">
-        <div class="text-yellow-600 font-bold text-lg">{{ formatNumber(instance.totalKamas) }} K</div>
+        <div class="text-yellow-600 font-bold text-lg">{{ formatNumber(instance.totalKamas) }} ₭</div>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
           :class="isExpanded ? 'rotate-90' : ''" class="transition-transform text-blue-600">
           <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/>
@@ -25,7 +25,7 @@
                 <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
               </div>
             </div>
-            <div class="font-semibold">{{ formatNumber(item.subtotal) }} K</div>
+            <div class="font-semibold">{{ formatNumber(item.subtotal) }} ₭</div>
           </li>
         </ul>
       </div>
@@ -58,10 +58,10 @@ function formatNumber(num) {
 function getSteleInfo(item) {
   const parts = []
   if (item.stele > 0) {
-    parts.push(`st.${item.stele}`)
+    parts.push(`st. ${item.stele}`)
   }
   if (item.steleIntervention > 0) {
-    parts.push(`st.i.${item.steleIntervention}`)
+    parts.push(`st.i. ${item.steleIntervention}`)
   }
   return parts.length > 0 ? ', ' + parts.join(', ') : ''
 }

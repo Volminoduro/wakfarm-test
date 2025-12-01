@@ -71,52 +71,49 @@
             </select>
           </td>
         </tr>
+        
+        <!-- Second row: Filters -->
+        <tr>
+          <th class="text-center font-medium pb-2 pt-4" colspan="3">{{ t('config_min_profit') }}</th>
+          <th class="text-center font-medium pb-2 pt-4" colspan="2">{{ t('config_min_rate') }}</th>
+          <th class="text-center font-medium pb-2 pt-4">{{ t('config_min_total') }}</th>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                :value="formatInputNumber(store.config.minItemProfit)"
+                @input="updateMinItemProfit"
+                class="border border-gray-300 rounded w-full kamas-input"
+              />
+              <span class="kamas-icon">₭</span>
+            </div>
+          </td>
+          <td colspan="2">
+            <input
+              type="number"
+              v-model.number="store.config.minDropRatePercent"
+              min="0"
+              max="100"
+              step="0.1"
+              class="border border-gray-300 px-3 py-2 rounded w-full"
+            />
+          </td>
+          <td>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                :value="formatInputNumber(store.config.minInstanceTotal)"
+                @input="updateMinInstanceTotal"
+                class="border border-gray-300 rounded w-full kamas-input"
+              />
+              <span class="kamas-icon">₭</span>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
-    
-    <!-- Filters: two extra lines -->
-    <div class="mt-4">
-      <div class="grid grid-cols-2 gap-4 mb-3">
-        <!-- Min item profit -->
-        <div>
-          <label class="text-sm font-medium">{{ t('config_min_profit') }}</label>
-          <input
-            type="number"
-            v-model.number="store.config.minItemProfit"
-            min="0"
-            step="1"
-            class="mt-1 block w-full border border-gray-300 px-3 py-2 rounded"
-          />
-        </div>
-
-        <!-- Min drop rate (percent) -->
-        <div>
-          <label class="text-sm font-medium">{{ t('config_min_rate') }}</label>
-          <input
-            type="number"
-            v-model.number="store.config.minDropRatePercent"
-            min="0"
-            max="100"
-            step="0.1"
-            class="mt-1 block w-full border border-gray-300 px-3 py-2 rounded"
-          />
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 gap-4">
-        <!-- Min instance total -->
-        <div>
-          <label class="text-sm font-medium">{{ t('config_min_total') }}</label>
-          <input
-            type="number"
-            v-model.number="store.config.minInstanceTotal"
-            min="0"
-            step="1"
-            class="mt-1 block w-1/2 border border-gray-300 px-3 py-2 rounded"
-          />
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -130,6 +127,31 @@ const dataStore = useDataStore()
 const t = (key) => {
   return dataStore.names?.divers?.[key] || key
 }
+
+function formatInputNumber(num) {
+  if (num === null || num === undefined || num === '' || num === 0) return ''
+  return new Intl.NumberFormat('fr-FR').format(num)
+}
+
+function updateMinItemProfit(event) {
+  const value = event.target.value.replace(/\s/g, '').replace(/\u202F/g, '')
+  if (value === '') {
+    store.config.minItemProfit = 0
+    return
+  }
+  const numValue = parseInt(value, 10)
+  store.config.minItemProfit = isNaN(numValue) ? 0 : numValue
+}
+
+function updateMinInstanceTotal(event) {
+  const value = event.target.value.replace(/\s/g, '').replace(/\u202F/g, '')
+  if (value === '') {
+    store.config.minInstanceTotal = 0
+    return
+  }
+  const numValue = parseInt(value, 10)
+  store.config.minInstanceTotal = isNaN(numValue) ? 0 : numValue
+}
 </script>
 
 <style scoped>
@@ -140,5 +162,28 @@ input::-webkit-inner-spin-button {
 }
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.input-wrapper {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.kamas-input {
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  line-height: 1.5;
+}
+
+.kamas-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  margin-top: -0.5em;
+  color: #9CA3AF;
+  pointer-events: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
 }
 </style>

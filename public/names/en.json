@@ -64,7 +64,7 @@
         },
         {
             "id": "config_min_profit",
-            "name": "Min profit (kamas)"
+            "name": "Min profit"
         },
         {
             "id": "config_min_rate",
@@ -72,7 +72,7 @@
         },
         {
             "id": "config_min_total",
-            "name": "Min instance total (kamas)"
+            "name": "Min instance total"
         },
         {
             "id": "server_pandora",

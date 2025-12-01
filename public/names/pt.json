@@ -64,7 +64,7 @@
         },
         {
             "id": "config_min_profit",
-            "name": "Lucro mín (kamas)"
+            "name": "Lucro mín"
         },
         {
             "id": "config_min_rate",
@@ -72,7 +72,7 @@
         },
         {
             "id": "config_min_total",
-            "name": "Total instância mín (kamas)"
+            "name": "Total instância mín"
         },
         {
             "id": "server_pandora",
