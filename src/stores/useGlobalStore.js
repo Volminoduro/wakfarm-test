@@ -6,10 +6,10 @@ export const useGlobalStore = defineStore('global', () => {
   
   // Default configuration
   const defaultConfig = {
-    stasis: 2,
+    stasis: 3,
     steles: 0,
+    steleIntervention: 0,
     isBooster: true,
-    intervention: false,
     isModulated: true,
     // Filters
     minItemProfit: 0,

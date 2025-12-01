@@ -20,7 +20,7 @@
         <ul class="divide-y">
           <li v-for="(item, idx) in instance.items" :key="item.itemId" class="py-2 flex justify-between items-center">
             <div class="flex items-center gap-3">
-              <div class="font-medium">{{ names.items[item.itemId] || ('#' + item.itemId) }} x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%)</div>
+              <div class="font-medium">{{ names.items[item.itemId] || ('#' + item.itemId) }} x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</div>
             </div>
             <div class="font-semibold">{{ formatNumber(item.subtotal) }} K</div>
           </li>
@@ -50,6 +50,17 @@ const emit = defineEmits(['toggle'])
 
 function formatNumber(num) {
   return new Intl.NumberFormat('fr-FR').format(num)
+}
+
+function getSteleInfo(item) {
+  const parts = []
+  if (item.stele > 0) {
+    parts.push(`st.${item.stele}`)
+  }
+  if (item.steleIntervention > 0) {
+    parts.push(`st.i.${item.steleIntervention}`)
+  }
+  return parts.length > 0 ? ', ' + parts.join(', ') : ''
 }
 </script>
 

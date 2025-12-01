@@ -7,15 +7,15 @@
                 "rate": 0.25,
                 "quantity": 1,
                 "stele": 0,
-                "steleIntervention": 0
+                "steleIntervention": 3
             },
             {
                 "itemId": 6257,
                 "rate": 0.50,
                 "quantity": 2,
-                "stele": 0,
+                "stele": 2,
                 "steleIntervention": 0
-            }   
+            }
         ]
     },
     {

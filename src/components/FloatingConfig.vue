@@ -5,16 +5,24 @@
     <table class="w-full">
       <thead>
         <tr>
+          <th class="text-center font-medium pb-4">{{ t('config_modulated') }}</th>
           <th class="text-center font-medium pb-4">{{ t('config_stasis') }}</th>
           <th class="text-center font-medium pb-4">{{ t('config_steles') }}</th>
-            <th class="text-center font-medium pb-4">{{ t('config_booster') }}</th>
-              <th class="text-center font-medium pb-4">{{ t('config_modulated') }}</th>
-              <th class="text-center font-medium pb-4">{{ t('config_intervention') }}</th>
-              <th class="text-center font-medium pb-4">{{ t('config_server') }}</th>
+          <th class="text-center font-medium pb-4">{{ t('config_stele_intervention') }}</th>
+          <th class="text-center font-medium pb-4">{{ t('config_booster') }}</th>
+          <th class="text-center font-medium pb-4">{{ t('config_server') }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
+          <td class="text-center">
+            <input 
+              id="booster"
+              type="checkbox" 
+              v-model="store.config.isBooster"
+              class="w-5 h-5"
+            />
+          </td>
           <td class="text-center">
             <select 
               id="stasis"
@@ -34,26 +42,19 @@
             </select>
           </td>
           <td class="text-center">
-            <input 
-              id="booster"
-              type="checkbox" 
-              v-model="store.config.isBooster"
-              class="w-5 h-5"
-            />
+            <select 
+              id="steleIntervention"
+              v-model.number="store.config.steleIntervention" 
+              class="border border-gray-300 px-3 py-2 rounded w-full"
+            >
+              <option v-for="n in 4" :key="n" :value="n - 1">{{ n - 1 }}</option>
+            </select>
           </td>
           <td class="text-center">
             <input 
               id="isModulated"
               type="checkbox" 
               v-model="store.config.isModulated"
-              class="w-5 h-5"
-            />
-          </td>
-          <td class="text-center">
-            <input 
-              id="intervention"
-              type="checkbox" 
-              v-model="store.config.intervention"
               class="w-5 h-5"
             />
           </td>

@@ -47,16 +47,16 @@
             "name": "Stèles"
         },
         {
+            "id": "config_stele_intervention",
+            "name": "Stèles Interv."
+        },
+        {
             "id": "config_booster",
             "name": "Booster"
         },
         {
             "id": "config_modulated",
             "name": "Modulé"
-        },
-        {
-            "id": "config_intervention",
-            "name": "Intervention"
         },
         {
             "id": "config_server",

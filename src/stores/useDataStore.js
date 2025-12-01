@@ -183,11 +183,29 @@ export const useDataStore = defineStore('data', {
             const monsterLoots = loots
               .filter(loot => loot.monsterId === monster.monsterId)
               .map(loot => loot.loots)
-            allLoots.push(...monsterLoots.flat().map(lootEntry => ({
-              ...lootEntry,
-              quantity: lootEntry.quantity * monster.number,
-              price: priceMap[lootEntry.itemId] || 0
-            })))
+            allLoots.push(...monsterLoots.flat()
+              // Filter by stele and steleIntervention configuration
+              .filter(lootEntry => {
+                const configSteles = Number(globalStore.config.steles || 0)
+                const configSteleIntervention = Number(globalStore.config.steleIntervention || 0)
+                const lootStele = Number(lootEntry.stele || 0)
+                const lootSteleIntervention = Number(lootEntry.steleIntervention || 0)
+                
+                // Include loot only if its stele requirements are <= config
+                const steleOk = lootStele <= configSteles
+                
+                // Check steleIntervention based on config
+                const steleInterventionOk = globalStore.config.intervention 
+                  ? lootSteleIntervention <= configSteleIntervention
+                  : lootSteleIntervention === 0
+                
+                return steleOk && steleInterventionOk
+              })
+              .map(lootEntry => ({
+                ...lootEntry,
+                quantity: lootEntry.quantity * monster.number,
+                price: priceMap[lootEntry.itemId] || 0
+              })))
           })
         }
         
@@ -216,7 +234,9 @@ export const useDataStore = defineStore('data', {
               rate: adjustedRate,
               price: price,
               quantity: 0,
-              subtotal: 0
+              subtotal: 0,
+              stele: l.stele || 0,
+              steleIntervention: l.steleIntervention || 0
             }
           }
 

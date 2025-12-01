@@ -47,17 +47,17 @@
             "name": "Estelas"
         },
         {
+            "id": "config_stele_intervention",
+            "name": "Estelas Interv."
+        },
+        {
             "id": "config_booster",
             "name": "Booster"
         },
         {
             "id": "config_modulated",
             "name": "Modulado"
-        },
-        {
-            "id": "config_intervention",
-            "name": "Intervenção"
-        },
+        }
         {
             "id": "config_server",
             "name": "Servidor"

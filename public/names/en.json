@@ -47,16 +47,16 @@
             "name": "Steles"
         },
         {
+            "id": "config_stele_intervention",
+            "name": "Interv. Steles"
+        },
+        {
             "id": "config_booster",
             "name": "Booster"
         },
         {
             "id": "config_modulated",
             "name": "Scaled"
-        },
-        {
-            "id": "config_intervention",
-            "name": "Intervention"
         },
         {
             "id": "config_server",
