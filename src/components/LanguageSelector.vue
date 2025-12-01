@@ -1,14 +1,14 @@
 <template>
-  <div class="flex gap-3">
+  <div class="flex gap-2">
     <button
       v-for="lang in languages"
       :key="lang.code"
       @click="handleChange(lang.code)"
       :class="[
-        'px-2 py-1 rounded transition text-lg font-bold',
+        'px-3 py-1 rounded transition-all text-lg',
         currentLanguage === lang.code 
-          ? 'bg-white text-blue-600 border-2 border-blue-500 shadow-md' 
-          : 'bg-gray-200 text-gray-600 hover:bg-gray-300 hover:shadow-sm'
+          ? 'bg-amber-500 shadow-lg ring-2 ring-amber-400 scale-110' 
+          : 'bg-slate-700 hover:bg-slate-600 opacity-70 hover:opacity-100'
       ]"
       :title="lang.name"
     >

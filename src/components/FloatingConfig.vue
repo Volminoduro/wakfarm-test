@@ -1,16 +1,16 @@
 <template>
-  <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
-    <h2 class="text-xl font-bold mb-6">{{ t('config_title') }}</h2>
+  <div class="bg-slate-800 border-2 border-amber-500/30 rounded-lg shadow-xl p-6">
+    <h2 class="text-xl font-bold mb-6 text-amber-400">{{ t('config_title') }}</h2>
 
     <table class="w-full">
       <thead>
         <tr>
-          <th class="text-center font-medium pb-4">{{ t('config_modulated') }}</th>
-          <th class="text-center font-medium pb-4">{{ t('config_stasis') }}</th>
-          <th class="text-center font-medium pb-4">{{ t('config_steles') }}</th>
-          <th class="text-center font-medium pb-4">{{ t('config_stele_intervention') }}</th>
-          <th class="text-center font-medium pb-4">{{ t('config_booster') }}</th>
-          <th class="text-center font-medium pb-4">{{ t('config_server') }}</th>
+          <th class="text-center font-medium pb-4 text-amber-300 text-sm">{{ t('config_modulated') }}</th>
+          <th class="text-center font-medium pb-4 text-amber-300 text-sm">{{ t('config_stasis') }}</th>
+          <th class="text-center font-medium pb-4 text-amber-300 text-sm">{{ t('config_steles') }}</th>
+          <th class="text-center font-medium pb-4 text-amber-300 text-sm">{{ t('config_stele_intervention') }}</th>
+          <th class="text-center font-medium pb-4 text-amber-300 text-sm">{{ t('config_booster') }}</th>
+          <th class="text-center font-medium pb-4 text-amber-300 text-sm">{{ t('config_server') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -27,7 +27,7 @@
             <select 
               id="stasis"
               v-model.number="store.config.stasis" 
-              class="border border-gray-300 px-3 py-2 rounded w-full"
+              class="border border-amber-500/30 bg-slate-700 text-slate-200 px-3 py-2 rounded w-full focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
             >
               <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
             </select>
@@ -36,7 +36,7 @@
             <select 
               id="steles"
               v-model.number="store.config.steles" 
-              class="border border-gray-300 px-3 py-2 rounded w-full"
+              class="border border-amber-500/30 bg-slate-700 text-slate-200 px-3 py-2 rounded w-full focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
             >
               <option v-for="n in 5" :key="n" :value="n - 1">{{ n - 1 }}</option>
             </select>
@@ -45,7 +45,7 @@
             <select 
               id="steleIntervention"
               v-model.number="store.config.steleIntervention" 
-              class="border border-gray-300 px-3 py-2 rounded w-full"
+              class="border border-amber-500/30 bg-slate-700 text-slate-200 px-3 py-2 rounded w-full focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
             >
               <option v-for="n in 4" :key="n" :value="n - 1">{{ n - 1 }}</option>
             </select>
@@ -55,14 +55,14 @@
               id="isModulated"
               type="checkbox" 
               v-model="store.config.isModulated"
-              class="w-5 h-5"
+              class="w-5 h-5 accent-amber-500"
             />
           </td>
           <td class="text-center">
             <select 
               id="server"
               v-model="store.config.server" 
-              class="border border-gray-300 px-3 py-2 rounded w-full"
+              class="border border-amber-500/30 bg-slate-700 text-slate-200 px-3 py-2 rounded w-full focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
             >
               <option value="pandora">{{ t('server_pandora') }}</option>
               <option value="ogrest">{{ t('server_ogrest') }}</option>
@@ -74,9 +74,9 @@
         
         <!-- Second row: Filters -->
         <tr>
-          <th class="text-center font-medium pb-2 pt-4" colspan="3">{{ t('config_min_profit') }}</th>
-          <th class="text-center font-medium pb-2 pt-4" colspan="2">{{ t('config_min_rate') }}</th>
-          <th class="text-center font-medium pb-2 pt-4">{{ t('config_min_total') }}</th>
+          <th class="text-center font-medium pb-2 pt-4 text-amber-300 text-sm" colspan="3">{{ t('config_min_profit') }}</th>
+          <th class="text-center font-medium pb-2 pt-4 text-amber-300 text-sm" colspan="2">{{ t('config_min_rate') }}</th>
+          <th class="text-center font-medium pb-2 pt-4 text-amber-300 text-sm">{{ t('config_min_total') }}</th>
         </tr>
         <tr>
           <td colspan="3">
@@ -85,7 +85,7 @@
                 type="text"
                 :value="formatInputNumber(store.config.minItemProfit)"
                 @input="updateMinItemProfit"
-                class="border border-gray-300 rounded w-full kamas-input"
+                class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded w-full kamas-input focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
               />
               <span class="kamas-icon">₭</span>
             </div>
@@ -97,7 +97,7 @@
               min="0"
               max="100"
               step="0.1"
-              class="border border-gray-300 px-3 py-2 rounded w-full"
+              class="border border-amber-500/30 bg-slate-700 text-slate-200 px-3 py-2 rounded w-full focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
             />
           </td>
           <td>
@@ -106,7 +106,7 @@
                 type="text"
                 :value="formatInputNumber(store.config.minInstanceTotal)"
                 @input="updateMinInstanceTotal"
-                class="border border-gray-300 rounded w-full kamas-input"
+                class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded w-full kamas-input focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
               />
               <span class="kamas-icon">₭</span>
             </div>
