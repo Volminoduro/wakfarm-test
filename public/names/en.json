@@ -33,6 +33,62 @@
         {
             "id": "niveau_reduit",
             "name": "lvl."
+        },
+        {
+            "id": "config_title",
+            "name": "Run Settings"
+        },
+        {
+            "id": "config_stasis",
+            "name": "Stasis"
+        },
+        {
+            "id": "config_steles",
+            "name": "Steles"
+        },
+        {
+            "id": "config_booster",
+            "name": "Booster"
+        },
+        {
+            "id": "config_modulated",
+            "name": "Scaled"
+        },
+        {
+            "id": "config_intervention",
+            "name": "Intervention"
+        },
+        {
+            "id": "config_server",
+            "name": "Server"
+        },
+        {
+            "id": "config_min_profit",
+            "name": "Min profit (kamas)"
+        },
+        {
+            "id": "config_min_rate",
+            "name": "Min rate (%)"
+        },
+        {
+            "id": "config_min_total",
+            "name": "Min instance total (kamas)"
+        },
+        {
+            "id": "server_pandora",
+            "name": "Pandora"
+        },
+        {
+            "id": "server_ogrest",
+            "name": "Ogrest"
+        },
+        {
+            "id": "server_neo_ogrest",
+            "name": "Neo-Ogrest"
+        },
+        {
+            "id": "server_neo_pandora",
+            "name": "Neo-Pandora"
         }
     ]
 }

@@ -1,16 +1,16 @@
 <template>
   <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
-    <h2 class="text-xl font-bold mb-6">Paramètres de Run</h2>
+    <h2 class="text-xl font-bold mb-6">{{ t('config_title') }}</h2>
 
     <table class="w-full">
       <thead>
         <tr>
-          <th class="text-center font-medium pb-4">Stasis</th>
-          <th class="text-center font-medium pb-4">Stèles</th>
-            <th class="text-center font-medium pb-4">Booster</th>
-              <th class="text-center font-medium pb-4">Modulé</th>
-              <th class="text-center font-medium pb-4">Intervention</th>
-              <th class="text-center font-medium pb-4">Serveur</th>
+          <th class="text-center font-medium pb-4">{{ t('config_stasis') }}</th>
+          <th class="text-center font-medium pb-4">{{ t('config_steles') }}</th>
+            <th class="text-center font-medium pb-4">{{ t('config_booster') }}</th>
+              <th class="text-center font-medium pb-4">{{ t('config_modulated') }}</th>
+              <th class="text-center font-medium pb-4">{{ t('config_intervention') }}</th>
+              <th class="text-center font-medium pb-4">{{ t('config_server') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -63,10 +63,10 @@
               v-model="store.config.server" 
               class="border border-gray-300 px-3 py-2 rounded w-full"
             >
-              <option value="pandora">Pandora</option>
-              <option value="ogrest">Ogrest</option>
-              <option value="neo-ogrest">Néo-Ogrest</option>
-              <option value="neo-pandora">Néo-Pandora</option>
+              <option value="pandora">{{ t('server_pandora') }}</option>
+              <option value="ogrest">{{ t('server_ogrest') }}</option>
+              <option value="neo-ogrest">{{ t('server_neo_ogrest') }}</option>
+              <option value="neo-pandora">{{ t('server_neo_pandora') }}</option>
             </select>
           </td>
         </tr>
@@ -78,7 +78,7 @@
       <div class="grid grid-cols-2 gap-4 mb-3">
         <!-- Min item profit -->
         <div>
-          <label class="text-sm font-medium">Profit min (kamas)</label>
+          <label class="text-sm font-medium">{{ t('config_min_profit') }}</label>
           <input
             type="number"
             v-model.number="store.config.minItemProfit"
@@ -90,7 +90,7 @@
 
         <!-- Min drop rate (percent) -->
         <div>
-          <label class="text-sm font-medium">Taux min (%)</label>
+          <label class="text-sm font-medium">{{ t('config_min_rate') }}</label>
           <input
             type="number"
             v-model.number="store.config.minDropRatePercent"
@@ -105,7 +105,7 @@
       <div class="grid grid-cols-1 gap-4">
         <!-- Min instance total -->
         <div>
-          <label class="text-sm font-medium">Total instance min (kamas)</label>
+          <label class="text-sm font-medium">{{ t('config_min_total') }}</label>
           <input
             type="number"
             v-model.number="store.config.minInstanceTotal"
@@ -121,7 +121,14 @@
 
 <script setup>
 import { useGlobalStore } from '../stores/useGlobalStore'
+import { useDataStore } from '../stores/useDataStore'
+
 const store = useGlobalStore()
+const dataStore = useDataStore()
+
+const t = (key) => {
+  return dataStore.names?.divers?.[key] || key
+}
 </script>
 
 <style scoped>

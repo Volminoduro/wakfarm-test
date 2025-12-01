@@ -2,11 +2,11 @@
     "items":[
         {
             "id": 6256,
-            "name": "Épée de Bois"
+            "name": "Espada de Madeira"
         },
         {
             "id": 6257,
-            "name": "Bouclier de Bois"
+            "name": "Escudo de Madeira"
         }
     ],
     "monsters":[
@@ -16,27 +16,27 @@
         },
         {
             "id": 3,
-            "name": "Larve"
+            "name": "Larva"
         }
     ],
     "instances":[
         {
             "id": 27,
-            "name": "Le Tofulailler"
+            "name": "O Tofulailler"
         },
         {
             "id": 28,
-            "name": "La Plaine Herbeuse"
+            "name": "A Planície Herbosa"
         }
     ],
     "divers": [
         {
             "id": "niveau_reduit",
-            "name": "niv."
+            "name": "nív."
         },
         {
             "id": "config_title",
-            "name": "Paramètres de Run"
+            "name": "Configurações de Run"
         },
         {
             "id": "config_stasis",
@@ -44,7 +44,7 @@
         },
         {
             "id": "config_steles",
-            "name": "Stèles"
+            "name": "Estelas"
         },
         {
             "id": "config_booster",
@@ -52,27 +52,27 @@
         },
         {
             "id": "config_modulated",
-            "name": "Modulé"
+            "name": "Modulado"
         },
         {
             "id": "config_intervention",
-            "name": "Intervention"
+            "name": "Intervenção"
         },
         {
             "id": "config_server",
-            "name": "Serveur"
+            "name": "Servidor"
         },
         {
             "id": "config_min_profit",
-            "name": "Profit min (kamas)"
+            "name": "Lucro mín (kamas)"
         },
         {
             "id": "config_min_rate",
-            "name": "Taux min (%)"
+            "name": "Taxa mín (%)"
         },
         {
             "id": "config_min_total",
-            "name": "Total instance min (kamas)"
+            "name": "Total instância mín (kamas)"
         },
         {
             "id": "server_pandora",
@@ -84,11 +84,11 @@
         },
         {
             "id": "server_neo_ogrest",
-            "name": "Néo-Ogrest"
+            "name": "Neo-Ogrest"
         },
         {
             "id": "server_neo_pandora",
-            "name": "Néo-Pandora"
+            "name": "Neo-Pandora"
         }
     ]
 }
