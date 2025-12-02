@@ -1,7 +1,9 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useDataStore } from './stores/useDataStore'
 import { useGlobalStore } from './stores/useGlobalStore'
+import { useExpandableItems } from './composables/useExpandableItems'
+import { STORAGE_KEYS } from './constants'
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
 import RentabilityView from './views/RentabilityView.vue'
@@ -27,49 +29,12 @@ const sortedInstances = computed(() => {
     .sort((a, b) => (b.totalKamas || 0) - (a.totalKamas || 0))
 })
 
-// Persist expanded state across reloads
-const LS_KEY = 'expandedInstances_v1'
-const initial = JSON.parse(localStorage.getItem(LS_KEY) || '[]')
-const expanded = ref(new Set(initial))
-
-function toggleExpand(id) {
-  if (expanded.value.has(id)) {
-    expanded.value.delete(id)
-  } else {
-    expanded.value.add(id)
-  }
-  expanded.value = new Set(expanded.value)
-}
-
-const allExpanded = computed(() => {
-  if (!dataStore.loaded) return false
-  const ids = dataStore.instancesRefined.map(i => i.id)
-  if (ids.length === 0) return false
-  return ids.every(id => expanded.value.has(id))
-})
-
-function toggleAll() {
-  if (allExpanded.value) collapseAll()
-  else expandAll()
-}
-
-function expandAll() {
-  const ids = dataStore.instancesRefined.map(i => i.id)
-  expanded.value = new Set(ids)
-}
-
-function collapseAll() {
-  expanded.value = new Set()
-}
-
-// Keep localStorage in sync
-watch(expanded, (val) => {
-  try {
-    localStorage.setItem(LS_KEY, JSON.stringify([...val]))
-  } catch (e) {
-    // ignore storage errors
-  }
-}, { deep: true })
+// Utiliser le composable pour gérer l'état d'expansion
+const instances = computed(() => dataStore.instancesRefined)
+const { expanded, toggleExpand, allExpanded, toggleAll } = useExpandableItems(
+  STORAGE_KEYS.EXPANDED_INSTANCES,
+  instances
+)
 </script>
 
 <template>

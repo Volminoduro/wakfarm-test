@@ -137,6 +137,7 @@
 <script setup>
 import { useGlobalStore } from '../stores/useGlobalStore'
 import { useDataStore } from '../stores/useDataStore'
+import { formatInputNumber, formatRateInput, parseFormattedNumber } from '../utils/formatters'
 
 const store = useGlobalStore()
 const dataStore = useDataStore()
@@ -145,14 +146,8 @@ const t = (key) => {
   return dataStore.names?.divers?.[key] || key
 }
 
-function formatInputNumber(num) {
-  if (num === 0) return '0'
-  if (num === null || num === undefined || num === '') return ''  
-  return new Intl.NumberFormat('fr-FR').format(num)
-}
-
 function updateMinItemProfit(event) {
-  const value = event.target.value.replace(/\s/g, '').replace(/\u202F/g, '')
+  const value = parseFormattedNumber(event.target.value)
   if (value === '') {
     store.config.minItemProfit = null
     return
@@ -162,19 +157,13 @@ function updateMinItemProfit(event) {
 }
 
 function updateMinInstanceTotal(event) {
-  const value = event.target.value.replace(/\s/g, '').replace(/\u202F/g, '')
+  const value = parseFormattedNumber(event.target.value)
   if (value === '') {
     store.config.minInstanceTotal = null
     return
   }
   const numValue = parseInt(value, 10)
   store.config.minInstanceTotal = isNaN(numValue) ? null : numValue
-}
-
-function formatRateInput(num) {
-  if (num === 0) return '0'
-  if (num === null || num === undefined || num === '') return ''  
-  return num.toString().replace('.', ',')
 }
 
 function updateMinDropRate(event) {

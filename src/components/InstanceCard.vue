@@ -34,6 +34,9 @@
 </template>
 
 <script setup>
+import { formatNumber } from '../utils/formatters'
+import { RARITY_COLORS } from '../constants'
+
 const props = defineProps({
   instance: {
     type: Object,
@@ -51,10 +54,6 @@ const props = defineProps({
 
 const emit = defineEmits(['toggle'])
 
-function formatNumber(num) {
-  return new Intl.NumberFormat('fr-FR').format(num)
-}
-
 function getSteleInfo(item) {
   const parts = []
   if (item.stele > 0) {
@@ -67,17 +66,7 @@ function getSteleInfo(item) {
 }
 
 function getRarityColor(rarity) {
-  const colors = {
-    0: '#FFFFFF',
-    1: '#FFFFFF',
-    2: '#00EE8C',
-    3: '#FF913C',
-    4: '#FFDF78',
-    5: '#6A42A2',
-    6: '#8DC6E1',
-    7: '#FF88B8'
-  }
-  return colors[rarity] || '#FFFFFF'
+  return RARITY_COLORS[rarity] || RARITY_COLORS[0]
 }
 </script>
 

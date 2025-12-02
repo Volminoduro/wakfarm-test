@@ -1,34 +1,21 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
+import { STORAGE_KEYS, DEFAULT_CONFIG } from '../constants'
 
 export const useGlobalStore = defineStore('global', () => {
-  const LS_KEY = 'wakfarm_config_v1'
-  
-  // Default configuration
-  const defaultConfig = {
-    stasis: 3,
-    steles: 0,
-    steleIntervention: 0,
-    isBooster: true,
-    isModulated: true,
-    // Filters
-    minItemProfit: null,
-    minDropRatePercent: null,
-    minInstanceTotal: null,
-    server: 'pandora'
-  }
+  const LS_KEY = STORAGE_KEYS.CONFIG
 
   // Load from localStorage or use defaults
   const loadConfig = () => {
     try {
       const saved = localStorage.getItem(LS_KEY)
       if (saved) {
-        return { ...defaultConfig, ...JSON.parse(saved) }
+        return { ...DEFAULT_CONFIG, ...JSON.parse(saved) }
       }
     } catch (e) {
       console.error('Erreur lecture localStorage:', e)
     }
-    return defaultConfig
+    return DEFAULT_CONFIG
   }
 
   // Configuration du bandeau

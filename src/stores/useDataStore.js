@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useGlobalStore } from './useGlobalStore'
 import { watch } from 'vue'
+import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS } from '../constants'
 
 export const useDataStore = defineStore('data', {
   state: () => ({
@@ -104,33 +105,8 @@ export const useDataStore = defineStore('data', {
     },
 
     getStasisBonus(steles, isModulated){
-      if(isModulated) {
-        switch(steles){
-          case 1: return 0.60
-          case 2: return 1.00
-          case 3: return 1.40
-          case 4: return 2.50
-          case 5: return 4.00
-          case 6: return 5.50
-          case 7: return 6.00
-          case 8: return 6.50
-          case 9: return 6.80
-          case 10: return 7.10
-        }
-      } else {
-        switch(steles){
-          case 1: return 0.60
-          case 2: return 1.00
-          case 3: return 1.20
-          case 4: return 1.60
-          case 5: return 1.88
-          case 6: return 2.00
-          case 7: return 2.05
-          case 8: return 2.10
-          case 9: return 2.15
-          case 10: return 2.20
-        }
-      }
+      const bonusMap = isModulated ? STASIS_BONUS_MODULATED : STASIS_BONUS_NON_MODULATED
+      return bonusMap[steles] || 0
     },
 
     createInstanceData(instances, items, mapping, loots, prices){
@@ -155,13 +131,9 @@ export const useDataStore = defineStore('data', {
         const stasisFactor = this.getStasisBonus(stasis, isModulated)
         const stelesBonus = 1
 
-        var boosterBonus = 1
+        let boosterBonus = 1
         if(globalStore.config.isBooster === true){
-          if(globalStore.config.server === 'ogrest' || globalStore.config.server === 'neo-ogrest'){ 
-            boosterBonus = 1.50
-          } else {
-            boosterBonus = 1.25
-          }
+          boosterBonus = BOOSTER_BONUS[globalStore.config.server] || 1.25
         }
         
         const interventionBonus = intervention ? 1.10 : 1
