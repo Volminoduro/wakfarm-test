@@ -79,8 +79,16 @@
             "name": "Pandora"
         },
         {
+            "id": "server_rubilax",
+            "name": "Rubilax"
+        },
+        {
             "id": "server_ogrest",
             "name": "Ogrest"
+        },
+        {
+            "id": "server_neo_rubilax",
+            "name": "Néo-Rubilax"
         },
         {
             "id": "server_neo_ogrest",
@@ -117,6 +125,22 @@
         {
             "id": "tab_kamas_hour",
             "name": "Kamas / Heure"
+        },
+        {
+            "id": "footer_title",
+            "name": "Wakfarm - Calculateur de rentabilité Wakfu"
+        },
+        {
+            "id": "footer_steles_update",
+            "name": "Stèles actualisées le"
+        },
+        {
+            "id": "footer_disclaimer",
+            "name": "Projet non officiel - Wakfu © Ankama Games"
+        },
+        {
+            "id": "prices_no_data",
+            "name": "Aucune donnée"
         }
     ]
 }

@@ -1,5 +1,10 @@
 <script setup>
 import { COLOR_CLASSES } from '../constants/colors'
+import { useDataStore } from '../stores/useDataStore'
+
+const dataStore = useDataStore()
+
+const t = (key) => dataStore.names?.divers?.[key] || key
 </script>
 
 <template>
@@ -7,8 +12,9 @@ import { COLOR_CLASSES } from '../constants/colors'
     <div :class="['border-t-3 mb-1', COLOR_CLASSES.borderPrimary]"></div>
     <div class="px-8 py-3">
       <div :class="['flex justify-between items-center text-xs', COLOR_CLASSES.footerText]">
-        <p>Wakfarm - Calculateur de rentabilité Wakfu</p>
-        <p>Projet non officiel - Wakfu © Ankama Games</p>
+        <p>{{ t('footer_title') }}</p>
+        <p>{{ t('footer_steles_update') }} xx.xx.xxxx</p>
+        <p>{{ t('footer_disclaimer') }}</p>
       </div>
     </div>
   </footer>

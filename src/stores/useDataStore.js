@@ -36,6 +36,7 @@ export const useDataStore = defineStore('data', {
     names: {},
     servers: [],
     loaded: false,
+    pricesLastUpdate: null,
     _rawInstances: [],
     _rawItems: [],
     _rawMapping: [],
@@ -47,26 +48,28 @@ export const useDataStore = defineStore('data', {
     async loadAllData(server, lang = 'fr') {
       try {
         const basePath = import.meta.env.BASE_URL
-        const [instRes, itemRes, monsterRes, mappingRes, lootRes, priceRes, nameRes, serversRes] = await Promise.all([
+        const [instRes, itemRes, monsterRes, mappingRes, lootRes, nameRes, serversRes] = await Promise.all([
           axios.get(`${basePath}data/instances.json`),
           axios.get(`${basePath}data/items.json`),
           axios.get(`${basePath}data/monsters.json`),
           axios.get(`${basePath}data/mapping.json`),
           axios.get(`${basePath}data/loots.json`),
-          axios.get(`${basePath}data/prices_${server}.json`),
           axios.get(`${basePath}names/${lang}.json`),
           axios.get(`${basePath}data/servers.json`)
         ])
-
+        
         this.names = parseNames(nameRes.data)
         this.servers = serversRes.data || []
+        
+        // Charger les prix APRÈS avoir chargé la liste des serveurs
+        const priceRes = await this.loadPricesWithDate(server)
 
         // Store raw fetched data so we can recompute when global config changes
         this._rawInstances = instRes.data
         this._rawItems = itemRes.data
         this._rawMapping = mappingRes.data
         this._rawLoots = lootRes.data
-        this._rawPrices = priceRes.data
+        this._rawPrices = priceRes
 
         // Process and store only instancesRefined (pass raw data)
         this.createInstanceData(
@@ -255,15 +258,50 @@ export const useDataStore = defineStore('data', {
       return enriched;
     },
 
-    async loadPrices(server) {
+    async loadPricesWithDate(server) {
       try {
         const basePath = import.meta.env.BASE_URL
-        const priceRes = await axios.get(`${basePath}data/prices_${server}.json`)
-        this._rawPrices = priceRes.data
-        this.createInstanceData(this._rawInstances, this._rawItems, this._rawMapping, this._rawLoots, this._rawPrices)
+        
+        // Trouver le serveur dans la liste pour obtenir le nom du fichier
+        const serverInfo = this.servers.find(s => s.id === server)
+        const priceFilename = serverInfo?.price_file || `${server}.json`
+        
+        console.log("Loading prices from:", priceFilename)
+        
+        // Charger le fichier de prix
+        const priceRes = await axios.get(`${basePath}data/prices/${priceFilename}`)
+        
+        // Extraire la date depuis le nom du fichier
+        // Format attendu: servername_YYYYMMDD_HHMM.json
+        const filenameMatch = priceFilename.match(/(\w+)_(\d{8})_(\d{4})/)
+        
+        if (filenameMatch && filenameMatch[2] && filenameMatch[3]) {
+          // Format: servername_YYYYMMDD_HHMM
+          const dateStr = filenameMatch[2] // YYYYMMDD
+          const timeStr = filenameMatch[3] // HHMM
+          const year = dateStr.substring(0, 4)
+          const month = dateStr.substring(4, 6)
+          const day = dateStr.substring(6, 8)
+          const hour = timeStr.substring(0, 2)
+          const minute = timeStr.substring(2, 4)
+          
+          this.pricesLastUpdate = `${day}.${month}.${year} ${hour}:${minute}`
+        } else {
+          this.pricesLastUpdate = null
+        }
+        
+        return priceRes.data
       } catch (e) {
         console.error("Erreur chargement prix", e)
+        this.pricesLastUpdate = null
+        return {}
       }
+    },
+    
+    async loadPrices(server) {
+      const prices = await this.loadPricesWithDate(server)
+      this._rawPrices = prices
+      this.createInstanceData(this._rawInstances, this._rawItems, this._rawMapping, this._rawLoots, this._rawPrices)
     },
 
     async loadNames(lang = 'fr') {

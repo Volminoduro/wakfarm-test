@@ -28,7 +28,7 @@ export const COLOR_CLASSES = {
   borderCard: 'border border-amber-500/30',
   
   // Boutons/États actifs
-  buttonToggle: 'text-slate-300 hover:text-orange-400 hover:bg-slate-700',
+  buttonToggle: 'text-slate-300 hover:bg-slate-700',
   
   // Boutons/États actifs (navigation)
   activeTab: 'bg-[#625946] text-[#dadada]',

@@ -1,18 +1,32 @@
 [
   {
     "id": "pandora",
-    "name_key": "server_pandora"
+    "name_key": "server_pandora",
+    "price_file": "pandora_20251202_0000.json"
+  },
+  {
+    "id": "rubilax",
+    "name_key": "server_rubilax",
+    "price_file": "rubilax.json"
   },
   {
     "id": "ogrest",
-    "name_key": "server_ogrest"
-  },
-  {
-    "id": "neo-ogrest",
-    "name_key": "server_neo_ogrest"
+    "name_key": "server_ogrest",
+    "price_file": "ogrest.json"
   },
   {
     "id": "neo-pandora",
-    "name_key": "server_neo_pandora"
+    "name_key": "server_neo_pandora",
+    "price_file": "neo-pandora.json"
+  },
+  {
+    "id": "neo-rubilax",
+    "name_key": "server_neo_rubilax",
+    "price_file": "neo-rubilax.json"
+  },
+  {
+    "id": "neo-ogrest",
+    "name_key": "server_neo_ogrest",
+    "price_file": "neo-ogrest.json"
   }
 ]

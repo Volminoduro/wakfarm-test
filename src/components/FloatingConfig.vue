@@ -29,8 +29,18 @@ function updateMinDropRate(event) {
     store.config.minDropRatePercent = null
     return
   }
-  const numValue = Math.max(0, Math.min(100, parseFloat(value) || 0))
+  const parsedValue = parseFloat(value)
+  if (isNaN(parsedValue)) {
+    store.config.minDropRatePercent = null
+    return
+  }
+  const numValue = Math.max(0, Math.min(100, parsedValue))
   store.config.minDropRatePercent = numValue
+  
+  // Forcer la mise à jour de l'input si la valeur a été limitée
+  if (parsedValue !== numValue) {
+    event.target.value = numValue.toString()
+  }
 }
 </script>
 
@@ -95,15 +105,24 @@ function updateMinDropRate(event) {
             </select>
           </td>
           <td class="text-center">
-            <select 
-              id="server"
-              v-model="store.config.server"
-              :class="[COLOR_CLASSES.select, 'w-[160px]']"
-            >
-              <option v-for="server in dataStore.servers" :key="server.id" :value="server.id">
-                {{ t(server.name_key) }}
-              </option>
-            </select>
+            <div class="flex items-center justify-center gap-2">
+              <select 
+                id="server"
+                v-model="store.config.server"
+                :class="[COLOR_CLASSES.select, 'w-[160px]']"
+              >
+                <option v-for="server in dataStore.servers" :key="server.id" :value="server.id">
+                  {{ t(server.name_key) }}
+                </option>
+              </select>
+              <div :class="['text-xs leading-tight w-[70px] text-center', COLOR_CLASSES.textMuted]">
+                <div v-if="dataStore.pricesLastUpdate">
+                  <div>{{ dataStore.pricesLastUpdate.split(' ')[0] }}</div>
+                  <div>{{ dataStore.pricesLastUpdate.split(' ')[1] }}</div>
+                </div>
+                <span v-else>{{ t('prices_no_data') }}</span>
+              </div>
+            </div>
           </td>
         </tr>
         
@@ -115,37 +134,37 @@ function updateMinDropRate(event) {
         </tr>
         <tr>
           <td colspan="2" class="text-center">
-            <div class="input-wrapper" style="width: 80px; margin: 0 auto;">
+            <div class="input-wrapper" style="width: 70px; margin: 0 auto;">
               <input
                 type="text"
                 :value="formatRateInput(store.config.minDropRatePercent)"
                 @input="updateMinDropRate"
-                :class="[COLOR_CLASSES.input, 'rounded px-5 py-1 rate-input-padding']"
-                style="width: 80px;"
+                :class="[COLOR_CLASSES.input, 'rounded px-2 py-1 rate-input-padding']"
+                style="width: 70px;"
               />
               <span class="rate-icon">%</span>
             </div>
           </td>
           <td colspan="2" class="text-center">
-            <div class="input-wrapper" style="width: 180px; margin: 0 auto;">
+            <div class="input-wrapper" style="width: 140px; margin: 0 auto;">
               <input
                 type="text"
                 :value="formatInputNumber(store.config.minItemProfit)"
                 @input="updateMinItemProfit"
-                :class="[COLOR_CLASSES.input, 'rounded px-5 py-1 kamas-input-padding']"
-                style="width: 180px;"
+                :class="[COLOR_CLASSES.input, 'rounded px-2 py-1 kamas-input-padding']"
+                style="width: 140px;"
               />
               <span class="kamas-icon">₭</span>
             </div>
           </td>
           <td colspan="2" class="text-center">
-            <div class="input-wrapper" style="width: 180px; margin: 0 auto;">
+            <div class="input-wrapper" style="width: 140px; margin: 0 auto;">
               <input
                 type="text"
                 :value="formatInputNumber(store.config.minInstanceTotal)"
                 @input="updateMinInstanceTotal"
-                :class="[COLOR_CLASSES.input, 'rounded px-5 py-1 kamas-input-padding']"
-                style="width: 180px;"
+                :class="[COLOR_CLASSES.input, 'rounded px-2 py-1 kamas-input-padding']"
+                style="width: 140px;"
               />
               <span class="kamas-icon">₭</span>
             </div>
