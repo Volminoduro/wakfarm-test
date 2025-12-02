@@ -3,6 +3,7 @@ import { useGlobalStore } from '../stores/useGlobalStore'
 import { useDataStore } from '../stores/useDataStore'
 import { formatInputNumber, formatRateInput, parseFormattedNumber } from '../utils/formatters'
 import { COLOR_CLASSES } from '../constants/colors'
+import LevelRangeFilter from './LevelRangeFilter.vue'
 
 const store = useGlobalStore()
 const dataStore = useDataStore()
@@ -48,7 +49,7 @@ function updateMinDropRate(event) {
   <div :class="COLOR_CLASSES.configBg" class="p-2">
     <h2 :class="['text-2xl mb-2', COLOR_CLASSES.titlePrimary]">{{ t('config_title') }}</h2>
 
-    <table class="w-full">
+    <table class="w-full" style="table-layout: fixed;">
       <thead>
         <tr>
           <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_modulated') }}</th>
@@ -128,12 +129,13 @@ function updateMinDropRate(event) {
         
         <!-- Second row: Filters -->
         <tr>
-          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_min_rate') }}</th>
-          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_min_profit') }}</th>          
+          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_min_rate') }}</th>
+          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_min_profit') }}</th>
           <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_min_total') }}</th>
+          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]">{{ t('level_ranges_title') }}</th>
         </tr>
         <tr>
-          <td colspan="2" class="text-center">
+          <td class="text-center">
             <div class="input-wrapper" style="width: 70px; margin: 0 auto;">
               <input
                 type="text"
@@ -167,6 +169,11 @@ function updateMinDropRate(event) {
                 style="width: 140px;"
               />
               <span class="kamas-icon">₭</span>
+            </div>
+          </td>
+          <td class="text-center">
+            <div style="width: 160px; margin: 0 auto;">
+              <LevelRangeFilter />
             </div>
           </td>
         </tr>

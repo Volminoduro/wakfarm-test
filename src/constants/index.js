@@ -17,6 +17,26 @@ export const RARITY_COLORS = {
   7: '#FF88B8'   // Souvenir (rose)
 }
 
+// Tranches de niveau (20, puis de 15 en 15 jusqu'à 245)
+export const LEVEL_RANGES = [
+  { min: 1, max: 20, label: '1-20' },
+  { min: 21, max: 35, label: '21-35' },
+  { min: 36, max: 50, label: '36-50' },
+  { min: 51, max: 65, label: '51-65' },
+  { min: 66, max: 80, label: '66-80' },
+  { min: 81, max: 95, label: '81-95' },
+  { min: 96, max: 110, label: '96-110' },
+  { min: 111, max: 125, label: '111-125' },
+  { min: 126, max: 140, label: '126-140' },
+  { min: 141, max: 155, label: '141-155' },
+  { min: 156, max: 170, label: '156-170' },
+  { min: 171, max: 185, label: '171-185' },
+  { min: 186, max: 200, label: '186-200' },
+  { min: 201, max: 215, label: '201-215' },
+  { min: 216, max: 230, label: '216-230' },
+  { min: 231, max: 245, label: '231-245' }
+]
+
 // Configuration par défaut
 export const DEFAULT_CONFIG = {
   stasis: 3,
@@ -27,7 +47,8 @@ export const DEFAULT_CONFIG = {
   minItemProfit: null,
   minDropRatePercent: null,
   minInstanceTotal: null,
-  server: 'pandora'
+  server: 'pandora',
+  levelRanges: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] // Tous activés par défaut
 }
 
 // Bonus stasis modulé

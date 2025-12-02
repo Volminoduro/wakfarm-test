@@ -1,7 +1,7 @@
 <script setup>
 import LanguageSelector from './LanguageSelector.vue'
 import FloatingConfig from './FloatingConfig.vue'
-import { COLOR_CLASSES } from '../constants/colors'
+import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
 
 import { useDataStore } from '../stores/useDataStore'
 
@@ -34,17 +34,20 @@ const t = (key) => dataStore.names?.divers?.[key] || key
     <nav class="flex items-center">
       <button 
         @click="emit('change-main-tab', 'rentability')" 
-        :class="['flex-1 py-2 transition-all font-semibold text-lg', mainTab === 'rentability' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]">
+        :class="['flex-1 py-2 transition-all font-semibold text-lg', COLOR_CLASSES.tabSeparator, mainTab === 'rentability' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]"
+        :style="`border-right-color: ${TAB_SEPARATOR} !important; ${mainTab === 'rentability' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
         {{ t('tab_rentability') }}
       </button>
       <button 
         @click="emit('change-main-tab', 'runs')" 
-        :class="['flex-1 py-2 transition-all font-semibold text-lg', mainTab === 'runs' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]">
+        :class="['flex-1 py-2 transition-all font-semibold text-lg', COLOR_CLASSES.tabSeparator, mainTab === 'runs' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]"
+        :style="`border-right-color: ${TAB_SEPARATOR} !important; ${mainTab === 'runs' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
         {{ t('tab_runs') }}
       </button>
       <button 
         @click="emit('change-main-tab', 'prices')" 
-        :class="['flex-1 py-2 transition-all font-semibold text-lg', mainTab === 'prices' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]">
+        :class="['flex-1 py-2 transition-all font-semibold text-lg', mainTab === 'prices' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]"
+        :style="mainTab === 'prices' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''">
         {{ t('tab_prices') }}
       </button>
     </nav>

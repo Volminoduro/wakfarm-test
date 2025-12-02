@@ -141,6 +141,30 @@
         {
             "id": "prices_no_data",
             "name": "Sin datos"
+        },
+        {
+            "id": "level_ranges_title",
+            "name": "Rangos de nivel"
+        },
+        {
+            "id": "level_ranges_toggle_all",
+            "name": "Marcar todo"
+        },
+        {
+            "id": "level_ranges_toggle_none",
+            "name": "Desmarcar todo"
+        },
+        {
+            "id": "level_ranges_all",
+            "name": "Todos"
+        },
+        {
+            "id": "level_ranges_none",
+            "name": "Ninguno"
+        },
+        {
+            "id": "level_ranges_selected",
+            "name": "seleccionados"
         }
     ]
 }

@@ -4,12 +4,14 @@
     <nav :class="['flex items-center border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
       <button 
         @click="emit('change-sub-tab', 'run')" 
-        :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'run' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]">
+        :class="['flex-1 py-2 transition-all font-semibold text-base', COLOR_CLASSES.tabSeparator, subTab === 'run' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]"
+        :style="`border-right-color: ${TAB_SEPARATOR} !important; ${subTab === 'run' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
         {{ t('tab_kamas_run') }}
       </button>
       <button 
         @click="emit('change-sub-tab', 'time')" 
-        :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'time' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]">
+        :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'time' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]"
+        :style="subTab === 'time' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''">
         {{ t('tab_kamas_hour') }}
       </button>
     </nav>
@@ -63,7 +65,7 @@
 import { computed } from 'vue'
 import { useDataStore } from '../stores/useDataStore'
 import InstanceCard from '../components/InstanceCard.vue'
-import { COLOR_CLASSES } from '../constants/colors'
+import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
 
 defineProps({
   subTab: {

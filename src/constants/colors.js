@@ -3,6 +3,16 @@
  * Correspond aux variables CSS définies dans styles/colors.css
  */
 
+// Couleurs personnalisées réutilisées
+export const WAKFU_BEIGE = '#625946'
+export const WAKFU_GRAY = '#363634'
+export const WAKFU_TEXT = '#dadada'
+export const WAKFU_TEXT_ALT = '#edd299'
+export const TAB_SEPARATOR = '#4e483a'
+
+// Styles réutilisables
+export const ACTIVE_TAB_TEXT_SHADOW = '1px 1px 2px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.8), 1px -1px 2px rgba(0,0,0,0.8), -1px 1px 2px rgba(0,0,0,0.8)'
+
 // Classes Tailwind pré-définies pour éviter la répétition
 export const COLOR_CLASSES = {
   // Textes
@@ -26,6 +36,7 @@ export const COLOR_CLASSES = {
   // Bordures
   borderPrimary: 'border-slate-700',
   borderCard: 'border border-amber-500/30',
+  tabSeparator: 'border-r-2 border-[#4e483a]',
   
   // Boutons/États actifs
   buttonToggle: 'text-slate-300 hover:bg-slate-700',

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useGlobalStore } from './useGlobalStore'
 import { watch } from 'vue'
-import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS } from '../constants'
+import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS, LEVEL_RANGES } from '../constants'
 
 // Fonction utilitaire pour parser les noms
 function parseNames(rawNames) {
@@ -251,7 +251,24 @@ export const useDataStore = defineStore('data', {
 
       // apply instance-level filter (minInstanceTotal)
       const minInstanceTotal = Number(globalStore.config.minInstanceTotal || 0)
-      const filteredEnriched = enriched.filter(inst => (inst.totalKamas || 0) >= minInstanceTotal)
+      let filteredEnriched = enriched.filter(inst => (inst.totalKamas || 0) >= minInstanceTotal)
+
+      // apply level range filter
+      const activeLevelRanges = globalStore.config.levelRanges || []
+      // Si aucune tranche n'est sélectionnée, ne rien afficher
+      if (activeLevelRanges.length === 0) {
+        filteredEnriched = []
+      } else if (activeLevelRanges.length < LEVEL_RANGES.length) {
+        // Si certaines tranches sont sélectionnées, filtrer
+        filteredEnriched = filteredEnriched.filter(inst => {
+          const level = inst.level
+          return activeLevelRanges.some(rangeIndex => {
+            const range = LEVEL_RANGES[rangeIndex]
+            return range && level >= range.min && level <= range.max
+          })
+        })
+      }
+      // Si toutes les tranches sont sélectionnées, ne pas filtrer (laisser tel quel)
 
       this.instancesRefined = filteredEnriched
 

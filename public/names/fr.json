@@ -141,6 +141,30 @@
         {
             "id": "prices_no_data",
             "name": "Aucune donnée"
+        },
+        {
+            "id": "level_ranges_title",
+            "name": "Tranches de niveau"
+        },
+        {
+            "id": "level_ranges_toggle_all",
+            "name": "Tout cocher"
+        },
+        {
+            "id": "level_ranges_toggle_none",
+            "name": "Tout décocher"
+        },
+        {
+            "id": "level_ranges_all",
+            "name": "Toutes"
+        },
+        {
+            "id": "level_ranges_none",
+            "name": "Aucune"
+        },
+        {
+            "id": "level_ranges_selected",
+            "name": "sélectionnées"
         }
     ]
 }
