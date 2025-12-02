@@ -97,6 +97,26 @@
         {
             "id": "toggle_collapse_all",
             "name": "Collapse all"
+        },
+        {
+            "id": "tab_rentability",
+            "name": "Profitability"
+        },
+        {
+            "id": "tab_runs",
+            "name": "Runs"
+        },
+        {
+            "id": "tab_prices",
+            "name": "Prices"
+        },
+        {
+            "id": "tab_kamas_run",
+            "name": "Kamas / Run"
+        },
+        {
+            "id": "tab_kamas_hour",
+            "name": "Kamas / Hour"
         }
     ]
 }

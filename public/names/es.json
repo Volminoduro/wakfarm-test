@@ -97,6 +97,26 @@
         {
             "id": "toggle_collapse_all",
             "name": "Contraer todo"
+        },
+        {
+            "id": "tab_rentability",
+            "name": "Rentabilidad"
+        },
+        {
+            "id": "tab_runs",
+            "name": "Runs"
+        },
+        {
+            "id": "tab_prices",
+            "name": "Precios"
+        },
+        {
+            "id": "tab_kamas_run",
+            "name": "Kamas / Run"
+        },
+        {
+            "id": "tab_kamas_hour",
+            "name": "Kamas / Hora"
         }
     ]
 }

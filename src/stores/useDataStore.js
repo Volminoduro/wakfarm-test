@@ -83,6 +83,14 @@ export const useDataStore = defineStore('data', {
         if (!this._hasConfigWatcher) {
           this._hasConfigWatcher = true
           watch(
+            () => globalStore.config.server,
+            async (newServer, oldServer) => {
+              if (newServer !== oldServer) {
+                await this.loadPrices(newServer)
+              }
+            }
+          )
+          watch(
             () => globalStore.config,
             (newVal) => {
               try {
@@ -245,6 +253,17 @@ export const useDataStore = defineStore('data', {
       this.instancesRefined = filteredEnriched
 
       return enriched;
+    },
+
+    async loadPrices(server) {
+      try {
+        const basePath = import.meta.env.BASE_URL
+        const priceRes = await axios.get(`${basePath}data/prices_${server}.json`)
+        this._rawPrices = priceRes.data
+        this.createInstanceData(this._rawInstances, this._rawItems, this._rawMapping, this._rawLoots, this._rawPrices)
+      } catch (e) {
+        console.error("Erreur chargement prix", e)
+      }
     },
 
     async loadNames(lang = 'fr') {

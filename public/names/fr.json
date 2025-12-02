@@ -97,6 +97,26 @@
         {
             "id": "toggle_collapse_all",
             "name": "Tout réduire"
+        },
+        {
+            "id": "tab_rentability",
+            "name": "Rentabilité"
+        },
+        {
+            "id": "tab_runs",
+            "name": "Runs"
+        },
+        {
+            "id": "tab_prices",
+            "name": "Prix"
+        },
+        {
+            "id": "tab_kamas_run",
+            "name": "Kamas / Run"
+        },
+        {
+            "id": "tab_kamas_hour",
+            "name": "Kamas / Heure"
         }
     ]
 }

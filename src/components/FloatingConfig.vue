@@ -1,129 +1,8 @@
-<template>
-  <div class="bg-slate-800 border-2 border-amber-500/30 rounded-lg shadow-xl p-2">
-    <h2 class="text-2xl font-bold mb-2 text-amber-400">{{ t('config_title') }}</h2>
-
-    <table class="w-full">
-      <thead>
-        <tr>
-          <th class="text-center font-medium pb-2 text-amber-300 text-base">{{ t('config_modulated') }}</th>
-          <th class="text-center font-medium pb-2 text-amber-300 text-base">{{ t('config_booster') }}</th>
-          <th class="text-center font-medium pb-2 text-amber-300 text-base">{{ t('config_stasis') }}</th>
-          <th class="text-center font-medium pb-2 text-amber-300 text-base">{{ t('config_steles') }}</th>
-          <th class="text-center font-medium pb-2 text-amber-300 text-base">{{ t('config_stele_intervention') }}</th>
-          <th class="text-center font-medium pb-2 text-amber-300 text-base">{{ t('config_server') }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="text-center">
-            <input 
-              id="booster"
-              type="checkbox" 
-              v-model="store.config.isBooster"
-              class="w-6 h-6 accent-amber-500"
-            />
-          </td>
-          <td class="text-center">
-            <input 
-              id="isModulated"
-              type="checkbox" 
-              v-model="store.config.isModulated"
-              class="w-6 h-6 accent-amber-500"
-            />
-          </td>
-          <td class="text-center">
-            <select 
-              id="stasis"
-              v-model.number="store.config.stasis" 
-              class="border border-amber-500/30 bg-slate-700 text-slate-200 px-3 py-1 rounded w-[65px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
-            >
-              <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
-            </select>
-          </td>
-          <td class="text-center">
-            <select 
-              id="steles"
-              v-model.number="store.config.steles" 
-              class="border border-amber-500/30 bg-slate-700 text-slate-200 px-3 py-1 rounded w-[65px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
-            >
-              <option v-for="n in 5" :key="n" :value="n - 1">{{ n - 1 }}</option>
-            </select>
-          </td>
-          <td class="text-center">
-            <select 
-              id="steleIntervention"
-              v-model.number="store.config.steleIntervention" 
-              class="border border-amber-500/30 bg-slate-700 text-slate-200 px-3 py-1 rounded w-[65px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
-            >
-              <option v-for="n in 4" :key="n" :value="n - 1">{{ n - 1 }}</option>
-            </select>
-          </td>
-          <td class="text-center">
-            <select 
-              id="server"
-              v-model="store.config.server" 
-              class="border border-amber-500/30 bg-slate-700 text-slate-200 px-3 py-1 rounded w-[160px] focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none"
-            >
-              <option v-for="server in dataStore.servers" :key="server.id" :value="server.id">
-                {{ t(server.name_key) }}
-              </option>
-            </select>
-          </td>
-        </tr>
-        
-        <!-- Second row: Filters -->
-        <tr>
-          <th class="text-center font-medium pb-2 pt-3 text-amber-300 text-base" colspan="2">{{ t('config_min_rate') }}</th>
-          <th class="text-center font-medium pb-2 pt-3 text-amber-300 text-base" colspan="2">{{ t('config_min_profit') }}</th>          
-          <th class="text-center font-medium pb-2 pt-3 text-amber-300 text-base" colspan="2">{{ t('config_min_total') }}</th>
-        </tr>
-        <tr>
-          <td colspan="2" class="text-center">
-            <div class="input-wrapper" style="width: 80px; margin: 0 auto;">
-              <input
-                type="text"
-                :value="formatRateInput(store.config.minDropRatePercent)"
-                @input="updateMinDropRate"
-                class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded px-5 py-1 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none rate-input-padding"
-                style="width: 80px;"
-              />
-              <span class="rate-icon">%</span>
-            </div>
-          </td>
-          <td colspan="2" class="text-center">
-            <div class="input-wrapper" style="width: 180px; margin: 0 auto;">
-              <input
-                type="text"
-                :value="formatInputNumber(store.config.minItemProfit)"
-                @input="updateMinItemProfit"
-                class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded px-5 py-1 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none kamas-input-padding"
-                style="width: 180px;"
-              />
-              <span class="kamas-icon">₭</span>
-            </div>
-          </td>
-          <td colspan="2" class="text-center">
-            <div class="input-wrapper" style="width: 180px; margin: 0 auto;">
-              <input
-                type="text"
-                :value="formatInputNumber(store.config.minInstanceTotal)"
-                @input="updateMinInstanceTotal"
-                class="border border-amber-500/30 bg-slate-700 text-slate-200 rounded px-5 py-1 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none kamas-input-padding"
-                style="width: 180px;"
-              />
-              <span class="kamas-icon">₭</span>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
 <script setup>
 import { useGlobalStore } from '../stores/useGlobalStore'
 import { useDataStore } from '../stores/useDataStore'
 import { formatInputNumber, formatRateInput, parseFormattedNumber } from '../utils/formatters'
+import { COLOR_CLASSES } from '../constants/colors'
 
 const store = useGlobalStore()
 const dataStore = useDataStore()
@@ -154,6 +33,130 @@ function updateMinDropRate(event) {
   store.config.minDropRatePercent = numValue
 }
 </script>
+
+<template>
+  <div :class="COLOR_CLASSES.configBg" class="p-2">
+    <h2 :class="['text-2xl mb-2', COLOR_CLASSES.titlePrimary]">{{ t('config_title') }}</h2>
+
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_modulated') }}</th>
+          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_booster') }}</th>
+          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_stasis') }}</th>
+          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_steles') }}</th>
+          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_stele_intervention') }}</th>
+          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_server') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">
+            <input 
+              id="booster"
+              type="checkbox" 
+              v-model="store.config.isBooster"
+              class="custom-checkbox"
+            />
+          </td>
+          <td class="text-center">
+            <input 
+              id="isModulated"
+              type="checkbox" 
+              v-model="store.config.isModulated"
+              class="custom-checkbox"
+            />
+          </td>
+          <td class="text-center">
+            <select 
+              id="stasis"
+              v-model.number="store.config.stasis"
+              :class="[COLOR_CLASSES.select, 'w-[65px]']"
+            >
+              <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
+            </select>
+          </td>
+          <td class="text-center">
+            <select 
+              id="steles"
+              v-model.number="store.config.steles"
+              :class="[COLOR_CLASSES.select, 'w-[65px]']"
+            >
+              <option v-for="n in 5" :key="n" :value="n - 1">{{ n - 1 }}</option>
+            </select>
+          </td>
+          <td class="text-center">
+            <select 
+              id="steleIntervention"
+              v-model.number="store.config.steleIntervention"
+              :class="[COLOR_CLASSES.select, 'w-[65px]']"
+            >
+              <option v-for="n in 4" :key="n" :value="n - 1">{{ n - 1 }}</option>
+            </select>
+          </td>
+          <td class="text-center">
+            <select 
+              id="server"
+              v-model="store.config.server"
+              :class="[COLOR_CLASSES.select, 'w-[160px]']"
+            >
+              <option v-for="server in dataStore.servers" :key="server.id" :value="server.id">
+                {{ t(server.name_key) }}
+              </option>
+            </select>
+          </td>
+        </tr>
+        
+        <!-- Second row: Filters -->
+        <tr>
+          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_min_rate') }}</th>
+          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_min_profit') }}</th>          
+          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_min_total') }}</th>
+        </tr>
+        <tr>
+          <td colspan="2" class="text-center">
+            <div class="input-wrapper" style="width: 80px; margin: 0 auto;">
+              <input
+                type="text"
+                :value="formatRateInput(store.config.minDropRatePercent)"
+                @input="updateMinDropRate"
+                :class="[COLOR_CLASSES.input, 'rounded px-5 py-1 rate-input-padding']"
+                style="width: 80px;"
+              />
+              <span class="rate-icon">%</span>
+            </div>
+          </td>
+          <td colspan="2" class="text-center">
+            <div class="input-wrapper" style="width: 180px; margin: 0 auto;">
+              <input
+                type="text"
+                :value="formatInputNumber(store.config.minItemProfit)"
+                @input="updateMinItemProfit"
+                :class="[COLOR_CLASSES.input, 'rounded px-5 py-1 kamas-input-padding']"
+                style="width: 180px;"
+              />
+              <span class="kamas-icon">₭</span>
+            </div>
+          </td>
+          <td colspan="2" class="text-center">
+            <div class="input-wrapper" style="width: 180px; margin: 0 auto;">
+              <input
+                type="text"
+                :value="formatInputNumber(store.config.minInstanceTotal)"
+                @input="updateMinInstanceTotal"
+                :class="[COLOR_CLASSES.input, 'rounded px-5 py-1 kamas-input-padding']"
+                style="width: 180px;"
+              />
+              <span class="kamas-icon">₭</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+
 
 <style scoped>
 input::-webkit-outer-spin-button,
@@ -190,5 +193,36 @@ input[type=number] {
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
+}
+
+/* Custom checkbox styling */
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(211, 253, 56, 0.4);
+  border-radius: 4px;
+  background-color: #334155;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.custom-checkbox:hover {
+  border-color: rgba(211, 253, 56, 0.6);
+}
+
+.custom-checkbox:checked {
+  background-color: #d3fd38;
+  border-color: #d3fd38;
+}
+
+.custom-checkbox:focus {
+  outline: none;
+  ring: 1px;
+  ring-color: #d3fd38;
+  border-color: #d3fd38;
 }
 </style>

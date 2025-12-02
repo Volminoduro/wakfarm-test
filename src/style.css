@@ -1,12 +1,16 @@
 @import "tailwindcss";
+@import "./styles/colors.css";
 
 body {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Nunito', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Luckiest Guy', cursive;
+  font-family: 'Righteous', 'Nunito', sans-serif;
+  letter-spacing: 0.5px;
 }

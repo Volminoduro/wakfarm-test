@@ -39,7 +39,7 @@ const { expanded, toggleExpand, allExpanded, toggleAll } = useExpandableItems(
     <!-- Main Content -->
     <main class="flex-grow">
       <div v-if="!dataStore.loaded" class="p-8 text-center">
-        <p class="text-amber-400 text-lg">Chargement des données...</p>
+        <p class="text-orange-400 text-lg">Chargement des données...</p>
       </div>
 
       <!-- Rentability Tab -->
