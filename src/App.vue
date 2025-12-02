@@ -21,14 +21,6 @@ onMounted(() => {
   dataStore.loadAllData(globalStore.config.server, savedLanguage)
 })
 
-// Calculer et trier les instances dynamiquement
-const sortedInstances = computed(() => {
-  if (!dataStore.loaded) return []
-  return dataStore.instancesRefined
-    .map(inst => ({ ...inst }))
-    .sort((a, b) => (b.totalKamas || 0) - (a.totalKamas || 0))
-})
-
 // Utiliser le composable pour gérer l'état d'expansion
 const instances = computed(() => dataStore.instancesRefined)
 const { expanded, toggleExpand, allExpanded, toggleAll } = useExpandableItems(

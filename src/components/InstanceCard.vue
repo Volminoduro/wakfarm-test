@@ -82,10 +82,6 @@ function getRarityColor(rarity) {
   opacity: 1;
 }
 
-.rotate-right {
-  transform: rotate(0deg);
-}
-
 .rotate-down {
   transform: rotate(90deg);
 }

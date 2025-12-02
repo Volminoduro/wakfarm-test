@@ -44,6 +44,3 @@ const props = defineProps({
 
 const emit = defineEmits(['change-main-tab'])
 </script>
-
-<style scoped>
-</style>

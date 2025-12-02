@@ -4,13 +4,38 @@ import { useGlobalStore } from './useGlobalStore'
 import { watch } from 'vue'
 import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS } from '../constants'
 
+// Fonction utilitaire pour parser les noms
+function parseNames(rawNames) {
+  const namesMap = { items: {}, monsters: {}, instances: {}, divers: {} }
+  
+  if (!rawNames || typeof rawNames !== 'object') return namesMap
+  
+  // Parse les tableaux par type
+  const types = ['items', 'monsters', 'instances', 'divers']
+  types.forEach(type => {
+    if (Array.isArray(rawNames[type])) {
+      rawNames[type].forEach(e => {
+        if (e?.id != null) namesMap[type][e.id] = e.name
+      })
+    }
+  })
+  
+  // Fallback pour les formats legacy (id->string directement)
+  Object.entries(rawNames).forEach(([k, v]) => {
+    if (typeof v === 'string') {
+      namesMap.instances[k] = v
+    }
+  })
+  
+  return namesMap
+}
+
 export const useDataStore = defineStore('data', {
   state: () => ({
     instancesRefined: [],
     names: {},
     servers: [],
     loaded: false,
-    // keep raw fetched data so we can recompute when config changes
     _rawInstances: [],
     _rawItems: [],
     _rawMapping: [],
@@ -33,37 +58,7 @@ export const useDataStore = defineStore('data', {
           axios.get(`${basePath}data/servers.json`)
         ])
 
-        // Normalize names into per-type maps so you can do:
-        // dataStore.names.items[itemId], dataStore.names.monsters[monsterId], dataStore.names.instances[instanceId]
-        const rawNames = nameRes.data
-        const namesMap = { items: {}, monsters: {}, instances: {}, divers: {} }
-
-        if (rawNames && typeof rawNames === 'object') {
-          // If structure already grouped by type (common case)
-          if (Array.isArray(rawNames.items)) {
-            rawNames.items.forEach(e => { if (e && e.id != null) namesMap.items[e.id] = e.name })
-          }
-          if (Array.isArray(rawNames.monsters)) {
-            rawNames.monsters.forEach(e => { if (e && e.id != null) namesMap.monsters[e.id] = e.name })
-          }
-          if (Array.isArray(rawNames.instances)) {
-            rawNames.instances.forEach(e => { if (e && e.id != null) namesMap.instances[e.id] = e.name })
-          }
-          if (Array.isArray(rawNames.divers)) {
-            rawNames.divers.forEach(e => { if (e && e.id != null) namesMap.divers[e.id] = e.name })
-          }
-
-          // If rawNames is a flat map of id->string, merge into instances map for backward compatibility
-          Object.keys(rawNames).forEach(k => {
-            const v = rawNames[k]
-            if (typeof v === 'string') {
-              // ambiguous: store under instances as fallback
-              namesMap.instances[k] = v
-            }
-          })
-        }
-
-        this.names = namesMap
+        this.names = parseNames(nameRes.data)
         this.servers = serversRes.data || []
 
         // Store raw fetched data so we can recompute when global config changes
@@ -121,31 +116,19 @@ export const useDataStore = defineStore('data', {
         })
       }
 
-      // helper: compute adjusted rate depending on stasis, steles, booster, intervention and modulation
+      // Calcule le taux ajusté en fonction de la config
       const computeAdjustedRate = (baseRate, cfg = {}) => {
         const stasis = Number(cfg.stasis || 0)
-        const steles = Number(cfg.steles || 0)
         const isModulated = !!cfg.isModulated
         const intervention = !!cfg.intervention
 
         const stasisFactor = this.getStasisBonus(stasis, isModulated)
-        const stelesBonus = 1
-
-        let boosterBonus = 1
-        if(globalStore.config.isBooster === true){
-          boosterBonus = BOOSTER_BONUS[globalStore.config.server] || 1.25
-        }
-        
+        const boosterBonus = globalStore.config.isBooster 
+          ? (BOOSTER_BONUS[globalStore.config.server] || 1.25) 
+          : 1
         const interventionBonus = intervention ? 1.10 : 1
 
-        let adjusted = baseRate * stasisFactor * stelesBonus * boosterBonus * interventionBonus
-
-        // clamp to reasonable bounds to avoid runaway values
-        const max = 1
-        if (adjusted > max) adjusted = max
-
-        console.log(`Base rate: ${baseRate}, Adjusted rate: ${adjusted} (stasis: ${stasis}, modulated: ${isModulated}, boosterBonus: ${boosterBonus}, intervention: ${intervention})`)
-        return adjusted
+        return Math.min(1, baseRate * stasisFactor * boosterBonus * interventionBonus)
       }
       // Build a lookup map for prices: { itemId: price }
       let priceMap = {};
@@ -268,33 +251,7 @@ export const useDataStore = defineStore('data', {
       try {
         const basePath = import.meta.env.BASE_URL
         const nameRes = await axios.get(`${basePath}names/${lang}.json`)
-
-        const rawNames = nameRes.data
-        const namesMap = { items: {}, monsters: {}, instances: {}, divers: {} }
-
-        if (rawNames && typeof rawNames === 'object') {
-          if (Array.isArray(rawNames.items)) {
-            rawNames.items.forEach(e => { if (e && e.id != null) namesMap.items[e.id] = e.name })
-          }
-          if (Array.isArray(rawNames.monsters)) {
-            rawNames.monsters.forEach(e => { if (e && e.id != null) namesMap.monsters[e.id] = e.name })
-          }
-          if (Array.isArray(rawNames.instances)) {
-            rawNames.instances.forEach(e => { if (e && e.id != null) namesMap.instances[e.id] = e.name })
-          }
-          if (Array.isArray(rawNames.divers)) {
-            rawNames.divers.forEach(e => { if (e && e.id != null) namesMap.divers[e.id] = e.name })
-          }
-
-          Object.keys(rawNames).forEach(k => {
-            const v = rawNames[k]
-            if (typeof v === 'string') {
-              namesMap.instances[k] = v
-            }
-          })
-        }
-
-        this.names = namesMap
+        this.names = parseNames(nameRes.data)
       } catch (e) {
         console.error("Erreur chargement langue", e)
       }

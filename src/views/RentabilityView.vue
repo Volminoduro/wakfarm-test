@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { useDataStore } from '../stores/useDataStore'
 import InstanceCard from '../components/InstanceCard.vue'
 
@@ -99,6 +99,3 @@ function toggleExpand(id) {
   emit('toggleExpand', id)
 }
 </script>
-
-<style scoped>
-</style>
