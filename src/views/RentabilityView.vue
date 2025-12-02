@@ -1,25 +1,25 @@
 <template>
   <div>
     <!-- Sub Navigation -->
-    <nav class="px-8 flex items-center bg-slate-800/50 border-b border-slate-700">
+    <nav class="flex items-center bg-slate-800/50 border-b border-slate-700">
       <button 
         @click="emit('change-sub-tab', 'run')" 
-        :class="['flex-1 py-4 transition-all font-semibold text-base', subTab === 'run' ? 'border-b-2 border-amber-300 text-amber-300' : 'text-slate-400 hover:text-amber-200']">
+        :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'run' ? 'border-b-2 border-amber-300 text-amber-300' : 'text-slate-400 hover:text-amber-200']">
         Kamas / Run
       </button>
       <button 
         @click="emit('change-sub-tab', 'time')" 
-        :class="['flex-1 py-4 transition-all font-semibold text-base', subTab === 'time' ? 'border-b-2 border-amber-300 text-amber-300' : 'text-slate-400 hover:text-amber-200']">
+        :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'time' ? 'border-b-2 border-amber-300 text-amber-300' : 'text-slate-400 hover:text-amber-200']">
         Kamas / Heure
       </button>
     </nav>
     
     <!-- Toggle All Button -->
-    <div v-if="subTab === 'run'" class="px-8 py-4 bg-slate-800/30 border-b border-slate-700">
+    <div v-if="subTab === 'run'" class="px-1 py-1 bg-slate-800/30 border-b border-slate-700">
       <button 
         @click="emit('toggle-all')" 
-        class="px-5 py-3 text-sm transition-all text-slate-400 hover:text-amber-200 hover:bg-slate-700 rounded" 
-        :title="allExpanded ? 'Tout réduire' : 'Tout développer'">
+        class="px-1 py-1 text-sm transition-all text-slate-400 hover:text-amber-200 hover:bg-slate-700 rounded" 
+        :title="allExpanded ? t('toggle_collapse_all') : t('toggle_expand_all')">
         <span class="flex items-center gap-2">
           <svg v-if="!allExpanded" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -27,7 +27,7 @@
           <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          {{ allExpanded ? 'Tout réduire' : 'Tout développer' }}
+          {{ allExpanded ? t('toggle_collapse_all') : t('toggle_expand_all') }}
         </span>
       </button>
     </div>
@@ -82,6 +82,10 @@ defineProps({
 const emit = defineEmits(['toggleExpand', 'change-sub-tab', 'toggle-all'])
 
 const dataStore = useDataStore()
+
+const t = (key) => {
+  return dataStore.names?.divers?.[key] || key
+}
 
 // Calculer et trier les instances dynamiquement
 const sortedInstances = computed(() => {

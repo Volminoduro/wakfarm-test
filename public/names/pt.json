@@ -89,6 +89,14 @@
         {
             "id": "server_neo_pandora",
             "name": "Neo-Pandora"
+        },
+        {
+            "id": "toggle_expand_all",
+            "name": "Expandir tudo"
+        },
+        {
+            "id": "toggle_collapse_all",
+            "name": "Recolher tudo"
         }
     ]
 }

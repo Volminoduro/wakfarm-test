@@ -9,7 +9,7 @@
       <div class="flex items-center gap-4">
         <div class="text-amber-400 font-bold text-lg">{{ formatNumber(instance.totalKamas) }} ₭</div>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-          :class="isExpanded ? 'rotate-90' : ''" class="transition-transform text-amber-400">
+          :class="isExpanded ? 'rotate-down' : ''" class="transition-transform text-amber-400">
           <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/>
         </svg>
       </div>
@@ -21,7 +21,7 @@
           <li v-for="(item, idx) in instance.items" :key="item.itemId" class="py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
               <div class="font-medium text-slate-300">
-                <span class="font-bold" :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
+                <span :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
                 <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
               </div>
             </div>
@@ -71,20 +71,22 @@ function getRarityColor(rarity) {
 </script>
 
 <style scoped>
-/* Slide down/up animation using max-height */
+/* Slide down/up animation using opacity only for better performance */
 .slide-enter-active, .slide-leave-active {
-  transition: max-height 300ms ease, opacity 200ms ease;
+  transition: opacity 100ms ease;
 }
 .slide-enter-from, .slide-leave-to {
-  max-height: 0;
   opacity: 0;
 }
 .slide-enter-to, .slide-leave-from {
-  max-height: 800px; /* big enough for the content */
   opacity: 1;
 }
 
-.rotate-90 {
+.rotate-right {
+  transform: rotate(0deg);
+}
+
+.rotate-down {
   transform: rotate(90deg);
 }
 </style>

@@ -89,6 +89,14 @@
         {
             "id": "server_neo_pandora",
             "name": "Néo-Pandora"
+        },
+        {
+            "id": "toggle_expand_all",
+            "name": "Tout développer"
+        },
+        {
+            "id": "toggle_collapse_all",
+            "name": "Tout réduire"
         }
     ]
 }

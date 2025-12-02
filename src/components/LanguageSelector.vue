@@ -5,7 +5,7 @@
       :key="lang.code"
       @click="handleChange(lang.code)"
       :class="[
-        'px-3 py-1.5 rounded transition-all text-xl',
+        'px-3 py-1 rounded transition-all text-xl',
         currentLanguage === lang.code 
           ? 'bg-amber-500 shadow-lg ring-2 ring-amber-400' 
           : 'bg-slate-700 hover:bg-slate-600 opacity-70 hover:opacity-100'
