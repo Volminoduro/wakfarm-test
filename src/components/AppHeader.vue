@@ -20,7 +20,7 @@ const t = (key) => dataStore.names?.divers?.[key] || key
 </script>
 
 <template>
-  <header :class="['sticky top-0 left-0 right-0 shadow-xl z-40', COLOR_CLASSES.headerBg, COLOR_CLASSES.headerBorder]">
+  <header :class="['sticky top-0 left-0 right-0 shadow-xl z-40', COLOR_CLASSES.headerBg]">
     <!-- Top Bar: Title and Language Selector -->
     <div class="px-8 py-2 flex justify-between items-center">
       <h1 :class="['text-4xl font-bold', COLOR_CLASSES.titleHeader]" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Wakfarm</h1>

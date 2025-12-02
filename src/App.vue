@@ -4,6 +4,7 @@ import { useDataStore } from './stores/useDataStore'
 import { useGlobalStore } from './stores/useGlobalStore'
 import { useExpandableItems } from './composables/useExpandableItems'
 import { STORAGE_KEYS } from './constants'
+import { COLOR_CLASSES } from './constants/colors'
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
 import RentabilityView from './views/RentabilityView.vue'
@@ -30,7 +31,7 @@ const { expanded, toggleExpand, allExpanded, toggleAll } = useExpandableItems(
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col bg-slate-900">
+  <div :class="['min-h-screen flex flex-col', COLOR_CLASSES.bgPrimary]">
     <AppHeader 
       :mainTab="mainTab"
       @change-main-tab="mainTab = $event"
@@ -39,7 +40,7 @@ const { expanded, toggleExpand, allExpanded, toggleAll } = useExpandableItems(
     <!-- Main Content -->
     <main class="flex-grow">
       <div v-if="!dataStore.loaded" class="p-8 text-center">
-        <p class="text-orange-400 text-lg">Chargement des données...</p>
+        <p :class="['text-lg', COLOR_CLASSES.textLoading]">Chargement des données...</p>
       </div>
 
       <!-- Rentability Tab -->

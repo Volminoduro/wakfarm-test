@@ -7,7 +7,7 @@
 :class="[
         'px-3 py-1 rounded transition-all',
         currentLanguage === lang.code 
-          ? 'bg-orange-500 shadow-lg ring-2 ring-orange-400' 
+          ? 'bg-slate-100 shadow-lg ring-2' 
           : 'bg-slate-700 hover:bg-slate-600 opacity-70 hover:opacity-100'
       ]"
       :title="lang.name"

@@ -54,19 +54,17 @@ function getRarityColor(rarity) {
     </div>
 
     <transition name="slide">
-      <div v-if="isExpanded && instance.items && instance.items.length > 0" :class="['px-5 py-4', COLOR_CLASSES.bgTertiaryOpacity]">
-        <ul :class="['divide-y', COLOR_CLASSES.borderPrimary]">
-          <li v-for="(item, idx) in instance.items" :key="item.itemId" class="py-3 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-              <div :class="['font-medium', COLOR_CLASSES.textNormal]">
-                <span :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
-                <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
-              </div>
+      <ul v-if="isExpanded && instance.items && instance.items.length > 0" :class="['divide-y divide-white/20', COLOR_CLASSES.bgTertiaryOpacity]">
+        <li v-for="(item, idx) in instance.items" :key="item.itemId" class="px-5 py-2 flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <div :class="['font-bold',  COLOR_CLASSES.textNormal]">
+              <span :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
+              <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
             </div>
-            <div :class="['font-semibold', COLOR_CLASSES.textKamas]">{{ formatNumber(item.subtotal) }} ₭</div>
-          </li>
-        </ul>
-      </div>
+          </div>
+          <div :class="['font-semibold', COLOR_CLASSES.textKamas]">{{ formatNumber(item.subtotal) }} ₭</div>
+        </li>
+      </ul>
     </transition>
   </div>
 </template>

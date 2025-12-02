@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Sub Navigation -->
-    <nav class="flex items-center bg-slate-800/50 border-b border-slate-700">
+    <nav :class="['flex items-center border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
       <button 
         @click="emit('change-sub-tab', 'run')" 
         :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'run' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]">
@@ -15,10 +15,10 @@
     </nav>
     
     <!-- Toggle All Button -->
-    <div v-if="subTab === 'run'" class="px-1 py-1 bg-[#1e2026]/30 border-b border-slate-700">
+    <div v-if="subTab === 'run'" :class="['px-1 py-1 border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
       <button 
         @click="emit('toggle-all')" 
-        class="px-1 py-1 text-sm transition-all text-slate-300 hover:text-orange-400 hover:bg-slate-700 rounded" 
+        :class="['px-1 py-1 text-sm transition-all rounded', COLOR_CLASSES.buttonToggle]" 
         :title="allExpanded ? t('toggle_collapse_all') : t('toggle_expand_all')">
         <span class="flex items-center gap-2">
           <svg v-if="!allExpanded" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -35,9 +35,9 @@
     <!-- Kamas / Run -->
     <div v-if="subTab === 'run'" class="px-8 py-6 max-w-[1920px] mx-auto">
       <div v-if="!dataStore.loaded" class="text-center">
-        <p class="text-orange-400 text-lg">Chargement des données...</p>
+        <p :class="['text-lg', COLOR_CLASSES.textLoading]">Chargement des données...</p>
       </div>
-      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         <InstanceCard 
           v-for="inst in sortedInstances" 
           :key="inst.id"
@@ -51,9 +51,9 @@
 
     <!-- Kamas / Heure -->
     <div v-else class="px-8 py-4 max-w-[1920px] mx-auto">
-      <p class="mb-4 text-slate-300">Vos configurations personnalisées (Sauvegardées localement)</p>
-      <div class="bg-[#1e2026] border border-orange-500/30 rounded-lg p-4">
-        <p class="text-slate-300">Work in progress: Configuration horaire</p>
+      <p :class="['mb-4', COLOR_CLASSES.textSecondary]">Vos configurations personnalisées (Sauvegardées localement)</p>
+      <div :class="[COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard, 'rounded-lg p-4']">
+        <p :class="COLOR_CLASSES.textSecondary">Work in progress: Configuration horaire</p>
       </div>
     </div>
   </div>
