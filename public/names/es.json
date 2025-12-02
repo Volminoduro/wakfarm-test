@@ -64,11 +64,11 @@
         },
         {
             "id": "config_min_profit",
-            "name": "Beneficio mín."
+            "name": "Beneficio mín. por pila de ítems"
         },
         {
             "id": "config_min_rate",
-            "name": "Tasa mín."
+            "name": "Tasa mín. ítem"
         },
         {
             "id": "config_min_total",

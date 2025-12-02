@@ -64,11 +64,11 @@
         },
         {
             "id": "config_min_profit",
-            "name": "Profit min."
+            "name": "Profit min. par stack d'item"
         },
         {
             "id": "config_min_rate",
-            "name": "Taux min."
+            "name": "Taux min. item"
         },
         {
             "id": "config_min_total",

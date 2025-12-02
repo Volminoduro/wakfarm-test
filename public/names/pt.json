@@ -64,11 +64,11 @@
         },
         {
             "id": "config_min_profit",
-            "name": "Lucro mín."
+            "name": "Lucro mín. por pilha de itens"
         },
         {
             "id": "config_min_rate",
-            "name": "Taxa mín."
+            "name": "Taxa mín. item"
         },
         {
             "id": "config_min_total",
