@@ -126,9 +126,8 @@ function updateField(field, value) {
 }
 
 .custom-checkbox-small:focus {
-  outline: none;
-  ring: 1px;
-  ring-color: #d3fd38;
+  outline: 2px solid #d3fd38;
+  outline-offset: 2px;
   border-color: #d3fd38;
 }
 
@@ -138,6 +137,7 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 input[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 </style>

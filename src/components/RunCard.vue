@@ -4,6 +4,7 @@ import { COLOR_CLASSES } from '../constants/colors'
 import { useRunsStore } from '../stores/useRunsStore'
 import { useDataStore } from '../stores/useDataStore'
 import RunConfigRow from './RunConfigRow.vue'
+import ExpandArrow from './ExpandArrow.vue'
 
 const props = defineProps({
   instance: {
@@ -139,20 +140,3 @@ function removeAllRuns() {
     </div>
   </div>
 </template>
-
-<style scoped>
-/* Slide down/up animation */
-.slide-enter-active, .slide-leave-active {
-  transition: opacity 100ms ease;
-}
-.slide-enter-from, .slide-leave-to {
-  opacity: 0;
-}
-.slide-enter-to, .slide-leave-from {
-  opacity: 1;
-}
-
-.rotate-down {
-  transform: rotate(90deg);
-}
-</style>

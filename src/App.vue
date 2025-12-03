@@ -1,10 +1,8 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useDataStore } from './stores/useDataStore'
 import { useGlobalStore } from './stores/useGlobalStore'
-import { useExpandableItems } from './composables/useExpandableItems'
 import { useLocalStorage } from './composables/useLocalStorage'
-import { STORAGE_KEYS } from './constants'
 import { COLOR_CLASSES } from './constants/colors'
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
@@ -29,12 +27,7 @@ onMounted(() => {
   dataStore.loadAllData(globalStore.config.server, savedLanguage)
 })
 
-// Utiliser le composable pour gérer l'état d'expansion
-const instances = computed(() => dataStore.instancesRefined)
-const { expanded, toggleExpand, allExpanded, toggleAll } = useExpandableItems(
-  STORAGE_KEYS.EXPANDED_INSTANCES,
-  instances
-)
+// Note: expanded state is now managed directly in RentabilityView for better control with manual runs
 </script>
 
 <template>

@@ -4,6 +4,7 @@ import { useDataStore } from '../stores/useDataStore'
 import { useRunsStore } from '../stores/useRunsStore'
 import { COLOR_CLASSES } from '../constants/colors'
 import RunCard from '../components/RunCard.vue'
+import ToggleAllButton from '../components/ToggleAllButton.vue'
 
 const dataStore = useDataStore()
 const runsStore = useRunsStore()
@@ -53,20 +54,12 @@ function removeAllRuns() {
     <!-- Action buttons -->
     <div :class="['px-4 py-3 mb-4 flex items-center gap-4', COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard, 'rounded-lg']">
       <!-- Toggle all button -->
-      <button 
-        @click="toggleAll"
-        :class="['px-4 py-2 text-sm transition-all rounded font-semibold', COLOR_CLASSES.buttonToggle]"
-        :title="allExpanded ? (t('toggle_collapse_all') || 'Tout réduire') : (t('toggle_expand_all') || 'Tout développer')">
-        <span class="flex items-center gap-2">
-          <svg v-if="!allExpanded" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          {{ allExpanded ? (t('toggle_collapse_all') || 'Tout réduire') : (t('toggle_expand_all') || 'Tout développer') }}
-        </span>
-      </button>
+      <ToggleAllButton
+        :isExpanded="allExpanded"
+        :expandText="t('toggle_expand_all') || 'Tout développer'"
+        :collapseText="t('toggle_collapse_all') || 'Tout réduire'"
+        @toggle="toggleAll"
+      />
 
       <!-- Remove all button -->
       <button 

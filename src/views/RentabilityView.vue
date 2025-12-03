@@ -17,7 +17,7 @@
           type="number"
           v-model.number="timePeriod"
           @click.stop
-          @input="$event.target.value === '' ? timePeriod = null : timePeriod = Math.min(999, Math.max(1, parseInt($event.target.value) || 60))"
+          @input="validateTimePeriod"
           :class="[COLOR_CLASSES.input, 'text-sm py-0 px-2 text-center']"
           style="width: 65px; height: 24px;"
           min="1"
@@ -30,36 +30,20 @@
     
     <!-- Toggle All Button (both tabs) -->
     <div :class="['px-1 py-1 border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
-      <button 
+      <ToggleAllButton
         v-if="subTab === 'run'"
-        @click="toggleAllRun" 
-        :class="['px-1 py-1 text-sm transition-all rounded', COLOR_CLASSES.buttonToggle]" 
-        :title="allRunExpanded ? t('toggle_collapse_all') : t('toggle_expand_all')">
-        <span class="flex items-center gap-2">
-          <svg v-if="!allRunExpanded" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          {{ allRunExpanded ? t('toggle_collapse_all') : t('toggle_expand_all') }}
-        </span>
-      </button>
-      <button 
+        :isExpanded="allRunExpanded"
+        :expandText="t('toggle_expand_all')"
+        :collapseText="t('toggle_collapse_all')"
+        @toggle="toggleAllRun"
+      />
+      <ToggleAllButton
         v-else
-        @click="toggleAllHourRuns" 
-        :class="['px-1 py-1 text-sm transition-all rounded', COLOR_CLASSES.buttonToggle]" 
-        :title="allHourRunsExpanded ? t('toggle_collapse_all') : t('toggle_expand_all')">
-        <span class="flex items-center gap-2">
-          <svg v-if="!allHourRunsExpanded" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          {{ allHourRunsExpanded ? t('toggle_collapse_all') : t('toggle_expand_all') }}
-        </span>
-      </button>
+        :isExpanded="allHourRunsExpanded"
+        :expandText="t('toggle_expand_all')"
+        :collapseText="t('toggle_collapse_all')"
+        @toggle="toggleAllHourRuns"
+      />
     </div>
     
     <!-- Kamas / Run -->
@@ -109,7 +93,7 @@ import { useDataStore } from '../stores/useDataStore'
 import { useRunsStore } from '../stores/useRunsStore'
 import InstanceCard from '../components/InstanceCard.vue'
 import RunHourCard from '../components/RunHourCard.vue'
-import { calculateIterationsPerHour } from '../utils/runHelpers'
+import ToggleAllButton from '../components/ToggleAllButton.vue'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
 import { useLocalStorage } from '../composables/useLocalStorage'
 
@@ -148,13 +132,14 @@ const sortedInstances = computed(() => {
     })
   })
   
-  // 2. Ajouter tous les runs configurés manuellement
+  // 2. Ajouter tous les runs configurés manuellement (seulement si items éligibles)
   Object.entries(runsStore.runs).forEach(([instanceId, runs]) => {
     runs.forEach(run => {
       const instanceIdNum = parseInt(instanceId)
       const instanceData = dataStore.calculateInstanceForRun(instanceIdNum, run)
       
-      if (instanceData) {
+      // N'ajouter que si l'instance a des items éligibles après filtrage
+      if (instanceData && instanceData.items && instanceData.items.length > 0) {
         allInstances.push({
           ...instanceData,
           isManualRun: true,
@@ -193,9 +178,15 @@ function toggleAllRun() {
   expandedRun.value = [...expandedRunSet.value]
 }
 
-// Kamas/Heure logic
+// Kamas/Time logic
 const expandedHourRuns = ref(new Set())
 const timePeriod = useLocalStorage('wakfarm_time_period', 60)
+
+// Validate time period input
+function validateTimePeriod(event) {
+  const value = event.target.value
+  timePeriod.value = value === '' ? null : Math.min(999, Math.max(1, parseInt(value) || 60))
+}
 
 // Build all runs with their kamas/period calculation
 const sortedHourRuns = computed(() => {

@@ -191,6 +191,7 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 input[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -246,9 +247,8 @@ input[type=number] {
 }
 
 .custom-checkbox:focus {
-  outline: none;
-  ring: 1px;
-  ring-color: #d3fd38;
+  outline: 2px solid #d3fd38;
+  outline-offset: 2px;
   border-color: #d3fd38;
 }
 </style>

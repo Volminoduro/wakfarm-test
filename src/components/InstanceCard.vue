@@ -2,8 +2,9 @@
 import { computed } from 'vue'
 import { formatNumber } from '../utils/formatters'
 import { formatRunConfig } from '../utils/runHelpers'
-import { RARITY_COLORS } from '../constants'
+import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
 import { COLOR_CLASSES } from '../constants/colors'
+import ExpandArrow from './ExpandArrow.vue'
 
 const props = defineProps({
   instance: {
@@ -35,21 +36,6 @@ const instanceTitle = computed(() => {
   
   return `${baseName} (${levelText} ${level})`
 })
-
-function getSteleInfo(item) {
-  const parts = []
-  if (item.stele > 0) {
-    parts.push(`st. ${item.stele}`)
-  }
-  if (item.steleIntervention > 0) {
-    parts.push(`st.i. ${item.steleIntervention}`)
-  }
-  return parts.length > 0 ? ', ' + parts.join(', ') : ''
-}
-
-function getRarityColor(rarity) {
-  return RARITY_COLORS[rarity] || RARITY_COLORS[0]
-}
 </script>
 
 <template>
@@ -62,10 +48,7 @@ function getRarityColor(rarity) {
 
       <div class="flex items-center gap-4">
         <div :class="['font-bold text-lg', COLOR_CLASSES.textKamas]">{{ formatNumber(instance.totalKamas) }} ₭</div>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-          :class="[isExpanded ? 'rotate-down' : '', 'transition-transform', COLOR_CLASSES.textPrimary]">
-          <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/>
-        </svg>
+        <ExpandArrow :isExpanded="isExpanded" />
       </div>
     </div>
 
@@ -84,20 +67,3 @@ function getRarityColor(rarity) {
     </transition>
   </div>
 </template>
-
-<style scoped>
-/* Slide down/up animation using opacity only for better performance */
-.slide-enter-active, .slide-leave-active {
-  transition: opacity 100ms ease;
-}
-.slide-enter-from, .slide-leave-to {
-  opacity: 0;
-}
-.slide-enter-to, .slide-leave-from {
-  opacity: 1;
-}
-
-.rotate-down {
-  transform: rotate(90deg);
-}
-</style>
