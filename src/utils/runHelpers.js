@@ -1,7 +1,7 @@
 /**
  * Formate un run config en string lisible et concis
- * Format: M3 B St10 S4 SI2 (10min)
- * M = Modulé, B = Booster, St = Stasis, S = Stèles, SI = Stèles Intervention
+ * Format: M S10 ST4 STI2 B (10min)
+ * M = Modulé, S = Stasis, ST = Stèles, STI = Stèles Intervention, B = Booster
  */
 export function formatRunConfig(run) {
   const parts = []
@@ -9,22 +9,22 @@ export function formatRunConfig(run) {
   // Modulé/Non-modulé
   parts.push(run.isModulated ? 'M' : 'NM')
   
-  // Booster
-  if (run.isBooster) {
-    parts.push('B')
-  }
-  
   // Stasis
-  parts.push(`St${run.stasis}`)
+  parts.push(`S${run.stasis}`)
   
   // Stèles
   if (run.steles > 0) {
-    parts.push(`S${run.steles}`)
+    parts.push(`ST${run.steles}`)
   }
   
   // Stèles Intervention
   if (run.steleIntervention > 0) {
-    parts.push(`SI${run.steleIntervention}`)
+    parts.push(`STI${run.steleIntervention}`)
+  }
+  
+  // Booster
+  if (run.isBooster) {
+    parts.push('B')
   }
   
   return parts.join(' ')
