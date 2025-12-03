@@ -2,16 +2,19 @@
   {
     "id": 27,
     "level": 12,
+    "players": 6,
     "isDungeon": true
   },
   {
     "id": 28,
     "level": 33,
+    "players": 4,
     "isDungeon": false
   },
   {
     "id": 29,
     "level": 14,
+    "players": 3,
     "isDungeon": true
   }
 ]

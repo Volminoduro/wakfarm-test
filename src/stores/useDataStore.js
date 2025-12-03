@@ -178,11 +178,18 @@ export const useDataStore = defineStore('data', {
       // Build lookup maps
       const itemRarityMap = this._buildItemRarityMap(items)
       const priceMap = this._buildPriceMap(prices)
+      
+      // Build players count map
+      const playersMap = {}
+      instances.forEach(inst => {
+        playersMap[inst.id] = inst.players || (inst.isDungeon ? 3 : 4)
+      })
 
       // Gather loot entries for each instance
       const instancesRefined = instances.map(inst => {
         const instanceMapping = mapping.find(m => m.instanceId === inst.id)
         const allLoots = []
+        const players = playersMap[inst.id] || 1
 
         if (instanceMapping?.monsters) {
           instanceMapping.monsters.forEach(monster => {
@@ -195,9 +202,14 @@ export const useDataStore = defineStore('data', {
                     return this._shouldIncludeLoot(lootEntry, itemRarity, globalStore.config)
                   })
                   .forEach(lootEntry => {
+                    const itemRarity = itemRarityMap[lootEntry.itemId] || 0
+                    const baseQuantity = lootEntry.quantity * monster.number
+                    // Rarity 5 items: only 1 per team, otherwise multiply by players
+                    const finalQuantity = itemRarity === 5 ? baseQuantity : baseQuantity * players
+                    
                     allLoots.push({
                       ...lootEntry,
-                      quantity: lootEntry.quantity * monster.number,
+                      quantity: finalQuantity,
                       price: priceMap[lootEntry.itemId] || 0
                     })
                   })
@@ -352,6 +364,7 @@ export const useDataStore = defineStore('data', {
       const globalStore = useGlobalStore()
       const itemRarityMap = this._buildItemRarityMap(this._rawItems)
       const priceMap = this._buildPriceMap(this._rawPrices)
+      const players = instance.players || (instance.isDungeon ? 3 : 4)
 
       // Find mapping for this instance
       const instanceMapping = this._rawMapping.find(m => m.instanceId === instanceId)
@@ -368,9 +381,14 @@ export const useDataStore = defineStore('data', {
                   return this._shouldIncludeLoot(lootEntry, itemRarity, runConfig)
                 })
                 .forEach(lootEntry => {
+                  const itemRarity = itemRarityMap[lootEntry.itemId] || 0
+                  const baseQuantity = lootEntry.quantity * monster.number
+                  // Rarity 5 items: only 1 per team, otherwise multiply by players
+                  const finalQuantity = itemRarity === 5 ? baseQuantity : baseQuantity * players
+                  
                   allLoots.push({
                     ...lootEntry,
-                    quantity: lootEntry.quantity * monster.number,
+                    quantity: finalQuantity,
                     price: priceMap[lootEntry.itemId] || 0
                   })
                 })
