@@ -262,8 +262,10 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useDataStore } from '../stores/useDataStore'
+import { useLocalStorage } from '../composables/useLocalStorage'
+import { useClickOutside } from '../composables/useClickOutside'
 import { COLOR_CLASSES } from '../constants/colors'
 import { RARITY_COLORS } from '../constants'
 import { formatNumber } from '../utils/formatters'
@@ -272,29 +274,27 @@ const dataStore = useDataStore()
 
 const t = (key) => dataStore.names?.divers?.[key] || key
 
-// Load saved filters from localStorage
-const loadFromStorage = (key, defaultValue) => {
-  try {
-    const saved = localStorage.getItem(key)
-    return saved !== null ? JSON.parse(saved) : defaultValue
-  } catch {
-    return defaultValue
-  }
-}
-
-// Filters
-const searchName = ref(loadFromStorage('wakfarm_prices_searchName', ''))
-const filterRarities = ref(loadFromStorage('wakfarm_prices_rarities', [0, 1, 2, 3, 4, 5, 6, 7]))
-const filterLevelMin = ref(loadFromStorage('wakfarm_prices_levelMin', ''))
-const filterLevelMax = ref(loadFromStorage('wakfarm_prices_levelMax', ''))
+// Filters with localStorage persistence
+const searchName = useLocalStorage('wakfarm_prices_searchName', '')
+const filterRarities = useLocalStorage('wakfarm_prices_rarities', [0, 1, 2, 3, 4, 5, 6, 7], { deep: true })
+const filterLevelMin = useLocalStorage('wakfarm_prices_levelMin', '')
+const filterLevelMax = useLocalStorage('wakfarm_prices_levelMax', '')
+const sortColumn = useLocalStorage('wakfarm_prices_sortColumn', 'name')
+const sortDirection = useLocalStorage('wakfarm_prices_sortDirection', 'asc')
+const currentPage = useLocalStorage('wakfarm_prices_page', 1)
+const itemsPerPage = useLocalStorage('wakfarm_prices_perPage', 50)
 
 // Search autocomplete
 const showAutocomplete = ref(false)
-const searchDropdownRef = ref(null)
+const { elementRef: searchDropdownRef } = useClickOutside(() => {
+  showAutocomplete.value = false
+})
 
 // Rarity dropdown
 const isRarityDropdownOpen = ref(false)
-const rarityDropdownRef = ref(null)
+const { elementRef: rarityDropdownRef } = useClickOutside(() => {
+  isRarityDropdownOpen.value = false
+})
 
 // Get all instances for the filter
 const allInstancesList = computed(() => {
@@ -305,77 +305,71 @@ const allInstancesList = computed(() => {
   })).sort((a, b) => a.name.localeCompare(b.name))
 })
 
-// Instances dropdown
-const isInstancesDropdownOpen = ref(false)
-const instancesDropdownRef = ref(null)
+// Instances filter with special initialization logic
+const savedInstancesRaw = (() => {
+  try {
+    const saved = localStorage.getItem('wakfarm_prices_instances')
+    return saved !== null ? JSON.parse(saved) : null
+  } catch {
+    return null
+  }
+})()
 
-// Load saved instances or use all by default (but only on first load, not when list updates)
-const savedInstances = loadFromStorage('wakfarm_prices_instances', null)
-const filterInstances = ref(savedInstances !== null ? savedInstances : [])
+const filterInstances = useLocalStorage(
+  'wakfarm_prices_instances',
+  savedInstancesRaw !== null ? savedInstancesRaw : [],
+  { deep: true }
+)
 
-// Update filterInstances only if never been set (no localStorage)
+// Initialize with all instances if never saved
 watch(allInstancesList, (newList) => {
-  if (savedInstances === null && newList.length > 0 && filterInstances.value.length === 0) {
+  if (savedInstancesRaw === null && newList.length > 0 && filterInstances.value.length === 0) {
     filterInstances.value = newList.map(i => i.id)
   }
 }, { immediate: true })
 
-// Sorting
-const sortColumn = ref(loadFromStorage('wakfarm_prices_sortColumn', 'name'))
-const sortDirection = ref(loadFromStorage('wakfarm_prices_sortDirection', 'asc'))
+// Instances dropdown
+const isInstancesDropdownOpen = ref(false)
+const { elementRef: instancesDropdownRef } = useClickOutside(() => {
+  isInstancesDropdownOpen.value = false
+})
 
-// Pagination
-const currentPage = ref(loadFromStorage('wakfarm_prices_page', 1))
-const itemsPerPage = ref(loadFromStorage('wakfarm_prices_perPage', 50))
-
-// Save filters to localStorage when they change
-watch(searchName, (val) => localStorage.setItem('wakfarm_prices_searchName', JSON.stringify(val)))
-watch(filterRarities, (val) => localStorage.setItem('wakfarm_prices_rarities', JSON.stringify(val)), { deep: true })
-watch(filterLevelMin, (val) => localStorage.setItem('wakfarm_prices_levelMin', JSON.stringify(val)))
-watch(filterLevelMax, (val) => localStorage.setItem('wakfarm_prices_levelMax', JSON.stringify(val)))
-watch(filterInstances, (val) => localStorage.setItem('wakfarm_prices_instances', JSON.stringify(val)), { deep: true })
-watch(sortColumn, (val) => localStorage.setItem('wakfarm_prices_sortColumn', JSON.stringify(val)))
-watch(sortDirection, (val) => localStorage.setItem('wakfarm_prices_sortDirection', JSON.stringify(val)))
-watch(currentPage, (val) => localStorage.setItem('wakfarm_prices_page', JSON.stringify(val)))
-watch(itemsPerPage, (val) => localStorage.setItem('wakfarm_prices_perPage', JSON.stringify(val)))
-
-// Build mapping of itemId -> instanceIds
+// Build mapping of itemId -> instanceIds (optimized with caching)
 const itemToInstancesMap = computed(() => {
   const loots = dataStore._rawLoots || []
   const mapping = dataStore._rawMapping || []
-  const map = {}
   
-  // Create a monster -> instances mapping
-  const monsterToInstances = {}
+  if (loots.length === 0 || mapping.length === 0) return {}
+  
+  // Build monster -> instances mapping
+  const monsterToInstances = new Map()
   mapping.forEach(m => {
     m.monsters.forEach(monster => {
-      if (!monsterToInstances[monster.monsterId]) {
-        monsterToInstances[monster.monsterId] = []
-      }
-      monsterToInstances[monster.monsterId].push(m.instanceId)
+      const existing = monsterToInstances.get(monster.monsterId) || []
+      existing.push(m.instanceId)
+      monsterToInstances.set(monster.monsterId, existing)
     })
   })
   
-  // Map items to instances through monsters
+  // Build item -> instances mapping
+  const itemMap = new Map()
   loots.forEach(loot => {
-    const monsterId = loot.monsterId
-    const instanceIds = monsterToInstances[monsterId] || []
+    const instanceIds = monsterToInstances.get(loot.monsterId) || []
     
     loot.loots.forEach(drop => {
-      const itemId = drop.itemId
-      if (!map[itemId]) {
-        map[itemId] = new Set()
-      }
-      instanceIds.forEach(instId => map[itemId].add(instId))
+      const existing = itemMap.get(drop.itemId) || new Set()
+      instanceIds.forEach(instId => existing.add(instId))
+      itemMap.set(drop.itemId, existing)
     })
   })
   
-  // Convert Sets to Arrays
-  Object.keys(map).forEach(itemId => {
-    map[itemId] = Array.from(map[itemId])
+  // Convert Map<itemId, Set<instanceId>> to plain object with arrays
+  const result = {}
+  itemMap.forEach((instanceSet, itemId) => {
+    result[itemId] = Array.from(instanceSet)
   })
   
-  return map
+  return result
 })
 
 // Get all items with names, prices, and instances
@@ -439,20 +433,15 @@ const filteredAndSortedItems = computed(() => {
   }
   
   // Filter by instances
-  const totalInstances = allInstancesList.value.length
-  if (totalInstances > 0) {
-    if (filterInstances.value.length === 0) {
-      result = [] // None selected = hide all
-    } else if (filterInstances.value.length < totalInstances) {
-      result = result.filter(item => {
-        // If item has no instances, show it (might be a special item)
-        if (!item.instanceIds || item.instanceIds.length === 0) return true
-        // Item must be found in at least one selected instance
-        return item.instanceIds.some(instId => filterInstances.value.includes(instId))
-      })
-    }
-    // All selected = show all (no filter)
+  if (filterInstances.value.length === 0) {
+    result = [] // None selected = hide all
+  } else if (filterInstances.value.length < allInstancesList.value.length) {
+    result = result.filter(item => {
+      // Item must be found in at least one selected instance
+      return item.instanceIds.some(instId => filterInstances.value.includes(instId))
+    })
   }
+  // All selected = show all (no filter)
   
   // Sort
   result.sort((a, b) => {
@@ -505,27 +494,7 @@ watch([searchName, filterRarities, filterLevelMin, filterLevelMax, filterInstanc
   currentPage.value = 1
 })
 
-// Click outside detection for dropdowns
-const handleClickOutside = (event) => {
-  if (rarityDropdownRef.value && !rarityDropdownRef.value.contains(event.target)) {
-    isRarityDropdownOpen.value = false
-  }
-  if (searchDropdownRef.value && !searchDropdownRef.value.contains(event.target)) {
-    showAutocomplete.value = false
-  }
-  if (instancesDropdownRef.value && !instancesDropdownRef.value.contains(event.target)) {
-    isInstancesDropdownOpen.value = false
-  }
-}
-
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
-})
-
+// Search helpers
 function onSearchInput() {
   showAutocomplete.value = searchName.value.length >= 2
 }
@@ -535,6 +504,7 @@ function selectItem(item) {
   showAutocomplete.value = false
 }
 
+// Rarity filter helpers
 function toggleRarity(rarity) {
   const index = filterRarities.value.indexOf(rarity)
   if (index === -1) {
@@ -545,11 +515,7 @@ function toggleRarity(rarity) {
 }
 
 function toggleAllRarities(selectAll) {
-  if (selectAll) {
-    filterRarities.value = [0, 1, 2, 3, 4, 5, 6, 7]
-  } else {
-    filterRarities.value = []
-  }
+  filterRarities.value = selectAll ? [0, 1, 2, 3, 4, 5, 6, 7] : []
   isRarityDropdownOpen.value = false
 }
 
@@ -560,6 +526,7 @@ function getRarityDisplayText() {
   return `${count.toString().padStart(2, ' ')}/8`
 }
 
+// Instance filter helpers
 function toggleInstance(instanceId) {
   const index = filterInstances.value.indexOf(instanceId)
   if (index === -1) {
@@ -570,11 +537,7 @@ function toggleInstance(instanceId) {
 }
 
 function toggleAllInstances(selectAll) {
-  if (selectAll) {
-    filterInstances.value = allInstancesList.value.map(i => i.id)
-  } else {
-    filterInstances.value = []
-  }
+  filterInstances.value = selectAll ? allInstancesList.value.map(i => i.id) : []
   isInstancesDropdownOpen.value = false
 }
 
@@ -586,6 +549,7 @@ function getInstancesDisplayText() {
   return `${count.toString().padStart(2, ' ')}/${total}`
 }
 
+// Level validation helpers
 function validateLevelMin(event) {
   const value = event.target.value
   if (value === '') {

@@ -10,37 +10,37 @@ const dataStore = useDataStore()
 
 const t = (key) => dataStore.names?.divers?.[key] || key
 
-// Fonction générique pour mettre à jour un champ numérique
+// Generic numeric field updater
 const updateNumericField = (event, fieldName, parser = parseInt) => {
   const value = parseFormattedNumber(event.target.value)
-  if (value === '') {
-    store.config[fieldName] = null
-    return
-  }
-  const numValue = parser(value, 10)
-  store.config[fieldName] = isNaN(numValue) ? null : numValue
+  store.config[fieldName] = value === '' ? null : parser(value, 10) || null
 }
 
+// Specific field updaters
 const updateMinItemProfit = (e) => updateNumericField(e, 'minItemProfit')
 const updateMinInstanceTotal = (e) => updateNumericField(e, 'minInstanceTotal')
 
+// Drop rate updater with percentage constraints
 function updateMinDropRate(event) {
   const value = event.target.value.replace(',', '.').trim()
+  
   if (value === '') {
     store.config.minDropRatePercent = null
     return
   }
+  
   const parsedValue = parseFloat(value)
   if (isNaN(parsedValue)) {
     store.config.minDropRatePercent = null
     return
   }
-  const numValue = Math.max(0, Math.min(100, parsedValue))
-  store.config.minDropRatePercent = numValue
   
-  // Forcer la mise à jour de l'input si la valeur a été limitée
-  if (parsedValue !== numValue) {
-    event.target.value = numValue.toString()
+  const clampedValue = Math.max(0, Math.min(100, parsedValue))
+  store.config.minDropRatePercent = clampedValue
+  
+  // Update input if value was clamped
+  if (parsedValue !== clampedValue) {
+    event.target.value = clampedValue.toString()
   }
 }
 </script>

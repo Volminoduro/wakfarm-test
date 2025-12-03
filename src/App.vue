@@ -1,8 +1,9 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useDataStore } from './stores/useDataStore'
 import { useGlobalStore } from './stores/useGlobalStore'
 import { useExpandableItems } from './composables/useExpandableItems'
+import { useLocalStorage } from './composables/useLocalStorage'
 import { STORAGE_KEYS } from './constants'
 import { COLOR_CLASSES } from './constants/colors'
 import AppHeader from './components/AppHeader.vue'
@@ -14,22 +15,13 @@ import PricesView from './views/PricesView.vue'
 const dataStore = useDataStore()
 const globalStore = useGlobalStore()
 
-// Load saved tabs or use defaults
-const savedMainTab = localStorage.getItem('wakfarm_mainTab') || 'rentability'
-const savedSubTab = localStorage.getItem('wakfarm_subTab') || 'run'
-const mainTab = ref(savedMainTab)
-const subTab = ref(savedSubTab)
+// Tab state with localStorage persistence
+const mainTab = useLocalStorage('wakfarm_mainTab', 'rentability')
+const subTab = useLocalStorage('wakfarm_subTab', 'run')
 
-// Save tabs to localStorage when they change
-const setMainTab = (tab) => {
-  mainTab.value = tab
-  localStorage.setItem('wakfarm_mainTab', tab)
-}
-
-const setSubTab = (tab) => {
-  subTab.value = tab
-  localStorage.setItem('wakfarm_subTab', tab)
-}
+// Tab change handlers
+const setMainTab = (tab) => { mainTab.value = tab }
+const setSubTab = (tab) => { subTab.value = tab }
 
 // Charger les données au montage
 onMounted(() => {

@@ -115,85 +115,96 @@ export const useDataStore = defineStore('data', {
       return bonusMap[steles] || 0
     },
 
-    createInstanceData(instances, items, mapping, loots, prices){
-      // access global config for rate adjustments
-      const globalStore = useGlobalStore()
-
-      // Build a lookup map for item rarity: { itemId: rarity }
-      const itemRarityMap = {}
+    // Helper: Build item rarity lookup map
+    _buildItemRarityMap(items) {
+      const map = {}
       if (Array.isArray(items)) {
         items.forEach(item => {
-          itemRarityMap[item.id] = item.rarity || 0
+          map[item.id] = item.rarity || 0
         })
       }
+      return map
+    },
 
-      // Calcule le taux ajusté en fonction de la config
-      const computeAdjustedRate = (baseRate, cfg = {}) => {
-        const stasis = Number(cfg.stasis || 0)
-        const isModulated = !!cfg.isModulated
-        const intervention = !!cfg.intervention
-
-        const stasisFactor = this.getStasisBonus(stasis, isModulated)
-        const boosterBonus = globalStore.config.isBooster 
-          ? (BOOSTER_BONUS[globalStore.config.server] || 1.25) 
-          : 1
-        const interventionBonus = intervention ? 1.10 : 1
-
-        return Math.min(1, baseRate * stasisFactor * boosterBonus * interventionBonus)
-      }
-      // Build a lookup map for prices: { itemId: price }
-      let priceMap = {};
+    // Helper: Build price lookup map
+    _buildPriceMap(prices) {
       if (Array.isArray(prices)) {
+        const map = {}
         prices.forEach(p => {
-          priceMap[p.itemId] = p.price
+          map[p.itemId] = p.price
         })
-      } else if (prices && typeof prices === 'object') {
-        // if already an object map
-        priceMap = prices
+        return map
       }
+      return prices && typeof prices === 'object' ? prices : {}
+    },
 
-      // For each instance, gather all loot entries (from mapping -> loots)
+    // Helper: Compute adjusted drop rate based on config
+    _computeAdjustedRate(baseRate, config) {
+      const globalStore = useGlobalStore()
+      const stasisFactor = this.getStasisBonus(config.stasis || 0, !!config.isModulated)
+      const boosterBonus = globalStore.config.isBooster 
+        ? (BOOSTER_BONUS[globalStore.config.server] || 1.25) 
+        : 1
+      const interventionBonus = config.intervention ? 1.10 : 1
+
+      return Math.min(1, baseRate * stasisFactor * boosterBonus * interventionBonus)
+    },
+
+    // Helper: Check if loot should be included based on config filters
+    _shouldIncludeLoot(lootEntry, itemRarity, config) {
+      const configSteles = Number(config.steles || 0)
+      const configSteleIntervention = Number(config.steleIntervention || 0)
+      const configStasis = Number(config.stasis || 0)
+      const lootStele = Number(lootEntry.stele || 0)
+      const lootSteleIntervention = Number(lootEntry.steleIntervention || 0)
+
+      // Check stele requirement
+      const steleOk = lootStele <= configSteles
+
+      // Check steleIntervention requirement
+      const steleInterventionOk = config.intervention 
+        ? lootSteleIntervention <= configSteleIntervention
+        : lootSteleIntervention === 0
+
+      // Items with rarity > 3 require stasis >= 3
+      const rarityOk = itemRarity > 3 ? configStasis >= 3 : true
+
+      return steleOk && steleInterventionOk && rarityOk
+    },
+
+    createInstanceData(instances, items, mapping, loots, prices){
+      const globalStore = useGlobalStore()
+      
+      // Build lookup maps
+      const itemRarityMap = this._buildItemRarityMap(items)
+      const priceMap = this._buildPriceMap(prices)
+
+      // Gather loot entries for each instance
       const instancesRefined = instances.map(inst => {
-        // Find mapping for this instance
         const instanceMapping = mapping.find(m => m.instanceId === inst.id)
-        
-        let allLoots = []
-        if (instanceMapping && instanceMapping.monsters) {
+        const allLoots = []
+
+        if (instanceMapping?.monsters) {
           instanceMapping.monsters.forEach(monster => {
-            const monsterLoots = loots
+            loots
               .filter(loot => loot.monsterId === monster.monsterId)
-              .map(loot => loot.loots)
-            allLoots.push(...monsterLoots.flat()
-              // Filter by stele and steleIntervention configuration
-              .filter(lootEntry => {
-                const configSteles = Number(globalStore.config.steles || 0)
-                const configSteleIntervention = Number(globalStore.config.steleIntervention || 0)
-                const configStasis = Number(globalStore.config.stasis || 0)
-                const lootStele = Number(lootEntry.stele || 0)
-                const lootSteleIntervention = Number(lootEntry.steleIntervention || 0)
-                const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                
-                // Include loot only if its stele requirements are <= config
-                const steleOk = lootStele <= configSteles
-                
-                // Check steleIntervention based on config
-                const steleInterventionOk = globalStore.config.intervention 
-                  ? lootSteleIntervention <= configSteleIntervention
-                  : lootSteleIntervention === 0
-                
-                // If rarity > 3, require stasis >= 3
-                const rarityOk = itemRarity > 3 ? configStasis >= 3 : true
-                
-                return steleOk && steleInterventionOk && rarityOk
+              .forEach(loot => {
+                loot.loots
+                  .filter(lootEntry => {
+                    const itemRarity = itemRarityMap[lootEntry.itemId] || 0
+                    return this._shouldIncludeLoot(lootEntry, itemRarity, globalStore.config)
+                  })
+                  .forEach(lootEntry => {
+                    allLoots.push({
+                      ...lootEntry,
+                      quantity: lootEntry.quantity * monster.number,
+                      price: priceMap[lootEntry.itemId] || 0
+                    })
+                  })
               })
-              .map(lootEntry => ({
-                ...lootEntry,
-                quantity: lootEntry.quantity * monster.number,
-                price: priceMap[lootEntry.itemId] || 0
-              })))
           })
         }
-        
+
         return {
           id: inst.id,
           level: inst.level,
@@ -201,44 +212,47 @@ export const useDataStore = defineStore('data', {
         }
       })
 
-      // For each instance, build per-item subtotal and totalKamas
+      // Build per-item breakdown and calculate total kamas for each instance
+      const minProfit = Number(globalStore.config.minItemProfit || 0)
+      const minDropRate = Number(globalStore.config.minDropRatePercent || 0) / 100
+
       const enriched = instancesRefined.map(inst => {
-        const perItem = {}
+        const perItem = new Map()
+
+        // Aggregate loot by item
         inst.loots.forEach(l => {
-          const id = l.itemId
+          const itemId = l.itemId
           const price = l.price || 0
           const qty = l.quantity || 0
           const baseRate = l.rate || 0
-          const adjustedRate = computeAdjustedRate(baseRate, globalStore.config)
+          const adjustedRate = this._computeAdjustedRate(baseRate, globalStore.config)
           const value = Math.floor(price * adjustedRate * qty)
 
-          if (!perItem[id]) {
-            perItem[id] = {
-              itemId: id,
-              name: this.names && this.names.items ? this.names.items[id] || null : null,
+          if (!perItem.has(itemId)) {
+            perItem.set(itemId, {
+              itemId,
+              name: this.names?.items?.[itemId] || null,
               rate: adjustedRate,
-              price: price,
+              price,
               quantity: 0,
               subtotal: 0,
               stele: l.stele || 0,
               steleIntervention: l.steleIntervention || 0,
-              rarity: itemRarityMap[id] || 0
-            }
+              rarity: itemRarityMap[itemId] || 0
+            })
           }
 
-          perItem[id].quantity += qty
-          perItem[id].subtotal += value
+          const item = perItem.get(itemId)
+          item.quantity += qty
+          item.subtotal += value
         })
 
-        // apply item filters from global config
-        const minProfit = Number(globalStore.config.minItemProfit || 0)
-        const minDrop = Number(globalStore.config.minDropRatePercent || 0) / 100
-
-        const itemsBreakdown = Object.values(perItem)
-          .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDrop)
+        // Filter and sort items by profit
+        const itemsBreakdown = Array.from(perItem.values())
+          .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDropRate)
           .sort((a, b) => b.subtotal - a.subtotal)
 
-        const totalKamas = itemsBreakdown.reduce((s, it) => s + it.subtotal, 0)
+        const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
 
         return {
           id: inst.id,
@@ -249,30 +263,29 @@ export const useDataStore = defineStore('data', {
         }
       })
 
-      // apply instance-level filter (minInstanceTotal)
+      // Apply instance-level filters
       const minInstanceTotal = Number(globalStore.config.minInstanceTotal || 0)
-      let filteredEnriched = enriched.filter(inst => (inst.totalKamas || 0) >= minInstanceTotal)
-
-      // apply level range filter
       const activeLevelRanges = globalStore.config.levelRanges || []
-      // Si aucune tranche n'est sélectionnée, ne rien afficher
+
+      let filteredEnriched = enriched.filter(inst => inst.totalKamas >= minInstanceTotal)
+
+      // Apply level range filter
       if (activeLevelRanges.length === 0) {
+        // No ranges selected = hide all
         filteredEnriched = []
       } else if (activeLevelRanges.length < LEVEL_RANGES.length) {
-        // Si certaines tranches sont sélectionnées, filtrer
+        // Some ranges selected = filter by range
         filteredEnriched = filteredEnriched.filter(inst => {
-          const level = inst.level
           return activeLevelRanges.some(rangeIndex => {
             const range = LEVEL_RANGES[rangeIndex]
-            return range && level >= range.min && level <= range.max
+            return range && inst.level >= range.min && inst.level <= range.max
           })
         })
       }
-      // Si toutes les tranches sont sélectionnées, ne pas filtrer (laisser tel quel)
+      // All ranges selected = no filtering
 
       this.instancesRefined = filteredEnriched
-
-      return enriched;
+      return enriched
     },
 
     async loadPricesWithDate(server) {
