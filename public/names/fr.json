@@ -277,6 +277,50 @@
         {
             "id": "prices_col_instances",
             "name": "Instances"
+        },
+        {
+            "id": "runs_add",
+            "name": "Ajouter un run"
+        },
+        {
+            "id": "runs_remove_all",
+            "name": "Supprimer tous les runs"
+        },
+        {
+            "id": "runs_all",
+            "name": "Tous"
+        },
+        {
+            "id": "runs_empty",
+            "name": "Aucun run configuré. Cliquez sur '+' pour en ajouter un."
+        },
+        {
+            "id": "runs_instances",
+            "name": "instances disponibles"
+        },
+        {
+            "id": "runs_confirm_remove_all",
+            "name": "Êtes-vous sûr de vouloir supprimer tous les runs ?"
+        },
+        {
+            "id": "config_time",
+            "name": "Temps (min)"
+        },
+        {
+            "id": "config_time_placeholder",
+            "name": "min"
+        },
+        {
+            "id": "button_remove",
+            "name": "Supprimer"
+        },
+        {
+            "id": "loading",
+            "name": "Chargement des données..."
+        },
+        {
+            "id": "kamas_hour_no_runs",
+            "name": "Aucun run configuré. Allez dans l'onglet 'Runs' pour en créer."
         }
     ]
 }

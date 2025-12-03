@@ -51,6 +51,7 @@ export const COLOR_CLASSES = {
   // Inputs/Select
   input: 'bg-slate-700 text-slate-100 focus:border-[#625946] focus:ring-1 focus:ring-[#625946] outline-none',
   select: 'bg-slate-700 text-slate-100 px-3 py-1 rounded focus:border-[#625946] focus:ring-1 focus:ring-[#625946] outline-none',
+  selectRunCard: 'bg-slate-700 text-slate-100 px-2 py-1 rounded focus:border-[#625946] focus:ring-1 focus:ring-[#625946] outline-none',
   
   // Cards
   card: 'border-2 border-[#363634] rounded-lg shadow-lg hover:shadow-xl transition bg-[#1e2026] overflow-hidden hover:border-[#625946]',

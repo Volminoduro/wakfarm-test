@@ -1,0 +1,155 @@
+import { defineStore } from 'pinia'
+import { ref, watch } from 'vue'
+import { useGlobalStore } from './useGlobalStore'
+
+const STORAGE_KEY = 'wakfarm_runs'
+const STORAGE_KEY_EXPANDED = 'wakfarm_runs_expanded'
+
+export const useRunsStore = defineStore('runs', () => {
+  // Structure: { instanceId: [{ id, isModulated, isBooster, stasis, steles, steleIntervention, time }] }
+  const loadRuns = () => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      return saved ? JSON.parse(saved) : {}
+    } catch {
+      return {}
+    }
+  }
+
+  const loadExpandedInstances = () => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_EXPANDED)
+      return saved ? new Set(JSON.parse(saved)) : new Set()
+    } catch {
+      return new Set()
+    }
+  }
+
+  const runs = ref(loadRuns())
+  const expandedInstances = ref(loadExpandedInstances())
+
+  // Save to localStorage on change
+  watch(
+    runs,
+    (newVal) => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newVal))
+      } catch (e) {
+        console.error('Erreur sauvegarde runs:', e)
+      }
+    },
+    { deep: true }
+  )
+
+  // Save expanded state to localStorage
+  watch(
+    expandedInstances,
+    (newVal) => {
+      try {
+        localStorage.setItem(STORAGE_KEY_EXPANDED, JSON.stringify([...newVal]))
+      } catch (e) {
+        console.error('Erreur sauvegarde expanded instances:', e)
+      }
+    },
+    { deep: true }
+  )
+
+  // Add a new run to an instance
+  function addRun(instanceId) {
+    const globalStore = useGlobalStore()
+    const config = globalStore.config
+
+    const newRun = {
+      id: Date.now(), // Unique ID
+      isModulated: config.isModulated,
+      isBooster: config.isBooster,
+      stasis: config.stasis,
+      steles: config.steles,
+      steleIntervention: config.steleIntervention,
+      intervention: config.intervention || false,
+      time: 10 // Temps en minutes (10 par défaut)
+    }
+
+    if (!runs.value[instanceId]) {
+      runs.value[instanceId] = []
+    }
+
+    runs.value[instanceId].push(newRun)
+  }
+
+  // Remove a specific run
+  function removeRun(instanceId, runId) {
+    if (!runs.value[instanceId]) return
+
+    const index = runs.value[instanceId].findIndex(r => r.id === runId)
+    if (index !== -1) {
+      runs.value[instanceId].splice(index, 1)
+
+      // Clean up if no runs left
+      if (runs.value[instanceId].length === 0) {
+        delete runs.value[instanceId]
+      }
+    }
+  }
+
+  // Remove all runs for an instance
+  function removeAllRunsForInstance(instanceId) {
+    delete runs.value[instanceId]
+  }
+
+  // Remove all runs from all instances
+  function removeAllRuns() {
+    runs.value = {}
+    expandedInstances.value.clear()
+  }
+
+  // Update a specific run
+  function updateRun(instanceId, runId, updates) {
+    if (!runs.value[instanceId]) return
+
+    const run = runs.value[instanceId].find(r => r.id === runId)
+    if (run) {
+      Object.assign(run, updates)
+    }
+  }
+
+  // Get runs for an instance
+  function getRunsForInstance(instanceId) {
+    return runs.value[instanceId] || []
+  }
+
+  // Toggle instance expansion
+  function toggleExpanded(instanceId) {
+    if (expandedInstances.value.has(instanceId)) {
+      expandedInstances.value.delete(instanceId)
+    } else {
+      expandedInstances.value.add(instanceId)
+    }
+    expandedInstances.value = new Set(expandedInstances.value)
+  }
+
+  // Expand all instances
+  function expandAll(instanceIds) {
+    expandedInstances.value = new Set(instanceIds)
+  }
+
+  // Collapse all instances
+  function collapseAll() {
+    expandedInstances.value.clear()
+    expandedInstances.value = new Set()
+  }
+
+  return {
+    runs,
+    expandedInstances,
+    addRun,
+    removeRun,
+    removeAllRunsForInstance,
+    removeAllRuns,
+    updateRun,
+    getRunsForInstance,
+    toggleExpanded,
+    expandAll,
+    collapseAll
+  }
+})

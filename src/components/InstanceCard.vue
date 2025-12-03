@@ -1,5 +1,7 @@
 <script setup>
+import { computed } from 'vue'
 import { formatNumber } from '../utils/formatters'
+import { formatRunConfig } from '../utils/runHelpers'
 import { RARITY_COLORS } from '../constants'
 import { COLOR_CLASSES } from '../constants/colors'
 
@@ -19,6 +21,20 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['toggle'])
+
+const instanceTitle = computed(() => {
+  const baseName = props.names.instances[props.instance.id] || ('Instance ' + props.instance.id)
+  const level = props.instance.level
+  const levelText = props.names.divers['niveau_reduit'] || 'Niv.'
+  
+  if (props.instance.isManualRun && props.instance.runConfig) {
+    const configStr = formatRunConfig(props.instance.runConfig)
+    const timeStr = props.instance.runConfig.time ? `${props.instance.runConfig.time}min` : '?'
+    return `${baseName} (${levelText} ${level}) • ${configStr} • ${timeStr}`
+  }
+  
+  return `${baseName} (${levelText} ${level})`
+})
 
 function getSteleInfo(item) {
   const parts = []
@@ -41,7 +57,7 @@ function getRarityColor(rarity) {
     <!-- Header clickable: toggles expand/collapse -->
     <div @click="emit('toggle')" class="cursor-pointer px-5 py-4 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 truncate">
-        <div :class="['font-bold truncate', COLOR_CLASSES.textLight]">{{ names.instances[instance.id] || ('Instance ' + instance.id) }} ({{ names.divers['niveau_reduit'] }} {{ instance.level }})</div>
+        <div :class="['font-bold text-sm truncate', COLOR_CLASSES.textLight]">{{ instanceTitle }}</div>
       </div>
 
       <div class="flex items-center gap-4">

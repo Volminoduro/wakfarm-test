@@ -54,11 +54,7 @@ const { expanded, toggleExpand, allExpanded, toggleAll } = useExpandableItems(
       <RentabilityView 
         v-if="mainTab === 'rentability'"
         :subTab="subTab"
-        :expanded="expanded"
-        :allExpanded="allExpanded"
-        @toggleExpand="toggleExpand"
         @change-sub-tab="setSubTab"
-        @toggle-all="toggleAll"
       />
 
       <!-- Runs Tab -->

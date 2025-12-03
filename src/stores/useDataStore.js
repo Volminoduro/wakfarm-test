@@ -342,6 +342,88 @@ export const useDataStore = defineStore('data', {
       } catch (e) {
         console.error("Erreur chargement langue", e)
       }
+    },
+
+    // Calculate instance data for a specific run configuration
+    calculateInstanceForRun(instanceId, runConfig) {
+      const instance = this._rawInstances.find(i => i.id === instanceId)
+      if (!instance) return null
+
+      const globalStore = useGlobalStore()
+      const itemRarityMap = this._buildItemRarityMap(this._rawItems)
+      const priceMap = this._buildPriceMap(this._rawPrices)
+
+      // Find mapping for this instance
+      const instanceMapping = this._rawMapping.find(m => m.instanceId === instanceId)
+      const allLoots = []
+
+      if (instanceMapping?.monsters) {
+        instanceMapping.monsters.forEach(monster => {
+          this._rawLoots
+            .filter(loot => loot.monsterId === monster.monsterId)
+            .forEach(loot => {
+              loot.loots
+                .filter(lootEntry => {
+                  const itemRarity = itemRarityMap[lootEntry.itemId] || 0
+                  return this._shouldIncludeLoot(lootEntry, itemRarity, runConfig)
+                })
+                .forEach(lootEntry => {
+                  allLoots.push({
+                    ...lootEntry,
+                    quantity: lootEntry.quantity * monster.number,
+                    price: priceMap[lootEntry.itemId] || 0
+                  })
+                })
+            })
+        })
+      }
+
+      // Build per-item breakdown
+      const perItem = new Map()
+
+      allLoots.forEach(l => {
+        const itemId = l.itemId
+        const price = l.price || 0
+        const qty = l.quantity || 0
+        const baseRate = l.rate || 0
+        const adjustedRate = this._computeAdjustedRate(baseRate, runConfig)
+        const value = Math.floor(price * adjustedRate * qty)
+
+        if (!perItem.has(itemId)) {
+          perItem.set(itemId, {
+            itemId,
+            name: this.names?.items?.[itemId] || null,
+            rate: adjustedRate,
+            price,
+            quantity: 0,
+            subtotal: 0,
+            stele: l.stele || 0,
+            steleIntervention: l.steleIntervention || 0,
+            rarity: itemRarityMap[itemId] || 0
+          })
+        }
+
+        const item = perItem.get(itemId)
+        item.quantity += qty
+        item.subtotal += value
+      })
+
+      // Filter items (use global config filters)
+      const minProfit = Number(globalStore.config.minItemProfit || 0)
+      const minDropRate = Number(globalStore.config.minDropRatePercent || 0) / 100
+
+      const itemsBreakdown = Array.from(perItem.values())
+        .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDropRate)
+        .sort((a, b) => b.subtotal - a.subtotal)
+
+      const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
+
+      return {
+        id: instance.id,
+        level: instance.level,
+        items: itemsBreakdown,
+        totalKamas: Math.floor(totalKamas)
+      }
     }
   }
 })
