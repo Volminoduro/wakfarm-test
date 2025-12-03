@@ -139,6 +139,40 @@ export const useRunsStore = defineStore('runs', () => {
     expandedInstances.value = new Set()
   }
 
+  // Export runs configuration to clipboard
+  async function exportRuns() {
+    const data = {
+      version: 1,
+      exportDate: new Date().toISOString(),
+      runs: runs.value
+    }
+    const json = JSON.stringify(data, null, 2)
+    
+    try {
+      await navigator.clipboard.writeText(json)
+      return { success: true, message: 'Configuration copiée dans le presse-papier !' }
+    } catch (error) {
+      return { success: false, message: 'Erreur lors de la copie: ' + error.message }
+    }
+  }
+
+  // Import runs configuration from clipboard
+  async function importRuns() {
+    try {
+      const text = await navigator.clipboard.readText()
+      const data = JSON.parse(text)
+      
+      if (data.runs && typeof data.runs === 'object') {
+        runs.value = data.runs
+        return { success: true, count: Object.keys(data.runs).length }
+      } else {
+        throw new Error('Format invalide')
+      }
+    } catch (error) {
+      throw new Error('Erreur lors de l\'import: ' + error.message)
+    }
+  }
+
   return {
     runs,
     expandedInstances,
@@ -150,6 +184,8 @@ export const useRunsStore = defineStore('runs', () => {
     getRunsForInstance,
     toggleExpanded,
     expandAll,
-    collapseAll
+    collapseAll,
+    exportRuns,
+    importRuns
   }
 })

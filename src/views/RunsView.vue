@@ -47,6 +47,20 @@ function removeAllRuns() {
     runsStore.removeAllRuns()
   }
 }
+
+async function exportRuns() {
+  const result = await runsStore.exportRuns()
+  alert(result.message)
+}
+
+async function importRuns() {
+  try {
+    const result = await runsStore.importRuns()
+    alert(`Import réussi ! ${result.count} instance(s) importée(s).`)
+  } catch (error) {
+    alert(error.message)
+  }
+}
 </script>
 
 <template>
@@ -60,6 +74,23 @@ function removeAllRuns() {
         :collapseText="t('toggle_collapse_all') || 'Tout réduire'"
         @toggle="toggleAll"
       />
+
+      <!-- Import button -->
+      <button 
+        @click="importRuns"
+        :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-green-900/50 hover:bg-green-800 text-green-200']"
+        :title="t('runs_import') || 'Importer depuis le presse-papier'">
+        📥 {{ t('runs_import') || 'Importer' }}
+      </button>
+
+      <!-- Export button -->
+      <button 
+        v-if="hasAnyRuns"
+        @click="exportRuns"
+        :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-blue-900/50 hover:bg-blue-800 text-blue-200']"
+        :title="t('runs_export') || 'Copier la configuration dans le presse-papier'">
+        📋 {{ t('runs_export') || 'Exporter' }}
+      </button>
 
       <!-- Remove all button -->
       <button 
