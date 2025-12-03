@@ -44,6 +44,68 @@ export const useDataStore = defineStore('data', {
     _rawPrices: {},
     _hasConfigWatcher: false
   }),
+  getters: {
+    // Expose price map as a getter for reuse across components
+    priceMap(state) {
+      if (Array.isArray(state._rawPrices)) {
+        const map = {}
+        state._rawPrices.forEach(p => {
+          map[p.itemId] = p.price
+        })
+        return map
+      }
+      return state._rawPrices && typeof state._rawPrices === 'object' ? state._rawPrices : {}
+    },
+    
+    // Expose item rarity map as a getter for reuse
+    itemRarityMap(state) {
+      const map = {}
+      if (Array.isArray(state._rawItems)) {
+        state._rawItems.forEach(item => {
+          map[item.id] = item.rarity || 0
+        })
+      }
+      return map
+    },
+    
+    // Build and cache item-to-instances mapping
+    itemToInstancesMap(state) {
+      const loots = state._rawLoots || []
+      const mapping = state._rawMapping || []
+      
+      if (loots.length === 0 || mapping.length === 0) return {}
+      
+      // Build monster -> instances mapping
+      const monsterToInstances = new Map()
+      mapping.forEach(m => {
+        m.monsters.forEach(monster => {
+          const existing = monsterToInstances.get(monster.monsterId) || []
+          existing.push(m.instanceId)
+          monsterToInstances.set(monster.monsterId, existing)
+        })
+      })
+      
+      // Build item -> instances mapping
+      const itemMap = new Map()
+      loots.forEach(loot => {
+        const instanceIds = monsterToInstances.get(loot.monsterId) || []
+        
+        loot.loots.forEach(drop => {
+          const existing = itemMap.get(drop.itemId) || new Set()
+          instanceIds.forEach(instId => existing.add(instId))
+          itemMap.set(drop.itemId, existing)
+        })
+      })
+      
+      // Convert Map<itemId, Set<instanceId>> to plain object with arrays
+      const result = {}
+      itemMap.forEach((instanceSet, itemId) => {
+        result[itemId] = Array.from(instanceSet)
+      })
+      
+      return result
+    }
+  },
   actions: {
     async loadAllData(server, lang = 'fr') {
       try {
@@ -115,29 +177,6 @@ export const useDataStore = defineStore('data', {
       return bonusMap[steles] || 0
     },
 
-    // Helper: Build item rarity lookup map
-    _buildItemRarityMap(items) {
-      const map = {}
-      if (Array.isArray(items)) {
-        items.forEach(item => {
-          map[item.id] = item.rarity || 0
-        })
-      }
-      return map
-    },
-
-    // Helper: Build price lookup map
-    _buildPriceMap(prices) {
-      if (Array.isArray(prices)) {
-        const map = {}
-        prices.forEach(p => {
-          map[p.itemId] = p.price
-        })
-        return map
-      }
-      return prices && typeof prices === 'object' ? prices : {}
-    },
-
     // Helper: Compute adjusted drop rate based on config
     _computeAdjustedRate(baseRate, config) {
       const globalStore = useGlobalStore()
@@ -175,9 +214,9 @@ export const useDataStore = defineStore('data', {
     createInstanceData(instances, items, mapping, loots, prices){
       const globalStore = useGlobalStore()
       
-      // Build lookup maps
-      const itemRarityMap = this._buildItemRarityMap(items)
-      const priceMap = this._buildPriceMap(prices)
+      // Use getters for lookup maps
+      const itemRarityMap = this.itemRarityMap
+      const priceMap = this.priceMap
       
       // Build players count map
       const playersMap = {}
@@ -362,8 +401,8 @@ export const useDataStore = defineStore('data', {
       if (!instance) return null
 
       const globalStore = useGlobalStore()
-      const itemRarityMap = this._buildItemRarityMap(this._rawItems)
-      const priceMap = this._buildPriceMap(this._rawPrices)
+      const itemRarityMap = this.itemRarityMap
+      const priceMap = this.priceMap
       const players = instance.players || (instance.isDungeon ? 3 : 4)
 
       // Find mapping for this instance

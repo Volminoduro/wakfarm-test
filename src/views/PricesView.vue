@@ -334,49 +334,11 @@ const { elementRef: instancesDropdownRef } = useClickOutside(() => {
   isInstancesDropdownOpen.value = false
 })
 
-// Build mapping of itemId -> instanceIds (optimized with caching)
-const itemToInstancesMap = computed(() => {
-  const loots = dataStore._rawLoots || []
-  const mapping = dataStore._rawMapping || []
-  
-  if (loots.length === 0 || mapping.length === 0) return {}
-  
-  // Build monster -> instances mapping
-  const monsterToInstances = new Map()
-  mapping.forEach(m => {
-    m.monsters.forEach(monster => {
-      const existing = monsterToInstances.get(monster.monsterId) || []
-      existing.push(m.instanceId)
-      monsterToInstances.set(monster.monsterId, existing)
-    })
-  })
-  
-  // Build item -> instances mapping
-  const itemMap = new Map()
-  loots.forEach(loot => {
-    const instanceIds = monsterToInstances.get(loot.monsterId) || []
-    
-    loot.loots.forEach(drop => {
-      const existing = itemMap.get(drop.itemId) || new Set()
-      instanceIds.forEach(instId => existing.add(instId))
-      itemMap.set(drop.itemId, existing)
-    })
-  })
-  
-  // Convert Map<itemId, Set<instanceId>> to plain object with arrays
-  const result = {}
-  itemMap.forEach((instanceSet, itemId) => {
-    result[itemId] = Array.from(instanceSet)
-  })
-  
-  return result
-})
-
-// Get all items with names, prices, and instances
+// Get all items with names, prices, and instances (using store getters)
 const allItems = computed(() => {
   const items = dataStore._rawItems || []
-  const prices = dataStore._rawPrices || {}
-  const itemInstances = itemToInstancesMap.value
+  const priceMap = dataStore.priceMap
+  const itemInstances = dataStore.itemToInstancesMap
   
   return items.map(item => {
     const instanceIds = itemInstances[item.id] || []
@@ -389,7 +351,7 @@ const allItems = computed(() => {
       name: dataStore.names?.items?.[item.id] || `Item #${item.id}`,
       rarity: item.rarity || 0,
       level: item.level || 0,
-      price: prices[item.id] || null,
+      price: priceMap[item.id] || null,
       instanceIds: instanceIds,
       instances: instanceNames
     }
