@@ -165,6 +165,118 @@
         {
             "id": "level_ranges_selected",
             "name": "selected"
+        },
+        {
+            "id": "kamas_hour_user_configs",
+            "name": "Your custom configurations (Saved locally)"
+        },
+        {
+            "id": "kamas_hour_wip",
+            "name": "Work in progress: Hourly configuration"
+        },
+        {
+            "id": "prices_search_name",
+            "name": "Search by name"
+        },
+        {
+            "id": "prices_search_placeholder",
+            "name": "Item name..."
+        },
+        {
+            "id": "prices_filter_rarity",
+            "name": "Filter by rarity"
+        },
+        {
+            "id": "prices_all_rarities",
+            "name": "All rarities"
+        },
+        {
+            "id": "prices_filter_level",
+            "name": "Filter by level"
+        },
+        {
+            "id": "prices_min",
+            "name": "Min"
+        },
+        {
+            "id": "prices_max",
+            "name": "Max"
+        },
+        {
+            "id": "prices_col_name",
+            "name": "Name"
+        },
+        {
+            "id": "prices_col_rarity",
+            "name": "Rarity"
+        },
+        {
+            "id": "prices_col_level",
+            "name": "Level"
+        },
+        {
+            "id": "prices_col_price",
+            "name": "Price"
+        },
+        {
+            "id": "prices_showing",
+            "name": "Showing"
+        },
+        {
+            "id": "prices_items",
+            "name": "items"
+        },
+        {
+            "id": "rarity_common",
+            "name": "Common"
+        },
+        {
+            "id": "rarity_unusual",
+            "name": "Unusual"
+        },
+        {
+            "id": "rarity_rare",
+            "name": "Rare"
+        },
+        {
+            "id": "rarity_mythical",
+            "name": "Mythical"
+        },
+        {
+            "id": "rarity_legendary",
+            "name": "Legendary"
+        },
+        {
+            "id": "rarity_relic",
+            "name": "Relic"
+        },
+        {
+            "id": "rarity_souvenir",
+            "name": "Souvenir"
+        },
+        {
+            "id": "rarity_epic",
+            "name": "Epic"
+        },
+        {
+            "id": "prices_per_page",
+            "name": "Items per page"
+        },
+        {
+            "id": "prices_of",
+            "name": "of"
+        },
+        {
+            "id": "prices_page",
+            "name": "Page"
+        },
+        {
+            "id": "prices_filter_instances",
+            "name": "Filter by instances"
+        },
+        {
+            "id": "prices_col_instances",
+            "name": "Instances"
         }
     ]
 }

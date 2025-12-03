@@ -13,8 +13,23 @@ import PricesView from './views/PricesView.vue'
 
 const dataStore = useDataStore()
 const globalStore = useGlobalStore()
-const mainTab = ref('rentability')
-const subTab = ref('run')
+
+// Load saved tabs or use defaults
+const savedMainTab = localStorage.getItem('wakfarm_mainTab') || 'rentability'
+const savedSubTab = localStorage.getItem('wakfarm_subTab') || 'run'
+const mainTab = ref(savedMainTab)
+const subTab = ref(savedSubTab)
+
+// Save tabs to localStorage when they change
+const setMainTab = (tab) => {
+  mainTab.value = tab
+  localStorage.setItem('wakfarm_mainTab', tab)
+}
+
+const setSubTab = (tab) => {
+  subTab.value = tab
+  localStorage.setItem('wakfarm_subTab', tab)
+}
 
 // Charger les données au montage
 onMounted(() => {
@@ -34,7 +49,7 @@ const { expanded, toggleExpand, allExpanded, toggleAll } = useExpandableItems(
   <div :class="['min-h-screen flex flex-col', COLOR_CLASSES.bgPrimary]">
     <AppHeader 
       :mainTab="mainTab"
-      @change-main-tab="mainTab = $event"
+      @change-main-tab="setMainTab"
     />
     
     <!-- Main Content -->
@@ -50,7 +65,7 @@ const { expanded, toggleExpand, allExpanded, toggleAll } = useExpandableItems(
         :expanded="expanded"
         :allExpanded="allExpanded"
         @toggleExpand="toggleExpand"
-        @change-sub-tab="subTab = $event"
+        @change-sub-tab="setSubTab"
         @toggle-all="toggleAll"
       />
 

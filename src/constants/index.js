@@ -7,14 +7,14 @@ export const STORAGE_KEYS = {
 
 // Couleurs de rareté Wakfu
 export const RARITY_COLORS = {
-  0: '#FFFFFF',  // Commun
-  1: '#FFFFFF',  // Commun
-  2: '#00EE8C',  // Inhabituel (vert)
-  3: '#FF913C',  // Rare (orange)
-  4: '#FFDF78',  // Mythique (jaune)
-  5: '#6A42A2',  // Légendaire (violet)
-  6: '#8DC6E1',  // Relique (cyan)
-  7: '#FF88B8'   // Souvenir (rose)
+  0: '#BEBEBE',  // Commun
+  1: '#FFFFFF',  // Inhabituel
+  2: '#00EE8C',  // Rare (vert)
+  3: '#FF913C',  // Mythique (orange)
+  4: '#FFDF78',  // Légendaire (jaune)
+  5: '#6A42A2',  // Relique (violet)
+  6: '#8DC6E1',  // Souvenir (cyan)
+  7: '#FF88B8'   // Epique (rose)
 }
 
 // Tranches de niveau (20, puis de 15 en 15 jusqu'à 245)

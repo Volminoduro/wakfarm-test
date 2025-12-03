@@ -35,7 +35,8 @@ export const COLOR_CLASSES = {
   
   // Bordures
   borderPrimary: 'border-slate-700',
-  borderCard: 'border border-amber-500/30',
+  borderCard: 'border border-[#625946] rounded-lg',
+  
   tabSeparator: 'border-r-2 border-[#4e483a]',
   
   // Boutons/États actifs

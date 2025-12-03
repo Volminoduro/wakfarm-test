@@ -53,9 +53,9 @@
 
     <!-- Kamas / Heure -->
     <div v-else class="px-8 py-4 max-w-[1920px] mx-auto">
-      <p :class="['mb-4', COLOR_CLASSES.textSecondary]">Vos configurations personnalisées (Sauvegardées localement)</p>
+      <p :class="['mb-4', COLOR_CLASSES.textSecondary]">{{ t('kamas_hour_user_configs') }}</p>
       <div :class="[COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard, 'rounded-lg p-4']">
-        <p :class="COLOR_CLASSES.textSecondary">Work in progress: Configuration horaire</p>
+        <p :class="COLOR_CLASSES.textSecondary">{{ t('kamas_hour_wip') }}</p>
       </div>
     </div>
   </div>
