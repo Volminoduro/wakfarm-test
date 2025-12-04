@@ -4,6 +4,7 @@ import { COLOR_CLASSES } from '../constants/colors'
 import { useRunsStore } from '../stores/useRunsStore'
 import { useDataStore } from '../stores/useDataStore'
 import RunConfigRow from './RunConfigRow.vue'
+import ExpandArrow from './ExpandArrow.vue'
 
 const props = defineProps({
   instance: {
@@ -108,9 +109,7 @@ function removeAllRuns() {
               Vagues faites
             </div>
             <!-- Empty spacers to align with dungeon layout (Stasis, Stèles, Stèles Interv.) -->
-            <div style="width: 60px;"></div>
-            <div style="width: 60px;"></div>
-            <div style="width: 80px;"></div>
+            <div style="width: 30px;"></div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
               Temps (min)
             </div>

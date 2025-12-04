@@ -1,13 +1,20 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useDataStore } from '../stores/useDataStore'
 import { useRunsStore } from '../stores/useRunsStore'
-import { COLOR_CLASSES } from '../constants/colors'
+import { useGlobalStore } from '../stores/useGlobalStore'
+import { useLocalStorage } from '../composables/useLocalStorage'
+import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
 import RunCard from '../components/RunCard.vue'
+import RunHourCard from '../components/RunHourCard.vue'
 import ToggleAllButton from '../components/ToggleAllButton.vue'
 
 const dataStore = useDataStore()
 const runsStore = useRunsStore()
+const globalStore = useGlobalStore()
+
+// Sub-tab management
+const subTab = useLocalStorage('wakfarm_runs_subTab', 'time')
 
 const t = (key) => dataStore.names?.divers?.[key] || key
 
@@ -70,12 +77,102 @@ async function importRuns() {
     alert(error.message)
   }
 }
+
+// Kamas/Time logic
+const expandedHourRuns = ref(new Set())
+const timePeriod = useLocalStorage('wakfarm_time_period', 60)
+
+// Validate time period input
+function validateTimePeriod(event) {
+  const value = event.target.value
+  timePeriod.value = value === '' ? null : Math.max(1, Math.min(999, parseInt(value) || 60))
+}
+
+// Build all runs with their kamas/period calculation
+const sortedHourRuns = computed(() => {
+  if (!dataStore.loaded) return []
+  
+  const allRuns = []
+  const period = timePeriod.value || 60
+  
+  // Iterate through all configured runs
+  Object.entries(runsStore.runs).forEach(([instanceId, runs]) => {
+    runs.forEach(run => {
+      const instanceIdNum = parseInt(instanceId)
+      const instanceData = dataStore.calculateInstanceForRun(instanceIdNum, run)
+      
+      if (instanceData && run.time > 0) {
+        const iterations = Math.floor(period / run.time)
+        const kamasPerPeriod = Math.floor(instanceData.totalKamas * iterations)
+        
+        allRuns.push({
+          key: `${instanceId}_${run.id}`,
+          instanceId: instanceIdNum,
+          run,
+          kamasPerPeriod,
+          iterations
+        })
+      }
+    })
+  })
+  
+  // Sort by kamas/period descending
+  return allRuns.sort((a, b) => b.kamasPerPeriod - a.kamasPerPeriod)
+})
+
+const allHourRunsExpanded = computed(() => {
+  if (sortedHourRuns.value.length === 0) return false
+  return sortedHourRuns.value.every(r => expandedHourRuns.value.has(r.key))
+})
+
+function toggleHourRun(key) {
+  if (expandedHourRuns.value.has(key)) {
+    expandedHourRuns.value.delete(key)
+  } else {
+    expandedHourRuns.value.add(key)
+  }
+  expandedHourRuns.value = new Set(expandedHourRuns.value)
+}
+
+function toggleAllHourRuns() {
+  expandedHourRuns.value = allHourRunsExpanded.value 
+    ? new Set() 
+    : new Set(sortedHourRuns.value.map(r => r.key))
+}
 </script>
 
 <template>
-  <div class="px-8 py-6 max-w-[1920px] mx-auto">
-    <!-- Action buttons -->
-    <div :class="['px-4 py-3 mb-4 flex items-center gap-4', COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard, 'rounded-lg']">
+  <div>
+    <!-- Sub Navigation -->
+    <nav :class="['flex items-center border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
+      <button 
+        @click="subTab = 'time'" 
+        :class="['flex-1 py-2 transition-all font-semibold text-base flex items-center justify-center gap-2', COLOR_CLASSES.tabSeparator, subTab === 'time' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]"
+        :style="`border-right-color: ${TAB_SEPARATOR} !important; ${subTab === 'time' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
+        <span>Kamas /</span>
+        <input 
+          type="number"
+          v-model.number="timePeriod"
+          @click.stop
+          @input="validateTimePeriod"
+          :class="[COLOR_CLASSES.input, 'text-sm py-0 px-2 text-center']"
+          style="width: 65px; height: 24px;"
+          min="1"
+          max="999"
+          placeholder="60"
+        />
+        <span>mins</span>
+      </button>
+      <button 
+        @click="subTab = 'config'" 
+        :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'config' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]"
+        :style="subTab === 'config' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''">
+        {{ t('runs_config') || 'Configuration' }}
+      </button>
+    </nav>
+
+    <!-- Header for Configuration Tab -->
+    <div v-if="subTab === 'config'" :class="['px-4 py-2 border-b flex items-center gap-4 h-[50px]', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
       <!-- Toggle all button -->
       <ToggleAllButton
         :isExpanded="allExpanded"
@@ -118,6 +215,41 @@ async function importRuns() {
       </div>
     </div>
 
+    <!-- Header for Kamas / Time Tab -->
+    <div v-if="subTab === 'time'" :class="['px-4 py-2 border-b h-[50px]', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
+      <ToggleAllButton
+        :isExpanded="allHourRunsExpanded"
+        :expandText="t('toggle_expand_all')"
+        :collapseText="t('toggle_collapse_all')"
+        @toggle="toggleAllHourRuns"
+      />
+    </div>
+
+    <!-- Kamas / Time Tab -->
+    <div v-if="subTab === 'time'" class="px-8 py-6 max-w-[1920px] mx-auto">
+
+      <!-- Runs list -->
+      <div v-if="!dataStore.loaded" class="text-center">
+        <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ t('loading') }}</p>
+      </div>
+      <div v-else-if="sortedHourRuns.length === 0" :class="[COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard, 'rounded-lg p-6']">
+        <p :class="COLOR_CLASSES.textSecondary">{{ t('kamas_hour_no_runs') || 'Aucun run configuré. Allez dans l\'onglet "Configuration" pour en créer.' }}</p>
+      </div>
+      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        <RunHourCard 
+          v-for="runData in sortedHourRuns" 
+          :key="runData.key"
+          :instanceId="runData.instanceId"
+          :run="runData.run"
+          :timePeriod="timePeriod"
+          :isExpanded="expandedHourRuns.has(runData.key)"
+          @toggle="toggleHourRun(runData.key)"
+        />
+      </div>
+    </div>
+
+    <!-- Configuration Tab -->
+    <div v-else class="px-8 py-6 max-w-[1920px] mx-auto">
     <!-- Loading state -->
     <div v-if="!dataStore.loaded" class="text-center py-8">
       <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ t('loading') || 'Chargement des données...' }}</p>
@@ -130,6 +262,7 @@ async function importRuns() {
         :key="inst.id"
         :instance="inst"
       />
+    </div>
     </div>
   </div>
 </template>

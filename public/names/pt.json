@@ -73354,7 +73354,7 @@
         },
         {
             "id": 168,
-            "name": "Falha Dimensional de Tainela"
+            "name": "Falha Dim. de Tainela"
         },
         {
             "id": 25,
@@ -73450,7 +73450,7 @@
         },
         {
             "id": 169,
-            "name": "Falha Dimensional de Sufokia"
+            "name": "Falha Dim. de Sufokia"
         },
         {
             "id": 3,
@@ -73562,11 +73562,11 @@
         },
         {
             "id": 170,
-            "name": "Falha Dimensional de Frigost"
+            "name": "Falha Dim. de Frigost"
         },
         {
             "id": 174,
-            "name": "Falha Dimensional de Amakna"
+            "name": "Falha Dim. de Amakna"
         },
         {
             "id": 204,
@@ -73630,7 +73630,7 @@
         },
         {
             "id": 171,
-            "name": "Falha Dimensional de Bonta"
+            "name": "Falha Dim. de Bonta"
         },
         {
             "id": 192,
@@ -73702,7 +73702,7 @@
         },
         {
             "id": 172,
-            "name": "Falha Dimensional de Moon"
+            "name": "Falha Dim. de Moon"
         },
         {
             "id": 117,
@@ -73782,11 +73782,11 @@
         },
         {
             "id": 173,
-            "name": "Falha Dimensional do Monte Zinit"
+            "name": "Falha Dim. do Monte Zinit"
         },
         {
             "id": 175,
-            "name": "Falha Dimensional de Osamosa"
+            "name": "Falha Dim. de Osamosa"
         },
         {
             "id": 176,
@@ -73814,11 +73814,11 @@
         },
         {
             "id": 182,
-            "name": "Falha Dimensional da Shukrute"
+            "name": "Falha Dim. da Shukrute"
         },
         {
             "id": 183,
-            "name": "Falha Dimensional Suprema da Shukrute"
+            "name": "Falha Dim. Suprema da Shukrute"
         },
         {
             "id": 187,
@@ -74177,6 +74177,10 @@
         {
             "id": "runs_import",
             "name": "Importar"
+        },
+        {
+            "id": "runs_config",
+            "name": "Configuração"
         }
     ]
 }

@@ -15,11 +15,9 @@ const globalStore = useGlobalStore()
 
 // Tab state with localStorage persistence
 const mainTab = useLocalStorage('wakfarm_mainTab', 'rentability')
-const subTab = useLocalStorage('wakfarm_subTab', 'run')
 
 // Tab change handlers
 const setMainTab = (tab) => { mainTab.value = tab }
-const setSubTab = (tab) => { subTab.value = tab }
 
 // Charger les données au montage
 onMounted(() => {
@@ -46,8 +44,6 @@ onMounted(() => {
       <!-- Rentability Tab -->
       <RentabilityView 
         v-if="mainTab === 'rentability'"
-        :subTab="subTab"
-        @change-sub-tab="setSubTab"
       />
 
       <!-- Runs Tab -->

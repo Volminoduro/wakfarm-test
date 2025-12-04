@@ -249,17 +249,18 @@ export const useDataStore = defineStore('data', {
 
       // Rifts (brèches) have different bonus calculation
       if (config.isRift) {
-        const finalWave = (config.startingWave || 1) + (config.wavesCompleted || 1)
+        const finalWave = (config.startingWave || 1) + (config.wavesCompleted || 0)
         const bonusPerWave = config.isUltimate ? 18 : 8
-        const waveBonus = 1 + ((finalWave - 1) * bonusPerWave) / 100
+        const waveBonus = 1 + ((finalWave-1) * bonusPerWave) / 100
+        console.log("baseRate * waveBonus * boosterBonus:", { baseRate, waveBonus, boosterBonus })
+        console.log("=>", baseRate * waveBonus * boosterBonus)
         return baseRate * waveBonus * boosterBonus
       }
 
-      // Dungeons use stasis/modulation/booster/intervention bonuses
+      // Dungeons use stasis/modulation/booster bonuses
       const bonusMap = config.isModulated ? STASIS_BONUS_MODULATED : STASIS_BONUS_NON_MODULATED
       const stasisFactor = bonusMap[config.stasis || 0] || 0
-      const interventionBonus = config.intervention ? 1.10 : 1
-      return Math.min(1, baseRate * stasisFactor * boosterBonus * interventionBonus)
+      return Math.min(1, baseRate * stasisFactor * boosterBonus)
     },
 
     // Helper: Check if loot should be included based on config filters

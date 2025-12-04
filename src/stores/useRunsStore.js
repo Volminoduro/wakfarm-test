@@ -104,6 +104,9 @@ export const useRunsStore = defineStore('runs', () => {
       // Clean up if no runs left
       if (runs.value[instanceId].length === 0) {
         delete runs.value[instanceId]
+        // Réduire l'instance quand on supprime le dernier run
+        expandedInstances.value.delete(instanceId)
+        expandedInstances.value = new Set(expandedInstances.value)
       }
     }
   }
@@ -111,12 +114,16 @@ export const useRunsStore = defineStore('runs', () => {
   // Remove all runs for an instance
   function removeAllRunsForInstance(instanceId) {
     delete runs.value[instanceId]
+    // Réduire l'instance quand on supprime tous ses runs
+    expandedInstances.value.delete(instanceId)
+    expandedInstances.value = new Set(expandedInstances.value)
   }
 
   // Remove all runs from all instances
   function removeAllRuns() {
     runs.value = {}
-    expandedInstances.value.clear()
+    // Réduire toutes les instances
+    expandedInstances.value = new Set()
   }
 
   // Update a specific run

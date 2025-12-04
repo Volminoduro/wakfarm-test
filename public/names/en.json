@@ -73354,7 +73354,7 @@
         },
         {
             "id": 168,
-            "name": "Tainela Dimensional Rift"
+            "name": "Tainela Dim. Rift"
         },
         {
             "id": 25,
@@ -73450,7 +73450,7 @@
         },
         {
             "id": 169,
-            "name": "Sufokia Dimensional Rift"
+            "name": "Sufokia Dim. Rift"
         },
         {
             "id": 3,
@@ -73562,11 +73562,11 @@
         },
         {
             "id": 170,
-            "name": "Frigost Dimensional Rift"
+            "name": "Frigost Dim. Rift"
         },
         {
             "id": 174,
-            "name": "Amakna Dimensional Rift"
+            "name": "Amakna Dim. Rift"
         },
         {
             "id": 204,
@@ -73630,7 +73630,7 @@
         },
         {
             "id": 171,
-            "name": "Bonta Dimensional Rift"
+            "name": "Bonta Dim. Rift"
         },
         {
             "id": 192,
@@ -73702,7 +73702,7 @@
         },
         {
             "id": 172,
-            "name": "Moon Dimensional Rift"
+            "name": "Moon Dim. Rift"
         },
         {
             "id": 117,
@@ -73782,11 +73782,11 @@
         },
         {
             "id": 173,
-            "name": "Mount Zinit Dimensional Rift"
+            "name": "Mount Zinit Dim. Rift"
         },
         {
             "id": 175,
-            "name": "Osamosa Dimensional Rift"
+            "name": "Osamosa Dim. Rift"
         },
         {
             "id": 176,
@@ -73814,11 +73814,11 @@
         },
         {
             "id": 182,
-            "name": "Shustuft Crust Dimensional Rift"
+            "name": "Shustuft Crust Dim. Rift"
         },
         {
             "id": 183,
-            "name": "Shustuft Crust Ultimate Dimensional Rift"
+            "name": "Shustuft Crust Ultimate Dim. Rift"
         },
         {
             "id": 187,
@@ -74177,6 +74177,10 @@
         {
             "id": "runs_import",
             "name": "Import"
+        },
+        {
+            "id": "runs_config",
+            "name": "Configuration"
         }
     ]
 }

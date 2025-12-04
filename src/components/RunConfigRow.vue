@@ -59,9 +59,7 @@ function updateField(field, value) {
       </div>
 
       <!-- Empty spacers to align with dungeon layout (Stasis, Stèles, Stèles Interv.) -->
-      <div style="width: 60px;"></div>
-      <div style="width: 60px;"></div>
-      <div style="width: 80px;"></div>
+      <div style="width: 30px;"></div>
 
       <!-- Temps (minutes) -->
       <div class="flex justify-center" style="width: 60px;">

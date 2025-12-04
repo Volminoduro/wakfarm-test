@@ -3,20 +3,12 @@ import { useGlobalStore } from '../stores/useGlobalStore'
 import { useDataStore } from '../stores/useDataStore'
 import { formatInputNumber, formatRateInput, parseFormattedNumber } from '../utils/formatters'
 import { COLOR_CLASSES } from '../constants/colors'
-import { useLocalStorage } from '../composables/useLocalStorage'
 import LevelRangeFilter from './LevelRangeFilter.vue'
 
 const store = useGlobalStore()
 const dataStore = useDataStore()
 
-// Collapsed state with localStorage persistence
-const isCollapsed = useLocalStorage('wakfarm_config_collapsed', false)
-
 const t = (key) => dataStore.names?.divers?.[key] || key
-
-function toggleCollapse() {
-  isCollapsed.value = !isCollapsed.value
-}
 
 // Generic numeric field updater
 const updateNumericField = (event, fieldName, parser = parseInt) => {
@@ -55,18 +47,11 @@ function updateMinDropRate(event) {
 
 <template>
   <div :class="COLOR_CLASSES.configBg" class="p-2" style="contain: layout style;">
-    <div class="flex items-center justify-between mb-2">
+    <div class="mb-2">
       <h2 :class="['text-2xl', COLOR_CLASSES.titlePrimary]">Filtres</h2>
-      <button 
-        @click="toggleCollapse"
-        :class="['px-2 py-1 rounded transition-colors', COLOR_CLASSES.button, COLOR_CLASSES.textSecondary]"
-        :title="isCollapsed ? 'Développer' : 'Réduire'">
-        {{ isCollapsed ? '▼' : '▲' }}
-      </button>
     </div>
 
-    <transition name="expand">
-      <div v-if="!isCollapsed">
+    <div>
         <table class="w-full" style="table-layout: fixed;">
           <thead>
             <tr>
@@ -143,8 +128,7 @@ function updateMinDropRate(event) {
             </tr>
       </tbody>
     </table>
-      </div>
-    </transition>
+    </div>
   </div>
 </template>
 
