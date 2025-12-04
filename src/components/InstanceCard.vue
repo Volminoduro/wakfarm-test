@@ -52,18 +52,41 @@ const instanceTitle = computed(() => {
       </div>
     </div>
 
-    <transition name="slide">
-      <ul v-if="isExpanded && instance.items && instance.items.length > 0" :class="['divide-y divide-white/20', COLOR_CLASSES.bgSecondary]">
-        <li v-for="(item, idx) in instance.items" :key="item.itemId" class="px-5 py-2 flex justify-between items-center">
-          <div class="flex items-center gap-3">
-            <div :class="COLOR_CLASSES.textNormal">
-              <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
-              <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
+    <transition name="expand">
+      <div v-if="isExpanded && instance.items && instance.items.length > 0" class="overflow-hidden">
+        <ul :class="['divide-y divide-white/20', COLOR_CLASSES.bgSecondary]">
+          <li v-for="(item, idx) in instance.items" :key="item.itemId" class="px-5 py-2 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+              <div :class="COLOR_CLASSES.textNormal">
+                <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
+                <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
+              </div>
             </div>
-          </div>
-          <div :class="['font-semibold', COLOR_CLASSES.textKamas]">{{ formatNumber(item.subtotal) }} ₭</div>
-        </li>
-      </ul>
+            <div :class="['font-semibold', COLOR_CLASSES.textKamas]">{{ formatNumber(item.subtotal) }} ₭</div>
+          </li>
+        </ul>
+      </div>
     </transition>
   </div>
 </template>
+
+<style scoped>
+/* Smooth expand/collapse transition */
+.expand-enter-active,
+.expand-leave-active {
+  transition: all 0.3s ease;
+  max-height: 2000px;
+}
+
+.expand-enter-from,
+.expand-leave-to {
+  opacity: 0;
+  max-height: 0;
+}
+
+.expand-enter-to,
+.expand-leave-from {
+  opacity: 1;
+  max-height: 2000px;
+}
+</style>

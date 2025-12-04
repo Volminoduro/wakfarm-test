@@ -65,11 +65,12 @@ function updateMinDropRate(event) {
       </button>
     </div>
 
-    <transition name="slide">
-      <table v-if="!isCollapsed" class="w-full" style="table-layout: fixed;">
-        <thead>
-          <tr>
-            <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_modulated') }}</th>
+    <transition name="expand">
+      <div v-if="!isCollapsed" class="overflow-hidden">
+        <table class="w-full" style="table-layout: fixed;">
+          <thead>
+            <tr>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_modulated') }}</th>
           <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_booster') }}</th>
           <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_stasis') }}</th>
           <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_steles') }}</th>
@@ -196,6 +197,7 @@ function updateMinDropRate(event) {
         </tr>
       </tbody>
     </table>
+      </div>
     </transition>
   </div>
 </template>
@@ -263,10 +265,28 @@ input[type=number] {
   background-color: #d3fd38;
   border-color: #d3fd38;
 }
-
 .custom-checkbox:focus {
   outline: 2px solid #d3fd38;
   outline-offset: 2px;
   border-color: #d3fd38;
+}
+
+/* Smooth expand/collapse transition */
+.expand-enter-active,
+.expand-leave-active {
+  transition: all 0.2s ease;
+  max-height: 500px;
+}
+
+.expand-enter-from,
+.expand-leave-to {
+  opacity: 0;
+  max-height: 0;
+}
+
+.expand-enter-to,
+.expand-leave-from {
+  opacity: 1;
+  max-height: 500px;
 }
 </style>
