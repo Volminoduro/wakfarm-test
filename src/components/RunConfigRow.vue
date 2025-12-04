@@ -20,7 +20,64 @@ function updateField(field, value) {
 </script>
 
 <template>
-  <div :class="['px-4 py-3 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
+  <!-- Rift (Brèche) Configuration -->
+  <div v-if="run.isRift" :class="['px-4 py-3 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
+    <div class="flex items-center gap-2 flex-1">
+      <!-- Vague de départ -->
+      <div class="flex justify-center" style="width: 120px;">
+        <input 
+          type="number"
+          :value="run.startingWave"
+          @input="updateField('startingWave', Math.max(1, parseInt($event.target.value) || 1))"
+          :class="[COLOR_CLASSES.input, 'text-sm py-1 text-center']"
+          style="width: 60px;"
+          min="1"
+        />
+      </div>
+
+      <!-- Nombre de vagues effectuées -->
+      <div class="flex justify-center" style="width: 120px;">
+        <input 
+          type="number"
+          :value="run.wavesCompleted"
+          @input="updateField('wavesCompleted', Math.min(99, Math.max(1, parseInt($event.target.value) || 1)))"
+          :class="[COLOR_CLASSES.input, 'text-sm py-1 text-center']"
+          style="width: 60px;"
+          min="1"
+          max="99"
+        />
+      </div>
+
+      <!-- Empty spacers to align with dungeon layout (Modulé, Booster, Stasis, Stèles, Stèles Interv.) -->
+      <div style="width: 95px;"></div>
+
+      <!-- Temps (minutes) -->
+      <div class="flex justify-center" style="width: 60px;">
+        <input 
+          type="number"
+          :value="run.time"
+          @input="updateField('time', $event.target.value ? Math.max(1, parseInt($event.target.value)) : null)"
+          :placeholder="'min'"
+          :class="[COLOR_CLASSES.input, 'text-sm py-1 text-center']"
+          style="width: 50px;"
+          min="1"
+        />
+      </div>
+    </div>
+
+    <!-- Bouton supprimer -->
+    <div class="flex justify-center" style="width: 60px;">
+      <button 
+        @click="emit('remove')"
+        :class="['px-2 py-1 rounded text-sm transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
+        :title="t('button_remove') || 'Supprimer'">
+        ✕
+      </button>
+    </div>
+  </div>
+
+  <!-- Dungeon Configuration -->
+  <div v-else :class="['px-4 py-3 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
     <div class="flex items-center gap-2 flex-1">
       <!-- Modulé -->
       <div class="flex justify-center" style="width: 60px;">

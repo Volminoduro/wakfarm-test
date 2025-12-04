@@ -27,7 +27,7 @@ function toggleExpand() {
 }
 
 function addRun() {
-  runsStore.addRun(props.instance.id)
+  runsStore.addRun(props.instance.id, props.instance)
   // Auto-expand when adding a run
   if (!isExpanded.value) {
     runsStore.toggleExpanded(props.instance.id)
@@ -96,8 +96,26 @@ function removeAllRuns() {
     <!-- Runs list (expandable) -->
     <transition name="slide">
       <div v-if="isExpanded && hasRuns">
-        <!-- Header row with labels -->
-        <div :class="['px-4 py-2 border-t border-[#363634] flex items-center gap-3', COLOR_CLASSES.bgSecondary]">
+        <!-- Header row with labels - Rift -->
+        <div v-if="!instance.isDungeon" :class="['px-4 py-2 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
+          <div class="flex items-center gap-2 flex-1">
+            <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 120px; text-align: center;">
+              Vague départ
+            </div>
+            <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 120px; text-align: center;">
+              Vagues faites
+            </div>
+            <!-- Empty spacers to align with dungeon layout (Modulé, Booster, Stasis, Stèles, Stèles Interv.) -->
+            <div style="width: 95px;"></div>
+            <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
+              Temps (min)
+            </div>
+          </div>
+          <div style="width: 60px;"></div> <!-- Space for delete button -->
+        </div>
+
+        <!-- Header row with labels - Dungeon -->
+        <div v-else :class="['px-4 py-2 border-t border-[#363634] flex items-center gap-3', COLOR_CLASSES.bgSecondary]">
           <div class="flex items-center gap-2 flex-1">
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
               {{ t('config_modulated') }}

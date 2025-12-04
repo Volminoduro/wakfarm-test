@@ -179,9 +179,19 @@ export const useDataStore = defineStore('data', {
 
     // Helper: Compute adjusted drop rate based on config
     _computeAdjustedRate(baseRate, config) {
+      // Rifts (brèches) have different bonus calculation
+      if (config.isRift) {
+        const finalWave = (config.startingWave || 1) + (config.wavesCompleted || 1)
+        // Ultimate rifts: 18% per wave, normal rifts: 8% per wave
+        const bonusPerWave = config.isUltimate ? 18 : 8
+        const bonusPercent = (finalWave - 1) * bonusPerWave
+        return baseRate * (1 + bonusPercent / 100)
+      }
+
+      // Dungeons use stasis/modulation/booster bonuses
       const globalStore = useGlobalStore()
       const stasisFactor = this.getStasisBonus(config.stasis || 0, !!config.isModulated)
-      const boosterBonus = globalStore.config.isBooster 
+      const boosterBonus = config.isBooster 
         ? (BOOSTER_BONUS[globalStore.config.server] || 1.25) 
         : 1
       const interventionBonus = config.intervention ? 1.10 : 1
@@ -191,11 +201,24 @@ export const useDataStore = defineStore('data', {
 
     // Helper: Check if loot should be included based on config filters
     _shouldIncludeLoot(lootEntry, itemRarity, config) {
+      // Rifts (brèches) have different eligibility rules
+      if (config.isRift) {
+        // Legendary+ items (rarity >= 5): ultimate rifts need 4 waves, normal rifts need 9
+        const requiredWaves = config.isUltimate ? 4 : 9
+        if (itemRarity >= 5 && (config.wavesCompleted || 0) < requiredWaves) {
+          return false
+        }
+        // Rifts ignore steles/stele intervention - all items eligible
+        return true
+      }
+
+      // Dungeons use steles/stele intervention/stasis filters
       const configSteles = Number(config.steles || 0)
       const configSteleIntervention = Number(config.steleIntervention || 0)
       const configStasis = Number(config.stasis || 0)
       const lootStele = Number(lootEntry.stele || 0)
       const lootSteleIntervention = Number(lootEntry.steleIntervention || 0)
+      const lootStasis = lootEntry.stasis !== undefined ? Number(lootEntry.stasis) : null
 
       // Check stele requirement
       const steleOk = lootStele <= configSteles
@@ -205,10 +228,13 @@ export const useDataStore = defineStore('data', {
         ? lootSteleIntervention <= configSteleIntervention
         : lootSteleIntervention === 0
 
+      // Check stasis requirement: if loot has a stasis requirement, config stasis must be >= that value
+      const stasisOk = lootStasis !== null ? configStasis >= lootStasis : true
+
       // Items with rarity > 3 require stasis >= 3
       const rarityOk = itemRarity > 3 ? configStasis >= 3 : true
 
-      return steleOk && steleInterventionOk && rarityOk
+      return steleOk && steleInterventionOk && stasisOk && rarityOk
     },
 
     createInstanceData(instances, items, mapping, loots, prices){
@@ -229,6 +255,12 @@ export const useDataStore = defineStore('data', {
         const instanceMapping = mapping.find(m => m.instanceId === inst.id)
         const allLoots = []
         const players = playersMap[inst.id] || 1
+        
+        // Build instance-specific config (add isUltimate for rifts)
+        const instanceConfig = {
+          ...globalStore.config,
+          isUltimate: inst.isUltimate || false
+        }
 
         if (instanceMapping?.monsters) {
           instanceMapping.monsters.forEach(monster => {
@@ -238,13 +270,20 @@ export const useDataStore = defineStore('data', {
                 loot.loots
                   .filter(lootEntry => {
                     const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                    return this._shouldIncludeLoot(lootEntry, itemRarity, globalStore.config)
+                    return this._shouldIncludeLoot(lootEntry, itemRarity, instanceConfig)
                   })
                   .forEach(lootEntry => {
                     const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                    const baseQuantity = lootEntry.quantity * monster.number
-                    // Rarity 5 items: only 1 per team, otherwise multiply by players
-                    const finalQuantity = itemRarity === 5 ? baseQuantity : baseQuantity * players
+                    let finalQuantity
+                    
+                    // BonusPP (99999) is a percentage bonus, not an actual item drop
+                    if (lootEntry.itemId === 99999) {
+                      finalQuantity = lootEntry.quantity // Keep percentage as-is
+                    } else {
+                      const baseQuantity = lootEntry.quantity * monster.number
+                      // Rarity 5 items: only 1 per team, otherwise multiply by players
+                      finalQuantity = itemRarity === 5 ? baseQuantity : baseQuantity * players
+                    }
                     
                     allLoots.push({
                       ...lootEntry,
@@ -259,6 +298,8 @@ export const useDataStore = defineStore('data', {
         return {
           id: inst.id,
           level: inst.level,
+          isDungeon: inst.isDungeon,
+          isUltimate: inst.isUltimate || false,
           loots: allLoots
         }
       })
@@ -268,15 +309,45 @@ export const useDataStore = defineStore('data', {
       const minDropRate = Number(globalStore.config.minDropRatePercent || 0) / 100
 
       const enriched = instancesRefined.map(inst => {
+        // Get original instance for isUltimate
+        const originalInst = instances.find(i => i.id === inst.id)
+        
+        // Build instance-specific config (add isUltimate for rifts)
+        const instanceConfig = {
+          ...globalStore.config,
+          isUltimate: originalInst?.isUltimate || false
+        }
+        
+        // Calculate BonusPP (item 99999) drop rate bonus
+        let bonusPPMultiplier = 0
+        inst.loots.forEach(l => {
+          if (l.itemId === 99999) {
+            const adjustedRate = this._computeAdjustedRate(l.rate || 0, instanceConfig)
+            // quantity represents the percentage bonus (e.g., 20 = +20%)
+            bonusPPMultiplier += adjustedRate * (l.quantity / 100)
+          }
+        })
+
         const perItem = new Map()
 
         // Aggregate loot by item
         inst.loots.forEach(l => {
           const itemId = l.itemId
+          
+          // Skip BonusPP item (99999) - it's only used for bonus calculation
+          if (itemId === 99999) return
+
           const price = l.price || 0
           const qty = l.quantity || 0
           const baseRate = l.rate || 0
-          const adjustedRate = this._computeAdjustedRate(baseRate, globalStore.config)
+          let adjustedRate = this._computeAdjustedRate(baseRate, instanceConfig)
+          
+          // Apply BonusPP bonus to drop rate
+          adjustedRate = adjustedRate * (1 + bonusPPMultiplier)
+          
+          // Cap drop rate at 100%
+          adjustedRate = Math.min(adjustedRate, 1.0)
+          
           const value = Math.floor(price * adjustedRate * qty)
 
           if (!perItem.has(itemId)) {
@@ -301,13 +372,22 @@ export const useDataStore = defineStore('data', {
         // Filter and sort items by profit
         const itemsBreakdown = Array.from(perItem.values())
           .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDropRate)
-          .sort((a, b) => b.subtotal - a.subtotal)
+          .sort((a, b) => {
+            // Primary sort: by subtotal (kamas) descending
+            if (b.subtotal !== a.subtotal) return b.subtotal - a.subtotal
+            // Secondary sort: by drop rate descending
+            if ((b.rate || 0) !== (a.rate || 0)) return (b.rate || 0) - (a.rate || 0)
+            // Tertiary sort: by quantity descending
+            return (b.quantity || 0) - (a.quantity || 0)
+          })
 
         const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
 
         return {
           id: inst.id,
           level: inst.level,
+          isDungeon: inst.isDungeon,
+          isUltimate: inst.isUltimate || false,
           loots: inst.loots,
           items: itemsBreakdown,
           totalKamas: Math.floor(totalKamas)
@@ -421,9 +501,16 @@ export const useDataStore = defineStore('data', {
                 })
                 .forEach(lootEntry => {
                   const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                  const baseQuantity = lootEntry.quantity * monster.number
-                  // Rarity 5 items: only 1 per team, otherwise multiply by players
-                  const finalQuantity = itemRarity === 5 ? baseQuantity : baseQuantity * players
+                  let finalQuantity
+                  
+                  // BonusPP (99999) is a percentage bonus, not an actual item drop
+                  if (lootEntry.itemId === 99999) {
+                    finalQuantity = lootEntry.quantity // Keep percentage as-is
+                  } else {
+                    const baseQuantity = lootEntry.quantity * monster.number
+                    // Rarity 5 items: only 1 per team, otherwise multiply by players
+                    finalQuantity = itemRarity === 5 ? baseQuantity : baseQuantity * players
+                  }
                   
                   allLoots.push({
                     ...lootEntry,
@@ -435,15 +522,36 @@ export const useDataStore = defineStore('data', {
         })
       }
 
+      // Calculate BonusPP (item 99999) drop rate bonus
+      let bonusPPMultiplier = 0
+      allLoots.forEach(l => {
+        if (l.itemId === 99999) {
+          const adjustedRate = this._computeAdjustedRate(l.rate || 0, runConfig)
+          // quantity represents the percentage bonus (e.g., 20 = +20%)
+          bonusPPMultiplier += adjustedRate * (l.quantity / 100)
+        }
+      })
+
       // Build per-item breakdown
       const perItem = new Map()
 
       allLoots.forEach(l => {
         const itemId = l.itemId
+        
+        // Skip BonusPP item (99999) - it's only used for bonus calculation
+        if (itemId === 99999) return
+
         const price = l.price || 0
         const qty = l.quantity || 0
         const baseRate = l.rate || 0
-        const adjustedRate = this._computeAdjustedRate(baseRate, runConfig)
+        let adjustedRate = this._computeAdjustedRate(baseRate, runConfig)
+        
+        // Apply BonusPP bonus to drop rate
+        adjustedRate = adjustedRate * (1 + bonusPPMultiplier)
+        
+        // Cap drop rate at 100%
+        adjustedRate = Math.min(adjustedRate, 1.0)
+        
         const value = Math.floor(price * adjustedRate * qty)
 
         if (!perItem.has(itemId)) {
@@ -465,13 +573,29 @@ export const useDataStore = defineStore('data', {
         item.subtotal += value
       })
 
+      // For rifts, multiply by number of waves completed (one loot iteration per wave)
+      if (runConfig.isRift) {
+        const wavesCompleted = runConfig.wavesCompleted || 1
+        perItem.forEach(item => {
+          item.quantity *= wavesCompleted
+          item.subtotal *= wavesCompleted
+        })
+      }
+
       // Filter items (use global config filters)
       const minProfit = Number(globalStore.config.minItemProfit || 0)
       const minDropRate = Number(globalStore.config.minDropRatePercent || 0) / 100
 
       const itemsBreakdown = Array.from(perItem.values())
         .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDropRate)
-        .sort((a, b) => b.subtotal - a.subtotal)
+        .sort((a, b) => {
+          // Primary sort: by subtotal (kamas) descending
+          if (b.subtotal !== a.subtotal) return b.subtotal - a.subtotal
+          // Secondary sort: by drop rate descending
+          if ((b.rate || 0) !== (a.rate || 0)) return (b.rate || 0) - (a.rate || 0)
+          // Tertiary sort: by quantity descending
+          return (b.quantity || 0) - (a.quantity || 0)
+        })
 
       const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
 

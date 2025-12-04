@@ -1,9 +1,21 @@
 /**
  * Formate un run config en string lisible et concis
- * Format: M S10 ST4 STI2 B (10min)
- * M = Modulé, S = Stasis, ST = Stèles, STI = Stèles Intervention, B = Booster
+ * Dungeon: M S10 ST4 STI2 B (10min)
+ * Rift: V1+10→V11 +80% (10min)
  */
 export function formatRunConfig(run) {
+  // Rifts (brèches)
+  if (run.isRift) {
+    const startWave = run.startingWave || 1
+    const wavesCompleted = run.wavesCompleted || 1
+    const finalWave = startWave + wavesCompleted
+    // Ultimate rifts: 18% per wave, normal rifts: 8% per wave
+    const bonusPerWave = run.isUltimate ? 18 : 8
+    const bonusPercent = (finalWave - 1) * bonusPerWave
+    return `V${startWave}+${wavesCompleted}→V${finalWave} +${bonusPercent}%`
+  }
+
+  // Dungeons
   const parts = []
   
   // Modulé/Non-modulé

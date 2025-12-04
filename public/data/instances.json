@@ -351,7 +351,8 @@
     "id": 170,
     "level": 111,
     "players": 4,
-    "isDungeon": false
+    "isDungeon": false,
+    "isUltimate": true
   },
   {
     "id": 174,
@@ -681,7 +682,8 @@
     "id": 173,
     "level": 201,
     "players": 4,
-    "isDungeon": false
+    "isDungeon": false,
+    "isUltimate": true
   },
   {
     "id": 175,
@@ -735,7 +737,8 @@
     "id": 183,
     "level": 216,
     "players": 4,
-    "isDungeon": false
+    "isDungeon": false,
+    "isUltimate": true
   },
   {
     "id": 187,

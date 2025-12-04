@@ -18,7 +18,8 @@ const sortedInstances = computed(() => {
     .map(inst => ({
       id: inst.id,
       level: inst.level,
-      isDungeon: inst.isDungeon || false
+      isDungeon: inst.isDungeon || false,
+      isUltimate: inst.isUltimate || false
     }))
     .sort((a, b) => a.level - b.level)
 })

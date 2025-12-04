@@ -55,19 +55,34 @@ export const useRunsStore = defineStore('runs', () => {
   )
 
   // Add a new run to an instance
-  function addRun(instanceId) {
+  function addRun(instanceId, instance = null) {
     const globalStore = useGlobalStore()
     const config = globalStore.config
 
+    // Check if this is a rift (brèche)
+    const isRift = instance && !instance.isDungeon
+
     const newRun = {
       id: Date.now(), // Unique ID
-      isModulated: config.isModulated,
-      isBooster: config.isBooster,
-      stasis: config.stasis,
-      steles: config.steles,
-      steleIntervention: config.steleIntervention,
-      intervention: config.intervention || false,
       time: 10 // Temps en minutes (10 par défaut)
+    }
+
+    if (isRift) {
+      // Rift-specific config
+      newRun.isRift = true
+      newRun.isUltimate = instance.isUltimate || false // Ultimate rifts have different bonuses
+      newRun.startingWave = 1 // Vague de départ (min 1)
+      // Ultimate rifts: 4 waves default (legendary threshold), normal rifts: 9 waves
+      newRun.wavesCompleted = instance.isUltimate ? 4 : 9
+    } else {
+      // Dungeon config
+      newRun.isRift = false
+      newRun.isModulated = config.isModulated
+      newRun.isBooster = config.isBooster
+      newRun.stasis = config.stasis
+      newRun.steles = config.steles
+      newRun.steleIntervention = config.steleIntervention
+      newRun.intervention = config.intervention || false
     }
 
     if (!runs.value[instanceId]) {
