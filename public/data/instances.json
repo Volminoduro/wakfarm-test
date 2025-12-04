@@ -6,15 +6,819 @@
     "isDungeon": true
   },
   {
-    "id": 28,
-    "level": 33,
+    "id": 65,
+    "level": 12,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 90,
+    "level": 12,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 26,
+    "level": 21,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 89,
+    "level": 21,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 125,
+    "level": 21,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 168,
+    "level": 21,
     "players": 4,
     "isDungeon": false
   },
   {
-    "id": 29,
-    "level": 14,
-    "players": 3,
+    "id": 25,
+    "level": 36,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 133,
+    "level": 36,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 136,
+    "level": 36,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 137,
+    "level": 36,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 184,
+    "level": 36,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 185,
+    "level": 36,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 34,
+    "level": 51,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 41,
+    "level": 51,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 80,
+    "level": 51,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 81,
+    "level": 51,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 140,
+    "level": 51,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 141,
+    "level": 51,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 186,
+    "level": 51,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 189,
+    "level": 51,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 4,
+    "level": 66,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 12,
+    "level": 66,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 46,
+    "level": 66,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 47,
+    "level": 66,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 88,
+    "level": 66,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 99,
+    "level": 66,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 145,
+    "level": 66,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 146,
+    "level": 66,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 147,
+    "level": 66,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 169,
+    "level": 66,
+    "players": 4,
+    "isDungeon": false
+  },
+  {
+    "id": 3,
+    "level": 81,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 13,
+    "level": 81,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 48,
+    "level": 81,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 49,
+    "level": 81,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 68,
+    "level": 81,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 101,
+    "level": 81,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 122,
+    "level": 81,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 150,
+    "level": 81,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 151,
+    "level": 81,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 5,
+    "level": 96,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 6,
+    "level": 96,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 8,
+    "level": 96,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 11,
+    "level": 96,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 53,
+    "level": 96,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 62,
+    "level": 96,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 69,
+    "level": 96,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 79,
+    "level": 96,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 138,
+    "level": 96,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 9,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 10,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 57,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 63,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 82,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 83,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 123,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 142,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 143,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 170,
+    "level": 111,
+    "players": 4,
+    "isDungeon": false
+  },
+  {
+    "id": 174,
+    "level": 111,
+    "players": 4,
+    "isDungeon": false
+  },
+  {
+    "id": 204,
+    "level": 111,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 67,
+    "level": 126,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 73,
+    "level": 126,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 84,
+    "level": 126,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 85,
+    "level": 126,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 124,
+    "level": 126,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 148,
+    "level": 126,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 193,
+    "level": 126,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 72,
+    "level": 141,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 74,
+    "level": 141,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 86,
+    "level": 141,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 87,
+    "level": 141,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 115,
+    "level": 141,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 152,
+    "level": 141,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 154,
+    "level": 141,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 171,
+    "level": 141,
+    "players": 4,
+    "isDungeon": false
+  },
+  {
+    "id": 192,
+    "level": 141,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 194,
+    "level": 141,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 95,
+    "level": 156,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 96,
+    "level": 156,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 100,
+    "level": 156,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 121,
+    "level": 156,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 139,
+    "level": 156,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 144,
+    "level": 156,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 149,
+    "level": 156,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 153,
+    "level": 156,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 104,
+    "level": 171,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 106,
+    "level": 171,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 109,
+    "level": 171,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 110,
+    "level": 171,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 111,
+    "level": 171,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 155,
+    "level": 171,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 158,
+    "level": 171,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 172,
+    "level": 171,
+    "players": 4,
+    "isDungeon": false
+  },
+  {
+    "id": 117,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 126,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 127,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 128,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 129,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 131,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 134,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 156,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 157,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 159,
+    "level": 186,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 135,
+    "level": 200,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 160,
+    "level": 201,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 161,
+    "level": 201,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 162,
+    "level": 201,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 163,
+    "level": 201,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 164,
+    "level": 201,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 165,
+    "level": 201,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 166,
+    "level": 201,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 167,
+    "level": 201,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 173,
+    "level": 201,
+    "players": 4,
+    "isDungeon": false
+  },
+  {
+    "id": 175,
+    "level": 201,
+    "players": 4,
+    "isDungeon": false
+  },
+  {
+    "id": 176,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 177,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 178,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 179,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 180,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 181,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 182,
+    "level": 216,
+    "players": 4,
+    "isDungeon": false
+  },
+  {
+    "id": 183,
+    "level": 216,
+    "players": 4,
+    "isDungeon": false
+  },
+  {
+    "id": 187,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 188,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 196,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 95188,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 96188,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 97188,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 98188,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 99188,
+    "level": 216,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 197,
+    "level": 231,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 198,
+    "level": 231,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 199,
+    "level": 231,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 200,
+    "level": 231,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 201,
+    "level": 231,
+    "players": 6,
+    "isDungeon": true
+  },
+  {
+    "id": 202,
+    "level": 231,
+    "players": 6,
     "isDungeon": true
   }
 ]

@@ -54,7 +54,7 @@ function updateMinDropRate(event) {
 </script>
 
 <template>
-  <div :class="COLOR_CLASSES.configBg" class="p-2">
+  <div :class="COLOR_CLASSES.configBg" class="p-2" style="contain: layout style;">
     <div class="flex items-center justify-between mb-2">
       <h2 :class="['text-2xl', COLOR_CLASSES.titlePrimary]">{{ t('config_title') }}</h2>
       <button 
@@ -66,7 +66,7 @@ function updateMinDropRate(event) {
     </div>
 
     <transition name="expand">
-      <div v-if="!isCollapsed" class="overflow-hidden">
+      <div v-if="!isCollapsed">
         <table class="w-full" style="table-layout: fixed;">
           <thead>
             <tr>
@@ -271,22 +271,23 @@ input[type=number] {
   border-color: #d3fd38;
 }
 
-/* Smooth expand/collapse transition */
+/* Smooth expand/collapse transition with GPU acceleration */
 .expand-enter-active,
 .expand-leave-active {
-  transition: all 0.2s ease;
-  max-height: 500px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform-origin: top;
+  will-change: opacity, transform;
 }
 
 .expand-enter-from,
 .expand-leave-to {
   opacity: 0;
-  max-height: 0;
+  transform: scaleY(0.95);
 }
 
 .expand-enter-to,
 .expand-leave-from {
   opacity: 1;
-  max-height: 500px;
+  transform: scaleY(1);
 }
 </style>

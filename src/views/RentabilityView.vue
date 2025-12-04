@@ -90,11 +90,13 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useDataStore } from '../stores/useDataStore'
+import { useGlobalStore } from '../stores/useGlobalStore'
 import { useRunsStore } from '../stores/useRunsStore'
 import InstanceCard from '../components/InstanceCard.vue'
 import RunHourCard from '../components/RunHourCard.vue'
 import ToggleAllButton from '../components/ToggleAllButton.vue'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
+import { LEVEL_RANGES } from '../constants'
 import { useLocalStorage } from '../composables/useLocalStorage'
 
 const props = defineProps({
@@ -107,6 +109,7 @@ const props = defineProps({
 const emit = defineEmits(['change-sub-tab'])
 
 const dataStore = useDataStore()
+const globalStore = useGlobalStore()
 const runsStore = useRunsStore()
 
 const t = (key) => {
@@ -140,12 +143,27 @@ const sortedInstances = computed(() => {
       
       // N'ajouter que si l'instance a des items éligibles après filtrage
       if (instanceData && instanceData.items && instanceData.items.length > 0) {
-        allInstances.push({
-          ...instanceData,
-          isManualRun: true,
-          runConfig: run,
-          uniqueKey: `manual_${instanceId}_${run.id}`
-        })
+        // Appliquer le filtre de tranche de niveau
+        const activeLevelRanges = globalStore.config.levelRanges || []
+        let passesLevelFilter = true
+        
+        if (activeLevelRanges.length === 0) {
+          passesLevelFilter = false
+        } else if (activeLevelRanges.length < LEVEL_RANGES.length) {
+          passesLevelFilter = activeLevelRanges.some(rangeIndex => {
+            const range = LEVEL_RANGES[rangeIndex]
+            return range && instanceData.level >= range.min && instanceData.level <= range.max
+          })
+        }
+        
+        if (passesLevelFilter) {
+          allInstances.push({
+            ...instanceData,
+            isManualRun: true,
+            runConfig: run,
+            uniqueKey: `manual_${instanceId}_${run.id}`
+          })
+        }
       }
     })
   })
