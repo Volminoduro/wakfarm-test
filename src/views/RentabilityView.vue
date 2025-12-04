@@ -28,22 +28,75 @@
       </button>
     </nav>
     
-    <!-- Toggle All Button (both tabs) -->
-    <div :class="['px-1 py-1 border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
-      <ToggleAllButton
-        v-if="subTab === 'run'"
-        :isExpanded="allRunExpanded"
-        :expandText="t('toggle_expand_all')"
-        :collapseText="t('toggle_collapse_all')"
-        @toggle="toggleAllRun"
-      />
-      <ToggleAllButton
-        v-else
-        :isExpanded="allHourRunsExpanded"
-        :expandText="t('toggle_expand_all')"
-        :collapseText="t('toggle_collapse_all')"
-        @toggle="toggleAllHourRuns"
-      />
+    <!-- Toggle All Button and Config Row (both tabs) -->
+    <div :class="['px-4 py-2 border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
+      <div class="flex items-center justify-between gap-4">
+        <ToggleAllButton
+          v-if="subTab === 'run'"
+          :isExpanded="allRunExpanded"
+          :expandText="t('toggle_expand_all')"
+          :collapseText="t('toggle_collapse_all')"
+          @toggle="toggleAllRun"
+        />
+        <ToggleAllButton
+          v-else
+          :isExpanded="allHourRunsExpanded"
+          :expandText="t('toggle_expand_all')"
+          :collapseText="t('toggle_collapse_all')"
+          @toggle="toggleAllHourRuns"
+        />
+        
+        <!-- Config row: Modulé, Booster, Stasis, Stèles, Stèles Interv. -->
+        <div class="flex items-center gap-6">
+          <div class="flex flex-col items-center gap-1">
+            <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_modulated') }}</label>
+            <input 
+              type="checkbox" 
+              v-model="globalStore.config.isModulated"
+              class="custom-checkbox"
+            />
+          </div>
+          
+          <div class="flex flex-col items-center gap-1">
+            <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_booster') }}</label>
+            <input 
+              type="checkbox" 
+              v-model="globalStore.config.isBooster"
+              class="custom-checkbox"
+            />
+          </div>
+          
+          <div class="flex flex-col items-center gap-1">
+            <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_stasis') }}</label>
+            <select 
+              v-model.number="globalStore.config.stasis"
+              :class="[COLOR_CLASSES.select, 'w-[65px]']"
+            >
+              <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
+            </select>
+          </div>
+          
+          <div class="flex flex-col items-center gap-1">
+            <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_steles') }}</label>
+            <select 
+              v-model.number="globalStore.config.steles"
+              :class="[COLOR_CLASSES.select, 'w-[65px]']"
+            >
+              <option v-for="n in 5" :key="n" :value="n - 1">{{ n - 1 }}</option>
+            </select>
+          </div>
+          
+          <div class="flex flex-col items-center gap-1">
+            <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_stele_intervention') }}</label>
+            <select 
+              v-model.number="globalStore.config.steleIntervention"
+              :class="[COLOR_CLASSES.select, 'w-[65px]']"
+            >
+              <option v-for="n in 4" :key="n" :value="n - 1">{{ n - 1 }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
     
     <!-- Kamas / Run -->
@@ -256,3 +309,35 @@ function toggleAllHourRuns() {
     : new Set(sortedHourRuns.value.map(r => r.key))
 }
 </script>
+
+<style scoped>
+/* Custom checkbox styling */
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(211, 253, 56, 0.4);
+  border-radius: 4px;
+  background-color: #334155;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.custom-checkbox:hover {
+  border-color: rgba(211, 253, 56, 0.6);
+}
+
+.custom-checkbox:checked {
+  background-color: #d3fd38;
+  border-color: #d3fd38;
+}
+
+.custom-checkbox:focus {
+  outline: 2px solid #d3fd38;
+  outline-offset: 2px;
+  border-color: #d3fd38;
+}
+</style>

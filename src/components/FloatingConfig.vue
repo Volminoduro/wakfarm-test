@@ -56,7 +56,7 @@ function updateMinDropRate(event) {
 <template>
   <div :class="COLOR_CLASSES.configBg" class="p-2" style="contain: layout style;">
     <div class="flex items-center justify-between mb-2">
-      <h2 :class="['text-2xl', COLOR_CLASSES.titlePrimary]">{{ t('config_title') }}</h2>
+      <h2 :class="['text-2xl', COLOR_CLASSES.titlePrimary]">Filtres</h2>
       <button 
         @click="toggleCollapse"
         :class="['px-2 py-1 rounded transition-colors', COLOR_CLASSES.button, COLOR_CLASSES.textSecondary]"
@@ -70,131 +70,77 @@ function updateMinDropRate(event) {
         <table class="w-full" style="table-layout: fixed;">
           <thead>
             <tr>
-              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_modulated') }}</th>
-          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_booster') }}</th>
-          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_stasis') }}</th>
-          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_steles') }}</th>
-          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_stele_intervention') }}</th>
-          <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_server') }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="text-center">
-            <input 
-              id="booster"
-              type="checkbox" 
-              v-model="store.config.isBooster"
-              class="custom-checkbox"
-            />
-          </td>
-          <td class="text-center">
-            <input 
-              id="isModulated"
-              type="checkbox" 
-              v-model="store.config.isModulated"
-              class="custom-checkbox"
-            />
-          </td>
-          <td class="text-center">
-            <select 
-              id="stasis"
-              v-model.number="store.config.stasis"
-              :class="[COLOR_CLASSES.select, 'w-[65px]']"
-            >
-              <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
-            </select>
-          </td>
-          <td class="text-center">
-            <select 
-              id="steles"
-              v-model.number="store.config.steles"
-              :class="[COLOR_CLASSES.select, 'w-[65px]']"
-            >
-              <option v-for="n in 5" :key="n" :value="n - 1">{{ n - 1 }}</option>
-            </select>
-          </td>
-          <td class="text-center">
-            <select 
-              id="steleIntervention"
-              v-model.number="store.config.steleIntervention"
-              :class="[COLOR_CLASSES.select, 'w-[65px]']"
-            >
-              <option v-for="n in 4" :key="n" :value="n - 1">{{ n - 1 }}</option>
-            </select>
-          </td>
-          <td class="text-center">
-            <div class="flex items-center justify-center gap-2">
-              <select 
-                id="server"
-                v-model="store.config.server"
-                :class="[COLOR_CLASSES.select, 'w-[160px]']"
-              >
-                <option v-for="server in dataStore.servers" :key="server.id" :value="server.id">
-                  {{ t(server.name_key) }}
-                </option>
-              </select>
-              <div :class="['text-xs leading-tight w-[70px] text-center', COLOR_CLASSES.textMuted]">
-                <div v-if="dataStore.pricesLastUpdate">
-                  <div>{{ dataStore.pricesLastUpdate.split(' ')[0] }}</div>
-                  <div>{{ dataStore.pricesLastUpdate.split(' ')[1] }}</div>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_min_rate') }}</th>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_min_profit') }}</th>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_min_total') }}</th>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('level_ranges_title') }}</th>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_server') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center">
+                <div class="input-wrapper" style="width: 70px; margin: 0 auto;">
+                  <input
+                    type="text"
+                    :value="formatRateInput(store.config.minDropRatePercent)"
+                    @input="updateMinDropRate"
+                    :class="[COLOR_CLASSES.input, 'rounded px-2 py-1 rate-input-padding']"
+                    style="width: 70px;"
+                  />
+                  <span class="rate-icon">%</span>
                 </div>
-                <span v-else>{{ t('prices_no_data') }}</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-        
-        <!-- Second row: Filters -->
-        <tr>
-          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_min_rate') }}</th>
-          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_min_profit') }}</th>
-          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_min_total') }}</th>
-          <th :class="['text-center font-medium pb-2 pt-3 text-base', COLOR_CLASSES.textSecondary]">{{ t('level_ranges_title') }}</th>
-        </tr>
-        <tr>
-          <td class="text-center">
-            <div class="input-wrapper" style="width: 70px; margin: 0 auto;">
-              <input
-                type="text"
-                :value="formatRateInput(store.config.minDropRatePercent)"
-                @input="updateMinDropRate"
-                :class="[COLOR_CLASSES.input, 'rounded px-2 py-1 rate-input-padding']"
-                style="width: 70px;"
-              />
-              <span class="rate-icon">%</span>
-            </div>
-          </td>
-          <td colspan="2" class="text-center">
-            <div class="input-wrapper" style="width: 140px; margin: 0 auto;">
-              <input
-                type="text"
-                :value="formatInputNumber(store.config.minItemProfit)"
-                @input="updateMinItemProfit"
-                :class="[COLOR_CLASSES.input, 'rounded px-2 py-1 kamas-input-padding']"
-                style="width: 140px;"
-              />
-              <span class="kamas-icon">₭</span>
-            </div>
-          </td>
-          <td colspan="2" class="text-center">
-            <div class="input-wrapper" style="width: 140px; margin: 0 auto;">
-              <input
-                type="text"
-                :value="formatInputNumber(store.config.minInstanceTotal)"
-                @input="updateMinInstanceTotal"
-                :class="[COLOR_CLASSES.input, 'rounded px-2 py-1 kamas-input-padding']"
-                style="width: 140px;"
-              />
-              <span class="kamas-icon">₭</span>
-            </div>
-          </td>
-          <td class="text-center">
-            <div style="width: 160px; margin: 0 auto;">
-              <LevelRangeFilter />
-            </div>
-          </td>
-        </tr>
+              </td>
+              <td class="text-center">
+                <div class="input-wrapper" style="width: 140px; margin: 0 auto;">
+                  <input
+                    type="text"
+                    :value="formatInputNumber(store.config.minItemProfit)"
+                    @input="updateMinItemProfit"
+                    :class="[COLOR_CLASSES.input, 'rounded px-2 py-1 kamas-input-padding']"
+                    style="width: 140px;"
+                  />
+                  <span class="kamas-icon">₭</span>
+                </div>
+              </td>
+              <td class="text-center">
+                <div class="input-wrapper" style="width: 140px; margin: 0 auto;">
+                  <input
+                    type="text"
+                    :value="formatInputNumber(store.config.minInstanceTotal)"
+                    @input="updateMinInstanceTotal"
+                    :class="[COLOR_CLASSES.input, 'rounded px-2 py-1 kamas-input-padding']"
+                    style="width: 140px;"
+                  />
+                  <span class="kamas-icon">₭</span>
+                </div>
+              </td>
+              <td class="text-center">
+                <div style="width: 160px; margin: 0 auto;">
+                  <LevelRangeFilter />
+                </div>
+              </td>
+              <td colspan="2" class="text-center">
+                <div class="flex items-center justify-center gap-2">
+                  <select 
+                    id="server"
+                    v-model="store.config.server"
+                    :class="[COLOR_CLASSES.select, 'w-[160px]']"
+                  >
+                    <option v-for="server in dataStore.servers" :key="server.id" :value="server.id">
+                      {{ t(server.name_key) }}
+                    </option>
+                  </select>
+                  <div :class="['text-xs leading-tight w-[70px] text-center', COLOR_CLASSES.textMuted]">
+                    <div v-if="dataStore.pricesLastUpdate">
+                      <div>{{ dataStore.pricesLastUpdate.split(' ')[0] }}</div>
+                      <div>{{ dataStore.pricesLastUpdate.split(' ')[1] }}</div>
+                    </div>
+                    <span v-else>{{ t('prices_no_data') }}</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
       </tbody>
     </table>
       </div>

@@ -65,8 +65,8 @@ const toggleShowAll = () => {
         <div :class="['font-bold text-sm truncate', COLOR_CLASSES.textLight]">{{ instanceTitle }}</div>
       </div>
 
-      <div class="flex items-center gap-4">
-        <div :class="['font-bold text-lg', COLOR_CLASSES.textKamas]">{{ formatNumber(instance.totalKamas) }} ₭</div>
+      <div class="flex items-center gap-4 flex-shrink-0">
+        <div :class="['font-bold text-lg whitespace-nowrap', COLOR_CLASSES.textKamas]">{{ formatNumber(instance.totalKamas) }} ₭</div>
         <ExpandArrow :isExpanded="isExpanded" />
       </div>
     </div>

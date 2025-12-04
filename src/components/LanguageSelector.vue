@@ -5,7 +5,7 @@
       :key="lang.code"
       @click="handleChange(lang.code)"
       :class="[
-        'px-3 py-1 transition-all border-b-2',
+        'px-3 py-1 transition-all border-b-2 text-slate-100',
         currentLanguage === lang.code 
           ? '' 
           : 'border-transparent opacity-70 hover:opacity-100'
