@@ -4,7 +4,6 @@ import { COLOR_CLASSES } from '../constants/colors'
 import { useRunsStore } from '../stores/useRunsStore'
 import { useDataStore } from '../stores/useDataStore'
 import RunConfigRow from './RunConfigRow.vue'
-import ExpandArrow from './ExpandArrow.vue'
 
 const props = defineProps({
   instance: {
@@ -99,14 +98,19 @@ function removeAllRuns() {
         <!-- Header row with labels - Rift -->
         <div v-if="!instance.isDungeon" :class="['px-4 py-2 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
           <div class="flex items-center gap-2 flex-1">
+            <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
+              {{ t('config_booster') }}
+            </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 120px; text-align: center;">
               Vague départ
             </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 120px; text-align: center;">
               Vagues faites
             </div>
-            <!-- Empty spacers to align with dungeon layout (Modulé, Booster, Stasis, Stèles, Stèles Interv.) -->
-            <div style="width: 95px;"></div>
+            <!-- Empty spacers to align with dungeon layout (Stasis, Stèles, Stèles Interv.) -->
+            <div style="width: 60px;"></div>
+            <div style="width: 60px;"></div>
+            <div style="width: 80px;"></div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
               Temps (min)
             </div>

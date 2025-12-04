@@ -24,10 +24,18 @@ const sortedInstances = computed(() => {
     .sort((a, b) => a.level - b.level)
 })
 
-// Check if all instances are expanded
+// Get instances that have runs
+const instancesWithRuns = computed(() => {
+  return sortedInstances.value.filter(inst => {
+    const runs = runsStore.getRunsForInstance(inst.id)
+    return runs && runs.length > 0
+  })
+})
+
+// Check if all instances with runs are expanded
 const allExpanded = computed(() => {
-  if (sortedInstances.value.length === 0) return false
-  return sortedInstances.value.every(inst => runsStore.expandedInstances.has(inst.id))
+  if (instancesWithRuns.value.length === 0) return false
+  return instancesWithRuns.value.every(inst => runsStore.expandedInstances.has(inst.id))
 })
 
 // Check if there are any runs
@@ -39,7 +47,7 @@ function toggleAll() {
   if (allExpanded.value) {
     runsStore.collapseAll()
   } else {
-    runsStore.expandAll(sortedInstances.value.map(i => i.id))
+    runsStore.expandAll(instancesWithRuns.value.map(i => i.id))
   }
 }
 

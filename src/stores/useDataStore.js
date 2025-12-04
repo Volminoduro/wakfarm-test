@@ -172,30 +172,93 @@ export const useDataStore = defineStore('data', {
       }
     },
 
-    getStasisBonus(steles, isModulated){
-      const bonusMap = isModulated ? STASIS_BONUS_MODULATED : STASIS_BONUS_NON_MODULATED
-      return bonusMap[steles] || 0
+    // Helper: Filter and sort items breakdown
+    _filterAndSortItems(perItem, minProfit, minDropRate) {
+      return Array.from(perItem.values())
+        .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDropRate)
+        .sort((a, b) => {
+          if (b.subtotal !== a.subtotal) return b.subtotal - a.subtotal
+          if ((b.rate || 0) !== (a.rate || 0)) return (b.rate || 0) - (a.rate || 0)
+          return (b.quantity || 0) - (a.quantity || 0)
+        })
+    },
+
+    // Helper: Process loots and build per-item breakdown
+    _processLoots(loots, config, runConfig = null) {
+      const itemRarityMap = this.itemRarityMap
+      
+      // Calculate BonusPP multiplier
+      const bonusPPMultiplier = loots.reduce((acc, l) => {
+        if (l.itemId === 99999) {
+          const adjustedRate = this._computeAdjustedRate(l.rate || 0, config)
+          return acc + adjustedRate * (l.quantity / 100)
+        }
+        return acc
+      }, 0)
+
+      const perItem = new Map()
+
+      // Aggregate loot by item
+      loots.forEach(l => {
+        const itemId = l.itemId
+        if (itemId === 99999) return // Skip BonusPP
+
+        const price = l.price || 0
+        const qty = l.quantity || 0
+        let adjustedRate = this._computeAdjustedRate(l.rate || 0, config)
+        adjustedRate = Math.min(adjustedRate * (1 + bonusPPMultiplier), 1.0)
+        const value = Math.floor(price * adjustedRate * qty)
+
+        if (!perItem.has(itemId)) {
+          perItem.set(itemId, {
+            itemId,
+            name: this.names?.items?.[itemId] || null,
+            rate: adjustedRate,
+            price,
+            quantity: 0,
+            subtotal: 0,
+            stele: l.stele || 0,
+            steleIntervention: l.steleIntervention || 0,
+            rarity: itemRarityMap[itemId] || 0
+          })
+        }
+
+        const item = perItem.get(itemId)
+        item.quantity += qty
+        item.subtotal += value
+      })
+
+      // For rifts, multiply by waves completed
+      if (runConfig?.isRift) {
+        const wavesCompleted = runConfig.wavesCompleted || 1
+        perItem.forEach(item => {
+          item.quantity *= wavesCompleted
+          item.subtotal *= wavesCompleted
+        })
+      }
+
+      return perItem
     },
 
     // Helper: Compute adjusted drop rate based on config
     _computeAdjustedRate(baseRate, config) {
-      // Rifts (brèches) have different bonus calculation
-      if (config.isRift) {
-        const finalWave = (config.startingWave || 1) + (config.wavesCompleted || 1)
-        // Ultimate rifts: 18% per wave, normal rifts: 8% per wave
-        const bonusPerWave = config.isUltimate ? 18 : 8
-        const bonusPercent = (finalWave - 1) * bonusPerWave
-        return baseRate * (1 + bonusPercent / 100)
-      }
-
-      // Dungeons use stasis/modulation/booster bonuses
       const globalStore = useGlobalStore()
-      const stasisFactor = this.getStasisBonus(config.stasis || 0, !!config.isModulated)
       const boosterBonus = config.isBooster 
         ? (BOOSTER_BONUS[globalStore.config.server] || 1.25) 
         : 1
-      const interventionBonus = config.intervention ? 1.10 : 1
 
+      // Rifts (brèches) have different bonus calculation
+      if (config.isRift) {
+        const finalWave = (config.startingWave || 1) + (config.wavesCompleted || 1)
+        const bonusPerWave = config.isUltimate ? 18 : 8
+        const waveBonus = 1 + ((finalWave - 1) * bonusPerWave) / 100
+        return baseRate * waveBonus * boosterBonus
+      }
+
+      // Dungeons use stasis/modulation/booster/intervention bonuses
+      const bonusMap = config.isModulated ? STASIS_BONUS_MODULATED : STASIS_BONUS_NON_MODULATED
+      const stasisFactor = bonusMap[config.stasis || 0] || 0
+      const interventionBonus = config.intervention ? 1.10 : 1
       return Math.min(1, baseRate * stasisFactor * boosterBonus * interventionBonus)
     },
 
@@ -204,37 +267,38 @@ export const useDataStore = defineStore('data', {
       // Rifts (brèches) have different eligibility rules
       if (config.isRift) {
         // Legendary+ items (rarity >= 5): ultimate rifts need 4 waves, normal rifts need 9
-        const requiredWaves = config.isUltimate ? 4 : 9
-        if (itemRarity >= 5 && (config.wavesCompleted || 0) < requiredWaves) {
-          return false
+        if (itemRarity >= 5) {
+          const requiredWaves = config.isUltimate ? 4 : 9
+          return (config.wavesCompleted || 0) >= requiredWaves
         }
-        // Rifts ignore steles/stele intervention - all items eligible
         return true
       }
 
       // Dungeons use steles/stele intervention/stasis filters
-      const configSteles = Number(config.steles || 0)
-      const configSteleIntervention = Number(config.steleIntervention || 0)
-      const configStasis = Number(config.stasis || 0)
-      const lootStele = Number(lootEntry.stele || 0)
-      const lootSteleIntervention = Number(lootEntry.steleIntervention || 0)
-      const lootStasis = lootEntry.stasis !== undefined ? Number(lootEntry.stasis) : null
+      const configSteles = config.steles || 0
+      const configSteleIntervention = config.steleIntervention || 0
+      const configStasis = config.stasis || 0
+      const lootStele = lootEntry.stele || 0
+      const lootSteleIntervention = lootEntry.steleIntervention || 0
+      const lootStasis = lootEntry.stasis
 
       // Check stele requirement
-      const steleOk = lootStele <= configSteles
+      if (lootStele > configSteles) return false
 
       // Check steleIntervention requirement
-      const steleInterventionOk = config.intervention 
-        ? lootSteleIntervention <= configSteleIntervention
-        : lootSteleIntervention === 0
+      if (config.intervention) {
+        if (lootSteleIntervention > configSteleIntervention) return false
+      } else {
+        if (lootSteleIntervention !== 0) return false
+      }
 
-      // Check stasis requirement: if loot has a stasis requirement, config stasis must be >= that value
-      const stasisOk = lootStasis !== null ? configStasis >= lootStasis : true
+      // Check stasis requirement
+      if (lootStasis !== undefined && lootStasis !== null && configStasis < lootStasis) return false
 
       // Items with rarity > 3 require stasis >= 3
-      const rarityOk = itemRarity > 3 ? configStasis >= 3 : true
+      if (itemRarity > 3 && configStasis < 3) return false
 
-      return steleOk && steleInterventionOk && stasisOk && rarityOk
+      return true
     },
 
     createInstanceData(instances, items, mapping, loots, prices){
@@ -244,15 +308,19 @@ export const useDataStore = defineStore('data', {
       const itemRarityMap = this.itemRarityMap
       const priceMap = this.priceMap
       
-      // Build players count map
+      // Build lookup maps
       const playersMap = {}
+      const mappingMap = {}
       instances.forEach(inst => {
         playersMap[inst.id] = inst.players || (inst.isDungeon ? 3 : 4)
+      })
+      mapping.forEach(m => {
+        mappingMap[m.instanceId] = m
       })
 
       // Gather loot entries for each instance
       const instancesRefined = instances.map(inst => {
-        const instanceMapping = mapping.find(m => m.instanceId === inst.id)
+        const instanceMapping = mappingMap[inst.id]
         const allLoots = []
         const players = playersMap[inst.id] || 1
         
@@ -305,81 +373,19 @@ export const useDataStore = defineStore('data', {
       })
 
       // Build per-item breakdown and calculate total kamas for each instance
-      const minProfit = Number(globalStore.config.minItemProfit || 0)
-      const minDropRate = Number(globalStore.config.minDropRatePercent || 0) / 100
+      const minProfit = globalStore.config.minItemProfit || 0
+      const minDropRate = (globalStore.config.minDropRatePercent || 0) / 100
 
       const enriched = instancesRefined.map(inst => {
-        // Get original instance for isUltimate
-        const originalInst = instances.find(i => i.id === inst.id)
-        
-        // Build instance-specific config (add isUltimate for rifts)
+        // Build instance-specific config (inst already has isUltimate)
         const instanceConfig = {
           ...globalStore.config,
-          isUltimate: originalInst?.isUltimate || false
+          isUltimate: inst.isUltimate
         }
         
-        // Calculate BonusPP (item 99999) drop rate bonus
-        let bonusPPMultiplier = 0
-        inst.loots.forEach(l => {
-          if (l.itemId === 99999) {
-            const adjustedRate = this._computeAdjustedRate(l.rate || 0, instanceConfig)
-            // quantity represents the percentage bonus (e.g., 20 = +20%)
-            bonusPPMultiplier += adjustedRate * (l.quantity / 100)
-          }
-        })
-
-        const perItem = new Map()
-
-        // Aggregate loot by item
-        inst.loots.forEach(l => {
-          const itemId = l.itemId
-          
-          // Skip BonusPP item (99999) - it's only used for bonus calculation
-          if (itemId === 99999) return
-
-          const price = l.price || 0
-          const qty = l.quantity || 0
-          const baseRate = l.rate || 0
-          let adjustedRate = this._computeAdjustedRate(baseRate, instanceConfig)
-          
-          // Apply BonusPP bonus to drop rate
-          adjustedRate = adjustedRate * (1 + bonusPPMultiplier)
-          
-          // Cap drop rate at 100%
-          adjustedRate = Math.min(adjustedRate, 1.0)
-          
-          const value = Math.floor(price * adjustedRate * qty)
-
-          if (!perItem.has(itemId)) {
-            perItem.set(itemId, {
-              itemId,
-              name: this.names?.items?.[itemId] || null,
-              rate: adjustedRate,
-              price,
-              quantity: 0,
-              subtotal: 0,
-              stele: l.stele || 0,
-              steleIntervention: l.steleIntervention || 0,
-              rarity: itemRarityMap[itemId] || 0
-            })
-          }
-
-          const item = perItem.get(itemId)
-          item.quantity += qty
-          item.subtotal += value
-        })
-
-        // Filter and sort items by profit
-        const itemsBreakdown = Array.from(perItem.values())
-          .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDropRate)
-          .sort((a, b) => {
-            // Primary sort: by subtotal (kamas) descending
-            if (b.subtotal !== a.subtotal) return b.subtotal - a.subtotal
-            // Secondary sort: by drop rate descending
-            if ((b.rate || 0) !== (a.rate || 0)) return (b.rate || 0) - (a.rate || 0)
-            // Tertiary sort: by quantity descending
-            return (b.quantity || 0) - (a.quantity || 0)
-          })
+        // Process loots to build per-item breakdown
+        const perItem = this._processLoots(inst.loots, instanceConfig)
+        const itemsBreakdown = this._filterAndSortItems(perItem, minProfit, minDropRate)
 
         const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
 
@@ -395,25 +401,26 @@ export const useDataStore = defineStore('data', {
       })
 
       // Apply instance-level filters
-      const minInstanceTotal = Number(globalStore.config.minInstanceTotal || 0)
+      const minInstanceTotal = globalStore.config.minInstanceTotal || 0
       const activeLevelRanges = globalStore.config.levelRanges || []
+
+      // Early return if no level ranges selected
+      if (activeLevelRanges.length === 0) {
+        this.instancesRefined = []
+        return enriched
+      }
 
       let filteredEnriched = enriched.filter(inst => inst.totalKamas >= minInstanceTotal)
 
-      // Apply level range filter
-      if (activeLevelRanges.length === 0) {
-        // No ranges selected = hide all
-        filteredEnriched = []
-      } else if (activeLevelRanges.length < LEVEL_RANGES.length) {
-        // Some ranges selected = filter by range
-        filteredEnriched = filteredEnriched.filter(inst => {
-          return activeLevelRanges.some(rangeIndex => {
+      // Apply level range filter only if not all ranges are selected
+      if (activeLevelRanges.length < LEVEL_RANGES.length) {
+        filteredEnriched = filteredEnriched.filter(inst => 
+          activeLevelRanges.some(rangeIndex => {
             const range = LEVEL_RANGES[rangeIndex]
             return range && inst.level >= range.min && inst.level <= range.max
           })
-        })
+        )
       }
-      // All ranges selected = no filtering
 
       this.instancesRefined = filteredEnriched
       return enriched
@@ -522,80 +529,13 @@ export const useDataStore = defineStore('data', {
         })
       }
 
-      // Calculate BonusPP (item 99999) drop rate bonus
-      let bonusPPMultiplier = 0
-      allLoots.forEach(l => {
-        if (l.itemId === 99999) {
-          const adjustedRate = this._computeAdjustedRate(l.rate || 0, runConfig)
-          // quantity represents the percentage bonus (e.g., 20 = +20%)
-          bonusPPMultiplier += adjustedRate * (l.quantity / 100)
-        }
-      })
-
-      // Build per-item breakdown
-      const perItem = new Map()
-
-      allLoots.forEach(l => {
-        const itemId = l.itemId
-        
-        // Skip BonusPP item (99999) - it's only used for bonus calculation
-        if (itemId === 99999) return
-
-        const price = l.price || 0
-        const qty = l.quantity || 0
-        const baseRate = l.rate || 0
-        let adjustedRate = this._computeAdjustedRate(baseRate, runConfig)
-        
-        // Apply BonusPP bonus to drop rate
-        adjustedRate = adjustedRate * (1 + bonusPPMultiplier)
-        
-        // Cap drop rate at 100%
-        adjustedRate = Math.min(adjustedRate, 1.0)
-        
-        const value = Math.floor(price * adjustedRate * qty)
-
-        if (!perItem.has(itemId)) {
-          perItem.set(itemId, {
-            itemId,
-            name: this.names?.items?.[itemId] || null,
-            rate: adjustedRate,
-            price,
-            quantity: 0,
-            subtotal: 0,
-            stele: l.stele || 0,
-            steleIntervention: l.steleIntervention || 0,
-            rarity: itemRarityMap[itemId] || 0
-          })
-        }
-
-        const item = perItem.get(itemId)
-        item.quantity += qty
-        item.subtotal += value
-      })
-
-      // For rifts, multiply by number of waves completed (one loot iteration per wave)
-      if (runConfig.isRift) {
-        const wavesCompleted = runConfig.wavesCompleted || 1
-        perItem.forEach(item => {
-          item.quantity *= wavesCompleted
-          item.subtotal *= wavesCompleted
-        })
-      }
-
-      // Filter items (use global config filters)
-      const minProfit = Number(globalStore.config.minItemProfit || 0)
-      const minDropRate = Number(globalStore.config.minDropRatePercent || 0) / 100
-
-      const itemsBreakdown = Array.from(perItem.values())
-        .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDropRate)
-        .sort((a, b) => {
-          // Primary sort: by subtotal (kamas) descending
-          if (b.subtotal !== a.subtotal) return b.subtotal - a.subtotal
-          // Secondary sort: by drop rate descending
-          if ((b.rate || 0) !== (a.rate || 0)) return (b.rate || 0) - (a.rate || 0)
-          // Tertiary sort: by quantity descending
-          return (b.quantity || 0) - (a.quantity || 0)
-        })
+      // Build per-item breakdown (with rift waves multiplier if applicable)
+      const perItem = this._processLoots(allLoots, runConfig, runConfig)
+      
+      // Filter and sort items
+      const minProfit = globalStore.config.minItemProfit || 0
+      const minDropRate = (globalStore.config.minDropRatePercent || 0) / 100
+      const itemsBreakdown = this._filterAndSortItems(perItem, minProfit, minDropRate)
 
       const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
 

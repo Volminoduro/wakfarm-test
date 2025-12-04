@@ -188,11 +188,9 @@ function toggleExpand(uniqueKey) {
 }
 
 function toggleAllRun() {
-  if (allRunExpanded.value) {
-    expandedRunSet.value.clear()
-  } else {
-    expandedRunSet.value = new Set(sortedInstances.value.map(inst => inst.uniqueKey))
-  }
+  expandedRunSet.value = allRunExpanded.value
+    ? new Set()
+    : new Set(sortedInstances.value.map(inst => inst.uniqueKey))
   expandedRun.value = [...expandedRunSet.value]
 }
 
@@ -203,7 +201,7 @@ const timePeriod = useLocalStorage('wakfarm_time_period', 60)
 // Validate time period input
 function validateTimePeriod(event) {
   const value = event.target.value
-  timePeriod.value = value === '' ? null : Math.min(999, Math.max(1, parseInt(value) || 60))
+  timePeriod.value = value === '' ? null : Math.max(1, Math.min(999, parseInt(value) || 60))
 }
 
 // Build all runs with their kamas/period calculation
@@ -253,10 +251,8 @@ function toggleHourRun(key) {
 }
 
 function toggleAllHourRuns() {
-  if (allHourRunsExpanded.value) {
-    expandedHourRuns.value.clear()
-  } else {
-    expandedHourRuns.value = new Set(sortedHourRuns.value.map(r => r.key))
-  }
+  expandedHourRuns.value = allHourRunsExpanded.value 
+    ? new Set() 
+    : new Set(sortedHourRuns.value.map(r => r.key))
 }
 </script>

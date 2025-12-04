@@ -74,6 +74,7 @@ export const useRunsStore = defineStore('runs', () => {
       newRun.startingWave = 1 // Vague de départ (min 1)
       // Ultimate rifts: 4 waves default (legendary threshold), normal rifts: 9 waves
       newRun.wavesCompleted = instance.isUltimate ? 4 : 9
+      newRun.isBooster = config.isBooster // Rifts can also use booster
     } else {
       // Dungeon config
       newRun.isRift = false
@@ -150,7 +151,6 @@ export const useRunsStore = defineStore('runs', () => {
 
   // Collapse all instances
   function collapseAll() {
-    expandedInstances.value.clear()
     expandedInstances.value = new Set()
   }
 

@@ -23,6 +23,16 @@ function updateField(field, value) {
   <!-- Rift (Brèche) Configuration -->
   <div v-if="run.isRift" :class="['px-4 py-3 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
     <div class="flex items-center gap-2 flex-1">
+      <!-- Booster -->
+      <div class="flex justify-center" style="width: 60px;">
+        <input 
+          type="checkbox"
+          :checked="run.isBooster"
+          @change="updateField('isBooster', $event.target.checked)"
+          class="custom-checkbox-small"
+        />
+      </div>
+
       <!-- Vague de départ -->
       <div class="flex justify-center" style="width: 120px;">
         <input 
@@ -48,8 +58,10 @@ function updateField(field, value) {
         />
       </div>
 
-      <!-- Empty spacers to align with dungeon layout (Modulé, Booster, Stasis, Stèles, Stèles Interv.) -->
-      <div style="width: 95px;"></div>
+      <!-- Empty spacers to align with dungeon layout (Stasis, Stèles, Stèles Interv.) -->
+      <div style="width: 60px;"></div>
+      <div style="width: 60px;"></div>
+      <div style="width: 80px;"></div>
 
       <!-- Temps (minutes) -->
       <div class="flex justify-center" style="width: 60px;">
