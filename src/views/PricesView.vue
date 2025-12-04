@@ -182,8 +182,11 @@
                   <span v-if="sortColumn === 'level'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
                 </div>
               </th>
-              <th :class="['px-4 py-3 text-left']">
-                {{ t('prices_col_instances') }}
+              <th @click="sortBy('instances')" :class="['px-4 py-3 text-left cursor-pointer select-none', 'hover:bg-[#4e4839]']">
+                <div class="flex items-center gap-2">
+                  {{ t('prices_col_instances') }}
+                  <span v-if="sortColumn === 'instances'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                </div>
               </th>
               <th @click="sortBy('price')" :class="['px-4 py-3 text-right cursor-pointer select-none', 'hover:bg-[#4e4839]']">
                 <div class="flex items-center justify-end gap-2">
@@ -410,14 +413,18 @@ const filteredAndSortedItems = computed(() => {
     let aVal = a[sortColumn.value]
     let bVal = b[sortColumn.value]
     
+    // Handle instances sorting by count
+    if (sortColumn.value === 'instances') {
+      aVal = a.instanceIds?.length || 0
+      bVal = b.instanceIds?.length || 0
+    }
     // Handle null prices
-    if (sortColumn.value === 'price') {
+    else if (sortColumn.value === 'price') {
       aVal = aVal ?? -1
       bVal = bVal ?? -1
     }
-    
     // Handle string comparison
-    if (typeof aVal === 'string') {
+    else if (typeof aVal === 'string') {
       aVal = aVal.toLowerCase()
       bVal = bVal.toLowerCase()
     }

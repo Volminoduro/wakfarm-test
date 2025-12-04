@@ -321,6 +321,14 @@
         {
             "id": "kamas_hour_no_runs",
             "name": "Aucun run configuré. Allez dans l'onglet 'Runs' pour en créer."
+        },
+        {
+            "id": "runs_export",
+            "name": "Exporter"
+        },
+        {
+            "id": "runs_import",
+            "name": "Importer"
         }
     ]
 }

@@ -322,5 +322,14 @@
             "id": "kamas_hour_no_runs",
             "name": "Ningún run configurado. Ve a la pestaña 'Runs' para crear uno."
         }
+        ,
+        {
+            "id": "runs_export",
+            "name": "Exportar"
+        },
+        {
+            "id": "runs_import",
+            "name": "Importar"
+        }
     ]
 }
