@@ -30,3 +30,19 @@ export function formatRateInput(num) {
 export function parseFormattedNumber(value) {
   return value.replace(/\s/g, '').replace(/\u202F/g, '')
 }
+
+/**
+ * Formate une quantité avec jusqu'à 2 décimales (sans zéros inutiles)
+ */
+export function formatQuantity(num) {
+  if (num === null || num === undefined) return ''
+  return Number(num.toFixed(2)).toString()
+}
+
+/**
+ * Formate un taux en pourcentage avec jusqu'à 2 décimales (sans zéros inutiles)
+ */
+export function formatRate(rate) {
+  if (rate === null || rate === undefined) return ''
+  return Number((rate * 100).toFixed(2)).toString()
+}

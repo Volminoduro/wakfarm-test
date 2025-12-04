@@ -78,7 +78,7 @@ const toggleShowAll = () => {
             <div class="flex items-center gap-3">
               <div :class="COLOR_CLASSES.textNormal">
                 <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
-                <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
+                <span> x{{ formatQuantity(item.quantity) }} ({{ formatRate(item.rate) }}%{{ getSteleInfo(item) }})</span>
               </div>
             </div>
             <div :class="['font-semibold', COLOR_CLASSES.textKamas]">{{ formatNumber(item.subtotal) }} ₭</div>

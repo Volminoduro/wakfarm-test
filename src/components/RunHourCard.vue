@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { formatNumber } from '../utils/formatters'
+import { formatNumber, formatQuantity, formatRate } from '../utils/formatters'
 import { formatRunConfig } from '../utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
 import { COLOR_CLASSES } from '../constants/colors'
@@ -95,7 +95,7 @@ const runTitle = computed(() => {
               <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">
                 {{ dataStore.names?.items?.[item.itemId] || ('#' + item.itemId) }}
               </span>
-              <span> x{{ item.quantity }} ({{ (item.rate * 100).toFixed(1) }}%{{ getSteleInfo(item) }})</span>
+              <span> x{{ formatQuantity(item.quantity) }} ({{ formatRate(item.rate) }}%{{ getSteleInfo(item) }})</span>
             </div>
           </div>
           <div class="text-right">
