@@ -5,6 +5,8 @@ import { formatRunConfig } from '../utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
 import { COLOR_CLASSES } from '../constants/colors'
 import ExpandArrow from './ExpandArrow.vue'
+import BossIcon from './BossIcon.vue'
+import InstanceBaseCard from './InstanceBaseCard.vue'
 
 const props = defineProps({
   instance: {
@@ -58,19 +60,14 @@ const toggleShowAll = () => {
 </script>
 
 <template>
-  <div :class="COLOR_CLASSES.card">
-    <!-- Header clickable: toggles expand/collapse -->
-    <div @click="emit('toggle')" class="cursor-pointer px-5 py-4 flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3 truncate">
-        <div :class="['font-bold text-sm truncate', COLOR_CLASSES.textLight]">{{ instanceTitle }}</div>
-      </div>
-
-      <div class="flex items-center gap-4 flex-shrink-0">
-        <div :class="['font-bold text-lg whitespace-nowrap', COLOR_CLASSES.textKamas]">{{ formatNumber(instance.totalKamas) }} ₭</div>
-        <ExpandArrow :isExpanded="isExpanded" />
-      </div>
-    </div>
-
+  <InstanceBaseCard
+    :boss-id="instance.bossId"
+    :title="instanceTitle"
+    :total-kamas="instance.totalKamas"
+    :is-expanded="isExpanded"
+    :clickable="true"
+    @toggle="emit('toggle')"
+  >
     <transition name="expand">
       <div v-if="isExpanded && instance.items && instance.items.length > 0" class="overflow-hidden" style="contain: layout style paint;">
         <ul :class="['divide-y divide-white/20', COLOR_CLASSES.bgSecondary]">
@@ -84,7 +81,6 @@ const toggleShowAll = () => {
             <div :class="['font-semibold', COLOR_CLASSES.textKamas]">{{ formatNumber(item.subtotal) }} ₭</div>
           </li>
         </ul>
-        
         <div v-if="hasMoreItems" :class="['px-5 py-3 text-center', COLOR_CLASSES.bgSecondary]">
           <button 
             @click.stop="toggleShowAll"
@@ -94,7 +90,7 @@ const toggleShowAll = () => {
         </div>
       </div>
     </transition>
-  </div>
+  </InstanceBaseCard>
 </template>
 
 <style scoped>

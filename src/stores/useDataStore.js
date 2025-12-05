@@ -42,6 +42,7 @@ export const useDataStore = defineStore('data', {
     _rawMapping: [],
     _rawLoots: [],
     _rawPrices: {},
+    _bossMapping: {},
     _hasConfigWatcher: false
   }),
   getters: {
@@ -110,14 +111,15 @@ export const useDataStore = defineStore('data', {
     async loadAllData(server, lang = 'fr') {
       try {
         const basePath = import.meta.env.BASE_URL
-        const [instRes, itemRes, monsterRes, mappingRes, lootRes, nameRes, serversRes] = await Promise.all([
+        const [instRes, itemRes, monsterRes, mappingRes, lootRes, nameRes, serversRes, bossMappingRes] = await Promise.all([
           axios.get(`${basePath}data/instances.json`),
           axios.get(`${basePath}data/items.json`),
           axios.get(`${basePath}data/monsters.json`),
           axios.get(`${basePath}data/mapping.json`),
           axios.get(`${basePath}data/loots.json`),
           axios.get(`${basePath}names/${lang}.json`),
-          axios.get(`${basePath}data/servers.json`)
+          axios.get(`${basePath}data/servers.json`),
+          axios.get(`${basePath}data/boss-mapping.json`)
         ])
         
         this.names = parseNames(nameRes.data)
@@ -132,6 +134,13 @@ export const useDataStore = defineStore('data', {
         this._rawMapping = mappingRes.data
         this._rawLoots = lootRes.data
         this._rawPrices = priceRes
+        this._bossMapping = bossMappingRes.data
+
+        // Ajouter les bossId aux instances
+        this._rawInstances = this._rawInstances.map(inst => ({
+          ...inst,
+          bossId: this._bossMapping[inst.id] || null
+        }))
 
         // Process and store only instancesRefined (pass raw data)
         this.createInstanceData(
@@ -369,6 +378,7 @@ export const useDataStore = defineStore('data', {
           level: inst.level,
           isDungeon: inst.isDungeon,
           isUltimate: inst.isUltimate || false,
+          bossId: inst.bossId || null,
           loots: allLoots
         }
       })
@@ -395,6 +405,7 @@ export const useDataStore = defineStore('data', {
           level: inst.level,
           isDungeon: inst.isDungeon,
           isUltimate: inst.isUltimate || false,
+          bossId: inst.bossId || null,
           loots: inst.loots,
           items: itemsBreakdown,
           totalKamas: Math.floor(totalKamas)
@@ -534,6 +545,7 @@ export const useDataStore = defineStore('data', {
       return {
         id: instance.id,
         level: instance.level,
+        bossId: instance.bossId || null,
         items: itemsBreakdown,
         totalKamas: Math.floor(totalKamas)
       }

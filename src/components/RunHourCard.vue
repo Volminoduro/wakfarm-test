@@ -1,3 +1,6 @@
+// Fichier déplacé dans instance/RunHourCard.vue
+// Ce fichier a été supprimé.
+
 <script setup>
 import { computed } from 'vue'
 import { formatNumber, formatQuantity, formatRate } from '../utils/formatters'
@@ -5,7 +8,7 @@ import { formatRunConfig } from '../utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
 import { COLOR_CLASSES } from '../constants/colors'
 import { useDataStore } from '../stores/useDataStore'
-import ExpandArrow from './ExpandArrow.vue'
+import InstanceBaseCard from './InstanceBaseCard.vue'
 
 const props = defineProps({
   instanceId: {
@@ -64,28 +67,14 @@ const runTitle = computed(() => {
 </script>
 
 <template>
-  <div :class="COLOR_CLASSES.card">
-    <!-- Header clickable: toggles expand/collapse -->
-    <div @click="emit('toggle')" class="px-5 py-4 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-800/30 transition-colors">
-      <div class="flex items-center gap-3 flex-1 truncate">
-        <div :class="['font-bold text-sm truncate', COLOR_CLASSES.textLight]">
-          {{ runTitle }}
-        </div>
-      </div>
-
-      <div class="flex items-center gap-4">
-        <div class="text-right">
-          <div :class="['text-xs', COLOR_CLASSES.textMuted]">
-            {{ iterationsPerPeriod }}x
-          </div>
-          <div :class="['font-bold text-lg', COLOR_CLASSES.textKamas]">
-            {{ formattedKamasPerPeriod }} ₭
-          </div>
-        </div>
-        <ExpandArrow :isExpanded="isExpanded" />
-      </div>
-    </div>
-
+  <InstanceBaseCard
+    :boss-id="instanceData?.bossId"
+    :title="runTitle"
+    :total-kamas="kamasPerPeriod"
+    :is-expanded="isExpanded"
+    :clickable="true"
+    @toggle="emit('toggle')"
+  >
     <transition name="slide">
       <ul v-if="isExpanded && instanceData && instanceData.items && instanceData.items.length > 0" 
           :class="['divide-y divide-white/20', COLOR_CLASSES.bgSecondary]">
@@ -109,5 +98,5 @@ const runTitle = computed(() => {
         </li>
       </ul>
     </transition>
-  </div>
+  </InstanceBaseCard>
 </template>

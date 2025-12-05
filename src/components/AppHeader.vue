@@ -100,4 +100,5 @@ const alertLevel = computed(() => {
       </button>
     </nav>
   </header>
+  // Fichier déplacé dans layout/AppHeader.vue
 </template>

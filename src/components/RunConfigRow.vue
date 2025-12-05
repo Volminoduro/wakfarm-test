@@ -1,6 +1,7 @@
 <script setup>
 import { COLOR_CLASSES } from '../constants/colors'
 import { useDataStore } from '../stores/useDataStore'
+import { useInstanceInfo } from '../composables/useInstanceInfo'
 
 const props = defineProps({
   run: {
@@ -13,6 +14,7 @@ const emit = defineEmits(['update', 'remove'])
 
 const dataStore = useDataStore()
 const t = (key) => dataStore.names?.divers?.[key] || key
+const instanceInfo = useInstanceInfo(props.run.instanceId)
 
 function updateField(field, value) {
   emit('update', { ...props.run, [field]: value })

@@ -13,5 +13,6 @@ export default defineConfig({
   },
   // TRES IMPORTANT : Remplace 'Wakfarm' par le nom EXACT de ton repository GitHub.
   // Si ton repo s'appelle 'wakfarm-project', mets '/wakfarm-project/'.
-  base: '/wakfarm-test/', 
+  // En dev, utilise '/', en prod utilise '/wakfarm-test/'
+  base: process.env.NODE_ENV === 'production' ? '/wakfarm-test/' : '/',
 })

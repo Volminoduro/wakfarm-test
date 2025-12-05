@@ -3,8 +3,10 @@ import { computed } from 'vue'
 import { COLOR_CLASSES } from '../constants/colors'
 import { useRunsStore } from '../stores/useRunsStore'
 import { useDataStore } from '../stores/useDataStore'
+import { useInstanceInfo } from '../composables/useInstanceInfo'
 import RunConfigRow from './RunConfigRow.vue'
 import ExpandArrow from './ExpandArrow.vue'
+import BossIcon from './BossIcon.vue'
 
 const props = defineProps({
   instance: {
@@ -15,6 +17,7 @@ const props = defineProps({
 
 const runsStore = useRunsStore()
 const dataStore = useDataStore()
+const instanceInfo = useInstanceInfo(props.instance.id)
 
 const t = (key) => dataStore.names?.divers?.[key] || key
 
@@ -56,9 +59,11 @@ function removeAllRuns() {
         @click="toggleExpand" 
         class="flex items-center gap-3 cursor-pointer flex-1 truncate"
         :class="{ 'opacity-50': !hasRuns }">
+        
+        <BossIcon :boss-id="instanceInfo.bossId.value" :size="32" />
+
         <div :class="['font-bold truncate', COLOR_CLASSES.textLight]">
-          {{ dataStore.names?.instances?.[instance.id] || `Instance #${instance.id}` }} 
-          ({{ dataStore.names?.divers?.['niveau_reduit'] || 'Niv.' }} {{ instance.level }})
+          {{ instanceInfo.name }} (niv. {{ instanceInfo.level }})
         </div>
         
         <svg 
