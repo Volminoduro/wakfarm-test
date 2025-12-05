@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 import LanguageSelector from '../LanguageSelector.vue'
 import FloatingFilter from '../FloatingFilter.vue'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../../constants/colors'
@@ -36,10 +36,26 @@ const alertLevel = computed(() => {
   const hasDanger = warnings.value.some(w => w.type === 'danger')
   return hasDanger ? 'danger' : 'warning'
 })
+
+// Expose header height as a CSS variable so other views can stick just below it
+const appHeaderRef = ref(null)
+function updateHeaderHeight() {
+  const h = appHeaderRef.value?.offsetHeight || 0
+  document.documentElement.style.setProperty('--app-header-height', `${h}px`)
+}
+
+onMounted(() => {
+  updateHeaderHeight()
+  window.addEventListener('resize', updateHeaderHeight)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateHeaderHeight)
+})
 </script>
 
 <template>
-  <header :class="['sticky top-0 left-0 right-0 shadow-xl z-40', COLOR_CLASSES.headerBg]">
+  <header ref="appHeaderRef" :class="['sticky top-0 left-0 right-0 shadow-xl z-40', COLOR_CLASSES.headerBg]">
     <!-- Top Bar: Title and Language Selector -->
     <div class="px-8 py-2 flex justify-between items-center">
       <div class="flex items-center gap-3">

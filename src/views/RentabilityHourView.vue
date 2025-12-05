@@ -146,86 +146,88 @@ function toggleAllHourRuns() {
 
 <template>
   <div>
-    <!-- Sub Navigation -->
-    <nav :class="['flex items-center border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
-      <button 
-        @click="subTab = 'time'" 
-        :class="['flex-1 py-2 transition-all font-semibold text-base flex items-center justify-center gap-2', COLOR_CLASSES.tabSeparator, subTab === 'time' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]"
-        :style="`border-right-color: ${TAB_SEPARATOR} !important; ${subTab === 'time' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
-        <span>Kamas /</span>
-        <input 
-          type="number"
-          v-model.number="timePeriod"
-          @click.stop
-          @input="validateTimePeriod"
-          :class="[COLOR_CLASSES.input, 'text-sm py-0 px-2 text-center']"
-          style="width: 65px; height: 24px;"
-          min="1"
-          max="999"
-          placeholder="60"
+    <!-- Sub Navigation + Tab Headers (sticky under main header) -->
+    <div class="sticky z-30" :style="{ top: 'var(--app-header-height)' }">
+      <nav :class="['flex items-center border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
+        <button 
+          @click="subTab = 'time'" 
+          :class="['flex-1 py-2 transition-all font-semibold text-base flex items-center justify-center gap-2', COLOR_CLASSES.tabSeparator, subTab === 'time' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]"
+          :style="`border-right-color: ${TAB_SEPARATOR} !important; ${subTab === 'time' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
+          <span>Kamas /</span>
+          <input 
+            type="number"
+            v-model.number="timePeriod"
+            @click.stop
+            @input="validateTimePeriod"
+            :class="[COLOR_CLASSES.input, 'text-sm py-0 px-2 text-center']"
+            style="width: 65px; height: 24px;"
+            min="1"
+            max="999"
+            placeholder="60"
+          />
+          <span>mins</span>
+        </button>
+        <button 
+          @click="subTab = 'config'" 
+          :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'config' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]"
+          :style="subTab === 'config' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''">
+          {{ t('runs_config') || 'Configuration' }}
+        </button>
+      </nav>
+
+      <!-- Header for Configuration Tab -->
+      <div v-if="subTab === 'config'" :class="['px-4 py-2 border-b flex items-center gap-4 h-[50px]', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
+        <!-- Toggle all button -->
+        <ToggleAllButton
+          :isExpanded="allExpanded"
+          :expandText="t('toggle_expand_all') || 'Tout développer'"
+          :collapseText="t('toggle_collapse_all') || 'Tout réduire'"
+          @toggle="toggleAll"
         />
-        <span>mins</span>
-      </button>
-      <button 
-        @click="subTab = 'config'" 
-        :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'config' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]"
-        :style="subTab === 'config' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''">
-        {{ t('runs_config') || 'Configuration' }}
-      </button>
-    </nav>
 
-    <!-- Header for Configuration Tab -->
-    <div v-if="subTab === 'config'" :class="['px-4 py-2 border-b flex items-center gap-4 h-[50px]', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
-      <!-- Toggle all button -->
-      <ToggleAllButton
-        :isExpanded="allExpanded"
-        :expandText="t('toggle_expand_all') || 'Tout développer'"
-        :collapseText="t('toggle_collapse_all') || 'Tout réduire'"
-        @toggle="toggleAll"
-      />
+        <!-- Import button -->
+        <button 
+          @click="importRuns"
+          :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-green-900/50 hover:bg-green-800 text-green-200']"
+          :title="t('runs_import') || 'Importer depuis le presse-papier'">
+          📥 {{ t('runs_import') || 'Importer' }}
+        </button>
 
-      <!-- Import button -->
-      <button 
-        @click="importRuns"
-        :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-green-900/50 hover:bg-green-800 text-green-200']"
-        :title="t('runs_import') || 'Importer depuis le presse-papier'">
-        📥 {{ t('runs_import') || 'Importer' }}
-      </button>
+        <!-- Export button -->
+        <button 
+          v-if="hasAnyRuns"
+          @click="exportRuns"
+          :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-blue-900/50 hover:bg-blue-800 text-blue-200']"
+          :title="t('runs_export') || 'Copier la configuration dans le presse-papier'">
+          📋 {{ t('runs_export') || 'Exporter' }}
+        </button>
 
-      <!-- Export button -->
-      <button 
-        v-if="hasAnyRuns"
-        @click="exportRuns"
-        :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-blue-900/50 hover:bg-blue-800 text-blue-200']"
-        :title="t('runs_export') || 'Copier la configuration dans le presse-papier'">
-        📋 {{ t('runs_export') || 'Exporter' }}
-      </button>
+        <!-- Remove all button -->
+        <button 
+          v-if="hasAnyRuns"
+          @click="removeAllRuns"
+          :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
+          :title="t('runs_remove_all') || 'Supprimer tous les runs'">
+          ✕ {{ t('runs_remove_all') || 'Supprimer tous les runs' }}
+        </button>
 
-      <!-- Remove all button -->
-      <button 
-        v-if="hasAnyRuns"
-        @click="removeAllRuns"
-        :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
-        :title="t('runs_remove_all') || 'Supprimer tous les runs'">
-        ✕ {{ t('runs_remove_all') || 'Supprimer tous les runs' }}
-      </button>
-
-      <!-- Info text -->
-      <div class="flex-1 text-right">
-        <span :class="['text-sm', COLOR_CLASSES.textSecondary]">
-          {{ sortedInstances.length }} {{ t('runs_instances') || 'instances disponibles' }}
-        </span>
+        <!-- Info text -->
+        <div class="flex-1 text-right">
+          <span :class="['text-sm', COLOR_CLASSES.textSecondary]">
+            {{ sortedInstances.length }} {{ t('runs_instances') || 'instances disponibles' }}
+          </span>
+        </div>
       </div>
-    </div>
 
-    <!-- Header for Kamas / Time Tab -->
-    <div v-if="subTab === 'time'" :class="['px-4 py-2 border-b h-[50px]', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
-      <ToggleAllButton
-        :isExpanded="allHourRunsExpanded"
-        :expandText="t('toggle_expand_all')"
-        :collapseText="t('toggle_collapse_all')"
-        @toggle="toggleAllHourRuns"
-      />
+      <!-- Header for Kamas / Time Tab -->
+      <div v-if="subTab === 'time'" :class="['px-4 py-2 border-b h-[50px]', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
+        <ToggleAllButton
+          :isExpanded="allHourRunsExpanded"
+          :expandText="t('toggle_expand_all')"
+          :collapseText="t('toggle_collapse_all')"
+          @toggle="toggleAllHourRuns"
+        />
+      </div>
     </div>
 
     <!-- Kamas / Time Tab -->
