@@ -73956,11 +73956,15 @@
         },
         {
             "id": "tab_rentability",
-            "name": "Rentabilité"
+            "name": "Rentabilité par run"
         },
         {
             "id": "tab_runs",
-            "name": "Runs"
+            "name": "Rentabilité horaire"
+        },
+        {
+            "id": "disclaimer_rifts_excluded",
+            "name": "Note : Les brèches ne sont pas incluses dans cette vue. Pour calculer la rentabilité des brèches, rendez-vous dans l'onglet Rentabilité horaire."
         },
         {
             "id": "tab_prices",
@@ -74168,7 +74172,7 @@
         },
         {
             "id": "kamas_hour_no_runs",
-            "name": "Aucun run configuré. Allez dans l'onglet 'Runs' pour en créer."
+            "name": "Aucun run configuré. Cliquez ici pour accéder à l'onglet Configuration."
         },
         {
             "id": "runs_export",

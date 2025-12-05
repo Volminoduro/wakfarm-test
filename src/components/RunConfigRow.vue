@@ -79,7 +79,7 @@ function updateField(field, value) {
     <div class="flex justify-center" style="width: 60px;">
       <button 
         @click="emit('remove')"
-        :class="['px-2 py-1 rounded text-sm transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
+        :class="['px-1 py-1 rounded text-sm transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
         :title="t('button_remove') || 'Supprimer'">
         ✕
       </button>
@@ -160,7 +160,7 @@ function updateField(field, value) {
     <div class="flex justify-center" style="width: 60px;">
       <button 
         @click="emit('remove')"
-        :class="['px-2 py-1 rounded text-sm transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
+        :class="['px-1 py-1 rounded text-sm transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
         :title="t('button_remove') || 'Supprimer'">
         ✕
       </button>

@@ -73956,11 +73956,15 @@
         },
         {
             "id": "tab_rentability",
-            "name": "Rentabilidade"
+            "name": "Rentabilidade por corrida"
         },
         {
             "id": "tab_runs",
-            "name": "Runs"
+            "name": "Rentabilidade horária"
+        },
+        {
+            "id": "disclaimer_rifts_excluded",
+            "name": "Nota: As falhas não estão incluídas nesta visualização. Para calcular a rentabilidade das falhas, vá para a aba Rentabilidade horária."
         },
         {
             "id": "tab_prices",
@@ -74168,7 +74172,7 @@
         },
         {
             "id": "kamas_hour_no_runs",
-            "name": "Nenhum run configurado. Vá para a aba 'Runs' para criar um."
+            "name": "Nenhum run configurado. Clique aqui para acessar a aba Configuração."
         },
         {
             "id": "runs_export",

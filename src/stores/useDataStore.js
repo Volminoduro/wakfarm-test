@@ -172,6 +172,16 @@ export const useDataStore = defineStore('data', {
       }
     },
 
+    // Helper: Calculate final quantity for a loot entry
+    _calculateFinalQuantity(lootEntry, itemRarity, monsterNumber, players) {
+      // BonusPP (99999) is a percentage bonus, not an actual item drop
+      if (lootEntry.itemId === 99999) return lootEntry.quantity
+      
+      const baseQuantity = lootEntry.quantity * monsterNumber
+      // Rarity 5 items: only 1 per team, otherwise multiply by players
+      return itemRarity === 5 ? baseQuantity : baseQuantity * players
+    },
+
     // Helper: Filter and sort items breakdown
     _filterAndSortItems(perItem, minProfit, minDropRate) {
       return Array.from(perItem.values())
@@ -252,8 +262,6 @@ export const useDataStore = defineStore('data', {
         const finalWave = (config.startingWave || 1) + (config.wavesCompleted || 0)
         const bonusPerWave = config.isUltimate ? 18 : 8
         const waveBonus = 1 + ((finalWave-1) * bonusPerWave) / 100
-        console.log("baseRate * waveBonus * boosterBonus:", { baseRate, waveBonus, boosterBonus })
-        console.log("=>", baseRate * waveBonus * boosterBonus)
         return baseRate * waveBonus * boosterBonus
       }
 
@@ -287,14 +295,12 @@ export const useDataStore = defineStore('data', {
       if (lootStele > configSteles) return false
 
       // Check steleIntervention requirement
-      if (config.intervention) {
-        if (lootSteleIntervention > configSteleIntervention) return false
-      } else {
-        if (lootSteleIntervention !== 0) return false
+      if (config.intervention ? lootSteleIntervention > configSteleIntervention : lootSteleIntervention !== 0) {
+        return false
       }
 
       // Check stasis requirement
-      if (lootStasis !== undefined && lootStasis !== null && configStasis < lootStasis) return false
+      if (lootStasis != null && configStasis < lootStasis) return false
 
       // Items with rarity > 3 require stasis >= 3
       if (itemRarity > 3 && configStasis < 3) return false
@@ -309,18 +315,21 @@ export const useDataStore = defineStore('data', {
       const itemRarityMap = this.itemRarityMap
       const priceMap = this.priceMap
       
+      // Filter out rifts (brèches) for rentability view
+      const dungeonsOnly = instances.filter(inst => inst.isDungeon)
+      
       // Build lookup maps
       const playersMap = {}
       const mappingMap = {}
-      instances.forEach(inst => {
-        playersMap[inst.id] = inst.players || (inst.isDungeon ? 3 : 4)
+      dungeonsOnly.forEach(inst => {
+        playersMap[inst.id] = inst.players || 3
       })
       mapping.forEach(m => {
         mappingMap[m.instanceId] = m
       })
 
       // Gather loot entries for each instance
-      const instancesRefined = instances.map(inst => {
+      const instancesRefined = dungeonsOnly.map(inst => {
         const instanceMapping = mappingMap[inst.id]
         const allLoots = []
         const players = playersMap[inst.id] || 1
@@ -343,16 +352,7 @@ export const useDataStore = defineStore('data', {
                   })
                   .forEach(lootEntry => {
                     const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                    let finalQuantity
-                    
-                    // BonusPP (99999) is a percentage bonus, not an actual item drop
-                    if (lootEntry.itemId === 99999) {
-                      finalQuantity = lootEntry.quantity // Keep percentage as-is
-                    } else {
-                      const baseQuantity = lootEntry.quantity * monster.number
-                      // Rarity 5 items: only 1 per team, otherwise multiply by players
-                      finalQuantity = itemRarity === 5 ? baseQuantity : baseQuantity * players
-                    }
+                    const finalQuantity = this._calculateFinalQuantity(lootEntry, itemRarity, monster.number, players)
                     
                     allLoots.push({
                       ...lootEntry,
@@ -509,16 +509,7 @@ export const useDataStore = defineStore('data', {
                 })
                 .forEach(lootEntry => {
                   const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                  let finalQuantity
-                  
-                  // BonusPP (99999) is a percentage bonus, not an actual item drop
-                  if (lootEntry.itemId === 99999) {
-                    finalQuantity = lootEntry.quantity // Keep percentage as-is
-                  } else {
-                    const baseQuantity = lootEntry.quantity * monster.number
-                    // Rarity 5 items: only 1 per team, otherwise multiply by players
-                    finalQuantity = itemRarity === 5 ? baseQuantity : baseQuantity * players
-                  }
+                  const finalQuantity = this._calculateFinalQuantity(lootEntry, itemRarity, monster.number, players)
                   
                   allLoots.push({
                     ...lootEntry,

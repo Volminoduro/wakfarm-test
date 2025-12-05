@@ -73956,11 +73956,15 @@
         },
         {
             "id": "tab_rentability",
-            "name": "Rentabilidad"
+            "name": "Rentabilidad por recorrido"
         },
         {
             "id": "tab_runs",
-            "name": "Runs"
+            "name": "Rentabilidad horaria"
+        },
+        {
+            "id": "disclaimer_rifts_excluded",
+            "name": "Nota: Las brechas no están incluidas en esta vista. Para calcular la rentabilidad de las brechas, vaya a la pestaña Rentabilidad horaria."
         },
         {
             "id": "tab_prices",
@@ -74168,7 +74172,7 @@
         },
         {
             "id": "kamas_hour_no_runs",
-            "name": "Ningún run configurado. Ve a la pestaña 'Runs' para crear uno."
+            "name": "Ningún run configurado. Haz clic aquí para acceder a la pestaña Configuración."
         },
         {
             "id": "runs_export",

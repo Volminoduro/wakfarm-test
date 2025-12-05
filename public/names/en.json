@@ -73956,11 +73956,15 @@
         },
         {
             "id": "tab_rentability",
-            "name": "Profitability"
+            "name": "Profit per run"
         },
         {
             "id": "tab_runs",
-            "name": "Runs"
+            "name": "Hourly profit"
+        },
+        {
+            "id": "disclaimer_rifts_excluded",
+            "name": "Note: Rifts are not included in this view. To calculate rift profitability, go to the Hourly profit tab."
         },
         {
             "id": "tab_prices",
@@ -74168,7 +74172,7 @@
         },
         {
             "id": "kamas_hour_no_runs",
-            "name": "No runs configured. Go to the 'Runs' tab to create one."
+            "name": "No runs configured. Click here to access the Configuration tab."
         },
         {
             "id": "runs_export",

@@ -64,6 +64,11 @@
       </div>
     </div>
     
+    <!-- Disclaimer -->
+    <div :class="['px-4 py-2 border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
+      <p :class="['text-sm italic', COLOR_CLASSES.textSecondary]">{{ t('disclaimer_rifts_excluded') }}</p>
+    </div>
+    
     <!-- Kamas / Run -->
     <div class="px-8 py-6 max-w-[1920px] mx-auto">
       <div v-if="!dataStore.loaded" class="text-center">
