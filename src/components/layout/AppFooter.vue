@@ -1,10 +1,10 @@
 <script setup>
-import { COLOR_CLASSES } from '../constants/colors'
-import { useDataStore } from '../stores/useDataStore'
+import { COLOR_CLASSES } from '../../constants/colors'
+import { useGlobalStore } from '../../stores/useGlobalStore'
 
-const dataStore = useDataStore()
+const jsonStore = useGlobalStore().jsonStore
 
-const t = (key) => dataStore.names?.divers?.[key] || key
+const t = (key) => jsonStore.names?.divers?.[key] || key
 </script>
 
 <template>

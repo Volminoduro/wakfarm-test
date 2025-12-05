@@ -1,10 +1,10 @@
 <script setup>
 import { computed } from 'vue'
-import LanguageSelector from './LanguageSelector.vue'
-import FloatingConfig from './FloatingConfig.vue'
-import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
+import LanguageSelector from '../LanguageSelector.vue'
+import FloatingFilter from '../FloatingFilter.vue'
+import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../../constants/colors'
 
-import { useDataStore } from '../stores/useDataStore'
+import { useGlobalStore } from '../../stores/useGlobalStore'
 
 const props = defineProps({
   mainTab: {
@@ -15,7 +15,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['change-main-tab'])
-const dataStore = useDataStore()
+const dataStore = useGlobalStore().jsonStore
 
 const t = (key) => dataStore.names?.divers?.[key] || key
 
@@ -75,8 +75,7 @@ const alertLevel = computed(() => {
       <LanguageSelector />
     </div>
     
-    <!-- Configuration -->
-    <FloatingConfig />
+    <FloatingFilter />
     
     <!-- Main Navigation Tabs -->
     <nav class="flex items-center">
@@ -100,5 +99,4 @@ const alertLevel = computed(() => {
       </button>
     </nav>
   </header>
-  // Fichier déplacé dans layout/AppHeader.vue
 </template>

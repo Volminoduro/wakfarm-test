@@ -4,8 +4,6 @@ import { formatNumber, formatQuantity, formatRate } from '../utils/formatters'
 import { formatRunConfig } from '../utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
 import { COLOR_CLASSES } from '../constants/colors'
-import ExpandArrow from './ExpandArrow.vue'
-import BossIcon from './BossIcon.vue'
 import InstanceBaseCard from './InstanceBaseCard.vue'
 
 const props = defineProps({

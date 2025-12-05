@@ -1,32 +1,33 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { useDataStore } from '../stores/useDataStore'
-import { useRunsStore } from '../stores/useRunsStore'
 import { useGlobalStore } from '../stores/useGlobalStore'
+import { instancePassesFilters } from '../composables/useInstanceFilters'
 import { useLocalStorage } from '../composables/useLocalStorage'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
-import RunCard from '../components/RunCard.vue'
+import RunConfigCard from '../components/RunConfigCard.vue'
 import RunHourCard from '../components/RunHourCard.vue'
 import ToggleAllButton from '../components/ToggleAllButton.vue'
 
-const dataStore = useDataStore()
-const runsStore = useRunsStore()
+const jsonStore = useGlobalStore().jsonStore
 const globalStore = useGlobalStore()
+const runsStore = globalStore.runsStore
 
 // Sub-tab management
 const subTab = useLocalStorage('wakfarm_runs_subTab', 'time')
 
-const t = (key) => dataStore.names?.divers?.[key] || key
+const t = (key) => jsonStore.names?.divers?.[key] || key
 
-// Get all instances sorted by level
+// Get all instances sorted by level (enriched with name and bossId for UI)
 const sortedInstances = computed(() => {
-  const instances = dataStore._rawInstances || []
+  const instances = jsonStore._rawInstances || []
   return instances
     .map(inst => ({
       id: inst.id,
       level: inst.level,
       isDungeon: inst.isDungeon || false,
-      isUltimate: inst.isUltimate || false
+      isUltimate: inst.isUltimate || false,
+      bossId: inst.bossId || null,
+      name: jsonStore.names?.instances?.[inst.id] || `Instance #${inst.id}`
     }))
     .sort((a, b) => a.level - b.level)
 })
@@ -90,7 +91,7 @@ function validateTimePeriod(event) {
 
 // Build all runs with their kamas/period calculation
 const sortedHourRuns = computed(() => {
-  if (!dataStore.loaded) return []
+  if (!jsonStore.loaded) return []
   
   const allRuns = []
   const period = timePeriod.value || 60
@@ -99,9 +100,11 @@ const sortedHourRuns = computed(() => {
   Object.entries(runsStore.runs).forEach(([instanceId, runs]) => {
     runs.forEach(run => {
       const instanceIdNum = parseInt(instanceId)
-      const instanceData = dataStore.calculateInstanceForRun(instanceIdNum, run)
+      const instanceData = jsonStore.calculateInstanceForRun(instanceIdNum, run)
       
-      if (instanceData && run.time > 0) {
+          if (instanceData && run.time > 0) {
+            // Use shared filter logic
+            if (!instancePassesFilters(instanceData, globalStore)) return
         const iterations = Math.floor(period / run.time)
         const kamasPerPeriod = Math.floor(instanceData.totalKamas * iterations)
         
@@ -229,7 +232,7 @@ function toggleAllHourRuns() {
     <div v-if="subTab === 'time'" class="px-8 py-6 max-w-[1920px] mx-auto">
 
       <!-- Runs list -->
-      <div v-if="!dataStore.loaded" class="text-center">
+      <div v-if="!jsonStore.loaded" class="text-center">
         <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ t('loading') }}</p>
       </div>
       <div v-else-if="sortedHourRuns.length === 0" :class="[COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard, 'rounded-lg p-6']">
@@ -256,13 +259,13 @@ function toggleAllHourRuns() {
     <!-- Configuration Tab -->
     <div v-else class="px-8 py-6 max-w-[1920px] mx-auto">
     <!-- Loading state -->
-    <div v-if="!dataStore.loaded" class="text-center py-8">
+    <div v-if="!jsonStore.loaded" class="text-center py-8">
       <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ t('loading') || 'Chargement des données...' }}</p>
     </div>
 
     <!-- Instances grid -->
     <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-      <RunCard 
+      <RunConfigCard 
         v-for="inst in sortedInstances" 
         :key="inst.id"
         :instance="inst"

@@ -7,7 +7,7 @@ import { formatNumber, formatQuantity, formatRate } from '../utils/formatters'
 import { formatRunConfig } from '../utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
 import { COLOR_CLASSES } from '../constants/colors'
-import { useDataStore } from '../stores/useDataStore'
+import { useGlobalStore } from '../stores/useGlobalStore'
 import InstanceBaseCard from './InstanceBaseCard.vue'
 
 const props = defineProps({
@@ -31,11 +31,11 @@ const props = defineProps({
 
 const emit = defineEmits(['toggle'])
 
-const dataStore = useDataStore()
+const jsonStore = useGlobalStore().jsonStore
 
 // Calculate instance data for this specific run config
 const instanceData = computed(() => {
-  return dataStore.calculateInstanceForRun(props.instanceId, props.run)
+  return jsonStore.calculateInstanceForRun(props.instanceId, props.run)
 })
 
 // Calculate iterations per time period
@@ -57,7 +57,7 @@ const formattedKamasPerPeriod = computed(() => {
 
 // Format the run title
 const runTitle = computed(() => {
-  const instanceName = dataStore.names?.instances?.[props.instanceId] || `Instance #${props.instanceId}`
+  const instanceName = jsonStore.names?.instances?.[props.instanceId] || `Instance #${props.instanceId}`
   const level = instanceData.value?.level || '?'
   const configStr = formatRunConfig(props.run)
   const timeStr = props.run.time ? `${props.run.time}min` : '?'
@@ -82,7 +82,7 @@ const runTitle = computed(() => {
           <div class="flex items-center gap-3">
             <div :class="COLOR_CLASSES.textNormal">
               <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">
-                {{ dataStore.names?.items?.[item.itemId] || ('#' + item.itemId) }}
+                {{ jsonStore.names?.items?.[item.itemId] || ('#' + item.itemId) }}
               </span>
               <span> x{{ formatQuantity(item.quantity) }} ({{ formatRate(item.rate) }}%{{ getSteleInfo(item) }})</span>
             </div>

@@ -21,22 +21,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useDataStore } from '../stores/useDataStore'
+import { useGlobalStore } from '../stores/useGlobalStore'
 import { WAKFU_TEXT_ALT, WAKFU_TEXT } from '../constants/colors'
 
-const dataStore = useDataStore()
+const global = useGlobalStore()
 
-// Determine initial language from localStorage or default to 'fr'
-const getInitialLanguage = () => {
-  if (typeof window !== 'undefined') {
-    const saved = localStorage.getItem('wakfarm_language')
-    if (saved) return saved
-  }
-  return 'fr'
-}
-
-const currentLanguage = ref(getInitialLanguage())
+// Use the reactive language ref exposed by the facade directly (single source of truth)
+const currentLanguage = global.language
 
 const languages = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -46,13 +37,6 @@ const languages = [
 ]
 
 const handleChange = async (langCode) => {
-  currentLanguage.value = langCode
-  localStorage.setItem('wakfarm_language', langCode)
-  await dataStore.loadNames(langCode)
+  await global.setLanguage(langCode)
 }
-
-onMounted(async () => {
-  // Load names for the current language on mount
-  await dataStore.loadNames(currentLanguage.value)
-})
 </script>

@@ -1,7 +1,6 @@
 <script setup>
 import { COLOR_CLASSES } from '../constants/colors'
-import { useDataStore } from '../stores/useDataStore'
-import { useInstanceInfo } from '../composables/useInstanceInfo'
+import { useGlobalStore } from '../stores/useGlobalStore'
 
 const props = defineProps({
   run: {
@@ -12,9 +11,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update', 'remove'])
 
-const dataStore = useDataStore()
-const t = (key) => dataStore.names?.divers?.[key] || key
-const instanceInfo = useInstanceInfo(props.run.instanceId)
+const jsonStore = useGlobalStore().jsonStore
+const t = (key) => jsonStore.names?.divers?.[key] || key
 
 function updateField(field, value) {
   emit('update', { ...props.run, [field]: value })
@@ -116,7 +114,7 @@ function updateField(field, value) {
         <select 
           :value="run.stasis"
           @change="updateField('stasis', parseInt($event.target.value))"
-          :class="[COLOR_CLASSES.selectRunCard, 'text-sm py-1']"
+          :class="[COLOR_CLASSES.selectRunConfigCard, 'text-sm py-1']"
           style="width: 50px;">
           <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
         </select>
@@ -127,7 +125,7 @@ function updateField(field, value) {
         <select 
           :value="run.steles"
           @change="updateField('steles', parseInt($event.target.value))"
-          :class="[COLOR_CLASSES.selectRunCard, 'text-sm py-1']"
+          :class="[COLOR_CLASSES.selectRunConfigCard, 'text-sm py-1']"
           style="width: 50px;">
           <option v-for="n in 5" :key="n - 1" :value="n - 1">{{ n - 1 }}</option>
         </select>
@@ -138,7 +136,7 @@ function updateField(field, value) {
         <select 
           :value="run.steleIntervention"
           @change="updateField('steleIntervention', parseInt($event.target.value))"
-          :class="[COLOR_CLASSES.selectRunCard, 'text-sm py-1']"
+          :class="[COLOR_CLASSES.selectRunConfigCard, 'text-sm py-1']"
           style="width: 50px;">
           <option v-for="n in 4" :key="n - 1" :value="n - 1">{{ n - 1 }}</option>
         </select>

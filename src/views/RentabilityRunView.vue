@@ -71,7 +71,7 @@
     
     <!-- Kamas / Run -->
     <div class="px-8 py-6 max-w-[1920px] mx-auto">
-      <div v-if="!dataStore.loaded" class="text-center">
+      <div v-if="!jsonStore.loaded" class="text-center">
         <p :class="['text-lg', COLOR_CLASSES.textLoading]">Chargement des données...</p>
       </div>
       <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
@@ -80,7 +80,7 @@
           :key="inst.uniqueKey"
           :instance="inst"
           :isExpanded="expandedRunSet.has(inst.uniqueKey)"
-          :names="dataStore.names"
+          :names="jsonStore.names"
           @toggle="toggleExpand(inst.uniqueKey)"
         />
       </div>
@@ -90,18 +90,18 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useDataStore } from '../stores/useDataStore'
 import { useGlobalStore } from '../stores/useGlobalStore'
 import InstanceCard from '../components/InstanceCard.vue'
 import ToggleAllButton from '../components/ToggleAllButton.vue'
 import { COLOR_CLASSES } from '../constants/colors'
 import { useLocalStorage } from '../composables/useLocalStorage'
 
-const dataStore = useDataStore()
+
 const globalStore = useGlobalStore()
+const jsonStore = globalStore.jsonStore
 
 const t = (key) => {
-  return dataStore.names?.divers?.[key] || key
+  return jsonStore.names?.divers?.[key] || key
 }
 
 // Gestion de l'expansion pour Kamas/Run
@@ -110,10 +110,10 @@ const expandedRunSet = ref(new Set(expandedRun.value || []))
 
 // Calculer et trier les instances dynamiquement (seulement config globale)
 const sortedInstances = computed(() => {
-  if (!dataStore.loaded) return []
+  if (!jsonStore.loaded) return []
   
   // Utiliser seulement les instances avec config globale (de instancesRefined)
-  return dataStore.instancesRefined
+  return jsonStore.instancesRefined
     .map(inst => ({
       ...inst,
       uniqueKey: `global_${inst.id}`

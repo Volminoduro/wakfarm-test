@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { useGlobalStore } from './useGlobalStore'
+import { useLocalStore } from './useLocalStore'
 import { watch } from 'vue'
 import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS, LEVEL_RANGES } from '../constants'
 
@@ -30,7 +30,7 @@ function parseNames(rawNames) {
   return namesMap
 }
 
-export const useDataStore = defineStore('data', {
+export const useJsonStore = defineStore('data', {
   state: () => ({
     instancesRefined: [],
     names: {},
@@ -111,10 +111,9 @@ export const useDataStore = defineStore('data', {
     async loadAllData(server, lang = 'fr') {
       try {
         const basePath = import.meta.env.BASE_URL
-        const [instRes, itemRes, monsterRes, mappingRes, lootRes, nameRes, serversRes, bossMappingRes] = await Promise.all([
+        const [instRes, itemRes, mappingRes, lootRes, nameRes, serversRes, bossMappingRes] = await Promise.all([
           axios.get(`${basePath}data/instances.json`),
           axios.get(`${basePath}data/items.json`),
-          axios.get(`${basePath}data/monsters.json`),
           axios.get(`${basePath}data/mapping.json`),
           axios.get(`${basePath}data/loots.json`),
           axios.get(`${basePath}names/${lang}.json`),
@@ -153,7 +152,7 @@ export const useDataStore = defineStore('data', {
         this.loaded = true
 
         // Setup a single watcher to recompute instances when global config changes
-        const globalStore = useGlobalStore()
+        const globalStore = useLocalStore()
         if (!this._hasConfigWatcher) {
           this._hasConfigWatcher = true
           watch(
@@ -166,7 +165,7 @@ export const useDataStore = defineStore('data', {
           )
           watch(
             () => globalStore.config,
-            (newVal) => {
+            () => {
               try {
                 this.createInstanceData(this._rawInstances, this._rawItems, this._rawMapping, this._rawLoots, this._rawPrices)
               } catch (e) {
@@ -261,7 +260,7 @@ export const useDataStore = defineStore('data', {
 
     // Helper: Compute adjusted drop rate based on config
     _computeAdjustedRate(baseRate, config) {
-      const globalStore = useGlobalStore()
+      const globalStore = useLocalStore()
       const boosterBonus = config.isBooster 
         ? (BOOSTER_BONUS[globalStore.config.server] || 1.25) 
         : 1
@@ -300,25 +299,21 @@ export const useDataStore = defineStore('data', {
       const lootSteleIntervention = lootEntry.steleIntervention || 0
       const lootStasis = lootEntry.stasis
 
-      // Check stele requirement
       if (lootStele > configSteles) return false
 
-      // Check steleIntervention requirement
-      if (config.intervention ? lootSteleIntervention > configSteleIntervention : lootSteleIntervention !== 0) {
+      if (lootSteleIntervention > configSteleIntervention) {
         return false
       }
 
-      // Check stasis requirement
       if (lootStasis != null && configStasis < lootStasis) return false
 
-      // Items with rarity > 3 require stasis >= 3
       if (itemRarity > 3 && configStasis < 3) return false
 
       return true
     },
 
     createInstanceData(instances, items, mapping, loots, prices){
-      const globalStore = useGlobalStore()
+      const globalStore = useLocalStore()
       
       // Use getters for lookup maps
       const itemRarityMap = this.itemRarityMap
@@ -404,8 +399,10 @@ export const useDataStore = defineStore('data', {
           id: inst.id,
           level: inst.level,
           isDungeon: inst.isDungeon,
-          isUltimate: inst.isUltimate || false,
+          isUltimate: inst.isUltimate,
           bossId: inst.bossId || null,
+          // Enrich instance with a display name resolved from loaded names
+          name: this.names?.instances?.[inst.id] || `Instance #${inst.id}`,
           loots: inst.loots,
           items: itemsBreakdown,
           totalKamas: Math.floor(totalKamas)
@@ -499,7 +496,7 @@ export const useDataStore = defineStore('data', {
       const instance = this._rawInstances.find(i => i.id === instanceId)
       if (!instance) return null
 
-      const globalStore = useGlobalStore()
+      const globalStore = useLocalStore()
       const itemRarityMap = this.itemRarityMap
       const priceMap = this.priceMap
       const players = instance.players || (instance.isDungeon ? 3 : 4)

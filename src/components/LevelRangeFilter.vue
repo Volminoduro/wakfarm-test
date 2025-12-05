@@ -1,16 +1,15 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useGlobalStore } from '../stores/useGlobalStore'
-import { useDataStore } from '../stores/useDataStore'
 import { LEVEL_RANGES } from '../constants'
 import { COLOR_CLASSES } from '../constants/colors'
 
 const store = useGlobalStore()
-const dataStore = useDataStore()
+const jsonStore = store.jsonStore
 const isOpen = ref(false)
 const dropdownRef = ref(null)
 
-const t = (key) => dataStore.names?.divers?.[key] || key
+const t = (key) => jsonStore.names?.divers?.[key] || key
 
 // Fermer le dropdown quand on clique en dehors
 const handleClickOutside = (event) => {

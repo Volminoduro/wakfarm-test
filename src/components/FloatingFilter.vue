@@ -1,14 +1,13 @@
 <script setup>
 import { useGlobalStore } from '../stores/useGlobalStore'
-import { useDataStore } from '../stores/useDataStore'
 import { formatInputNumber, formatRateInput, parseFormattedNumber } from '../utils/formatters'
 import { COLOR_CLASSES } from '../constants/colors'
 import LevelRangeFilter from './LevelRangeFilter.vue'
 
 const store = useGlobalStore()
-const dataStore = useDataStore()
+const jsonStore = store.jsonStore
 
-const t = (key) => dataStore.names?.divers?.[key] || key
+const t = (key) => jsonStore.names?.divers?.[key] || key
 
 // Generic numeric field updater
 const updateNumericField = (event, fieldName, parser = parseInt) => {
@@ -112,14 +111,14 @@ function updateMinDropRate(event) {
                     v-model="store.config.server"
                     :class="[COLOR_CLASSES.select, 'w-[160px]']"
                   >
-                    <option v-for="server in dataStore.servers" :key="server.id" :value="server.id">
+                    <option v-for="server in jsonStore.servers" :key="server.id" :value="server.id">
                       {{ t(server.name_key) }}
                     </option>
                   </select>
                   <div :class="['text-xs leading-tight w-[70px] text-center', COLOR_CLASSES.textMuted]">
-                    <div v-if="dataStore.pricesLastUpdate">
-                      <div>{{ dataStore.pricesLastUpdate.split(' ')[0] }}</div>
-                      <div>{{ dataStore.pricesLastUpdate.split(' ')[1] }}</div>
+                    <div v-if="jsonStore.pricesLastUpdate">
+                      <div>{{ jsonStore.pricesLastUpdate.split(' ')[0] }}</div>
+                      <div>{{ jsonStore.pricesLastUpdate.split(' ')[1] }}</div>
                     </div>
                     <span v-else>{{ t('prices_no_data') }}</span>
                   </div>

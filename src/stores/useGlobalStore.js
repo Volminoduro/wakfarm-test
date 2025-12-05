@@ -1,46 +1,49 @@
-import { defineStore } from 'pinia'
-import { ref, watch } from 'vue'
-import { STORAGE_KEYS, DEFAULT_CONFIG } from '../constants'
+import { useLocalStore } from './useLocalStore'
+import { computed } from 'vue'
+import { useJsonStore } from './useJsonStore'
+import { useRunsStore } from './useRunsStore'
 
-export const useGlobalStore = defineStore('global', () => {
-  const LS_KEY = STORAGE_KEYS.CONFIG
+// Facade/global accessor that composes the local persisted store and the data store.
+// It also centralizes cross-store actions like language changes and initial data loading.
+export const useGlobalStore = () => {
+  const local = useLocalStore()
+  const data = useJsonStore()
+  const runs = useRunsStore()
 
-  // Load from localStorage or use defaults
-  const loadConfig = () => {
+  // Create a reactive proxy for language that always forwards to the local store's ref
+  const language = computed(() => {
+    const l = local.language
+    return (l && (l.value ?? l)) || 'fr'
+  })
+
+  // Set language globally: update persisted value and load names from json store
+  async function setLanguage(lang) {
+    if (local.updateLanguage) local.updateLanguage(lang)
     try {
-      const saved = localStorage.getItem(LS_KEY)
-      if (saved) {
-        return { ...DEFAULT_CONFIG, ...JSON.parse(saved) }
-      }
+      await data.loadNames(lang)
     } catch (e) {
-      console.error('Erreur lecture localStorage:', e)
+      console.error('Erreur chargement noms pour la langue', lang, e)
     }
-    return DEFAULT_CONFIG
   }
 
-  // Configuration du bandeau
-  const config = ref(loadConfig())
-
-  // Configuration locale (pour l'onglet "Kamas par heure")
-  // On chargera ça depuis le localStorage au montage
-  const userRotations = ref([]) 
-
-  function updateConfig(newConfig) {
-    config.value = { ...config.value, ...newConfig }
+  // Initialize data (used on app mount): load all main JSON + names using persisted language
+  async function initData(server) {
+    // `language` computed proxy already returns a default ('fr') when missing,
+    // so rely on `language.value` here to avoid duplicating fallback logic.
+    const lang = language.value
+    try {
+      await data.loadAllData(server, lang)
+    } catch (e) {
+      console.error('Erreur initData', e)
+    }
   }
 
-  // Persist to localStorage whenever config changes
-  watch(
-    config,
-    (newVal) => {
-      try {
-        localStorage.setItem(LS_KEY, JSON.stringify(newVal))
-      } catch (e) {
-        console.error('Erreur écriture localStorage:', e)
-      }
-    },
-    { deep: true }
-  )
-
-  return { config, userRotations, updateConfig }
-})
+  return {
+    ...local,
+    language,
+    jsonStore: data,
+    runsStore: runs,
+    setLanguage,
+    initData
+  }
+}

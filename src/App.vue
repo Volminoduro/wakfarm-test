@@ -1,17 +1,17 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useDataStore } from './stores/useDataStore'
 import { useGlobalStore } from './stores/useGlobalStore'
 import { useLocalStorage } from './composables/useLocalStorage'
 import { COLOR_CLASSES } from './constants/colors'
-import AppHeader from './components/AppHeader.vue'
-import AppFooter from './components/AppFooter.vue'
-import RentabilityView from './views/RentabilityView.vue'
-import RunsView from './views/RunsView.vue'
+import AppHeader from './components/layout/AppHeader.vue'
+import AppFooter from './components/layout/AppFooter.vue'
+import RentabilityRunView from './views/RentabilityRunView.vue'
+import RentabilityHourView from './views/RentabilityHourView.vue'
 import PricesView from './views/PricesView.vue'
 
-const dataStore = useDataStore()
+
 const globalStore = useGlobalStore()
+const jsonStore = globalStore.jsonStore
 
 // Tab state with localStorage persistence
 const mainTab = useLocalStorage('wakfarm_mainTab', 'rentability')
@@ -20,9 +20,8 @@ const mainTab = useLocalStorage('wakfarm_mainTab', 'rentability')
 const setMainTab = (tab) => { mainTab.value = tab }
 
 // Charger les données au montage
-onMounted(() => {
-  const savedLanguage = localStorage.getItem('wakfarm_language') || 'fr'
-  dataStore.loadAllData(globalStore.config.server, savedLanguage)
+onMounted(async () => {
+  await globalStore.initData(globalStore.config.server)
 })
 
 // Note: expanded state is now managed directly in RentabilityView for better control with manual runs
@@ -30,26 +29,21 @@ onMounted(() => {
 
 <template>
   <div :class="['min-h-screen flex flex-col', COLOR_CLASSES.bgPrimary]">
+
     <AppHeader 
       :mainTab="mainTab"
       @change-main-tab="setMainTab"
     />
     
-    <!-- Main Content -->
     <main class="flex-grow">
-      <div v-if="!dataStore.loaded" class="p-8 text-center">
+      <div v-if="!jsonStore.loaded" class="p-8 text-center">
         <p :class="['text-lg', COLOR_CLASSES.textLoading]">Chargement des données...</p>
       </div>
 
-      <!-- Rentability Tab -->
-      <RentabilityView 
-        v-if="mainTab === 'rentability'"
-      />
+      <RentabilityRunView v-if="mainTab === 'rentability'" />
 
-      <!-- Runs Tab -->
-      <RunsView v-else-if="mainTab === 'runs'" />
+      <RentabilityHourView v-else-if="mainTab === 'runs'" />
 
-      <!-- Prices Tab -->
       <PricesView v-else-if="mainTab === 'prices'" />
     </main>
     

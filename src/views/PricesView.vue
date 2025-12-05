@@ -266,16 +266,16 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useDataStore } from '../stores/useDataStore'
+import { useGlobalStore } from '../stores/useGlobalStore'
 import { useLocalStorage } from '../composables/useLocalStorage'
 import { useClickOutside } from '../composables/useClickOutside'
 import { COLOR_CLASSES } from '../constants/colors'
 import { RARITY_COLORS } from '../constants'
 import { formatNumber } from '../utils/formatters'
 
-const dataStore = useDataStore()
+const jsonStore = useGlobalStore().jsonStore
 
-const t = (key) => dataStore.names?.divers?.[key] || key
+const t = (key) => jsonStore.names?.divers?.[key] || key
 
 // Filters with localStorage persistence
 const searchName = useLocalStorage('wakfarm_prices_searchName', '')
@@ -301,10 +301,10 @@ const { elementRef: rarityDropdownRef } = useClickOutside(() => {
 
 // Get all instances for the filter
 const allInstancesList = computed(() => {
-  const instances = dataStore._rawInstances || []
+  const instances = jsonStore._rawInstances || []
   return instances.map(inst => ({
     id: inst.id,
-    name: dataStore.names?.instances?.[inst.id] || `Instance #${inst.id}`
+    name: jsonStore.names?.instances?.[inst.id] || `Instance #${inst.id}`
   })).sort((a, b) => a.name.localeCompare(b.name))
 })
 
@@ -339,19 +339,19 @@ const { elementRef: instancesDropdownRef } = useClickOutside(() => {
 
 // Get all items with names, prices, and instances (using store getters)
 const allItems = computed(() => {
-  const items = dataStore._rawItems || []
-  const priceMap = dataStore.priceMap
-  const itemInstances = dataStore.itemToInstancesMap
+  const items = jsonStore._rawItems || []
+  const priceMap = jsonStore.priceMap
+  const itemInstances = jsonStore.itemToInstancesMap
   
   return items.map(item => {
     const instanceIds = itemInstances[item.id] || []
     const instanceNames = instanceIds
-      .map(id => dataStore.names?.instances?.[id] || `#${id}`)
+      .map(id => jsonStore.names?.instances?.[id] || `#${id}`)
       .sort((a, b) => a.localeCompare(b))
     
     return {
       id: item.id,
-      name: dataStore.names?.items?.[item.id] || `Item #${item.id}`,
+      name: jsonStore.names?.items?.[item.id] || `Item #${item.id}`,
       rarity: item.rarity || 0,
       level: item.level || 0,
       price: priceMap[item.id] || null,
