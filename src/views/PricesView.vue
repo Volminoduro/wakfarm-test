@@ -267,6 +267,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useGlobalStore } from '../stores/useGlobalStore'
+import { useNameStore } from '../stores/useNameStore'
 import { useLocalStorage } from '../composables/useLocalStorage'
 import { useClickOutside } from '../composables/useClickOutside'
 import { COLOR_CLASSES } from '../constants/colors'
@@ -274,8 +275,9 @@ import { RARITY_COLORS } from '../constants'
 import { formatNumber } from '../utils/formatters'
 
 const jsonStore = useGlobalStore().jsonStore
+const nameStore = useNameStore()
 
-const t = (key) => jsonStore.names?.divers?.[key] || key
+const t = (key) => nameStore.names?.divers?.[key] || key
 
 // Filters with localStorage persistence
 const searchName = useLocalStorage('wakfarm_prices_searchName', '')
@@ -304,7 +306,7 @@ const allInstancesList = computed(() => {
   const instances = jsonStore._rawInstances || []
   return instances.map(inst => ({
     id: inst.id,
-    name: jsonStore.names?.instances?.[inst.id] || `Instance #${inst.id}`
+    name: nameStore.names?.instances?.[inst.id] || `Instance #${inst.id}`
   })).sort((a, b) => a.name.localeCompare(b.name))
 })
 
@@ -346,12 +348,12 @@ const allItems = computed(() => {
   return items.map(item => {
     const instanceIds = itemInstances[item.id] || []
     const instanceNames = instanceIds
-      .map(id => jsonStore.names?.instances?.[id] || `#${id}`)
+      .map(id => nameStore.names?.instances?.[id] || `#${id}`)
       .sort((a, b) => a.localeCompare(b))
     
     return {
       id: item.id,
-      name: jsonStore.names?.items?.[item.id] || `Item #${item.id}`,
+      name: nameStore.names?.items?.[item.id] || `Item #${item.id}`,
       rarity: item.rarity || 0,
       level: item.level || 0,
       price: priceMap[item.id] || null,

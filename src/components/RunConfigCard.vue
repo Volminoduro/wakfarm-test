@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { COLOR_CLASSES } from '../constants/colors'
 import { useGlobalStore } from '../stores/useGlobalStore'
+import { useNameStore } from '../stores/useNameStore'
 import RunConfigRow from './RunConfigRow.vue'
 import BossIcon from './BossIcon.vue'
 
@@ -12,13 +13,15 @@ const props = defineProps({
   }
 })
 
+
 const runsStore = useGlobalStore().runsStore
 const jsonStore = useGlobalStore().jsonStore
+const namesStore = useNameStore()
 
 
 console.log('Instance in RunConfigCard:', props.instance)
 
-const t = (key) => jsonStore.names?.divers?.[key] || key
+const t = (key) => namesStore.names?.divers?.[key] || key
 
 const isExpanded = computed(() => runsStore.expandedInstances.has(props.instance.id))
 const runs = computed(() => runsStore.getRunsForInstance(props.instance.id))

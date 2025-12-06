@@ -5,6 +5,7 @@ import { formatRunConfig } from '../utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
 import { COLOR_CLASSES } from '../constants/colors'
 import InstanceBaseCard from './InstanceBaseCard.vue'
+import { useNameStore } from '../stores/useNameStore'
 
 const props = defineProps({
   instance: {
@@ -15,21 +16,18 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-  names: {
-    type: Object,
-    required: true
-  }
 })
 
 const emit = defineEmits(['toggle'])
 
 const INITIAL_ITEMS_SHOWN = 15
 const showAllItems = ref(false)
+const namesStore = useNameStore()
 
 const instanceTitle = computed(() => {
-  const baseName = props.names.instances[props.instance.id] || ('Instance ' + props.instance.id)
+  const baseName = namesStore.names.instances[props.instance.id] || ('Instance ' + props.instance.id)
   const level = props.instance.level
-  const levelText = props.names.divers['niveau_reduit'] || 'Niv.'
+  const levelText = namesStore.names.divers['niveau_reduit'] || 'Niv.'
   
   if (props.instance.isManualRun && props.instance.runConfig) {
     const configStr = formatRunConfig(props.instance.runConfig)
@@ -72,7 +70,7 @@ const toggleShowAll = () => {
           <li v-for="item in displayedItems" :key="item.itemId" class="px-5 py-2 flex justify-between items-center">
             <div class="flex items-center gap-3">
               <div :class="COLOR_CLASSES.textNormal">
-                <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">{{ names.items[item.itemId] || ('#' + item.itemId) }}</span>
+                <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">{{ namesStore.names.items[item.itemId] || ('#' + item.itemId) }}</span>
                 <span> x{{ formatQuantity(item.quantity) }} ({{ formatRate(item.rate) }}%{{ getSteleInfo(item) }})</span>
               </div>
             </div>

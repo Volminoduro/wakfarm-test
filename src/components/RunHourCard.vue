@@ -8,6 +8,7 @@ import { formatRunConfig } from '../utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
 import { COLOR_CLASSES } from '../constants/colors'
 import { useGlobalStore } from '../stores/useGlobalStore'
+import { useNameStore } from '../stores/useNameStore'
 import InstanceBaseCard from './InstanceBaseCard.vue'
 
 const props = defineProps({
@@ -32,6 +33,7 @@ const props = defineProps({
 const emit = defineEmits(['toggle'])
 
 const jsonStore = useGlobalStore().jsonStore
+const namesStore = useNameStore()
 
 // Calculate instance data for this specific run config
 const instanceData = computed(() => {
@@ -57,7 +59,7 @@ const formattedKamasPerPeriod = computed(() => {
 
 // Format the run title
 const runTitle = computed(() => {
-  const instanceName = jsonStore.names?.instances?.[props.instanceId] || `Instance #${props.instanceId}`
+  const instanceName = namesStore.names?.instances?.[props.instanceId] || `Instance #${props.instanceId}`
   const level = instanceData.value?.level || '?'
   const configStr = formatRunConfig(props.run)
   const timeStr = props.run.time ? `${props.run.time}min` : '?'
@@ -82,7 +84,7 @@ const runTitle = computed(() => {
           <div class="flex items-center gap-3">
             <div :class="COLOR_CLASSES.textNormal">
               <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">
-                {{ jsonStore.names?.items?.[item.itemId] || ('#' + item.itemId) }}
+                {{ namesStore.names?.items?.[item.itemId] || ('#' + item.itemId) }}
               </span>
               <span> x{{ formatQuantity(item.quantity) }} ({{ formatRate(item.rate) }}%{{ getSteleInfo(item) }})</span>
             </div>

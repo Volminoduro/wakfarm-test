@@ -5,6 +5,7 @@ import FloatingFilter from '../FloatingFilter.vue'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../../constants/colors'
 
 import { useGlobalStore } from '../../stores/useGlobalStore'
+import { useNameStore } from '../../stores/useNameStore'
 
 const props = defineProps({
   mainTab: {
@@ -16,8 +17,9 @@ const props = defineProps({
 
 const emit = defineEmits(['change-main-tab'])
 const dataStore = useGlobalStore().jsonStore
+const nameStore = useNameStore()
 
-const t = (key) => dataStore.names?.divers?.[key] || key
+const t = (key) => nameStore.names?.divers?.[key] || key
 
 // System for warnings and alerts
 const warnings = computed(() => {

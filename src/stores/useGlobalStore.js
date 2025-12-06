@@ -1,6 +1,7 @@
 import { useLocalStore } from './useLocalStore'
 import { computed } from 'vue'
 import { useJsonStore } from './useJsonStore'
+import { useNameStore } from './useNameStore'
 import { useRunsStore } from './useRunsStore'
 
 // Facade/global accessor that composes the local persisted store and the data store.
@@ -20,7 +21,8 @@ export const useGlobalStore = () => {
   async function setLanguage(lang) {
     if (local.updateLanguage) local.updateLanguage(lang)
     try {
-      await data.loadNames(lang)
+      const namesStore = useNameStore()
+      await namesStore.loadNames(lang)
     } catch (e) {
       console.error('Erreur chargement noms pour la langue', lang, e)
     }
@@ -32,7 +34,12 @@ export const useGlobalStore = () => {
     // so rely on `language.value` here to avoid duplicating fallback logic.
     const lang = language.value
     try {
-      await data.loadAllData(server, lang)
+      const namesStore = useNameStore()
+      // Load main JSON data and localized names in parallel to speed startup.
+      await Promise.all([
+        data.loadAllData(server, lang),
+        namesStore.loadNames(lang)
+      ])
     } catch (e) {
       console.error('Erreur initData', e)
     }

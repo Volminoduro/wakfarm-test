@@ -1,13 +1,15 @@
 <script setup>
 import { useGlobalStore } from '../stores/useGlobalStore'
+import { useNameStore } from '../stores/useNameStore'
 import { formatInputNumber, formatRateInput, parseFormattedNumber } from '../utils/formatters'
 import { COLOR_CLASSES } from '../constants/colors'
 import LevelRangeFilter from './LevelRangeFilter.vue'
 
 const store = useGlobalStore()
 const jsonStore = store.jsonStore
+const namesStore = useNameStore()
 
-const t = (key) => jsonStore.names?.divers?.[key] || key
+const t = (key) => namesStore.names?.divers?.[key] || key
 
 // Generic numeric field updater
 const updateNumericField = (event, fieldName, parser = parseInt) => {

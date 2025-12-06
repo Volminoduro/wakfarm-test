@@ -3,6 +3,8 @@ import './style.css'
 import { useGlobalStore } from '@/stores/useGlobalStore'
 import { createPinia } from 'pinia'
 import App from './App.vue'
+import { useNameStore } from './stores/useNameStore'
+import { useJsonStore } from './stores/useJsonStore'
 
 const pinia = createPinia()
 
@@ -12,3 +14,6 @@ app.mount('#app')
 
 // Initialize stores (pass pinia instance to avoid active-Pinia timing issues)
 const globalStore = useGlobalStore(pinia)
+const jsonStore = useJsonStore(pinia)
+const nameStore = useNameStore(pinia)
+// const runsStore = useRunsStore(pinia)

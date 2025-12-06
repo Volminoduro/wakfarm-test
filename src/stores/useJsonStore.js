@@ -4,36 +4,10 @@ import { useLocalStore } from './useLocalStore'
 import { watch } from 'vue'
 import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS, LEVEL_RANGES } from '../constants'
 
-// Fonction utilitaire pour parser les noms
-function parseNames(rawNames) {
-  const namesMap = { items: {}, monsters: {}, instances: {}, divers: {} }
-  
-  if (!rawNames || typeof rawNames !== 'object') return namesMap
-  
-  // Parse les tableaux par type
-  const types = ['items', 'monsters', 'instances', 'divers']
-  types.forEach(type => {
-    if (Array.isArray(rawNames[type])) {
-      rawNames[type].forEach(e => {
-        if (e?.id != null) namesMap[type][e.id] = e.name
-      })
-    }
-  })
-  
-  // Fallback pour les formats legacy (id->string directement)
-  Object.entries(rawNames).forEach(([k, v]) => {
-    if (typeof v === 'string') {
-      namesMap.instances[k] = v
-    }
-  })
-  
-  return namesMap
-}
 
 export const useJsonStore = defineStore('data', {
   state: () => ({
     instancesRefined: [],
-    names: {},
     servers: [],
     loaded: false,
     pricesLastUpdate: null,
@@ -111,17 +85,15 @@ export const useJsonStore = defineStore('data', {
     async loadAllData(server, lang = 'fr') {
       try {
         const basePath = import.meta.env.BASE_URL
-        const [instRes, itemRes, mappingRes, lootRes, nameRes, serversRes, bossMappingRes] = await Promise.all([
+        const [instRes, itemRes, mappingRes, lootRes, serversRes, bossMappingRes] = await Promise.all([
           axios.get(`${basePath}data/instances.json`),
           axios.get(`${basePath}data/items.json`),
           axios.get(`${basePath}data/mapping.json`),
           axios.get(`${basePath}data/loots.json`),
-          axios.get(`${basePath}names/${lang}.json`),
           axios.get(`${basePath}data/servers.json`),
           axios.get(`${basePath}data/boss-mapping.json`)
         ])
-        
-        this.names = parseNames(nameRes.data)
+
         this.servers = serversRes.data || []
         
         // Charger les prix APRÈS avoir chargé la liste des serveurs
@@ -151,10 +123,12 @@ export const useJsonStore = defineStore('data', {
         )
         this.loaded = true
 
-        // Setup a single watcher to recompute instances when global config changes
+        // Setup a watcher to recompute instances when relevant global config keys change
         const globalStore = useLocalStore()
         if (!this._hasConfigWatcher) {
           this._hasConfigWatcher = true
+
+          // Watch server separately to reload prices immediately
           watch(
             () => globalStore.config.server,
             async (newServer, oldServer) => {
@@ -163,14 +137,55 @@ export const useJsonStore = defineStore('data', {
               }
             }
           )
-          watch(
-            () => globalStore.config,
-            () => {
+
+          // Only watch the subset of config fields that affect instance computation.
+          // UI-only preferences should be stored elsewhere or will not trigger this watcher.
+          const configSelector = () => ({
+            server: globalStore.config.server,
+            isBooster: globalStore.config.isBooster,
+            isModulated: globalStore.config.isModulated,
+            stasis: globalStore.config.stasis,
+            steles: globalStore.config.steles,
+            steleIntervention: globalStore.config.steleIntervention,
+            minItemProfit: globalStore.config.minItemProfit,
+            minDropRatePercent: globalStore.config.minDropRatePercent,
+            minInstanceTotal: globalStore.config.minInstanceTotal,
+            levelRanges: globalStore.config.levelRanges
+          })
+
+          // Scheduler for the expensive recompute: prefer requestIdleCallback, fallback to debounce timeout
+          let idleHandle = null
+          let timeoutHandle = null
+          const scheduleRecompute = () => {
+            // cancel any pending
+            try {
+              if (typeof cancelIdleCallback !== 'undefined' && idleHandle != null) cancelIdleCallback(idleHandle)
+            } catch (e) {}
+            if (timeoutHandle != null) {
+              clearTimeout(timeoutHandle)
+              timeoutHandle = null
+            }
+
+            const doRecompute = () => {
               try {
                 this.createInstanceData(this._rawInstances, this._rawItems, this._rawMapping, this._rawLoots, this._rawPrices)
               } catch (e) {
                 console.error('Erreur recompute instances after config change', e)
               }
+            }
+
+            if (typeof requestIdleCallback !== 'undefined') {
+              idleHandle = requestIdleCallback(() => doRecompute(), { timeout: 250 })
+            } else {
+              // lightweight debounce to avoid multiple immediate recomputes
+              timeoutHandle = setTimeout(() => doRecompute(), 80)
+            }
+          }
+
+          watch(
+            configSelector,
+            () => {
+              scheduleRecompute()
             },
             { deep: true }
           )
@@ -230,7 +245,6 @@ export const useJsonStore = defineStore('data', {
         if (!perItem.has(itemId)) {
           perItem.set(itemId, {
             itemId,
-            name: this.names?.items?.[itemId] || null,
             rate: adjustedRate,
             price,
             quantity: 0,
@@ -401,8 +415,6 @@ export const useJsonStore = defineStore('data', {
           isDungeon: inst.isDungeon,
           isUltimate: inst.isUltimate,
           bossId: inst.bossId || null,
-          // Enrich instance with a display name resolved from loaded names
-          name: this.names?.instances?.[inst.id] || `Instance #${inst.id}`,
           loots: inst.loots,
           items: itemsBreakdown,
           totalKamas: Math.floor(totalKamas)
@@ -479,16 +491,6 @@ export const useJsonStore = defineStore('data', {
       const prices = await this.loadPricesWithDate(server)
       this._rawPrices = prices
       this.createInstanceData(this._rawInstances, this._rawItems, this._rawMapping, this._rawLoots, this._rawPrices)
-    },
-
-    async loadNames(lang = 'fr') {
-      try {
-        const basePath = import.meta.env.BASE_URL
-        const nameRes = await axios.get(`${basePath}names/${lang}.json`)
-        this.names = parseNames(nameRes.data)
-      } catch (e) {
-        console.error("Erreur chargement langue", e)
-      }
     },
 
     // Calculate instance data for a specific run configuration

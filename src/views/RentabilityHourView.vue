@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useGlobalStore } from '../stores/useGlobalStore'
+import { useNameStore } from '../stores/useNameStore'
 import { instancePassesFilters } from '../composables/useInstanceFilters'
 import { useLocalStorage } from '../composables/useLocalStorage'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
@@ -10,12 +11,13 @@ import ToggleAllButton from '../components/ToggleAllButton.vue'
 
 const jsonStore = useGlobalStore().jsonStore
 const globalStore = useGlobalStore()
+const nameStore = useNameStore()
 const runsStore = globalStore.runsStore
 
 // Sub-tab management
 const subTab = useLocalStorage('wakfarm_runs_subTab', 'time')
 
-const t = (key) => jsonStore.names?.divers?.[key] || key
+const t = (key) => nameStore.names?.divers?.[key] || key
 
 // Get all instances sorted by level (enriched with name and bossId for UI)
 const sortedInstances = computed(() => {
@@ -27,7 +29,7 @@ const sortedInstances = computed(() => {
       isDungeon: inst.isDungeon || false,
       isUltimate: inst.isUltimate || false,
       bossId: inst.bossId || null,
-      name: jsonStore.names?.instances?.[inst.id] || `Instance #${inst.id}`
+      name: nameStore.names?.instances?.[inst.id] || `Instance #${inst.id}`
     }))
     .sort((a, b) => a.level - b.level)
 })

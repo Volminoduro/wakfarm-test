@@ -82,7 +82,6 @@
           :key="inst.uniqueKey"
           :instance="inst"
           :isExpanded="expandedRunSet.has(inst.uniqueKey)"
-          :names="jsonStore.names"
           @toggle="toggleExpand(inst.uniqueKey)"
         />
       </div>
@@ -93,6 +92,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useGlobalStore } from '../stores/useGlobalStore'
+import { useNameStore } from '../stores/useNameStore'
 import InstanceCard from '../components/InstanceCard.vue'
 import ToggleAllButton from '../components/ToggleAllButton.vue'
 import { COLOR_CLASSES } from '../constants/colors'
@@ -101,9 +101,10 @@ import { useLocalStorage } from '../composables/useLocalStorage'
 
 const globalStore = useGlobalStore()
 const jsonStore = globalStore.jsonStore
+const nameStore = useNameStore()
 
 const t = (key) => {
-  return jsonStore.names?.divers?.[key] || key
+  return nameStore.names?.divers?.[key] || key
 }
 
 // Gestion de l'expansion pour Kamas/Run
