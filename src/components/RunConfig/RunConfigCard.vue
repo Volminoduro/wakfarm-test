@@ -1,10 +1,10 @@
 <script setup>
 import { computed } from 'vue'
-import { COLOR_CLASSES } from '../constants/colors'
-import { useNameStore } from '../stores/useNameStore'
-import RunConfigRow from './RunConfigRow.vue'
-import BossIcon from './BossIcon.vue'
-import { useRunStore } from '../stores/useRunStore'
+import { COLOR_CLASSES } from '@/constants/colors'
+import { useNameStore } from '@/stores/useNameStore'
+import RunConfigRow from '@/components/RunConfig/RunConfigRow.vue'
+import BossIcon from '@/components/BossIcon.vue'
+import { useRunStore } from '@/stores/useRunStore'
 
 const props = defineProps({
   instance: {

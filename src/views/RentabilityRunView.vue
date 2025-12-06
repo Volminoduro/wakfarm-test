@@ -87,13 +87,13 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useAppStore } from '../stores/useAppStore'
-import { useJsonStore } from '../stores/useJsonStore'
-import { useNameStore } from '../stores/useNameStore'
-import InstanceCard from '../components/InstanceCard.vue'
-import ToggleAllButton from '../components/ToggleAllButton.vue'
-import { COLOR_CLASSES } from '../constants/colors'
-import { useLocalStorage } from '../composables/useLocalStorage'
+import { useAppStore } from '@/stores/useAppStore'
+import { useJsonStore } from '@/stores/useJsonStore'
+import { useNameStore } from '@/stores/useNameStore'
+import InstanceCard from '@/components/InstanceCard.vue'
+import ToggleAllButton from '@/components/ToggleAllButton.vue'
+import { COLOR_CLASSES } from '@/constants/colors'
+import { useLocalStorage } from '@/composables/useLocalStorage'
 
 
 const appStore = useAppStore()

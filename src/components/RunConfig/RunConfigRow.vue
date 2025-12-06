@@ -1,7 +1,7 @@
 <script setup>
-import { COLOR_CLASSES } from '../constants/colors'
-import { useJsonStore } from '../stores/useJsonStore'
-import { useNameStore } from '../stores/useNameStore'
+import { COLOR_CLASSES } from '@/constants/colors'
+import { useJsonStore } from '@/stores/useJsonStore'
+import { useNameStore } from '@/stores/useNameStore'
 
 const props = defineProps({
   run: {

@@ -3,9 +3,9 @@ import './style.css'
 import { useAppStore } from '@/stores/useAppStore'
 import { createPinia } from 'pinia'
 import App from './App.vue'
-import { useNameStore } from './stores/useNameStore'
-import { useJsonStore } from './stores/useJsonStore'
-import { useRunStore } from './stores/useRunStore'
+import { useNameStore } from '@/stores/useNameStore'
+import { useJsonStore } from '@/stores/useJsonStore'
+import { useRunStore } from '@/stores/useRunStore'
 
 const pinia = createPinia()
 

@@ -1,4 +1,4 @@
-import { RARITY_COLORS } from '../constants'
+import { RARITY_COLORS } from '@/constants'
 
 /**
  * Get stele information string for an item

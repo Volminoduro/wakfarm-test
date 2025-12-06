@@ -1,5 +1,5 @@
 <script setup>
-import { COLOR_CLASSES } from '../constants/colors'
+import { COLOR_CLASSES } from '@/constants/colors'
 
 defineProps({
   isExpanded: {

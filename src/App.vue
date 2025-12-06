@@ -1,14 +1,14 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useAppStore } from './stores/useAppStore'
-import { useJsonStore } from './stores/useJsonStore'
-import { useLocalStorage } from './composables/useLocalStorage'
-import { COLOR_CLASSES } from './constants/colors'
-import AppHeader from './components/layout/AppHeader.vue'
-import AppFooter from './components/layout/AppFooter.vue'
-import RentabilityRunView from './views/RentabilityRunView.vue'
-import RentabilityHourView from './views/RentabilityHourView.vue'
-import PricesView from './views/PricesView.vue'
+import { useAppStore } from '@/stores/useAppStore'
+import { useJsonStore } from '@/stores/useJsonStore'
+import { useLocalStorage } from '@/composables/useLocalStorage'
+import { COLOR_CLASSES } from '@/constants/colors'
+import AppHeader from '@/components/layout/AppHeader.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
+import RentabilityRunView from '@/views/RentabilityRunView.vue'
+import RentabilityHourView from '@/views/RentabilityHourView.vue'
+import PricesView from '@/views/PricesView.vue'
 
 const appStore = useAppStore()
 const jsonStore = useJsonStore()

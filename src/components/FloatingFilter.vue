@@ -1,10 +1,10 @@
 <script setup>
-import { useAppStore } from '../stores/useAppStore'
-import { useNameStore } from '../stores/useNameStore'
-import { formatInputNumber, formatRateInput, parseFormattedNumber } from '../utils/formatters'
-import { COLOR_CLASSES } from '../constants/colors'
+import { useAppStore } from '@/stores/useAppStore'
+import { useNameStore } from '@/stores/useNameStore'
+import { formatInputNumber, formatRateInput, parseFormattedNumber } from '@/utils/formatters'
+import { COLOR_CLASSES } from '@/constants/colors'
 import LevelRangeFilter from './LevelRangeFilter.vue'
-import { useJsonStore } from '../stores/useJsonStore'
+import { useJsonStore } from '@/stores/useJsonStore'
 
 const store = useAppStore()
 const jsonStore = useJsonStore()

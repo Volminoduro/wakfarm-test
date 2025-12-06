@@ -1,14 +1,14 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { useLocalStorage } from '../composables/useLocalStorage'
-import { useJsonStore } from '../stores/useJsonStore'
-import { useAppStore } from '../stores/useAppStore'
-import { formatNumber, formatQuantity, formatRate } from '../utils/formatters'
-import { formatRunConfig } from '../utils/runHelpers'
-import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
-import { COLOR_CLASSES } from '../constants/colors'
+import { useLocalStorage } from '@/composables/useLocalStorage'
+import { useJsonStore } from '@/stores/useJsonStore'
+import { useAppStore } from '@/stores/useAppStore'
+import { formatNumber, formatQuantity, formatRate } from '@/utils/formatters'
+import { formatRunConfig } from '@/utils/runHelpers'
+import { getSteleInfo, getRarityColor } from '@/utils/itemHelpers'
+import { COLOR_CLASSES } from '@/constants/colors'
 import InstanceBaseCard from './InstanceBaseCard.vue'
-import { useNameStore } from '../stores/useNameStore'
+import { useNameStore } from '@/stores/useNameStore'
 
 
 const props = defineProps({

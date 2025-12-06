@@ -22,8 +22,8 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useAppStore } from '../stores/useAppStore'
-import { WAKFU_TEXT_ALT, WAKFU_TEXT } from '../constants/colors'
+import { useAppStore } from '@/stores/useAppStore'
+import { WAKFU_TEXT_ALT, WAKFU_TEXT } from '@/constants/colors'
 
 const appStore = useAppStore()
 

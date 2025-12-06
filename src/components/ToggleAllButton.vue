@@ -1,6 +1,6 @@
 <script setup>
-import { COLOR_CLASSES } from '../constants/colors'
-import { useNameStore } from '../stores/useNameStore'
+import { COLOR_CLASSES } from '@/constants/colors'
+import { useNameStore } from '@/stores/useNameStore'
 
 defineProps({
   isExpanded: {

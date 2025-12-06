@@ -1,15 +1,15 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { useAppStore } from '../stores/useAppStore'
-import { useJsonStore } from '../stores/useJsonStore'
-import { useRunStore } from '../stores/useRunStore'
-import { useNameStore } from '../stores/useNameStore'
-import { instancePassesFilters } from '../composables/useInstanceFilters'
-import { useLocalStorage } from '../composables/useLocalStorage'
-import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
-import RunConfigCard from '../components/RunConfigCard.vue'
-import InstanceCard from '../components/InstanceCard.vue'
-import ToggleAllButton from '../components/ToggleAllButton.vue'
+import { useAppStore } from '@/stores/useAppStore'
+import { useJsonStore } from '@/stores/useJsonStore'
+import { useRunStore } from '@/stores/useRunStore'
+import { useNameStore } from '@/stores/useNameStore'
+import { instancePassesFilters } from '@/composables/useInstanceFilters'
+import { useLocalStorage } from '@/composables/useLocalStorage'
+import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
+import RunConfigCard from '@/components/RunConfig/RunConfigCard.vue'
+import InstanceCard from '@/components/InstanceCard.vue'
+import ToggleAllButton from '@/components/ToggleAllButton.vue'
 
 const appStore = useAppStore()
 const jsonStore = useJsonStore()

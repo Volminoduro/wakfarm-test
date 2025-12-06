@@ -1,10 +1,10 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue'
-import LanguageSelector from '../LanguageSelector.vue'
-import FloatingFilter from '../FloatingFilter.vue'
-import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../../constants/colors'
-import { useNameStore } from '../../stores/useNameStore'
-import { useLocalStorage } from '../../composables/useLocalStorage'
+import LanguageSelector from '@/components/LanguageSelector.vue'
+import FloatingFilter from '@/components/FloatingFilter.vue'
+import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
+import { useNameStore } from '@/stores/useNameStore'
+import { useLocalStorage } from '@/composables/useLocalStorage'
 
 const mainTab = useLocalStorage('wakfarm_mainTab', 'rentability')
 const nameStore = useNameStore()

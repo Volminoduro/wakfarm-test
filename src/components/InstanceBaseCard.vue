@@ -1,8 +1,8 @@
 <script setup>
 import BossIcon from './BossIcon.vue'
 import ExpandArrow from './ExpandArrow.vue'
-import { COLOR_CLASSES } from '../constants/colors'
-import { formatNumber } from '../utils/formatters'
+import { COLOR_CLASSES } from '@/constants/colors'
+import { formatNumber } from '@/utils/formatters'
 
 const props = defineProps({
   bossId: [Number, String],

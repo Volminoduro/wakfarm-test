@@ -266,13 +266,13 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useNameStore } from '../stores/useNameStore'
-import { useLocalStorage } from '../composables/useLocalStorage'
-import { useClickOutside } from '../composables/useClickOutside'
-import { COLOR_CLASSES } from '../constants/colors'
-import { RARITY_COLORS } from '../constants'
-import { formatNumber } from '../utils/formatters'
-import { useJsonStore } from '../stores/useJsonStore'
+import { useNameStore } from '@/stores/useNameStore'
+import { useLocalStorage } from '@/composables/useLocalStorage'
+import { useClickOutside } from '@/composables/useClickOutside'
+import { COLOR_CLASSES } from '@/constants/colors'
+import { RARITY_COLORS } from '@/constants'
+import { formatNumber } from '@/utils/formatters'
+import { useJsonStore } from '@/stores/useJsonStore'
 
 const jsonStore = useJsonStore()
 const nameStore = useNameStore()

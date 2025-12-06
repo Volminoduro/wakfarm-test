@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
-import { STORAGE_KEYS, DEFAULT_CONFIG } from '../constants'
+import { STORAGE_KEYS, DEFAULT_CONFIG } from '@/constants'
 import { useJsonStore } from './useJsonStore'
 import { useNameStore } from './useNameStore'
 

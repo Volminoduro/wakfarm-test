@@ -1,4 +1,4 @@
-import { LEVEL_RANGES } from '../constants'
+import { LEVEL_RANGES } from '@/constants'
 
 export function instancePassesFilters(instanceData, appStore) {
   if (!instanceData || !appStore) return false

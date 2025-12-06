@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useAppStore } from '../stores/useAppStore'
-import { useNameStore } from '../stores/useNameStore'
-import { LEVEL_RANGES } from '../constants'
-import { COLOR_CLASSES } from '../constants/colors'
+import { useAppStore } from '@/stores/useAppStore'
+import { useNameStore } from '@/stores/useNameStore'
+import { LEVEL_RANGES } from '@/constants'
+import { COLOR_CLASSES } from '@/constants/colors'
 
 const store = useAppStore()
 const nameStore = useNameStore()
