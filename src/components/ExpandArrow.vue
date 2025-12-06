@@ -1,14 +1,3 @@
-<script setup>
-import { COLOR_CLASSES } from '@/constants/colors'
-
-defineProps({
-  isExpanded: {
-    type: Boolean,
-    default: false
-  }
-})
-</script>
-
 <template>
   <svg 
     width="18" 
@@ -20,3 +9,14 @@ defineProps({
     <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/>
   </svg>
 </template>
+
+<script setup>
+import { COLOR_CLASSES } from '@/constants/colors'
+
+defineProps({
+  isExpanded: {
+    type: Boolean,
+    default: false
+  }
+})
+</script>

@@ -1,3 +1,24 @@
+<template>
+  <div :class="['min-h-screen flex flex-col', COLOR_CLASSES.bgPrimary]">
+
+    <AppHeader />
+    
+    <main class="flex-grow">
+      <div v-if="!jsonStore.loaded" class="p-8 text-center">
+        <p :class="['text-lg', COLOR_CLASSES.textLoading]">Chargement des données...</p>
+      </div>
+
+      <RentabilityRunView v-if="mainTab === 'rentability'" />
+
+      <RentabilityHourView v-else-if="mainTab === 'runs'" />
+
+      <PricesView v-else-if="mainTab === 'prices'" />
+    </main>
+    
+    <AppFooter />
+  </div>
+</template>
+
 <script setup>
 import { onMounted } from 'vue'
 import { useAppStore } from '@/stores/useAppStore'
@@ -22,24 +43,3 @@ onMounted(async () => {
 })
 
 </script>
-
-<template>
-  <div :class="['min-h-screen flex flex-col', COLOR_CLASSES.bgPrimary]">
-
-    <AppHeader />
-    
-    <main class="flex-grow">
-      <div v-if="!jsonStore.loaded" class="p-8 text-center">
-        <p :class="['text-lg', COLOR_CLASSES.textLoading]">Chargement des données...</p>
-      </div>
-
-      <RentabilityRunView v-if="mainTab === 'rentability'" />
-
-      <RentabilityHourView v-else-if="mainTab === 'runs'" />
-
-      <PricesView v-else-if="mainTab === 'prices'" />
-    </main>
-    
-    <AppFooter />
-  </div>
-</template>

@@ -1,20 +1,3 @@
-<script setup>
-import { COLOR_CLASSES } from '@/constants/colors'
-import { useNameStore } from '@/stores/useNameStore'
-
-defineProps({
-  isExpanded: {
-    type: Boolean,
-    required: true
-  }
-})
-
-const nameStore = useNameStore()
-const t = (key) => nameStore.names?.divers?.[key] || key
-
-const emit = defineEmits(['toggle'])
-</script>
-
 <template>
   <button 
     @click="emit('toggle')"
@@ -31,3 +14,20 @@ const emit = defineEmits(['toggle'])
     </span>
   </button>
 </template>
+
+<script setup>
+import { COLOR_CLASSES } from '@/constants/colors'
+import { useNameStore } from '@/stores/useNameStore'
+
+defineProps({
+  isExpanded: {
+    type: Boolean,
+    required: true
+  }
+})
+
+const nameStore = useNameStore()
+const t = (key) => nameStore.names?.divers?.[key] || key
+
+const emit = defineEmits(['toggle'])
+</script>

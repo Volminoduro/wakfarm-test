@@ -1,52 +1,3 @@
-<script setup>
-import { useAppStore } from '@/stores/useAppStore'
-import { useNameStore } from '@/stores/useNameStore'
-import { formatInputNumber, formatRateInput, parseFormattedNumber } from '@/utils/formatters'
-import { COLOR_CLASSES } from '@/constants/colors'
-import LevelRangeFilter from './LevelRangeFilter.vue'
-import { useJsonStore } from '@/stores/useJsonStore'
-
-const store = useAppStore()
-const jsonStore = useJsonStore()
-const nameStore = useNameStore()
-
-const t = (key) => nameStore.names?.divers?.[key] || key
-
-// Generic numeric field updater
-const updateNumericField = (event, fieldName, parser = parseInt) => {
-  const value = parseFormattedNumber(event.target.value)
-  store.config[fieldName] = value === '' ? null : parser(value, 10) || null
-}
-
-// Specific field updaters
-const updateMinItemProfit = (e) => updateNumericField(e, 'minItemProfit')
-const updateMinInstanceTotal = (e) => updateNumericField(e, 'minInstanceTotal')
-
-// Drop rate updater with percentage constraints
-function updateMinDropRate(event) {
-  const value = event.target.value.replace(',', '.').trim()
-  
-  if (value === '') {
-    store.config.minDropRatePercent = null
-    return
-  }
-  
-  const parsedValue = parseFloat(value)
-  if (isNaN(parsedValue)) {
-    store.config.minDropRatePercent = null
-    return
-  }
-  
-  const clampedValue = Math.max(0, Math.min(100, parsedValue))
-  store.config.minDropRatePercent = clampedValue
-  
-  // Update input if value was clamped
-  if (parsedValue !== clampedValue) {
-    event.target.value = clampedValue.toString()
-  }
-}
-</script>
-
 <template>
   <div :class="COLOR_CLASSES.configBg" class="p-2" style="contain: layout style;">
     <div class="mb-2">
@@ -134,7 +85,54 @@ function updateMinDropRate(event) {
   </div>
 </template>
 
+<script setup>
+import { useAppStore } from '@/stores/useAppStore'
+import { useNameStore } from '@/stores/useNameStore'
+import { formatInputNumber, formatRateInput, parseFormattedNumber } from '@/utils/formatters'
+import { COLOR_CLASSES } from '@/constants/colors'
+import LevelRangeFilter from './LevelRangeFilter.vue'
+import { useJsonStore } from '@/stores/useJsonStore'
 
+const store = useAppStore()
+const jsonStore = useJsonStore()
+const nameStore = useNameStore()
+
+const t = (key) => nameStore.names?.divers?.[key] || key
+
+// Generic numeric field updater
+const updateNumericField = (event, fieldName, parser = parseInt) => {
+  const value = parseFormattedNumber(event.target.value)
+  store.config[fieldName] = value === '' ? null : parser(value, 10) || null
+}
+
+// Specific field updaters
+const updateMinItemProfit = (e) => updateNumericField(e, 'minItemProfit')
+const updateMinInstanceTotal = (e) => updateNumericField(e, 'minInstanceTotal')
+
+// Drop rate updater with percentage constraints
+function updateMinDropRate(event) {
+  const value = event.target.value.replace(',', '.').trim()
+  
+  if (value === '') {
+    store.config.minDropRatePercent = null
+    return
+  }
+  
+  const parsedValue = parseFloat(value)
+  if (isNaN(parsedValue)) {
+    store.config.minDropRatePercent = null
+    return
+  }
+  
+  const clampedValue = Math.max(0, Math.min(100, parsedValue))
+  store.config.minDropRatePercent = clampedValue
+  
+  // Update input if value was clamped
+  if (parsedValue !== clampedValue) {
+    event.target.value = clampedValue.toString()
+  }
+}
+</script>
 
 <style scoped>
 input::-webkit-outer-spin-button,

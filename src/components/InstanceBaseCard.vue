@@ -1,18 +1,3 @@
-<script setup>
-import BossIcon from './BossIcon.vue'
-import ExpandArrow from './ExpandArrow.vue'
-import { COLOR_CLASSES } from '@/constants/colors'
-import { formatNumber } from '@/utils/formatters'
-
-const props = defineProps({
-  bossId: [Number, String],
-  title: String,
-  totalKamas: Number,
-  isExpanded: Boolean,
-  clickable: Boolean,
-})
-const emit = defineEmits(['toggle'])
-</script>
 <template>
   <div :class="COLOR_CLASSES.card">
     <div
@@ -31,3 +16,19 @@ const emit = defineEmits(['toggle'])
     <slot />
   </div>
 </template>
+
+<script setup>
+import BossIcon from '@/components/BossIcon.vue'
+import ExpandArrow from '@/components/ExpandArrow.vue'
+import { COLOR_CLASSES } from '@/constants/colors'
+import { formatNumber } from '@/utils/formatters'
+
+const props = defineProps({
+  bossId: [Number, String],
+  title: String,
+  totalKamas: Number,
+  isExpanded: Boolean,
+  clickable: Boolean,
+})
+const emit = defineEmits(['toggle'])
+</script>

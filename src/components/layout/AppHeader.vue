@@ -1,49 +1,3 @@
-<script setup>
-import { computed, ref, onMounted, onUnmounted } from 'vue'
-import LanguageSelector from '@/components/LanguageSelector.vue'
-import FloatingFilter from '@/components/FloatingFilter.vue'
-import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
-import { useNameStore } from '@/stores/useNameStore'
-import { useLocalStorage } from '@/composables/useLocalStorage'
-
-const mainTab = useLocalStorage('wakfarm_mainTab', 'rentability')
-const nameStore = useNameStore()
-
-const t = (key) => nameStore.names?.divers?.[key] || key
-
-// System for warnings and alerts
-const warnings = computed(() => {
-  const list = []
-  // Example: Add your warnings here
-  // list.push({ type: 'warning', message: 'Ceci est un avertissement' })
-  // list.push({ type: 'danger', message: 'Ceci est un danger' })
-  return list
-})
-
-// Determine the severity level (danger > warning)
-const alertLevel = computed(() => {
-  if (warnings.value.length === 0) return null
-  const hasDanger = warnings.value.some(w => w.type === 'danger')
-  return hasDanger ? 'danger' : 'warning'
-})
-
-// Expose header height as a CSS variable so other views can stick just below it
-const appHeaderRef = ref(null)
-function updateHeaderHeight() {
-  const h = appHeaderRef.value?.offsetHeight || 0
-  document.documentElement.style.setProperty('--app-header-height', `${h}px`)
-}
-
-onMounted(() => {
-  updateHeaderHeight()
-  window.addEventListener('resize', updateHeaderHeight)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateHeaderHeight)
-})
-</script>
-
 <template>
   <header ref="appHeaderRef" :class="['sticky top-0 left-0 right-0 shadow-xl z-40', COLOR_CLASSES.headerBg]">
     <!-- Top Bar: Title and Language Selector -->
@@ -106,3 +60,49 @@ onUnmounted(() => {
     </nav>
   </header>
 </template>
+
+<script setup>
+import { computed, ref, onMounted, onUnmounted } from 'vue'
+import LanguageSelector from '@/components/LanguageSelector.vue'
+import FloatingFilter from '@/components/FloatingFilter.vue'
+import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
+import { useNameStore } from '@/stores/useNameStore'
+import { useLocalStorage } from '@/composables/useLocalStorage'
+
+const mainTab = useLocalStorage('wakfarm_mainTab', 'rentability')
+const nameStore = useNameStore()
+
+const t = (key) => nameStore.names?.divers?.[key] || key
+
+// System for warnings and alerts
+const warnings = computed(() => {
+  const list = []
+  // Example: Add your warnings here
+  // list.push({ type: 'warning', message: 'Ceci est un avertissement' })
+  // list.push({ type: 'danger', message: 'Ceci est un danger' })
+  return list
+})
+
+// Determine the severity level (danger > warning)
+const alertLevel = computed(() => {
+  if (warnings.value.length === 0) return null
+  const hasDanger = warnings.value.some(w => w.type === 'danger')
+  return hasDanger ? 'danger' : 'warning'
+})
+
+// Expose header height as a CSS variable so other views can stick just below it
+const appHeaderRef = ref(null)
+function updateHeaderHeight() {
+  const h = appHeaderRef.value?.offsetHeight || 0
+  document.documentElement.style.setProperty('--app-header-height', `${h}px`)
+}
+
+onMounted(() => {
+  updateHeaderHeight()
+  window.addEventListener('resize', updateHeaderHeight)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateHeaderHeight)
+})
+</script>

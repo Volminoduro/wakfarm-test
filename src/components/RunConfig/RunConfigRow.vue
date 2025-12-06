@@ -1,26 +1,3 @@
-<script setup>
-import { COLOR_CLASSES } from '@/constants/colors'
-import { useJsonStore } from '@/stores/useJsonStore'
-import { useNameStore } from '@/stores/useNameStore'
-
-const props = defineProps({
-  run: {
-    type: Object,
-    required: true
-  }
-})
-
-const emit = defineEmits(['update', 'remove'])
-
-const jsonStore = useJsonStore()
-const nameStore = useNameStore()
-const t = (key) => nameStore.names?.divers?.[key] || key
-
-function updateField(field, value) {
-  emit('update', { ...props.run, [field]: value })
-}
-</script>
-
 <template>
   <!-- Rift (Brèche) Configuration -->
   <div v-if="run.isRift" :class="['px-4 py-3 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
@@ -169,6 +146,29 @@ function updateField(field, value) {
     </div>
   </div>
 </template>
+
+<script setup>
+import { COLOR_CLASSES } from '@/constants/colors'
+import { useJsonStore } from '@/stores/useJsonStore'
+import { useNameStore } from '@/stores/useNameStore'
+
+const props = defineProps({
+  run: {
+    type: Object,
+    required: true
+  }
+})
+
+const emit = defineEmits(['update', 'remove'])
+
+const jsonStore = useJsonStore()
+const nameStore = useNameStore()
+const t = (key) => nameStore.names?.divers?.[key] || key
+
+function updateField(field, value) {
+  emit('update', { ...props.run, [field]: value })
+}
+</script>
 
 <style scoped>
 .custom-checkbox-small {

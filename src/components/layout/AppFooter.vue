@@ -1,12 +1,3 @@
-<script setup>
-import { COLOR_CLASSES } from '@/constants/colors'
-import { useNameStore } from '@/stores/useNameStore'
-
-const nameStore = useNameStore()
-
-const t = (key) => nameStore.names?.divers?.[key] || key
-</script>
-
 <template>
   <footer :class="[COLOR_CLASSES.footerBg]">
     <div :class="['border-t-3 mb-1', COLOR_CLASSES.borderPrimary]"></div>
@@ -19,3 +10,12 @@ const t = (key) => nameStore.names?.divers?.[key] || key
     </div>
   </footer>
 </template>
+
+<script setup>
+import { COLOR_CLASSES } from '@/constants/colors'
+import { useNameStore } from '@/stores/useNameStore'
+
+const nameStore = useNameStore()
+
+const t = (key) => nameStore.names?.divers?.[key] || key
+</script>

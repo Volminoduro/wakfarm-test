@@ -1,3 +1,49 @@
+<template>
+  <div class="relative" ref="dropdownRef">
+    <button
+      @click="isOpen = !isOpen"
+      :class="[COLOR_CLASSES.select, 'w-full text-left flex items-center justify-between']"
+      type="button"
+      style="min-width: 160px;">
+      <span class="font-mono">{{ getDisplayText() }}</span>
+      <svg 
+        :class="['w-4 h-4 transition-transform', isOpen ? 'rotate-180' : '']"
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+    
+    <div 
+      v-if="isOpen"
+      :class="['absolute z-50 mt-1 w-full rounded shadow-lg', COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard]"
+      style="max-height: 300px; overflow-y: auto;">
+      <div class="p-2">
+        <button 
+          @click="toggleAll"
+          :class="['w-full text-sm px-2 py-1 rounded mb-2', COLOR_CLASSES.buttonToggle]">
+          {{ store.config.levelRanges.length === LEVEL_RANGES.length ? t('level_ranges_toggle_none') : t('level_ranges_toggle_all') }}
+        </button>
+        <div class="space-y-1">
+          <label
+            v-for="(range, index) in LEVEL_RANGES"
+            :key="index"
+            class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-700/50 cursor-pointer">
+            <input
+              type="checkbox"
+              :checked="isRangeActive(index)"
+              @change="toggleRange(index)"
+              class="custom-checkbox-small"
+            />
+            <span :class="COLOR_CLASSES.textNormal">{{ range.label }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useAppStore } from '@/stores/useAppStore'
@@ -65,52 +111,6 @@ const getDisplayText = () => {
   return `${count.toString().padStart(2, ' ')}/${LEVEL_RANGES.length}`
 }
 </script>
-
-<template>
-  <div class="relative" ref="dropdownRef">
-    <button
-      @click="isOpen = !isOpen"
-      :class="[COLOR_CLASSES.select, 'w-full text-left flex items-center justify-between']"
-      type="button"
-      style="min-width: 160px;">
-      <span class="font-mono">{{ getDisplayText() }}</span>
-      <svg 
-        :class="['w-4 h-4 transition-transform', isOpen ? 'rotate-180' : '']"
-        fill="none" 
-        stroke="currentColor" 
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
-    </button>
-    
-    <div 
-      v-if="isOpen"
-      :class="['absolute z-50 mt-1 w-full rounded shadow-lg', COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard]"
-      style="max-height: 300px; overflow-y: auto;">
-      <div class="p-2">
-        <button 
-          @click="toggleAll"
-          :class="['w-full text-sm px-2 py-1 rounded mb-2', COLOR_CLASSES.buttonToggle]">
-          {{ store.config.levelRanges.length === LEVEL_RANGES.length ? t('level_ranges_toggle_none') : t('level_ranges_toggle_all') }}
-        </button>
-        <div class="space-y-1">
-          <label
-            v-for="(range, index) in LEVEL_RANGES"
-            :key="index"
-            class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-700/50 cursor-pointer">
-            <input
-              type="checkbox"
-              :checked="isRangeActive(index)"
-              @change="toggleRange(index)"
-              class="custom-checkbox-small"
-            />
-            <span :class="COLOR_CLASSES.textNormal">{{ range.label }}</span>
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .custom-checkbox-small {

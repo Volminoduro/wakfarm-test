@@ -1,3 +1,15 @@
+<template>
+  <img
+    v-if="bossId && bossId > 0"
+    :src="bossIconUrl"
+    :alt="'Boss'"
+    :height="'32px'"
+    class="object-contain flex-shrink-0"
+    style="max-height:32px;"
+    @error="$event.target.style.display='none'"
+  />
+</template>
+
 <script setup>
 import { computed } from 'vue';
 const props = defineProps({
@@ -18,14 +30,3 @@ const bossIconUrl = computed(() => {
   }
 });
 </script>
-<template>
-  <img
-    v-if="bossId && bossId > 0"
-    :src="bossIconUrl"
-    :alt="'Boss'"
-    :height="'32px'"
-    class="object-contain flex-shrink-0"
-    style="max-height:32px;"
-    @error="$event.target.style.display='none'"
-  />
-</template>

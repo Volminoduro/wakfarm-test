@@ -1,52 +1,3 @@
-<script setup>
-import { computed } from 'vue'
-import { COLOR_CLASSES } from '@/constants/colors'
-import { useNameStore } from '@/stores/useNameStore'
-import RunConfigRow from '@/components/RunConfig/RunConfigRow.vue'
-import BossIcon from '@/components/BossIcon.vue'
-import { useRunStore } from '@/stores/useRunStore'
-
-const props = defineProps({
-  instance: {
-    type: Object,
-    required: true
-  }
-})
-
-const runStore = useRunStore()
-const nameStore = useNameStore()
-
-const t = (key) => nameStore.names?.divers?.[key] || key
-
-const isExpanded = computed(() => runStore.expandedInstances.has(props.instance.id))
-const runs = computed(() => runStore.getRunsForInstance(props.instance.id))
-const hasRuns = computed(() => runs.value.length > 0)
-
-function toggleExpand() {
-  runStore.toggleExpanded(props.instance.id)
-}
-
-function addRun() {
-  runStore.addRun(props.instance.id, props.instance)
-  // Auto-expand when adding a run
-  if (!isExpanded.value) {
-    runStore.toggleExpanded(props.instance.id)
-  }
-}
-
-function removeRun(runId) {
-  runStore.removeRun(props.instance.id, runId)
-}
-
-function updateRun(updatedRun) {
-  runStore.updateRun(props.instance.id, updatedRun.id, updatedRun)
-}
-
-function removeAllRuns() {
-  runStore.removeAllRunsForInstance(props.instance.id)
-}
-</script>
-
 <template>
   <div :class="COLOR_CLASSES.card">
     <!-- Header -->
@@ -163,3 +114,52 @@ function removeAllRuns() {
     </div>
   </div>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { COLOR_CLASSES } from '@/constants/colors'
+import { useNameStore } from '@/stores/useNameStore'
+import RunConfigRow from '@/components/RunConfig/RunConfigRow.vue'
+import BossIcon from '@/components/BossIcon.vue'
+import { useRunStore } from '@/stores/useRunStore'
+
+const props = defineProps({
+  instance: {
+    type: Object,
+    required: true
+  }
+})
+
+const runStore = useRunStore()
+const nameStore = useNameStore()
+
+const t = (key) => nameStore.names?.divers?.[key] || key
+
+const isExpanded = computed(() => runStore.expandedInstances.has(props.instance.id))
+const runs = computed(() => runStore.getRunsForInstance(props.instance.id))
+const hasRuns = computed(() => runs.value.length > 0)
+
+function toggleExpand() {
+  runStore.toggleExpanded(props.instance.id)
+}
+
+function addRun() {
+  runStore.addRun(props.instance.id, props.instance)
+  // Auto-expand when adding a run
+  if (!isExpanded.value) {
+    runStore.toggleExpanded(props.instance.id)
+  }
+}
+
+function removeRun(runId) {
+  runStore.removeRun(props.instance.id, runId)
+}
+
+function updateRun(updatedRun) {
+  runStore.updateRun(props.instance.id, updatedRun.id, updatedRun)
+}
+
+function removeAllRuns() {
+  runStore.removeAllRunsForInstance(props.instance.id)
+}
+</script>
