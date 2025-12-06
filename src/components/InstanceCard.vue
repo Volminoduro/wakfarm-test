@@ -1,6 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useLocalStorage } from '../composables/useLocalStorage'
+import { useJsonStore } from '../stores/useJsonStore'
+import { useAppStore } from '../stores/useAppStore'
 import { formatNumber, formatQuantity, formatRate } from '../utils/formatters'
 import { formatRunConfig } from '../utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
@@ -8,32 +10,55 @@ import { COLOR_CLASSES } from '../constants/colors'
 import InstanceBaseCard from './InstanceBaseCard.vue'
 import { useNameStore } from '../stores/useNameStore'
 
+
 const props = defineProps({
+  // Either pass a precomputed `instance` object (enriched), or pass `instanceId` + `run` to compute per-run data.
   instance: {
     type: Object,
-    required: true
-  }
+    required: false
+  },
+  instanceId: {
+    type: Number,
+    required: false
+  },
+  run: {
+    type: Object,
+    required: false
+  },
+  // timePeriod is retrieved from AppStore or local storage inside the component
 })
 
-// Manage expanded state locally using the shared localStorage array `wakfarm_expanded_run`.
+const jsonStore = useJsonStore()
+
+// Manage expanded state locally using different localStorage keys depending on mode.
 const expandedRun = useLocalStorage('wakfarm_expanded_run', [])
+const expandedHourRuns = useLocalStorage('wakfarm_expanded_hour_runs', [])
+
+const isRunMode = computed(() => !!props.run && typeof props.instanceId === 'number')
 
 const storageKey = computed(() => {
+  if (isRunMode.value) {
+    return `${props.instanceId}_${props.run.id}`
+  }
   // prefer an explicit uniqueKey if provided, otherwise derive from id
-  return props.instance.uniqueKey || `global_${props.instance.id}`
+  return props.instance?.uniqueKey || `global_${props.instance?.id}`
 })
 
-const isExpanded = computed(() => expandedRun.value.includes(storageKey.value))
+const isExpanded = computed(() => {
+  const list = isRunMode.value ? expandedHourRuns.value : expandedRun.value
+  return list.includes(storageKey.value)
+})
 
 function toggleExpand() {
   const key = storageKey.value
-  const idx = expandedRun.value.indexOf(key)
+  const listRef = isRunMode.value ? expandedHourRuns : expandedRun
+  const idx = listRef.value.indexOf(key)
   if (idx > -1) {
-    const copy = [...expandedRun.value]
+    const copy = [...listRef.value]
     copy.splice(idx, 1)
-    expandedRun.value = copy
+    listRef.value = copy
   } else {
-    expandedRun.value = [...expandedRun.value, key]
+    listRef.value = [...listRef.value, key]
   }
 }
 
@@ -41,48 +66,92 @@ const INITIAL_ITEMS_SHOWN = 15
 const showAllItems = ref(false)
 const nameStore = useNameStore()
 
-const instanceTitle = computed(() => {
-  const baseName = nameStore.names.instances[props.instance.id] || ('Instance ' + props.instance.id)
-  const level = props.instance.level
-  const levelText = nameStore.names.divers['niveau_reduit'] || 'Niv.'
-  
-  if (props.instance.isManualRun && props.instance.runConfig) {
-    const configStr = formatRunConfig(props.instance.runConfig)
-    const timeStr = props.instance.runConfig.time ? `${props.instance.runConfig.time}min` : '?'
-    return `${baseName} (${levelText} ${level}) • ${configStr} • ${timeStr}`
+const appStore = useAppStore()
+const localTimePeriod = useLocalStorage('wakfarm_time_period', 60)
+
+const iterationsPerPeriod = computed(() => {
+  if (!isRunMode.value) return 0
+  if (!props.run?.time || props.run.time === 0) return 0
+  // Prefer central value from appStore.config.timePeriod if present, otherwise fallback to local storage
+  const period = (appStore.config && appStore.config.timePeriod) || localTimePeriod.value || 60
+  return Math.floor(period / props.run.time)
+})
+
+// Build a normalized `displayInstance` object used by the template regardless of mode
+const displayInstance = computed(() => {
+  if (!isRunMode.value) {
+    return props.instance || null
   }
-  
-  return `${baseName} (${levelText} ${level})`
+  // run mode: compute instance data for this run
+  const data = jsonStore.calculateInstanceForRun(props.instanceId, props.run)
+  if (!data) return null
+
+  const iters = iterationsPerPeriod.value || 0
+  // clone and scale items
+  const scaledItems = (data.items || []).map(it => ({
+    ...it,
+    quantity: (it.quantity || 0) * iters,
+    subtotal: Math.floor((it.subtotal || 0) * iters)
+  }))
+
+  return {
+    id: data.id,
+    level: data.level,
+    bossId: data.bossId || null,
+    items: scaledItems,
+    totalKamas: Math.floor((data.totalKamas || 0) * iters),
+    // keep run metadata for title formatting
+    isManualRun: true,
+    runConfig: props.run
+  }
 })
 
 const displayedItems = computed(() => {
-  if (!props.instance.items) return []
-  if (showAllItems.value || props.instance.items.length <= INITIAL_ITEMS_SHOWN) {
-    return props.instance.items
+  if (!displayInstance.value?.items) return []
+  if (showAllItems.value || displayInstance.value.items.length <= INITIAL_ITEMS_SHOWN) {
+    return displayInstance.value.items
   }
-  return props.instance.items.slice(0, INITIAL_ITEMS_SHOWN)
+  return displayInstance.value.items.slice(0, INITIAL_ITEMS_SHOWN)
 })
 
 const hasMoreItems = computed(() => {
-  return props.instance.items && props.instance.items.length > INITIAL_ITEMS_SHOWN
+  return displayInstance.value?.items && displayInstance.value.items.length > INITIAL_ITEMS_SHOWN
 })
 
 const toggleShowAll = () => {
   showAllItems.value = !showAllItems.value
 }
+
+const instanceTitle = computed(() => {
+  const inst = displayInstance.value
+  if (!inst) return ''
+  const baseName = nameStore.names.instances?.[inst.id] || ('Instance ' + inst.id)
+  const level = inst.level
+  const levelText = nameStore.names.divers?.['niveau_reduit'] || 'Niv.'
+
+  // If there is a runConfig (manual or run-mode), include config/time and iterations
+  if (inst.runConfig) {
+    const configStr = formatRunConfig(inst.runConfig)
+    const timeStr = inst.runConfig.time ? `${inst.runConfig.time}min` : '?'
+    const iters = iterationsPerPeriod.value || 0
+    return `${baseName} (${levelText} ${level}) • ${configStr} • ${timeStr} • ${iters}×`
+  }
+
+  return `${baseName} (${levelText} ${level})`
+})
 </script>
 
 <template>
   <InstanceBaseCard
-    :boss-id="instance.bossId"
+    :boss-id="displayInstance?.bossId"
     :title="instanceTitle"
-    :total-kamas="instance.totalKamas"
+    :total-kamas="displayInstance?.totalKamas"
     :is-expanded="isExpanded"
     :clickable="true"
     @toggle="toggleExpand"
   >
     <transition name="expand">
-      <div v-if="isExpanded && instance.items && instance.items.length > 0" class="overflow-hidden" style="contain: layout style paint;">
+      <div v-if="isExpanded && displayInstance?.items && displayInstance.items.length > 0" class="overflow-hidden" style="contain: layout style paint;">
         <ul :class="['divide-y divide-white/20', COLOR_CLASSES.bgSecondary]">
           <li v-for="item in displayedItems" :key="item.itemId" class="px-5 py-2 flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -98,7 +167,7 @@ const toggleShowAll = () => {
           <button 
             @click.stop="toggleShowAll"
             :class="['text-sm font-medium transition-colors hover:underline', COLOR_CLASSES.textLight]">
-            {{ showAllItems ? `Voir moins (${INITIAL_ITEMS_SHOWN} items)` : `Voir tout (${instance.items.length} items)` }}
+            {{ showAllItems ? `Voir moins (${INITIAL_ITEMS_SHOWN} items)` : `Voir tout (${displayInstance.items.length} items)` }}
           </button>
         </div>
       </div>

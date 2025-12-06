@@ -8,7 +8,7 @@ import { instancePassesFilters } from '../composables/useInstanceFilters'
 import { useLocalStorage } from '../composables/useLocalStorage'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../constants/colors'
 import RunConfigCard from '../components/RunConfigCard.vue'
-import RunHourCard from '../components/RunHourCard.vue'
+import InstanceCard from '../components/InstanceCard.vue'
 import ToggleAllButton from '../components/ToggleAllButton.vue'
 
 const appStore = useAppStore()
@@ -241,13 +241,11 @@ function toggleAllHourRuns() {
         </p>
       </div>
       <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-        <RunHourCard 
-          v-for="runData in sortedHourRuns" 
+        <InstanceCard
+          v-for="runData in sortedHourRuns"
           :key="runData.key"
-          :instanceId="runData.instanceId"
+          :instance-id="runData.instanceId"
           :run="runData.run"
-          :timePeriod="timePeriod"
-          @toggle="toggleHourRun(runData.key)"
         />
       </div>
     </div>
