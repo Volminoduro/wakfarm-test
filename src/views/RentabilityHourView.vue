@@ -1,6 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { useGlobalStore } from '../stores/useGlobalStore'
+import { useAppStore } from '../stores/useAppStore'
+import { useJsonStore } from '../stores/useJsonStore'
+import { useRunStore } from '../stores/useRunStore'
 import { useNameStore } from '../stores/useNameStore'
 import { instancePassesFilters } from '../composables/useInstanceFilters'
 import { useLocalStorage } from '../composables/useLocalStorage'
@@ -9,10 +11,10 @@ import RunConfigCard from '../components/RunConfigCard.vue'
 import RunHourCard from '../components/RunHourCard.vue'
 import ToggleAllButton from '../components/ToggleAllButton.vue'
 
-const jsonStore = useGlobalStore().jsonStore
-const globalStore = useGlobalStore()
+const appStore = useAppStore()
+const jsonStore = useJsonStore()
 const nameStore = useNameStore()
-const runsStore = globalStore.runsStore
+const runStore = useRunStore()
 
 // Sub-tab management
 const subTab = useLocalStorage('wakfarm_runs_subTab', 'time')
@@ -37,7 +39,7 @@ const sortedInstances = computed(() => {
 // Get instances that have runs
 const instancesWithRuns = computed(() => {
   return sortedInstances.value.filter(inst => {
-    const runs = runsStore.getRunsForInstance(inst.id)
+    const runs = runStore.getRunsForInstance(inst.id)
     return runs && runs.length > 0
   })
 })
@@ -45,36 +47,36 @@ const instancesWithRuns = computed(() => {
 // Check if all instances with runs are expanded
 const allExpanded = computed(() => {
   if (instancesWithRuns.value.length === 0) return false
-  return instancesWithRuns.value.every(inst => runsStore.expandedInstances.has(inst.id))
+  return instancesWithRuns.value.every(inst => runStore.expandedInstances.has(inst.id))
 })
 
 // Check if there are any runs
 const hasAnyRuns = computed(() => {
-  return Object.keys(runsStore.runs).length > 0
+  return Object.keys(runStore.runs).length > 0
 })
 
 function toggleAll() {
   if (allExpanded.value) {
-    runsStore.collapseAll()
+    runStore.collapseAll()
   } else {
-    runsStore.expandAll(instancesWithRuns.value.map(i => i.id))
+    runStore.expandAll(instancesWithRuns.value.map(i => i.id))
   }
 }
 
 function removeAllRuns() {
   if (confirm(t('runs_confirm_remove_all') || 'Êtes-vous sûr de vouloir supprimer tous les runs ?')) {
-    runsStore.removeAllRuns()
+    runStore.removeAllRuns()
   }
 }
 
 async function exportRuns() {
-  const result = await runsStore.exportRuns()
+  const result = await runStore.exportRuns()
   alert(result.message)
 }
 
 async function importRuns() {
   try {
-    const result = await runsStore.importRuns()
+    const result = await runStore.importRuns()
     alert(`Import réussi ! ${result.count} instance(s) importée(s).`)
   } catch (error) {
     alert(error.message)
@@ -82,7 +84,9 @@ async function importRuns() {
 }
 
 // Kamas/Time logic
-const expandedHourRuns = ref(new Set())
+// Persist expanded hour runs as an array in localStorage; cards manage their own expansion.
+const expandedHourRuns = useLocalStorage('wakfarm_expanded_hour_runs', [])
+
 const timePeriod = useLocalStorage('wakfarm_time_period', 60)
 
 // Validate time period input
@@ -99,14 +103,14 @@ const sortedHourRuns = computed(() => {
   const period = timePeriod.value || 60
   
   // Iterate through all configured runs
-  Object.entries(runsStore.runs).forEach(([instanceId, runs]) => {
+  Object.entries(runStore.runs).forEach(([instanceId, runs]) => {
     runs.forEach(run => {
       const instanceIdNum = parseInt(instanceId)
       const instanceData = jsonStore.calculateInstanceForRun(instanceIdNum, run)
       
           if (instanceData && run.time > 0) {
             // Use shared filter logic
-            if (!instancePassesFilters(instanceData, globalStore)) return
+            if (!instancePassesFilters(instanceData, appStore)) return
         const iterations = Math.floor(period / run.time)
         const kamasPerPeriod = Math.floor(instanceData.totalKamas * iterations)
         
@@ -127,22 +131,15 @@ const sortedHourRuns = computed(() => {
 
 const allHourRunsExpanded = computed(() => {
   if (sortedHourRuns.value.length === 0) return false
-  return sortedHourRuns.value.every(r => expandedHourRuns.value.has(r.key))
+  return sortedHourRuns.value.every(r => expandedHourRuns.value.includes(r.key))
 })
 
-function toggleHourRun(key) {
-  if (expandedHourRuns.value.has(key)) {
-    expandedHourRuns.value.delete(key)
-  } else {
-    expandedHourRuns.value.add(key)
-  }
-  expandedHourRuns.value = new Set(expandedHourRuns.value)
-}
-
 function toggleAllHourRuns() {
-  expandedHourRuns.value = allHourRunsExpanded.value 
-    ? new Set() 
-    : new Set(sortedHourRuns.value.map(r => r.key))
+  if (allHourRunsExpanded.value) {
+    expandedHourRuns.value = []
+  } else {
+    expandedHourRuns.value = sortedHourRuns.value.map(r => r.key)
+  }
 }
 </script>
 
@@ -182,8 +179,6 @@ function toggleAllHourRuns() {
         <!-- Toggle all button -->
         <ToggleAllButton
           :isExpanded="allExpanded"
-          :expandText="t('toggle_expand_all') || 'Tout développer'"
-          :collapseText="t('toggle_collapse_all') || 'Tout réduire'"
           @toggle="toggleAll"
         />
 
@@ -225,8 +220,6 @@ function toggleAllHourRuns() {
       <div v-if="subTab === 'time'" :class="['px-4 py-2 border-b h-[50px]', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
         <ToggleAllButton
           :isExpanded="allHourRunsExpanded"
-          :expandText="t('toggle_expand_all')"
-          :collapseText="t('toggle_collapse_all')"
           @toggle="toggleAllHourRuns"
         />
       </div>
@@ -254,7 +247,6 @@ function toggleAllHourRuns() {
           :instanceId="runData.instanceId"
           :run="runData.run"
           :timePeriod="timePeriod"
-          :isExpanded="expandedHourRuns.has(runData.key)"
           @toggle="toggleHourRun(runData.key)"
         />
       </div>

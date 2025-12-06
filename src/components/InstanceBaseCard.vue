@@ -20,7 +20,7 @@ const emit = defineEmits(['toggle'])
       :class="['px-5 py-4 flex items-center justify-between gap-4', clickable !== false ? 'cursor-pointer' : '']"
     >
       <div class="flex items-center gap-3 truncate">
-        <BossIcon :boss-id="bossId" :size="32" />
+        <BossIcon :boss-id="bossId" />
         <div :class="['font-bold text-sm truncate', COLOR_CLASSES.textLight]">{{ title }}</div>
       </div>
       <div class="flex items-center gap-4 flex-shrink-0">

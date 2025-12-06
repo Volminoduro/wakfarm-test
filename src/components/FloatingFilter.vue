@@ -1,15 +1,16 @@
 <script setup>
-import { useGlobalStore } from '../stores/useGlobalStore'
+import { useAppStore } from '../stores/useAppStore'
 import { useNameStore } from '../stores/useNameStore'
 import { formatInputNumber, formatRateInput, parseFormattedNumber } from '../utils/formatters'
 import { COLOR_CLASSES } from '../constants/colors'
 import LevelRangeFilter from './LevelRangeFilter.vue'
+import { useJsonStore } from '../stores/useJsonStore'
 
-const store = useGlobalStore()
-const jsonStore = store.jsonStore
-const namesStore = useNameStore()
+const store = useAppStore()
+const jsonStore = useJsonStore()
+const nameStore = useNameStore()
 
-const t = (key) => namesStore.names?.divers?.[key] || key
+const t = (key) => nameStore.names?.divers?.[key] || key
 
 // Generic numeric field updater
 const updateNumericField = (event, fieldName, parser = parseInt) => {

@@ -1,15 +1,13 @@
-// Fichier déplacé dans instance/RunHourCard.vue
-// Ce fichier a été supprimé.
-
 <script setup>
 import { computed } from 'vue'
 import { formatNumber, formatQuantity, formatRate } from '../utils/formatters'
 import { formatRunConfig } from '../utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '../utils/itemHelpers'
 import { COLOR_CLASSES } from '../constants/colors'
-import { useGlobalStore } from '../stores/useGlobalStore'
 import { useNameStore } from '../stores/useNameStore'
 import InstanceBaseCard from './InstanceBaseCard.vue'
+import { useJsonStore } from '../stores/useJsonStore'
+import { useLocalStorage } from '../composables/useLocalStorage'
 
 const props = defineProps({
   instanceId: {
@@ -23,17 +21,28 @@ const props = defineProps({
   timePeriod: {
     type: Number,
     default: 60
-  },
-  isExpanded: {
-    type: Boolean,
-    required: true
   }
 })
 
-const emit = defineEmits(['toggle'])
+// Local persistence for expanded hour runs
+const expandedHourRuns = useLocalStorage('wakfarm_expanded_hour_runs', [])
+const storageKey = computed(() => `${props.instanceId}_${props.run.id}`)
+const isExpanded = computed(() => expandedHourRuns.value.includes(storageKey.value))
 
-const jsonStore = useGlobalStore().jsonStore
-const namesStore = useNameStore()
+function toggleExpand() {
+  const key = storageKey.value
+  const idx = expandedHourRuns.value.indexOf(key)
+  if (idx > -1) {
+    const copy = [...expandedHourRuns.value]
+    copy.splice(idx, 1)
+    expandedHourRuns.value = copy
+  } else {
+    expandedHourRuns.value = [...expandedHourRuns.value, key]
+  }
+}
+
+const jsonStore = useJsonStore()
+const nameStore = useNameStore()
 
 // Calculate instance data for this specific run config
 const instanceData = computed(() => {
@@ -59,13 +68,26 @@ const formattedKamasPerPeriod = computed(() => {
 
 // Format the run title
 const runTitle = computed(() => {
-  const instanceName = namesStore.names?.instances?.[props.instanceId] || `Instance #${props.instanceId}`
+  const instanceName = nameStore.names?.instances?.[props.instanceId] || `Instance #${props.instanceId}`
   const level = instanceData.value?.level || '?'
   const configStr = formatRunConfig(props.run)
   const timeStr = props.run.time ? `${props.run.time}min` : '?'
   
   return `${instanceName} (niv. ${level}) • ${configStr} • ${timeStr}`
 })
+
+function toggleHourRun(storageKey) {
+  const key = storageKey
+  const idx = expandedHourRuns.value.indexOf(key)
+  if (idx > -1) {
+    const copy = [...expandedHourRuns.value]
+    copy.splice(idx, 1)
+    expandedHourRuns.value = copy
+  } else {
+    expandedHourRuns.value = [...expandedHourRuns.value, key]
+  }
+}
+
 </script>
 
 <template>
@@ -75,7 +97,7 @@ const runTitle = computed(() => {
     :total-kamas="kamasPerPeriod"
     :is-expanded="isExpanded"
     :clickable="true"
-    @toggle="emit('toggle')"
+    @toggle="toggleHourRun(storageKey)"
   >
     <transition name="slide">
       <ul v-if="isExpanded && instanceData && instanceData.items && instanceData.items.length > 0" 
@@ -84,7 +106,7 @@ const runTitle = computed(() => {
           <div class="flex items-center gap-3">
             <div :class="COLOR_CLASSES.textNormal">
               <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">
-                {{ namesStore.names?.items?.[item.itemId] || ('#' + item.itemId) }}
+                {{ nameStore.names?.items?.[item.itemId] || ('#' + item.itemId) }}
               </span>
               <span> x{{ formatQuantity(item.quantity) }} ({{ formatRate(item.rate) }}%{{ getSteleInfo(item) }})</span>
             </div>

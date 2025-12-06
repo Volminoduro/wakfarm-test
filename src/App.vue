@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useGlobalStore } from './stores/useGlobalStore'
+import { useAppStore } from './stores/useAppStore'
+import { useJsonStore } from './stores/useJsonStore'
 import { useLocalStorage } from './composables/useLocalStorage'
 import { COLOR_CLASSES } from './constants/colors'
 import AppHeader from './components/layout/AppHeader.vue'
@@ -9,31 +10,23 @@ import RentabilityRunView from './views/RentabilityRunView.vue'
 import RentabilityHourView from './views/RentabilityHourView.vue'
 import PricesView from './views/PricesView.vue'
 
+const appStore = useAppStore()
+const jsonStore = useJsonStore()
 
-const globalStore = useGlobalStore()
-const jsonStore = globalStore.jsonStore
-
-// Tab state with localStorage persistence
+// Tab state with localStorage persistence (shared ref)
 const mainTab = useLocalStorage('wakfarm_mainTab', 'rentability')
-
-// Tab change handlers
-const setMainTab = (tab) => { mainTab.value = tab }
 
 // Charger les données au montage
 onMounted(async () => {
-  await globalStore.initData(globalStore.config.server)
+  await appStore.initData(appStore.config.server)
 })
 
-// Note: expanded state is now managed directly in RentabilityView for better control with manual runs
 </script>
 
 <template>
   <div :class="['min-h-screen flex flex-col', COLOR_CLASSES.bgPrimary]">
 
-    <AppHeader 
-      :mainTab="mainTab"
-      @change-main-tab="setMainTab"
-    />
+    <AppHeader />
     
     <main class="flex-grow">
       <div v-if="!jsonStore.loaded" class="p-8 text-center">

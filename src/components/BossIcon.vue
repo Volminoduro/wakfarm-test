@@ -23,7 +23,7 @@ const bossIconUrl = computed(() => {
     v-if="bossId && bossId > 0"
     :src="bossIconUrl"
     :alt="'Boss'"
-    :height="size"
+    :height="'32px'"
     class="object-contain flex-shrink-0"
     style="max-height:32px;"
     @error="$event.target.style.display='none'"

@@ -7,8 +7,6 @@
         <div class="flex items-center justify-between gap-4">
           <ToggleAllButton
             :isExpanded="allRunExpanded"
-            :expandText="t('toggle_expand_all')"
-            :collapseText="t('toggle_collapse_all')"
             @toggle="toggleAllRun"
           />
 
@@ -18,7 +16,7 @@
               <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_modulated') }}</label>
               <input 
                 type="checkbox" 
-                v-model="globalStore.config.isModulated"
+                v-model="appStore.config.isModulated"
                 class="custom-checkbox"
               />
             </div>
@@ -27,7 +25,7 @@
               <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_booster') }}</label>
               <input 
                 type="checkbox" 
-                v-model="globalStore.config.isBooster"
+                v-model="appStore.config.isBooster"
                 class="custom-checkbox"
               />
             </div>
@@ -35,7 +33,7 @@
             <div class="flex flex-col items-center gap-1">
               <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_stasis') }}</label>
               <select 
-                v-model.number="globalStore.config.stasis"
+                v-model.number="appStore.config.stasis"
                 :class="[COLOR_CLASSES.select, 'w-[65px]']"
               >
                 <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
@@ -45,7 +43,7 @@
             <div class="flex flex-col items-center gap-1">
               <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_steles') }}</label>
               <select 
-                v-model.number="globalStore.config.steles"
+                v-model.number="appStore.config.steles"
                 :class="[COLOR_CLASSES.select, 'w-[65px]']"
               >
                 <option v-for="n in 5" :key="n" :value="n - 1">{{ n - 1 }}</option>
@@ -55,7 +53,7 @@
             <div class="flex flex-col items-center gap-1">
               <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_stele_intervention') }}</label>
               <select 
-                v-model.number="globalStore.config.steleIntervention"
+                v-model.number="appStore.config.steleIntervention"
                 :class="[COLOR_CLASSES.select, 'w-[65px]']"
               >
                 <option v-for="n in 4" :key="n" :value="n - 1">{{ n - 1 }}</option>
@@ -77,12 +75,10 @@
         <p :class="['text-lg', COLOR_CLASSES.textLoading]">Chargement des données...</p>
       </div>
       <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-        <InstanceCard 
-          v-for="inst in sortedInstances" 
+        <InstanceCard
+          v-for="inst in sortedInstances"
           :key="inst.uniqueKey"
           :instance="inst"
-          :isExpanded="expandedRunSet.has(inst.uniqueKey)"
-          @toggle="toggleExpand(inst.uniqueKey)"
         />
       </div>
     </div>
@@ -91,7 +87,8 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useGlobalStore } from '../stores/useGlobalStore'
+import { useAppStore } from '../stores/useAppStore'
+import { useJsonStore } from '../stores/useJsonStore'
 import { useNameStore } from '../stores/useNameStore'
 import InstanceCard from '../components/InstanceCard.vue'
 import ToggleAllButton from '../components/ToggleAllButton.vue'
@@ -99,17 +96,18 @@ import { COLOR_CLASSES } from '../constants/colors'
 import { useLocalStorage } from '../composables/useLocalStorage'
 
 
-const globalStore = useGlobalStore()
-const jsonStore = globalStore.jsonStore
+const appStore = useAppStore()
+const jsonStore = useJsonStore()
 const nameStore = useNameStore()
 
 const t = (key) => {
   return nameStore.names?.divers?.[key] || key
 }
 
-// Gestion de l'expansion pour Kamas/Run
+// Gestion de l'expansion pour Kamas/Run (persistée en localStorage)
 const expandedRun = useLocalStorage('wakfarm_expanded_run', [])
-const expandedRunSet = ref(new Set(expandedRun.value || []))
+
+// Expanded run keys are persisted in `expandedRun` (localStorage)
 
 // Calculer et trier les instances dynamiquement (seulement config globale)
 const sortedInstances = computed(() => {
@@ -126,24 +124,15 @@ const sortedInstances = computed(() => {
 
 const allRunExpanded = computed(() => {
   if (sortedInstances.value.length === 0) return false
-  return sortedInstances.value.every(inst => expandedRunSet.value.has(inst.uniqueKey))
+  return sortedInstances.value.every(inst => expandedRun.value.includes(inst.uniqueKey))
 })
 
-function toggleExpand(uniqueKey) {
-  if (expandedRunSet.value.has(uniqueKey)) {
-    expandedRunSet.value.delete(uniqueKey)
-  } else {
-    expandedRunSet.value.add(uniqueKey)
-  }
-  expandedRunSet.value = new Set(expandedRunSet.value)
-  expandedRun.value = [...expandedRunSet.value]
-}
-
 function toggleAllRun() {
-  expandedRunSet.value = allRunExpanded.value
-    ? new Set()
-    : new Set(sortedInstances.value.map(inst => inst.uniqueKey))
-  expandedRun.value = [...expandedRunSet.value]
+  if (allRunExpanded.value) {
+    expandedRun.value = []
+  } else {
+    expandedRun.value = sortedInstances.value.map(inst => inst.uniqueKey)
+  }
 }
 </script>
 

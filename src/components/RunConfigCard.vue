@@ -1,10 +1,10 @@
 <script setup>
 import { computed } from 'vue'
 import { COLOR_CLASSES } from '../constants/colors'
-import { useGlobalStore } from '../stores/useGlobalStore'
 import { useNameStore } from '../stores/useNameStore'
 import RunConfigRow from './RunConfigRow.vue'
 import BossIcon from './BossIcon.vue'
+import { useRunStore } from '../stores/useRunStore'
 
 const props = defineProps({
   instance: {
@@ -13,42 +13,37 @@ const props = defineProps({
   }
 })
 
+const runStore = useRunStore()
+const nameStore = useNameStore()
 
-const runsStore = useGlobalStore().runsStore
-const jsonStore = useGlobalStore().jsonStore
-const namesStore = useNameStore()
+const t = (key) => nameStore.names?.divers?.[key] || key
 
-
-console.log('Instance in RunConfigCard:', props.instance)
-
-const t = (key) => namesStore.names?.divers?.[key] || key
-
-const isExpanded = computed(() => runsStore.expandedInstances.has(props.instance.id))
-const runs = computed(() => runsStore.getRunsForInstance(props.instance.id))
+const isExpanded = computed(() => runStore.expandedInstances.has(props.instance.id))
+const runs = computed(() => runStore.getRunsForInstance(props.instance.id))
 const hasRuns = computed(() => runs.value.length > 0)
 
 function toggleExpand() {
-  runsStore.toggleExpanded(props.instance.id)
+  runStore.toggleExpanded(props.instance.id)
 }
 
 function addRun() {
-  runsStore.addRun(props.instance.id, props.instance)
+  runStore.addRun(props.instance.id, props.instance)
   // Auto-expand when adding a run
   if (!isExpanded.value) {
-    runsStore.toggleExpanded(props.instance.id)
+    runStore.toggleExpanded(props.instance.id)
   }
 }
 
 function removeRun(runId) {
-  runsStore.removeRun(props.instance.id, runId)
+  runStore.removeRun(props.instance.id, runId)
 }
 
 function updateRun(updatedRun) {
-  runsStore.updateRun(props.instance.id, updatedRun.id, updatedRun)
+  runStore.updateRun(props.instance.id, updatedRun.id, updatedRun)
 }
 
 function removeAllRuns() {
-  runsStore.removeAllRunsForInstance(props.instance.id)
+  runStore.removeAllRunsForInstance(props.instance.id)
 }
 </script>
 
@@ -62,7 +57,7 @@ function removeAllRuns() {
         class="flex items-center gap-3 cursor-pointer flex-1 truncate"
         :class="{ 'opacity-50': !hasRuns }">
         
-        <BossIcon :boss-id="props.instance.bossId" :size="32" />
+        <BossIcon :boss-id="props.instance.bossId" />
 
         <div :class="['font-bold truncate', COLOR_CLASSES.textLight]">
           {{ props.instance.name }} (niv. {{ props.instance.level }})

@@ -1,6 +1,6 @@
 <script setup>
 import { COLOR_CLASSES } from '../constants/colors'
-import { useGlobalStore } from '../stores/useGlobalStore'
+import { useJsonStore } from '../stores/useJsonStore'
 import { useNameStore } from '../stores/useNameStore'
 
 const props = defineProps({
@@ -12,9 +12,9 @@ const props = defineProps({
 
 const emit = defineEmits(['update', 'remove'])
 
-const jsonStore = useGlobalStore().jsonStore
-const namesStore = useNameStore()
-const t = (key) => namesStore.names?.divers?.[key] || key
+const jsonStore = useJsonStore()
+const nameStore = useNameStore()
+const t = (key) => nameStore.names?.divers?.[key] || key
 
 function updateField(field, value) {
   emit('update', { ...props.run, [field]: value })

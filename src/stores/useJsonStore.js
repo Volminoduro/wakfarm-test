@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { useLocalStore } from './useLocalStore'
+import { useAppStore } from './useAppStore'
 import { watch } from 'vue'
 import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS, LEVEL_RANGES } from '../constants'
 
@@ -82,7 +82,7 @@ export const useJsonStore = defineStore('data', {
     }
   },
   actions: {
-    async loadAllData(server, lang = 'fr') {
+    async loadAllData(server) {
       try {
         const basePath = import.meta.env.BASE_URL
         const [instRes, itemRes, mappingRes, lootRes, serversRes, bossMappingRes] = await Promise.all([
@@ -124,13 +124,13 @@ export const useJsonStore = defineStore('data', {
         this.loaded = true
 
         // Setup a watcher to recompute instances when relevant global config keys change
-        const globalStore = useLocalStore()
+        const appStore = useAppStore()
         if (!this._hasConfigWatcher) {
           this._hasConfigWatcher = true
 
           // Watch server separately to reload prices immediately
           watch(
-            () => globalStore.config.server,
+            () => appStore.config.server,
             async (newServer, oldServer) => {
               if (newServer !== oldServer) {
                 await this.loadPrices(newServer)
@@ -141,16 +141,16 @@ export const useJsonStore = defineStore('data', {
           // Only watch the subset of config fields that affect instance computation.
           // UI-only preferences should be stored elsewhere or will not trigger this watcher.
           const configSelector = () => ({
-            server: globalStore.config.server,
-            isBooster: globalStore.config.isBooster,
-            isModulated: globalStore.config.isModulated,
-            stasis: globalStore.config.stasis,
-            steles: globalStore.config.steles,
-            steleIntervention: globalStore.config.steleIntervention,
-            minItemProfit: globalStore.config.minItemProfit,
-            minDropRatePercent: globalStore.config.minDropRatePercent,
-            minInstanceTotal: globalStore.config.minInstanceTotal,
-            levelRanges: globalStore.config.levelRanges
+            server: appStore.config.server,
+            isBooster: appStore.config.isBooster,
+            isModulated: appStore.config.isModulated,
+            stasis: appStore.config.stasis,
+            steles: appStore.config.steles,
+            steleIntervention: appStore.config.steleIntervention,
+            minItemProfit: appStore.config.minItemProfit,
+            minDropRatePercent: appStore.config.minDropRatePercent,
+            minInstanceTotal: appStore.config.minInstanceTotal,
+            levelRanges: appStore.config.levelRanges
           })
 
           // Scheduler for the expensive recompute: prefer requestIdleCallback, fallback to debounce timeout
@@ -274,9 +274,9 @@ export const useJsonStore = defineStore('data', {
 
     // Helper: Compute adjusted drop rate based on config
     _computeAdjustedRate(baseRate, config) {
-      const globalStore = useLocalStore()
+      const appStore = useAppStore()
       const boosterBonus = config.isBooster 
-        ? (BOOSTER_BONUS[globalStore.config.server] || 1.25) 
+        ? (BOOSTER_BONUS[appStore.config.server] || 1.25) 
         : 1
 
       // Rifts (brèches) have different bonus calculation
@@ -327,7 +327,7 @@ export const useJsonStore = defineStore('data', {
     },
 
     createInstanceData(instances, items, mapping, loots, prices){
-      const globalStore = useLocalStore()
+      const appStore = useAppStore()
       
       // Use getters for lookup maps
       const itemRarityMap = this.itemRarityMap
@@ -354,7 +354,7 @@ export const useJsonStore = defineStore('data', {
         
         // Build instance-specific config (add isUltimate for rifts)
         const instanceConfig = {
-          ...globalStore.config,
+          ...appStore.config,
           isUltimate: inst.isUltimate || false
         }
 
@@ -393,13 +393,13 @@ export const useJsonStore = defineStore('data', {
       })
 
       // Build per-item breakdown and calculate total kamas for each instance
-      const minProfit = globalStore.config.minItemProfit || 0
-      const minDropRate = (globalStore.config.minDropRatePercent || 0) / 100
+      const minProfit = appStore.config.minItemProfit || 0
+      const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
 
       const enriched = instancesRefined.map(inst => {
         // Build instance-specific config (inst already has isUltimate)
         const instanceConfig = {
-          ...globalStore.config,
+          ...appStore.config,
           isUltimate: inst.isUltimate
         }
         
@@ -422,8 +422,8 @@ export const useJsonStore = defineStore('data', {
       })
 
       // Apply instance-level filters
-      const minInstanceTotal = globalStore.config.minInstanceTotal || 0
-      const activeLevelRanges = globalStore.config.levelRanges || []
+      const minInstanceTotal = appStore.config.minInstanceTotal || 0
+      const activeLevelRanges = appStore.config.levelRanges || []
 
       // Early return if no level ranges selected
       if (activeLevelRanges.length === 0) {
@@ -498,7 +498,7 @@ export const useJsonStore = defineStore('data', {
       const instance = this._rawInstances.find(i => i.id === instanceId)
       if (!instance) return null
 
-      const globalStore = useLocalStore()
+      const appStore = useAppStore()
       const itemRarityMap = this.itemRarityMap
       const priceMap = this.priceMap
       const players = instance.players || (instance.isDungeon ? 3 : 4)
@@ -535,8 +535,8 @@ export const useJsonStore = defineStore('data', {
       const perItem = this._processLoots(allLoots, runConfig, runConfig)
       
       // Filter and sort items
-      const minProfit = globalStore.config.minItemProfit || 0
-      const minDropRate = (globalStore.config.minDropRatePercent || 0) / 100
+      const minProfit = appStore.config.minItemProfit || 0
+      const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
       const itemsBreakdown = this._filterAndSortItems(perItem, minProfit, minDropRate)
 
       const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)

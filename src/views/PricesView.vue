@@ -266,15 +266,15 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useGlobalStore } from '../stores/useGlobalStore'
 import { useNameStore } from '../stores/useNameStore'
 import { useLocalStorage } from '../composables/useLocalStorage'
 import { useClickOutside } from '../composables/useClickOutside'
 import { COLOR_CLASSES } from '../constants/colors'
 import { RARITY_COLORS } from '../constants'
 import { formatNumber } from '../utils/formatters'
+import { useJsonStore } from '../stores/useJsonStore'
 
-const jsonStore = useGlobalStore().jsonStore
+const jsonStore = useJsonStore()
 const nameStore = useNameStore()
 
 const t = (key) => nameStore.names?.divers?.[key] || key

@@ -1,10 +1,10 @@
 import { LEVEL_RANGES } from '../constants'
 
-export function instancePassesFilters(instanceData, globalStore) {
-  if (!instanceData || !globalStore) return false
+export function instancePassesFilters(instanceData, appStore) {
+  if (!instanceData || !appStore) return false
 
-  const minInstanceTotal = globalStore.config.minInstanceTotal || 0
-  const activeLevelRanges = globalStore.config.levelRanges || []
+  const minInstanceTotal = appStore.config.minInstanceTotal || 0
+  const activeLevelRanges = appStore.config.levelRanges || []
 
   // If no level ranges selected, exclude everything
   if (activeLevelRanges.length === 0) return false

@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
-import { useLocalStore } from './useLocalStore'
+import { useAppStore } from './useAppStore'
 
 const STORAGE_KEY = 'wakfarm_runs'
 const STORAGE_KEY_EXPANDED = 'wakfarm_runs_expanded'
 
-export const useRunsStore = defineStore('runs', () => {
+export const useRunStore = defineStore('runs', () => {
   // Structure: { instanceId: [{ id, isModulated, isBooster, stasis, steles, steleIntervention, time }] }
   const loadRuns = () => {
     try {
@@ -56,8 +56,8 @@ export const useRunsStore = defineStore('runs', () => {
 
   // Add a new run to an instance
   function addRun(instanceId, instance = null) {
-    const globalStore = useLocalStore()
-    const config = globalStore.config
+    const appStore = useAppStore()
+    const config = appStore.config
 
     const isRift = instance && !instance.isDungeon
 

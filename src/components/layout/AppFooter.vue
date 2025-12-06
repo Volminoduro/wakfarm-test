@@ -1,9 +1,7 @@
 <script setup>
 import { COLOR_CLASSES } from '../../constants/colors'
-import { useGlobalStore } from '../../stores/useGlobalStore'
 import { useNameStore } from '../../stores/useNameStore'
 
-const jsonStore = useGlobalStore().jsonStore
 const nameStore = useNameStore()
 
 const t = (key) => nameStore.names?.divers?.[key] || key

@@ -21,13 +21,13 @@
 </template>
 
 <script setup>
-import { useGlobalStore } from '../stores/useGlobalStore'
+import { computed } from 'vue'
+import { useAppStore } from '../stores/useAppStore'
 import { WAKFU_TEXT_ALT, WAKFU_TEXT } from '../constants/colors'
 
-const global = useGlobalStore()
+const appStore = useAppStore()
 
-// Use the reactive language ref exposed by the facade directly (single source of truth)
-const currentLanguage = global.language
+const currentLanguage = computed(() => appStore.language)
 
 const languages = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -37,6 +37,7 @@ const languages = [
 ]
 
 const handleChange = async (langCode) => {
-  await global.setLanguage(langCode)
+  await appStore.setLanguage(langCode)
 }
+
 </script>

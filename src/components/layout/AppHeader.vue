@@ -3,20 +3,10 @@ import { computed, ref, onMounted, onUnmounted } from 'vue'
 import LanguageSelector from '../LanguageSelector.vue'
 import FloatingFilter from '../FloatingFilter.vue'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '../../constants/colors'
-
-import { useGlobalStore } from '../../stores/useGlobalStore'
 import { useNameStore } from '../../stores/useNameStore'
+import { useLocalStorage } from '../../composables/useLocalStorage'
 
-const props = defineProps({
-  mainTab: {
-    type: String,
-    required: true
-  },
-
-})
-
-const emit = defineEmits(['change-main-tab'])
-const dataStore = useGlobalStore().jsonStore
+const mainTab = useLocalStorage('wakfarm_mainTab', 'rentability')
 const nameStore = useNameStore()
 
 const t = (key) => nameStore.names?.divers?.[key] || key
@@ -24,11 +14,9 @@ const t = (key) => nameStore.names?.divers?.[key] || key
 // System for warnings and alerts
 const warnings = computed(() => {
   const list = []
-  
   // Example: Add your warnings here
   // list.push({ type: 'warning', message: 'Ceci est un avertissement' })
   // list.push({ type: 'danger', message: 'Ceci est un danger' })
-  
   return list
 })
 
@@ -98,19 +86,19 @@ onUnmounted(() => {
     <!-- Main Navigation Tabs -->
     <nav class="flex items-center">
       <button 
-        @click="emit('change-main-tab', 'rentability')" 
+        @click="mainTab = 'rentability'" 
         :class="['flex-1 py-2 transition-all font-semibold text-lg', COLOR_CLASSES.tabSeparator, mainTab === 'rentability' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]"
         :style="`border-right-color: ${TAB_SEPARATOR} !important; ${mainTab === 'rentability' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
         {{ t('tab_rentability') }}
       </button>
       <button 
-        @click="emit('change-main-tab', 'runs')" 
+        @click="mainTab = 'runs'" 
         :class="['flex-1 py-2 transition-all font-semibold text-lg', COLOR_CLASSES.tabSeparator, mainTab === 'runs' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]"
         :style="`border-right-color: ${TAB_SEPARATOR} !important; ${mainTab === 'runs' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
         {{ t('tab_runs') }}
       </button>
       <button 
-        @click="emit('change-main-tab', 'prices')" 
+        @click="mainTab = 'prices'" 
         :class="['flex-1 py-2 transition-all font-semibold text-lg', mainTab === 'prices' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]"
         :style="mainTab === 'prices' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''">
         {{ t('tab_prices') }}

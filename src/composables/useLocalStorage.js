@@ -1,7 +1,11 @@
 import { ref, watch } from 'vue'
 
+// Cache pour retourner la même référence pour une clé donnée
+const storageCache = new Map()
+
 /**
  * Composable pour gérer la persistance localStorage avec watch automatique
+ * Retourne une référence partagée par clé pour que plusieurs appels restent synchronisés
  * @param {string} key - Clé localStorage
  * @param {*} defaultValue - Valeur par défaut
  * @param {Object} options - Options { deep: boolean }
@@ -9,6 +13,8 @@ import { ref, watch } from 'vue'
  */
 export function useLocalStorage(key, defaultValue, options = {}) {
   const { deep = false } = options
+
+  if (storageCache.has(key)) return storageCache.get(key)
 
   // Charger la valeur depuis localStorage
   const loadValue = () => {
@@ -35,5 +41,22 @@ export function useLocalStorage(key, defaultValue, options = {}) {
     { deep }
   )
 
+  // Écoute les changements provenant d'autres onglets/fenêtres
+  const onStorage = (e) => {
+    if (!e) return
+    try {
+      if (e.key === key) {
+        value.value = e.newValue !== null ? JSON.parse(e.newValue) : defaultValue
+      }
+    } catch {
+      // ignore parse errors
+    }
+  }
+
+  if (typeof window !== 'undefined' && window.addEventListener) {
+    window.addEventListener('storage', onStorage)
+  }
+
+  storageCache.set(key, value)
   return value
 }
