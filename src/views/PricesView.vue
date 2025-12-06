@@ -311,24 +311,12 @@ const allInstancesList = computed(() => {
 })
 
 // Instances filter with special initialization logic
-const savedInstancesRaw = (() => {
-  try {
-    const saved = localStorage.getItem('wakfarm_prices_instances')
-    return saved !== null ? JSON.parse(saved) : null
-  } catch {
-    return null
-  }
-})()
-
-const filterInstances = useLocalStorage(
-  'wakfarm_prices_instances',
-  savedInstancesRaw !== null ? savedInstancesRaw : [],
-  { deep: true }
-)
+// Use `null` as the sentinel default so we can detect "never saved" without direct localStorage access
+const filterInstances = useLocalStorage('wakfarm_prices_instances', null, { deep: true })
 
 // Initialize with all instances if never saved
 watch(allInstancesList, (newList) => {
-  if (savedInstancesRaw === null && newList.length > 0 && filterInstances.value.length === 0) {
+  if (filterInstances.value === null && newList.length > 0) {
     filterInstances.value = newList.map(i => i.id)
   }
 }, { immediate: true })
@@ -400,12 +388,13 @@ const filteredAndSortedItems = computed(() => {
   }
   
   // Filter by instances
-  if (filterInstances.value.length === 0) {
+  const fi = filterInstances.value || []
+  if (fi.length === 0) {
     result = [] // None selected = hide all
-  } else if (filterInstances.value.length < allInstancesList.value.length) {
+  } else if (fi.length < allInstancesList.value.length) {
     result = result.filter(item => {
       // Item must be found in at least one selected instance
-      return item.instanceIds.some(instId => filterInstances.value.includes(instId))
+      return item.instanceIds.some(instId => fi.includes(instId))
     })
   }
   // All selected = show all (no filter)
@@ -499,12 +488,14 @@ function getRarityDisplayText() {
 
 // Instance filter helpers
 function toggleInstance(instanceId) {
-  const index = filterInstances.value.indexOf(instanceId)
+  const arr = filterInstances.value || []
+  const index = arr.indexOf(instanceId)
   if (index === -1) {
-    filterInstances.value.push(instanceId)
+    arr.push(instanceId)
   } else {
-    filterInstances.value.splice(index, 1)
+    arr.splice(index, 1)
   }
+  filterInstances.value = arr
 }
 
 function toggleAllInstances(selectAll) {
@@ -513,7 +504,8 @@ function toggleAllInstances(selectAll) {
 }
 
 function getInstancesDisplayText() {
-  const count = filterInstances.value.length
+  const arr = filterInstances.value || []
+  const count = arr.length
   const total = allInstancesList.value.length
   if (count === 0) return t('level_ranges_none')
   if (count === total) return t('level_ranges_all')

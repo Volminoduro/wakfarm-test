@@ -1,54 +1,48 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import { useAppStore } from './useAppStore'
+import { useLocalStorage } from '@/composables/useLocalStorage'
 
 const STORAGE_KEY = 'wakfarm_runs'
 const STORAGE_KEY_EXPANDED = 'wakfarm_runs_expanded'
 
 export const useRunStore = defineStore('runs', () => {
   // Structure: { instanceId: [{ id, isModulated, isBooster, stasis, steles, steleIntervention, time }] }
-  const loadRuns = () => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      return saved ? JSON.parse(saved) : {}
-    } catch {
-      return {}
-    }
-  }
+  // Persist runs as an object
+  const runs = useLocalStorage(STORAGE_KEY, {}, { deep: true })
 
-  const loadExpandedInstances = () => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY_EXPANDED)
-      return saved ? new Set(JSON.parse(saved)) : new Set()
-    } catch {
-      return new Set()
-    }
-  }
+  // Persist expanded instances as an array but expose a Set for compatibility
+  const _expandedArray = useLocalStorage(STORAGE_KEY_EXPANDED, [], { deep: true })
+  const expandedInstances = ref(new Set(_expandedArray.value))
 
-  const runs = ref(loadRuns())
-  const expandedInstances = ref(loadExpandedInstances())
-
-  // Save to localStorage on change
+  // Sync storage array -> Set (e.g. cross-tab updates)
   watch(
-    runs,
+    _expandedArray,
     (newVal) => {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newVal))
+        const arr = newVal || []
+        // avoid unnecessary reassignments which can trigger recursive watchers
+        const current = [...expandedInstances.value]
+        const equal = arr.length === current.length && arr.every((v, i) => v === current[i])
+        if (!equal) expandedInstances.value = new Set(arr)
       } catch (e) {
-        console.error('Erreur sauvegarde runs:', e)
+        expandedInstances.value = new Set()
       }
     },
     { deep: true }
   )
 
-  // Save expanded state to localStorage
+  // Sync Set -> storage array
   watch(
     expandedInstances,
     (newVal) => {
       try {
-        localStorage.setItem(STORAGE_KEY_EXPANDED, JSON.stringify([...newVal]))
+        const arr = [...newVal]
+        const current = _expandedArray.value || []
+        const equal = arr.length === current.length && arr.every((v, i) => v === current[i])
+        if (!equal) _expandedArray.value = arr
       } catch (e) {
-        console.error('Erreur sauvegarde expanded instances:', e)
+        _expandedArray.value = []
       }
     },
     { deep: true }
@@ -102,6 +96,7 @@ export const useRunStore = defineStore('runs', () => {
         delete runs.value[instanceId]
         // Réduire l'instance quand on supprime le dernier run
         expandedInstances.value.delete(instanceId)
+        // trigger sync watcher by reassigning a new Set
         expandedInstances.value = new Set(expandedInstances.value)
       }
     }
@@ -144,6 +139,7 @@ export const useRunStore = defineStore('runs', () => {
     } else {
       expandedInstances.value.add(instanceId)
     }
+    // Reassign to trigger watchers
     expandedInstances.value = new Set(expandedInstances.value)
   }
 

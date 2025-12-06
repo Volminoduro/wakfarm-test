@@ -3,61 +3,29 @@ import { ref, watch } from 'vue'
 import { STORAGE_KEYS, DEFAULT_CONFIG } from '@/constants'
 import { useJsonStore } from './useJsonStore'
 import { useNameStore } from './useNameStore'
+import { useLocalStorage } from '@/composables/useLocalStorage'
 
 export const useAppStore = defineStore('app', () => {
   const LS_KEY = STORAGE_KEYS.CONFIG
   const LANG_KEY = STORAGE_KEYS.LANGUAGE
 
-  // Load persisted config or fallback to defaults
-  const loadConfig = () => {
-    try {
-      const saved = localStorage.getItem(LS_KEY)
-      if (saved) return { ...DEFAULT_CONFIG, ...JSON.parse(saved) }
-    } catch (e) {
-      console.error('Erreur lecture localStorage:', e)
-    }
-    return { ...DEFAULT_CONFIG }
+  // Persisted config (merge with defaults)
+  const config = useLocalStorage(LS_KEY, { ...DEFAULT_CONFIG }, { deep: true })
+  // Ensure missing default keys are present (in case stored value is partial)
+  try {
+    config.value = { ...DEFAULT_CONFIG, ...config.value }
+  } catch (e) {
+    config.value = { ...DEFAULT_CONFIG }
   }
 
-  const config = ref(loadConfig())
-
-  const loadLanguage = () => {
-    try {
-      const saved = localStorage.getItem(LANG_KEY)
-      if (saved) return saved
-    } catch (e) {
-      console.error('Erreur lecture language localStorage:', e)
-    }
-    return 'fr'
-  }
-
-  const language = ref(loadLanguage())
+  const language = useLocalStorage(LANG_KEY, 'fr')
   const userRotations = ref([])
 
   function updateConfig(newConfig) {
     config.value = { ...config.value, ...newConfig }
   }
 
-  // Persist changes
-  watch(
-    config,
-    (newVal) => {
-      try {
-        localStorage.setItem(LS_KEY, JSON.stringify(newVal))
-      } catch (e) {
-        console.error('Erreur écriture localStorage:', e)
-      }
-    },
-    { deep: true }
-  )
-
-  watch(language, (newVal) => {
-    try {
-      localStorage.setItem(LANG_KEY, newVal)
-    } catch (e) {
-      console.error('Erreur écriture language localStorage:', e)
-    }
-  })
+  // persistence handled by useLocalStorage
 
   // Compose other stores
   const jsonStore = useJsonStore()

@@ -134,7 +134,7 @@ import { instancePassesFilters } from '@/composables/useInstanceFilters'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
 import RunConfigCard from '@/components/RunConfig/RunConfigCard.vue'
-import InstanceCard from '@/components/InstanceCard.vue'
+import InstanceCard from '@/components/Instance/InstanceCard.vue'
 import ToggleAllButton from '@/components/ToggleAllButton.vue'
 
 const appStore = useAppStore()

@@ -15,7 +15,8 @@ import { computed } from 'vue';
 const props = defineProps({
   bossId: {
     type: [Number, String],
-    required: true
+    required: false,
+    default: null
   },
   size: {
     type: Number,
@@ -23,10 +24,11 @@ const props = defineProps({
   }
 })
 const bossIconUrl = computed(() => {
+  if (props.bossId === null || props.bossId === undefined) return ''
   try {
-    return new URL(`../assets/boss/${props.bossId}.png`, import.meta.url).href;
+    return new URL(`../assets/boss/${props.bossId}.png`, import.meta.url).href
   } catch {
-    return '';
+    return ''
   }
 });
 </script>
