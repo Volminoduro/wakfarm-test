@@ -123,33 +123,26 @@ export const useJsonStore = defineStore('data', {
         }
 
         // Process and store only _instancesBase (pass raw data)
-        this.initiateInstancesBase(
-          this.rawInstances,
-          this._rawMapping,
-          this._rawLoots,
-        )
+        this.initiateInstancesBase()
         this.loaded = true
       } catch (e) {
         console.error("Erreur chargement données", e)
       }
     },
 
-    initiateInstancesBase(instances, mapping, loots){
+    initiateInstancesBase(){
       const itemRarityMap = this.itemRarityMap
 
-      // Filter out rifts for base; keep metadata
-      const dungeonsOnly = instances.filter(inst => inst.isDungeon)
-
       const mappingMap = {}
-      mapping.forEach(m => { mappingMap[m.instanceId] = m })
+      this._rawMapping.forEach(m => { mappingMap[m.instanceId] = m })
 
-      const instancesBase = dungeonsOnly.map(inst => {
+      const instancesBase = this.rawInstances.map(inst => {
         const instanceMapping = mappingMap[inst.id]
         const baseLoots = []
 
         if (instanceMapping?.monsters) {
           instanceMapping.monsters.forEach(monster => {
-            loots
+            this._rawLoots
               .filter(loot => loot.monsterId === monster.monsterId)
               .forEach(loot => {
                 (loot.loots || [])
