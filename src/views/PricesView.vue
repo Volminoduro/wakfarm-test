@@ -142,7 +142,7 @@
                   class="custom-checkbox-small"
                 />
                 <span :class="COLOR_CLASSES.textNormal">
-                  {{ inst.name }}
+                  {{ getInstanceName(inst.id) }}
                 </span>
               </label>
             </div>
@@ -273,6 +273,7 @@ import { COLOR_CLASSES } from '@/constants/colors'
 import { RARITY_COLORS } from '@/constants'
 import { formatNumber } from '@/utils/formatters'
 import { useJsonStore } from '@/stores/useJsonStore'
+import { getInstanceName } from '@/utils/getInstanceName'
 
 const jsonStore = useJsonStore()
 const nameStore = useNameStore()
@@ -303,10 +304,10 @@ const { elementRef: rarityDropdownRef } = useClickOutside(() => {
 
 // Get all instances for the filter
 const allInstancesList = computed(() => {
-  const instances = jsonStore._rawInstances || []
+  const instances = jsonStore.rawInstances || []
   return instances.map(inst => ({
     id: inst.id,
-    name: nameStore.names?.instances?.[inst.id] || `Instance #${inst.id}`
+    name: getInstanceName(inst.id)
   })).sort((a, b) => a.name.localeCompare(b.name))
 })
 
@@ -329,14 +330,14 @@ const { elementRef: instancesDropdownRef } = useClickOutside(() => {
 
 // Get all items with names, prices, and instances (using store getters)
 const allItems = computed(() => {
-  const items = jsonStore._rawItems || []
+  const items = jsonStore.rawItems || []
   const priceMap = jsonStore.priceMap
   const itemInstances = jsonStore.itemToInstancesMap
   
   return items.map(item => {
     const instanceIds = itemInstances[item.id] || []
     const instanceNames = instanceIds
-      .map(id => nameStore.names?.instances?.[id] || `#${id}`)
+      .map(id => getInstanceName(id))
       .sort((a, b) => a.localeCompare(b))
     
     return {

@@ -11,7 +11,7 @@
         <BossIcon :boss-id="props.instance.bossId" />
 
         <div :class="['font-bold truncate', COLOR_CLASSES.textLight]">
-          {{ props.instance.name }} (niv. {{ props.instance.level }})
+          {{ getInstanceName(props.instance.id) }} (niv. {{ props.instance.level }})
         </div>
         
         <svg 
@@ -122,6 +122,7 @@ import { useNameStore } from '@/stores/useNameStore'
 import RunConfigRow from '@/components/RunConfig/RunConfigRow.vue'
 import BossIcon from '@/components/BossIcon.vue'
 import { useRunStore } from '@/stores/useRunStore'
+import { getInstanceName } from '@/utils/getInstanceName'
 
 const props = defineProps({
   instance: {
@@ -144,7 +145,7 @@ function toggleExpand() {
 }
 
 function addRun() {
-  runStore.addRun(props.instance.id, props.instance)
+  runStore.addRun(props.instance.id)
   // Auto-expand when adding a run
   if (!isExpanded.value) {
     runStore.toggleExpanded(props.instance.id)

@@ -43,6 +43,7 @@ import { getSteleInfo, getRarityColor } from '@/utils/itemHelpers'
 import { COLOR_CLASSES } from '@/constants/colors'
 import InstanceBaseCard from './InstanceBaseCard.vue'
 import { useNameStore } from '@/stores/useNameStore'
+import { getInstanceName } from '../../utils/getInstanceName'
 
 
 const props = defineProps({
@@ -159,7 +160,7 @@ const toggleShowAll = () => {
 const instanceTitle = computed(() => {
   const inst = displayInstance.value
   if (!inst) return ''
-  const baseName = nameStore.names.instances?.[inst.id] || ('Instance ' + inst.id)
+  const baseName = getInstanceName(inst.id) || ('Instance ' + inst.id)
   const level = inst.level
   const levelText = nameStore.names.divers?.['niveau_reduit'] || 'Niv.'
 

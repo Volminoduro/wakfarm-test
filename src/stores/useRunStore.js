@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import { useAppStore } from './useAppStore'
+import { useJsonStore } from '@/stores/useJsonStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 
 const STORAGE_KEY = 'wakfarm_runs'
@@ -49,18 +50,19 @@ export const useRunStore = defineStore('runs', () => {
   )
 
   // Add a new run to an instance
-  function addRun(instanceId, instance = null) {
+  function addRun(instanceId) {
     const appStore = useAppStore()
     const config = appStore.config
+    const jsonStore = useJsonStore()
 
-    const isRift = instance && !instance.isDungeon
+    const instance = jsonStore.rawInstances && jsonStore.rawInstances.find(i => i.id === instanceId) || null
 
     const newRun = {
       id: Date.now(), // Unique ID
       time: 10 // Temps en minutes
     }
 
-    if (isRift) {
+    if (instance && !instance.isDungeon) {
       newRun.isRift = true
       newRun.isUltimate = instance.isUltimate || false
       newRun.startingWave = 1

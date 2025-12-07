@@ -109,12 +109,16 @@ const expandedRun = useLocalStorage('wakfarm_expanded_run', [])
 
 // Expanded run keys are persisted in `expandedRun` (localStorage)
 
-// Calculer et trier les instances dynamiquement (seulement config globale)
+// Calculer et trier les instances dynamiquement (sur demande via instancesBase)
 const sortedInstances = computed(() => {
   if (!jsonStore.loaded) return []
-  
-  // Utiliser seulement les instances avec config globale (de instancesRefined)
-  return jsonStore.instancesRefined
+
+  // Compute enriched view from the base cache using the current global config.
+  // This ensures filters (appStore.config) are applied immediately without
+  // forcing a global recompute of `instancesRefined` which is kept price-only.
+  const enriched = jsonStore.computeEnrichedFromConfig(appStore.config)
+
+  return (enriched || [])
     .map(inst => ({
       ...inst,
       uniqueKey: `global_${inst.id}`

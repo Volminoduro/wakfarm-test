@@ -149,15 +149,14 @@ const t = (key) => nameStore.names?.divers?.[key] || key
 
 // Get all instances sorted by level (enriched with name and bossId for UI)
 const sortedInstances = computed(() => {
-  const instances = jsonStore._rawInstances || []
+  const instances = jsonStore.rawInstances || []
   return instances
     .map(inst => ({
       id: inst.id,
       level: inst.level,
       isDungeon: inst.isDungeon || false,
       isUltimate: inst.isUltimate || false,
-      bossId: inst.bossId || null,
-      name: nameStore.names?.instances?.[inst.id] || `Instance #${inst.id}`
+      bossId: inst.bossId || null
     }))
     .sort((a, b) => a.level - b.level)
 })

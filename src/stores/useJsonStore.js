@@ -2,42 +2,42 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useAppStore } from './useAppStore'
 import { watch } from 'vue'
-import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS, LEVEL_RANGES } from '@/constants'
+import { LEVEL_RANGES } from '@/constants'
 import { calculateFinalQuantity, filterAndSortItems, processLoots, shouldIncludeLoot } from '@/utils/instanceProcessor'
 
 
 export const useJsonStore = defineStore('data', {
   state: () => ({
-    instancesRefined: [],
     servers: [],
     loaded: false,
     pricesLastUpdate: null,
-    _rawInstances: [],
-    _rawItems: [],
+    rawInstances: [],
+    rawItems: [],
     _rawMapping: [],
     _rawLoots: [],
     _rawPrices: {},
     _bossMapping: {},
-    _hasConfigWatcher: false
+    _hasConfigWatcher: false,
+    _instancesBase: []
   }),
   getters: {
     // Expose price map as a getter for reuse across components
-    priceMap(state) {
-      if (Array.isArray(state._rawPrices)) {
+    priceMap() {
+      if (Array.isArray(this._rawPrices)) {
         const map = {}
-        state._rawPrices.forEach(p => {
+        this._rawPrices.forEach(p => {
           map[p.itemId] = p.price
         })
         return map
       }
-      return state._rawPrices && typeof state._rawPrices === 'object' ? state._rawPrices : {}
+      return this._rawPrices && typeof this._rawPrices === 'object' ? this._rawPrices : {}
     },
 
     // Expose item rarity map as a getter for reuse
-    itemRarityMap(state) {
+    itemRarityMap() {
       const map = {}
-      if (Array.isArray(state._rawItems)) {
-        state._rawItems.forEach(item => {
+      if (Array.isArray(this.rawItems)) {
+        this.rawItems.forEach(item => {
           map[item.id] = item.rarity || 0
         })
       }
@@ -45,9 +45,9 @@ export const useJsonStore = defineStore('data', {
     },
 
     // Build and cache item-to-instances mapping
-    itemToInstancesMap(state) {
-      const loots = Array.isArray(state._rawLoots) ? state._rawLoots : []
-      const mapping = Array.isArray(state._rawMapping) ? state._rawMapping : []
+    itemToInstancesMap() {
+      const loots = Array.isArray(this._rawLoots) ? this._rawLoots : []
+      const mapping = Array.isArray(this._rawMapping) ? this._rawMapping : []
 
       if (loots.length === 0 || mapping.length === 0) return {}
 
@@ -93,159 +93,84 @@ export const useJsonStore = defineStore('data', {
         ])
 
         this.servers = serversRes.data || []
-
-        // Charger les prix APRÈS avoir chargé la liste des serveurs
-        const priceRes = await this.loadPricesWithDate(server)
-
+        
         // Store raw fetched data so we can recompute when global config changes
-        this._rawInstances = instRes.data
-        this._rawItems = itemRes.data
+        this.rawInstances = instRes.data
+        this.rawItems = itemRes.data
         this._rawMapping = mappingRes.data
         this._rawLoots = lootRes.data
-        this._rawPrices = priceRes
+        await this.loadPricesWithDate(server)
         this._bossMapping = bossMappingRes.data
 
-        // Ajouter les bossId aux instances
-        this._rawInstances = this._rawInstances.map(inst => ({
+        this.rawInstances = this.rawInstances.map(inst => ({
           ...inst,
           bossId: this._bossMapping[inst.id] || null
         }))
 
-        // Process and store only instancesRefined (pass raw data)
-        this.createInstanceData(
-          this._rawInstances,
-          this._rawItems,
-          this._rawMapping,
-          this._rawLoots,
-          this._rawPrices
-        )
-        this.loaded = true
-
-        // Setup a watcher to recompute instances when relevant global config keys change
+        // Setup a watcher to reload prices when server changes.
         const appStore = useAppStore()
         if (!this._hasConfigWatcher) {
           this._hasConfigWatcher = true
-
-          // Watch server separately to reload prices immediately
+          // Watch server separately to reload prices and recompute price-dependent data
           watch(
             () => appStore.config.server,
             async (newServer, oldServer) => {
               if (newServer !== oldServer) {
-                await this.loadPrices(newServer)
+                await this.loadPricesWithDate(newServer)
               }
             }
-          )
-
-          const configSelector = () => ({
-            server: appStore.config.server,
-            isBooster: appStore.config.isBooster,
-            isModulated: appStore.config.isModulated,
-            stasis: appStore.config.stasis,
-            steles: appStore.config.steles,
-            steleIntervention: appStore.config.steleIntervention,
-            minItemProfit: appStore.config.minItemProfit,
-            minDropRatePercent: appStore.config.minDropRatePercent,
-            minInstanceTotal: appStore.config.minInstanceTotal,
-            levelRanges: appStore.config.levelRanges
-          })
-
-          let idleHandle = null
-          let timeoutHandle = null
-          const scheduleRecompute = () => {
-            try {
-              if (typeof cancelIdleCallback !== 'undefined' && idleHandle != null) cancelIdleCallback(idleHandle)
-            } catch (e) {}
-            if (timeoutHandle != null) {
-              clearTimeout(timeoutHandle)
-              timeoutHandle = null
-            }
-
-            const doRecompute = () => {
-              try {
-                this.createInstanceData(this._rawInstances, this._rawItems, this._rawMapping, this._rawLoots, this._rawPrices)
-              } catch (e) {
-                console.error('Erreur recompute instances after config change', e)
-              }
-            }
-
-            if (typeof requestIdleCallback !== 'undefined') {
-              idleHandle = requestIdleCallback(() => doRecompute(), { timeout: 250 })
-            } else {
-              timeoutHandle = setTimeout(() => doRecompute(), 80)
-            }
-          }
-
-          watch(
-            configSelector,
-            () => {
-              scheduleRecompute()
-            },
-            { deep: true }
           )
         }
+
+        // Process and store only _instancesBase (pass raw data)
+        this.initiateInstancesBase(
+          this.rawInstances,
+          this._rawMapping,
+          this._rawLoots,
+        )
+        this.loaded = true
       } catch (e) {
         console.error("Erreur chargement données", e)
       }
     },
 
-    // Helper: Process loots and build per-item breakdown has been extracted to utils
-
-    createInstanceData(instances, items, mapping, loots, prices){
-      const appStore = useAppStore()
-      
-      // Use getters for lookup maps
+    initiateInstancesBase(instances, mapping, loots){
       const itemRarityMap = this.itemRarityMap
-      const priceMap = this.priceMap
-      
-      // Filter out rifts (brèches) for rentability view
-      const dungeonsOnly = instances.filter(inst => inst.isDungeon)
-      
-      // Build lookup maps
-      const playersMap = {}
-      const mappingMap = {}
-      dungeonsOnly.forEach(inst => {
-        playersMap[inst.id] = inst.players || 3
-      })
-      mapping.forEach(m => {
-        mappingMap[m.instanceId] = m
-      })
 
-      // Gather loot entries for each instance
-      const instancesRefined = dungeonsOnly.map(inst => {
+      // Filter out rifts for base; keep metadata
+      const dungeonsOnly = instances.filter(inst => inst.isDungeon)
+
+      const mappingMap = {}
+      mapping.forEach(m => { mappingMap[m.instanceId] = m })
+
+      const instancesBase = dungeonsOnly.map(inst => {
         const instanceMapping = mappingMap[inst.id]
-        const allLoots = []
-        const players = playersMap[inst.id] || 1
-        
-        // Build instance-specific config (add isUltimate for rifts)
-        const instanceConfig = {
-          ...appStore.config,
-          isUltimate: inst.isUltimate || false
-        }
+        const baseLoots = []
 
         if (instanceMapping?.monsters) {
           instanceMapping.monsters.forEach(monster => {
             loots
               .filter(loot => loot.monsterId === monster.monsterId)
               .forEach(loot => {
-                loot.loots
+                (loot.loots || [])
                   .filter(lootEntry => {
                     const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                    return shouldIncludeLoot(lootEntry, itemRarity, instanceConfig)
+                    const minimalConfig = { isRift: inst.isRift || false, isUltimate: inst.isUltimate || false, steles: 0, steleIntervention: 0, stasis: 0, isModulated: false }
+                    return shouldIncludeLoot(lootEntry, itemRarity, minimalConfig)
                   })
                   .forEach(lootEntry => {
-                    const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                    const finalQuantity = calculateFinalQuantity(lootEntry, itemRarity, monster.number, players)
-                    
-                    allLoots.push({
+                    const baseQuantity = (lootEntry.quantity || 0) * (monster.number || 1)
+                    baseLoots.push({
                       ...lootEntry,
-                      quantity: finalQuantity,
-                      monsterNumber: monster.number,
-                      price: priceMap[lootEntry.itemId] || 0
+                      baseQuantity,
+                      monsterNumber: monster.number || 1
                     })
                   })
               })
           })
         }
+
+        const players = inst.players || (inst.isDungeon ? 3 : 4)
 
         return {
           id: inst.id,
@@ -253,59 +178,12 @@ export const useJsonStore = defineStore('data', {
           isDungeon: inst.isDungeon,
           isUltimate: inst.isUltimate || false,
           bossId: inst.bossId || null,
-          loots: allLoots
+          loots: baseLoots,
+          players
         }
       })
-
-      // Build per-item breakdown and calculate total kamas for each instance
-      const minProfit = appStore.config.minItemProfit || 0
-      const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
-
-      const enriched = instancesRefined.map(inst => {
-        const instanceConfig = {
-          ...appStore.config,
-          isUltimate: inst.isUltimate
-        }
-
-        const perItem = processLoots(inst.loots, instanceConfig, this.priceMap, this.itemRarityMap)
-        const itemsBreakdown = filterAndSortItems(perItem, minProfit, minDropRate)
-
-        const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
-
-        return {
-          id: inst.id,
-          level: inst.level,
-          isDungeon: inst.isDungeon,
-          isUltimate: inst.isUltimate,
-          bossId: inst.bossId || null,
-          loots: inst.loots,
-          items: itemsBreakdown,
-          totalKamas: Math.floor(totalKamas)
-        }
-      })
-
-      // Apply instance-level filters
-      const minInstanceTotal = appStore.config.minInstanceTotal || 0
-      const activeLevelRanges = appStore.config.levelRanges || []
-
-      if (activeLevelRanges.length === 0) {
-        this.instancesRefined = []
-        return enriched
-      }
-
-      let filteredEnriched = enriched.filter(inst => inst.totalKamas >= minInstanceTotal)
-
-      if (activeLevelRanges.length < LEVEL_RANGES.length) {
-        filteredEnriched = filteredEnriched.filter(inst => 
-          activeLevelRanges.some(rangeIndex => {
-            const range = LEVEL_RANGES[rangeIndex]
-            return range && inst.level >= range.min && inst.level <= range.max
-          })
-        )
-      }
-
-      this.instancesRefined = filteredEnriched
-      return enriched
+      console.log('Instances de base initialisées', instancesBase)
+      this._instancesBase = instancesBase
     },
 
     async loadPricesWithDate(server) {
@@ -331,57 +209,34 @@ export const useJsonStore = defineStore('data', {
           this.pricesLastUpdate = null
         }
 
+        this._rawPrices = priceRes.data
         return priceRes.data
       } catch (e) {
         console.error("Erreur chargement prix", e)
         this.pricesLastUpdate = null
-        return {}
       }
     },
 
-    async loadPrices(server) {
-      const prices = await this.loadPricesWithDate(server)
-      this._rawPrices = prices
-      this.createInstanceData(this._rawInstances, this._rawItems, this._rawMapping, this._rawLoots, this._rawPrices)
-    },
-
     calculateInstanceForRun(instanceId, runConfig) {
-      const instance = this._rawInstances.find(i => i.id === instanceId)
-      if (!instance) return null
+      // Utiliser directement l'instance de base
+      const baseInstance = this._instancesBase.find(i => i.id === instanceId)
+      if (!baseInstance) return null
 
       const appStore = useAppStore()
       const itemRarityMap = this.itemRarityMap
       const priceMap = this.priceMap
-      const players = instance.players || (instance.isDungeon ? 3 : 4)
 
-      const instanceMapping = this._rawMapping.find(m => m.instanceId === instanceId)
-      const allLoots = []
+      // Filtrer et recalculer les loots selon la config du run
+      const allLoots = (baseInstance.loots || []).filter(l => {
+        const itemRarity = itemRarityMap[l.itemId] || 0
+        return shouldIncludeLoot(l, itemRarity, runConfig)
+      }).map(l => {
+        const itemRarity = itemRarityMap[l.itemId] || 0
+        const finalQuantity = calculateFinalQuantity(l, itemRarity, l.monsterNumber, baseInstance.players)
+        return { ...l, quantity: finalQuantity, price: priceMap[l.itemId] || 0 }
+      })
 
-      if (instanceMapping?.monsters) {
-        instanceMapping.monsters.forEach(monster => {
-          this._rawLoots
-            .filter(loot => loot.monsterId === monster.monsterId)
-            .forEach(loot => {
-              loot.loots
-                .filter(lootEntry => {
-                  const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                  return shouldIncludeLoot(lootEntry, itemRarity, runConfig)
-                })
-                .forEach(lootEntry => {
-                  const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                  const finalQuantity = calculateFinalQuantity(lootEntry, itemRarity, monster.number, players)
-
-                  allLoots.push({
-                    ...lootEntry,
-                    quantity: finalQuantity,
-                    price: priceMap[lootEntry.itemId] || 0
-                  })
-                })
-            })
-        })
-      }
-
-      const perItem = processLoots(allLoots, runConfig, this.priceMap, this.itemRarityMap, runConfig)
+      const perItem = processLoots(allLoots, runConfig, priceMap, itemRarityMap, runConfig)
       const minProfit = appStore.config.minItemProfit || 0
       const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
       const itemsBreakdown = filterAndSortItems(perItem, minProfit, minDropRate)
@@ -389,12 +244,63 @@ export const useJsonStore = defineStore('data', {
       const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
 
       return {
-        id: instance.id,
-        level: instance.level,
-        bossId: instance.bossId || null,
+        id: baseInstance.id,
+        level: baseInstance.level,
+        bossId: baseInstance.bossId || null,
+        players: baseInstance.players,
         items: itemsBreakdown,
         totalKamas: Math.floor(totalKamas)
       }
+    }
+    ,
+
+    // Helper: compute enriched instances on demand from the base cache and a given config
+    computeEnrichedFromConfig(config) {
+      // config: same shape as appStore.config (isBooster, isModulated, minProfit, minDropRatePercent, etc.)
+      const minProfit = config.minItemProfit || 0
+      const minDropRate = (config.minDropRatePercent || 0) / 100
+
+      const enriched = this._instancesBase.map(inst => {
+        const allLoots = (inst.loots || []).map(l => {
+          const itemRarity = this.itemRarityMap[l.itemId] || 0
+          const finalQuantity = calculateFinalQuantity(l, itemRarity, l.monsterNumber, inst.players)
+          return { ...l, quantity: finalQuantity, price: this.priceMap[l.itemId] || 0 }
+        })
+
+        const perItem = processLoots(allLoots, config, this.priceMap, this.itemRarityMap)
+        const itemsBreakdown = filterAndSortItems(perItem, minProfit, minDropRate)
+        const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
+
+        return {
+          id: inst.id,
+          level: inst.level,
+          players: inst.players,
+          isDungeon: inst.isDungeon,
+          isUltimate: inst.isUltimate,
+          bossId: inst.bossId || null,
+          loots: allLoots,
+          items: itemsBreakdown,
+          totalKamas: Math.floor(totalKamas)
+        }
+      })
+
+      // Apply instance-level filters based on config
+      const minInstanceTotal = config.minInstanceTotal || 0
+      const activeLevelRanges = config.levelRanges || []
+
+      if (activeLevelRanges.length === 0) return []
+
+      let filteredEnriched = enriched.filter(inst => inst.totalKamas >= minInstanceTotal)
+      if (activeLevelRanges.length < LEVEL_RANGES.length) {
+        filteredEnriched = filteredEnriched.filter(inst => 
+          activeLevelRanges.some(rangeIndex => {
+            const range = LEVEL_RANGES[rangeIndex]
+            return range && inst.level >= range.min && inst.level <= range.max
+          })
+        )
+      }
+
+      return filteredEnriched
     }
   }
 })
