@@ -2,9 +2,6 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useAppStore } from './useAppStore'
 import { watch } from 'vue'
-import { LEVEL_RANGES } from '@/constants'
-import { calculateFinalQuantity, filterAndSortItems, processLoots, shouldIncludeLoot } from '@/utils/instanceProcessor'
-
 
 export const useJsonStore = defineStore('data', {
   state: () => ({
@@ -21,7 +18,6 @@ export const useJsonStore = defineStore('data', {
     _instancesBase: []
   }),
   getters: {
-    // Expose price map as a getter for reuse across components
     priceMap() {
       if (Array.isArray(this._rawPrices)) {
         const map = {}
@@ -33,7 +29,6 @@ export const useJsonStore = defineStore('data', {
       return this._rawPrices && typeof this._rawPrices === 'object' ? this._rawPrices : {}
     },
 
-    // Expose item rarity map as a getter for reuse
     itemRarityMap() {
       const map = {}
       if (Array.isArray(this.rawItems)) {
@@ -44,7 +39,6 @@ export const useJsonStore = defineStore('data', {
       return map
     },
 
-    // Build and cache item-to-instances mapping
     itemToInstancesMap() {
       const loots = Array.isArray(this._rawLoots) ? this._rawLoots : []
       const mapping = Array.isArray(this._rawMapping) ? this._rawMapping : []
@@ -123,48 +117,37 @@ export const useJsonStore = defineStore('data', {
         }
 
         // Process and store only _instancesBase (pass raw data)
-        this.initiateInstancesBase()
+        this._initiateInstancesBase()
         this.loaded = true
       } catch (e) {
         console.error("Erreur chargement données", e)
       }
     },
 
-    initiateInstancesBase(){
-      const itemRarityMap = this.itemRarityMap
+    _initiateInstancesBase(){
+      // Préparer un mapping instanceId -> mapping
+      const mappingMap = new Map(this._rawMapping.map(m => [m.instanceId, m]))
 
-      const mappingMap = {}
-      this._rawMapping.forEach(m => { mappingMap[m.instanceId] = m })
+      // Préparer un mapping monsterId -> loots
+      const lootMap = new Map()
+      this._rawLoots.forEach(loot => {
+        lootMap.set(loot.monsterId, loot.loots || [])
+      })
 
+      // Construction optimisée des instances
       const instancesBase = this.rawInstances.map(inst => {
-        const instanceMapping = mappingMap[inst.id]
-        const baseLoots = []
-
+        const instanceMapping = mappingMap.get(inst.id)
+        let baseLoots = []
         if (instanceMapping?.monsters) {
-          instanceMapping.monsters.forEach(monster => {
-            this._rawLoots
-              .filter(loot => loot.monsterId === monster.monsterId)
-              .forEach(loot => {
-                (loot.loots || [])
-                  .filter(lootEntry => {
-                    const itemRarity = itemRarityMap[lootEntry.itemId] || 0
-                    const minimalConfig = { isRift: inst.isRift || false, isUltimate: inst.isUltimate || false, steles: 0, steleIntervention: 0, stasis: 0, isModulated: false }
-                    return shouldIncludeLoot(lootEntry, itemRarity, minimalConfig)
-                  })
-                  .forEach(lootEntry => {
-                    const baseQuantity = (lootEntry.quantity || 0) * (monster.number || 1)
-                    baseLoots.push({
-                      ...lootEntry,
-                      baseQuantity,
-                      monsterNumber: monster.number || 1
-                    })
-                  })
-              })
+          baseLoots = instanceMapping.monsters.flatMap(monster => {
+            const monsterLoots = lootMap.get(monster.monsterId) || []
+            return monsterLoots.map(lootEntry => ({
+              ...lootEntry,
+              monsterQuantity: monster.number || 1
+            }))
           })
         }
-
         const players = inst.players || (inst.isDungeon ? 3 : 4)
-
         return {
           id: inst.id,
           level: inst.level,
@@ -208,92 +191,6 @@ export const useJsonStore = defineStore('data', {
         console.error("Erreur chargement prix", e)
         this.pricesLastUpdate = null
       }
-    },
-
-    calculateInstanceForRun(instanceId, runConfig) {
-      // Utiliser directement l'instance de base
-      const baseInstance = this._instancesBase.find(i => i.id === instanceId)
-      if (!baseInstance) return null
-
-      const appStore = useAppStore()
-      const itemRarityMap = this.itemRarityMap
-      const priceMap = this.priceMap
-
-      // Filtrer et recalculer les loots selon la config du run
-      const allLoots = (baseInstance.loots || []).filter(l => {
-        const itemRarity = itemRarityMap[l.itemId] || 0
-        return shouldIncludeLoot(l, itemRarity, runConfig)
-      }).map(l => {
-        const itemRarity = itemRarityMap[l.itemId] || 0
-        const finalQuantity = calculateFinalQuantity(l, itemRarity, l.monsterNumber, baseInstance.players)
-        return { ...l, quantity: finalQuantity, price: priceMap[l.itemId] || 0 }
-      })
-
-      const perItem = processLoots(allLoots, runConfig, priceMap, itemRarityMap, runConfig)
-      const minProfit = appStore.config.minItemProfit || 0
-      const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
-      const itemsBreakdown = filterAndSortItems(perItem, minProfit, minDropRate)
-
-      const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
-
-      return {
-        id: baseInstance.id,
-        level: baseInstance.level,
-        bossId: baseInstance.bossId || null,
-        players: baseInstance.players,
-        items: itemsBreakdown,
-        totalKamas: Math.floor(totalKamas)
-      }
-    }
-    ,
-
-    // Helper: compute enriched instances on demand from the base cache and a given config
-    computeEnrichedFromConfig(config) {
-      // config: same shape as appStore.config (isBooster, isModulated, minProfit, minDropRatePercent, etc.)
-      const minProfit = config.minItemProfit || 0
-      const minDropRate = (config.minDropRatePercent || 0) / 100
-
-      const enriched = this._instancesBase.map(inst => {
-        const allLoots = (inst.loots || []).map(l => {
-          const itemRarity = this.itemRarityMap[l.itemId] || 0
-          const finalQuantity = calculateFinalQuantity(l, itemRarity, l.monsterNumber, inst.players)
-          return { ...l, quantity: finalQuantity, price: this.priceMap[l.itemId] || 0 }
-        })
-
-        const perItem = processLoots(allLoots, config, this.priceMap, this.itemRarityMap)
-        const itemsBreakdown = filterAndSortItems(perItem, minProfit, minDropRate)
-        const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
-
-        return {
-          id: inst.id,
-          level: inst.level,
-          players: inst.players,
-          isDungeon: inst.isDungeon,
-          isUltimate: inst.isUltimate,
-          bossId: inst.bossId || null,
-          loots: allLoots,
-          items: itemsBreakdown,
-          totalKamas: Math.floor(totalKamas)
-        }
-      })
-
-      // Apply instance-level filters based on config
-      const minInstanceTotal = config.minInstanceTotal || 0
-      const activeLevelRanges = config.levelRanges || []
-
-      if (activeLevelRanges.length === 0) return []
-
-      let filteredEnriched = enriched.filter(inst => inst.totalKamas >= minInstanceTotal)
-      if (activeLevelRanges.length < LEVEL_RANGES.length) {
-        filteredEnriched = filteredEnriched.filter(inst => 
-          activeLevelRanges.some(rangeIndex => {
-            const range = LEVEL_RANGES[rangeIndex]
-            return range && inst.level >= range.min && inst.level <= range.max
-          })
-        )
-      }
-
-      return filteredEnriched
     }
   }
 })

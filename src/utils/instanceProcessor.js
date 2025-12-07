@@ -1,14 +1,16 @@
-import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS } from '@/constants'
+import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS, LEVEL_RANGES } from '@/constants'
+import { useJsonStore } from '../stores/useJsonStore'
+import { useAppStore } from '../stores/useAppStore'
 
 // Calculate final quantity for a loot entry
-export function calculateFinalQuantity(lootEntry, itemRarity, monsterNumber, players) {
+export function _calculateFinalQuantity(lootEntry, itemRarity, monsterNumber, players) {
   if (lootEntry.itemId === 99999) return lootEntry.quantity
   const baseQuantity = lootEntry.quantity * monsterNumber
   return itemRarity === 5 ? baseQuantity : baseQuantity * players
 }
 
 // Filter and sort items breakdown
-export function filterAndSortItems(perItem, minProfit, minDropRate) {
+export function _filterAndSortItems(perItem, minProfit, minDropRate) {
   return Array.from(perItem.values())
     .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDropRate)
     .sort((a, b) => {
@@ -19,7 +21,7 @@ export function filterAndSortItems(perItem, minProfit, minDropRate) {
 }
 
 // Compute adjusted drop rate based on config and constants
-export function computeAdjustedRate(baseRate, config) {
+export function _computeAdjustedRate(baseRate, config) {
   const boosterBonus = config.isBooster ? (BOOSTER_BONUS[config.server] || 1.25) : 1
 
   if (config.isRift) {
@@ -35,7 +37,7 @@ export function computeAdjustedRate(baseRate, config) {
 }
 
 // Check if loot should be included based on config
-export function shouldIncludeLoot(lootEntry, itemRarity, config) {
+export function _shouldIncludeLoot(lootEntry, itemRarity, config) {
   if (config.isRift) {
     if (itemRarity >= 5) {
       const requiredWaves = config.isUltimate ? 4 : 9
@@ -60,11 +62,11 @@ export function shouldIncludeLoot(lootEntry, itemRarity, config) {
 }
 
 // Process loots and build per-item breakdown
-export function processLoots(loots, config, priceMap = {}, itemRarityMap = {}, runConfig = null) {
+export function _processLoots(loots, config, priceMap = {}, itemRarityMap = {}, runConfig = null){
   // Calculate BonusPP multiplier
   const bonusPPMultiplier = loots.reduce((acc, l) => {
     if (l.itemId === 99999) {
-      const adjustedRate = computeAdjustedRate(l.rate || 0, config)
+      const adjustedRate = _computeAdjustedRate(l.rate || 0, config)
       return acc + adjustedRate * (l.quantity / 100)
     }
     return acc
@@ -78,7 +80,7 @@ export function processLoots(loots, config, priceMap = {}, itemRarityMap = {}, r
 
     const price = l.price || 0
     const qty = l.quantity || 0
-    let adjustedRate = computeAdjustedRate(l.rate || 0, config)
+    let adjustedRate = _computeAdjustedRate(l.rate || 0, config)
     adjustedRate = Math.min(adjustedRate * (1 + bonusPPMultiplier), 1.0)
     const value = Math.floor(price * adjustedRate * qty)
 
@@ -109,4 +111,100 @@ export function processLoots(loots, config, priceMap = {}, itemRarityMap = {}, r
   }
 
   return perItem
+}
+
+export function calculateInstanceForRun(instanceId, runConfig) {
+  // Utiliser directement l'instance de base
+  const jsonStore = useJsonStore()
+  const baseInstance = jsonStore._instancesBase.find(i => i.id === instanceId)
+  if (!baseInstance) return null
+
+  const appStore = useAppStore()
+  const itemRarityMap = jsonStore.itemRarityMap
+  const priceMap = jsonStore.priceMap
+
+  // Filtrer et recalculer les loots selon la config du run
+  const allLoots = (baseInstance.loots || []).filter(l => {
+    const itemRarity = itemRarityMap[l.itemId] || 0
+    return _shouldIncludeLoot(l, itemRarity, runConfig)
+  }).map(l => {
+    const itemRarity = itemRarityMap[l.itemId] || 0
+    const finalQuantity = _calculateFinalQuantity(l, itemRarity, l.monsterQuantity, baseInstance.players)
+    return { ...l, quantity: finalQuantity, price: priceMap[l.itemId] || 0 }
+  })
+
+  const perItem = _processLoots(allLoots, runConfig, priceMap, itemRarityMap, runConfig)
+  const minProfit = appStore.config.minItemProfit || 0
+  const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
+  const itemsBreakdown = _filterAndSortItems(perItem, minProfit, minDropRate)
+
+  const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
+
+  return {
+    id: baseInstance.id,
+    level: baseInstance.level,
+    bossId: baseInstance.bossId || null,
+    players: baseInstance.players,
+    items: itemsBreakdown,
+    totalKamas: Math.floor(totalKamas)
+  }
+}
+
+// Helper: compute enriched instances on demand from the base cache and a given config
+export function computeEnrichedFromConfig(config) {
+  const jsonStore = useJsonStore()
+  const priceMap = jsonStore.priceMap
+  const itemRarityMap = jsonStore.itemRarityMap
+  const minProfit = config.minItemProfit || 0
+  const minDropRate = (config.minDropRatePercent || 0) / 100
+
+  const enriched = jsonStore._instancesBase.map(inst => {
+    const allLoots = (inst.loots || []).map(l => {
+      const itemRarity = itemRarityMap[l.itemId] || 0
+      const finalQuantity = _calculateFinalQuantity(l, itemRarity, l.monsterQuantity, inst.players)
+      return { ...l, quantity: finalQuantity, price: priceMap[l.itemId] || 0 }
+    })
+
+    const perItem = _processLoots(allLoots, config, priceMap, itemRarityMap)
+    const itemsBreakdown = _filterAndSortItems(perItem, minProfit, minDropRate)
+    const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
+
+    return {
+      id: inst.id,
+      level: inst.level,
+      players: inst.players,
+      isDungeon: inst.isDungeon,
+      isUltimate: inst.isUltimate,
+      bossId: inst.bossId || null,
+      loots: allLoots,
+      items: itemsBreakdown,
+      totalKamas: Math.floor(totalKamas)
+    }
+  })
+
+  return enriched.filter(inst => instancePassesFilters(inst))
+}
+
+export function instancePassesFilters(instanceData) {
+  if (!instanceData) return false
+
+  const appStore = useAppStore()
+  const minInstanceTotal = appStore.config.minInstanceTotal || 0
+  const activeLevelRanges = appStore.config.levelRanges || []  
+
+  if (activeLevelRanges.length === 0) return false
+
+  if ((instanceData.totalKamas || 0) < minInstanceTotal) return false
+
+  if (activeLevelRanges.length < LEVEL_RANGES.length) {
+    const level = instanceData.level || 0
+    const inRange = activeLevelRanges.some(rangeIndex => {
+      const range = LEVEL_RANGES[rangeIndex]
+      if (!range) return false
+      return level >= range.min && level <= range.max
+    })
+    if (!inRange) return false
+  }
+
+  return true
 }

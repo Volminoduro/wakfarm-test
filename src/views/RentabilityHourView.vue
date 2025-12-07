@@ -125,17 +125,17 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useAppStore } from '@/stores/useAppStore'
 import { useJsonStore } from '@/stores/useJsonStore'
 import { useRunStore } from '@/stores/useRunStore'
 import { useNameStore } from '@/stores/useNameStore'
-import { instancePassesFilters } from '@/composables/useInstanceFilters'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
 import RunConfigCard from '@/components/RunConfig/RunConfigCard.vue'
 import InstanceCard from '@/components/Instance/InstanceCard.vue'
 import ToggleAllButton from '@/components/ToggleAllButton.vue'
+import { calculateInstanceForRun, instancePassesFilters } from '@/utils/instanceProcessor'
 
 const appStore = useAppStore()
 const jsonStore = useJsonStore()
@@ -231,11 +231,11 @@ const sortedHourRuns = computed(() => {
   Object.entries(runStore.runs).forEach(([instanceId, runs]) => {
     runs.forEach(run => {
       const instanceIdNum = parseInt(instanceId)
-      const instanceData = jsonStore.calculateInstanceForRun(instanceIdNum, run)
+      const instanceData = calculateInstanceForRun(instanceIdNum, run)
       
           if (instanceData && run.time > 0) {
             // Use shared filter logic
-            if (!instancePassesFilters(instanceData, appStore)) return
+            if (!instancePassesFilters(instanceData)) return
         const iterations = Math.floor(period / run.time)
         const kamasPerPeriod = Math.floor(instanceData.totalKamas * iterations)
         

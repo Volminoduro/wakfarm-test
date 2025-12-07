@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useAppStore } from '@/stores/useAppStore'
 import { useJsonStore } from '@/stores/useJsonStore'
 import { useNameStore } from '@/stores/useNameStore'
@@ -94,6 +94,7 @@ import InstanceCard from '@/components/Instance/InstanceCard.vue'
 import ToggleAllButton from '@/components/ToggleAllButton.vue'
 import { COLOR_CLASSES } from '@/constants/colors'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { computeEnrichedFromConfig } from '@/utils/instanceProcessor'
 
 
 const appStore = useAppStore()
@@ -116,7 +117,8 @@ const sortedInstances = computed(() => {
   // Compute enriched view from the base cache using the current global config.
   // This ensures filters (appStore.config) are applied immediately without
   // forcing a global recompute of `instancesRefined` which is kept price-only.
-  const enriched = jsonStore.computeEnrichedFromConfig(appStore.config)
+  const enriched = computeEnrichedFromConfig(appStore.config)
+  console.log('Enriched instances for RentabilityHourView:', enriched)
 
   return (enriched || [])
     .map(inst => ({

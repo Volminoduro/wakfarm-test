@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import LanguageSelector from '@/components/LanguageSelector.vue'
 import FloatingFilter from '@/components/FloatingFilter.vue'
 import HeaderAlerts from '@/components/HeaderAlerts.vue'

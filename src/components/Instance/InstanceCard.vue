@@ -44,6 +44,7 @@ import { COLOR_CLASSES } from '@/constants/colors'
 import InstanceBaseCard from './InstanceBaseCard.vue'
 import { useNameStore } from '@/stores/useNameStore'
 import { getInstanceName } from '../../utils/getInstanceName'
+import { calculateInstanceForRun } from '@/utils/instanceProcessor'
 
 
 const props = defineProps({
@@ -118,7 +119,7 @@ const displayInstance = computed(() => {
     return props.instance || null
   }
   // run mode: compute instance data for this run
-  const data = jsonStore.calculateInstanceForRun(props.instanceId, props.run)
+  const data = calculateInstanceForRun(props.instanceId, props.run)
   if (!data) return null
 
   const iters = iterationsPerPeriod.value || 0
