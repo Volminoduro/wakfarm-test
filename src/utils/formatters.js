@@ -44,5 +44,6 @@ export function formatQuantity(num) {
  */
 export function formatRate(rate) {
   if (rate === null || rate === undefined) return ''
+  if(rate < 1) return Number((rate * 100).toFixed(4)).toString()
   return Number((rate * 100).toFixed(2)).toString()
 }
