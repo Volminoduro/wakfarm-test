@@ -99,8 +99,8 @@
         <InstanceCard
           v-for="runData in sortedHourRuns"
           :key="runData.key"
-          :instance-id="runData.instanceId"
-          :run="runData.run"
+          :instance="runData.instance"
+          :config="runData.config"
         />
       </div>
     </div>
@@ -126,21 +126,19 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useAppStore } from '@/stores/useAppStore'
 import { useJsonStore } from '@/stores/useJsonStore'
-import { useRunStore } from '@/stores/useRunStore'
+import { useConfigRunStore } from '@/stores/useConfigRunStore'
 import { useNameStore } from '@/stores/useNameStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
 import RunConfigCard from '@/components/RunConfig/RunConfigCard.vue'
 import InstanceCard from '@/components/Instance/InstanceCard.vue'
 import ToggleAllButton from '@/components/ToggleAllButton.vue'
-import { calculateInstanceForRun, instancePassesFilters } from '@/utils/instanceProcessor'
+import { calculateInstanceForRunAndPassFilters } from '@/utils/instanceProcessor'
 
-const appStore = useAppStore()
 const jsonStore = useJsonStore()
 const nameStore = useNameStore()
-const runStore = useRunStore()
+const configRunStore = useConfigRunStore()
 
 // Sub-tab management
 const subTab = useLocalStorage('wakfarm_runs_subTab', 'time')
@@ -164,7 +162,7 @@ const sortedInstances = computed(() => {
 // Get instances that have runs
 const instancesWithRuns = computed(() => {
   return sortedInstances.value.filter(inst => {
-    const runs = runStore.getRunsForInstance(inst.id)
+    const runs = configRunStore.getRunsForInstance(inst.id)
     return runs && runs.length > 0
   })
 })
@@ -172,36 +170,36 @@ const instancesWithRuns = computed(() => {
 // Check if all instances with runs are expanded
 const allExpanded = computed(() => {
   if (instancesWithRuns.value.length === 0) return false
-  return instancesWithRuns.value.every(inst => runStore.expandedInstances.has(inst.id))
+  return instancesWithRuns.value.every(inst => configRunStore.expandedInstances.has(inst.id))
 })
 
 // Check if there are any runs
 const hasAnyRuns = computed(() => {
-  return Object.keys(runStore.runs).length > 0
+  return Object.keys(configRunStore.configs).length > 0
 })
 
 function toggleAll() {
   if (allExpanded.value) {
-    runStore.collapseAll()
+    configRunStore.collapseAll()
   } else {
-    runStore.expandAll(instancesWithRuns.value.map(i => i.id))
+    configRunStore.expandAll(instancesWithRuns.value.map(i => i.id))
   }
 }
 
 function removeAllRuns() {
   if (confirm(t('runs_confirm_remove_all') || 'Êtes-vous sûr de vouloir supprimer tous les runs ?')) {
-    runStore.removeAllRuns()
+    configRunStore.removeAllRuns()
   }
 }
 
 async function exportRuns() {
-  const result = await runStore.exportRuns()
+  const result = await configRunStore.exportRuns()
   alert(result.message)
 }
 
 async function importRuns() {
   try {
-    const result = await runStore.importRuns()
+    const result = await configRunStore.importRuns()
     alert(`Import réussi ! ${result.count} instance(s) importée(s).`)
   } catch (error) {
     alert(error.message)
@@ -228,21 +226,18 @@ const sortedHourRuns = computed(() => {
   const period = timePeriod.value || 60
   
   // Iterate through all configured runs
-  Object.entries(runStore.runs).forEach(([instanceId, runs]) => {
-    runs.forEach(run => {
-      const instanceIdNum = parseInt(instanceId)
-      const instanceData = calculateInstanceForRun(instanceIdNum, run)
+  Object.entries(configRunStore.configs).forEach(([instanceId, runs]) => {
+    runs.forEach(config => {
+      const instanceData = calculateInstanceForRunAndPassFilters(parseInt(instanceId), config)
       
-          if (instanceData && run.time > 0) {
-            // Use shared filter logic
-            if (!instancePassesFilters(instanceData)) return
-        const iterations = Math.floor(period / run.time)
+          if (instanceData && config.time > 0) {
+        const iterations = Math.floor(period / config.time)
         const kamasPerPeriod = Math.floor(instanceData.totalKamas * iterations)
         
         allRuns.push({
-          key: `${instanceId}_${run.id}`,
-          instanceId: instanceIdNum,
-          run,
+          key: `${instanceId}_${config.id}`,
+          instance:instanceData,
+          config: config,
           kamasPerPeriod,
           iterations
         })

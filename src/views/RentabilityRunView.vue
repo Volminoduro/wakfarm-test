@@ -77,7 +77,7 @@
       <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         <InstanceCard
           v-for="inst in sortedInstances"
-          :key="inst.uniqueKey"
+          :key="inst.key"
           :instance="inst"
         />
       </div>
@@ -94,7 +94,7 @@ import InstanceCard from '@/components/Instance/InstanceCard.vue'
 import ToggleAllButton from '@/components/ToggleAllButton.vue'
 import { COLOR_CLASSES } from '@/constants/colors'
 import { useLocalStorage } from '@/composables/useLocalStorage'
-import { computeEnrichedFromConfig } from '@/utils/instanceProcessor'
+import { calculateInstanceForRunAndPassFilters } from '@/utils/instanceProcessor'
 
 
 const appStore = useAppStore()
@@ -114,30 +114,29 @@ const expandedRun = useLocalStorage('wakfarm_expanded_run', [])
 const sortedInstances = computed(() => {
   if (!jsonStore.loaded) return []
 
-  // Compute enriched view from the base cache using the current global config.
-  // This ensures filters (appStore.config) are applied immediately without
-  // forcing a global recompute of `instancesRefined` which is kept price-only.
-  const enriched = computeEnrichedFromConfig(appStore.config)
-  console.log('Enriched instances for RentabilityHourView:', enriched)
+  const enriched = jsonStore.instancesBase.map(inst => {
+    const result = calculateInstanceForRunAndPassFilters(inst.id, appStore.config)
+    return result
+  }).filter(inst => inst && inst.isDungeon)
 
-  return (enriched || [])
+  return (enriched || []).filter(inst => inst.isDungeon)
     .map(inst => ({
       ...inst,
-      uniqueKey: `global_${inst.id}`
+      key: `global_${inst.id}`
     }))
     .sort((a, b) => (b.totalKamas || 0) - (a.totalKamas || 0))
 })
 
 const allRunExpanded = computed(() => {
   if (sortedInstances.value.length === 0) return false
-  return sortedInstances.value.every(inst => expandedRun.value.includes(inst.uniqueKey))
+  return sortedInstances.value.every(inst => expandedRun.value.includes(inst.key))
 })
 
 function toggleAllRun() {
   if (allRunExpanded.value) {
     expandedRun.value = []
   } else {
-    expandedRun.value = sortedInstances.value.map(inst => inst.uniqueKey)
+    expandedRun.value = sortedInstances.value.map(inst => inst.key)
   }
 }
 </script>

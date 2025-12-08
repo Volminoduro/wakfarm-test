@@ -35,7 +35,6 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useLocalStorage } from '@/composables/useLocalStorage'
-import { useJsonStore } from '@/stores/useJsonStore'
 import { useAppStore } from '@/stores/useAppStore'
 import { formatNumber, formatQuantity, formatRate } from '@/utils/formatters'
 import { formatRunConfig } from '@/utils/runHelpers'
@@ -48,46 +47,38 @@ import { calculateInstanceForRun } from '@/utils/instanceProcessor'
 
 
 const props = defineProps({
-  // Either pass a precomputed `instance` object (enriched), or pass `instanceId` + `run` to compute per-run data.
   instance: {
     type: Object,
     required: false
   },
-  instanceId: {
-    type: Number,
-    required: false
-  },
-  run: {
+  config: {
     type: Object,
     required: false
   },
-  // timePeriod is retrieved from AppStore or local storage inside the component
 })
-
-const jsonStore = useJsonStore()
 
 // Manage expanded state locally using different localStorage keys depending on mode.
 const expandedRun = useLocalStorage('wakfarm_expanded_run', [])
 const expandedHourRuns = useLocalStorage('wakfarm_expanded_hour_runs', [])
 
-const isRunMode = computed(() => !!props.run && typeof props.instanceId === 'number')
+const isConfigRunMode = computed(() => !!props.config)
 
 const storageKey = computed(() => {
-  if (isRunMode.value) {
-    return `${props.instanceId}_${props.run.id}`
+  if (isConfigRunMode.value) {
+    return `${props.instance.instanceId}_${props.config.id}`
   }
   // prefer an explicit uniqueKey if provided, otherwise derive from id
   return props.instance?.uniqueKey || `global_${props.instance?.id}`
 })
 
 const isExpanded = computed(() => {
-  const list = isRunMode.value ? expandedHourRuns.value : expandedRun.value
+  const list = isConfigRunMode.value ? expandedHourRuns.value : expandedRun.value
   return list.includes(storageKey.value)
 })
 
 function toggleExpand() {
   const key = storageKey.value
-  const listRef = isRunMode.value ? expandedHourRuns : expandedRun
+  const listRef = isConfigRunMode.value ? expandedHourRuns : expandedRun
   const idx = listRef.value.indexOf(key)
   if (idx > -1) {
     const copy = [...listRef.value]
@@ -106,39 +97,23 @@ const appStore = useAppStore()
 const localTimePeriod = useLocalStorage('wakfarm_time_period', 60)
 
 const iterationsPerPeriod = computed(() => {
-  if (!isRunMode.value) return 0
-  if (!props.run?.time || props.run.time === 0) return 0
+  if (!props.config?.time || props.config.time === 0) return 0
   // Prefer central value from appStore.config.timePeriod if present, otherwise fallback to local storage
   const period = (appStore.config && appStore.config.timePeriod) || localTimePeriod.value || 60
-  return Math.floor(period / props.run.time)
+  return Math.floor(period / props.config.time)
 })
 
 // Build a normalized `displayInstance` object used by the template regardless of mode
 const displayInstance = computed(() => {
-  if (!isRunMode.value) {
-    return props.instance || null
-  }
-  // run mode: compute instance data for this run
-  const data = calculateInstanceForRun(props.instanceId, props.run)
-  if (!data) return null
-
-  const iters = iterationsPerPeriod.value || 0
-  // clone and scale items
-  const scaledItems = (data.items || []).map(it => ({
-    ...it,
-    quantity: (it.quantity || 0) * iters,
-    subtotal: Math.floor((it.subtotal || 0) * iters)
-  }))
-
   return {
-    id: data.id,
-    level: data.level,
-    bossId: data.bossId || null,
-    items: scaledItems,
-    totalKamas: Math.floor((data.totalKamas || 0) * iters),
+    id: props.instance.id,
+    level: props.instance.level,
+    bossId: props.instance.bossId || null,
+    items: props.instance.items,
+    totalKamas: props.instance.totalKamas,
     // keep run metadata for title formatting
     isManualRun: true,
-    runConfig: props.run
+    runConfig: props.config
   }
 })
 

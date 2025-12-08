@@ -5,7 +5,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import { useNameStore } from '@/stores/useNameStore'
 import { useJsonStore } from '@/stores/useJsonStore'
-import { useRunStore } from '@/stores/useRunStore'
+import { useConfigRunStore } from '@/stores/useConfigRunStore'
 
 const pinia = createPinia()
 
@@ -17,4 +17,4 @@ app.mount('#app')
 const appStore = useAppStore(pinia)
 const jsonStore = useJsonStore(pinia)
 const nameStore = useNameStore(pinia)
-const runStore = useRunStore(pinia)
+const configRunStore = useConfigRunStore(pinia)

@@ -4,13 +4,13 @@ import { useAppStore } from './useAppStore'
 import { useJsonStore } from '@/stores/useJsonStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 
-const STORAGE_KEY = 'wakfarm_runs'
-const STORAGE_KEY_EXPANDED = 'wakfarm_runs_expanded'
+const STORAGE_KEY = 'wakfarm_configs'
+const STORAGE_KEY_EXPANDED = 'wakfarm_configs_expanded'
 
-export const useRunStore = defineStore('runs', () => {
+export const useConfigRunStore = defineStore('config', () => {
   // Structure: { instanceId: [{ id, isModulated, isBooster, stasis, steles, steleIntervention, time }] }
   // Persist runs as an object
-  const runs = useLocalStorage(STORAGE_KEY, {}, { deep: true })
+  const configs = useLocalStorage(STORAGE_KEY, {}, { deep: true })
 
   // Persist expanded instances as an array but expose a Set for compatibility
   const _expandedArray = useLocalStorage(STORAGE_KEY_EXPANDED, [], { deep: true })
@@ -78,24 +78,24 @@ export const useRunStore = defineStore('runs', () => {
       newRun.steleIntervention = config.steleIntervention
     }
 
-    if (!runs.value[instanceId]) {
-      runs.value[instanceId] = []
+    if (!configs.value[instanceId]) {
+      configs.value[instanceId] = []
     }
 
-    runs.value[instanceId].push(newRun)
+    configs.value[instanceId].push(newRun)
   }
 
   // Remove a specific run
   function removeRun(instanceId, runId) {
-    if (!runs.value[instanceId]) return
+    if (!configs.value[instanceId]) return
 
-    const index = runs.value[instanceId].findIndex(r => r.id === runId)
+    const index = configs.value[instanceId].findIndex(r => r.id === runId)
     if (index !== -1) {
-      runs.value[instanceId].splice(index, 1)
+      configs.value[instanceId].splice(index, 1)
 
       // Clean up if no runs left
-      if (runs.value[instanceId].length === 0) {
-        delete runs.value[instanceId]
+      if (configs.value[instanceId].length === 0) {
+        delete configs.value[instanceId]
         // Réduire l'instance quand on supprime le dernier run
         expandedInstances.value.delete(instanceId)
         // trigger sync watcher by reassigning a new Set
@@ -106,7 +106,7 @@ export const useRunStore = defineStore('runs', () => {
 
   // Remove all runs for an instance
   function removeAllRunsForInstance(instanceId) {
-    delete runs.value[instanceId]
+    delete configs.value[instanceId]
     // Réduire l'instance quand on supprime tous ses runs
     expandedInstances.value.delete(instanceId)
     expandedInstances.value = new Set(expandedInstances.value)
@@ -114,16 +114,16 @@ export const useRunStore = defineStore('runs', () => {
 
   // Remove all runs from all instances
   function removeAllRuns() {
-    runs.value = {}
+    configs.value = {}
     // Réduire toutes les instances
     expandedInstances.value = new Set()
   }
 
   // Update a specific run
   function updateRun(instanceId, runId, updates) {
-    if (!runs.value[instanceId]) return
+    if (!configs.value[instanceId]) return
 
-    const run = runs.value[instanceId].find(r => r.id === runId)
+    const run = configs.value[instanceId].find(r => r.id === runId)
     if (run) {
       Object.assign(run, updates)
     }
@@ -131,7 +131,7 @@ export const useRunStore = defineStore('runs', () => {
 
   // Get runs for an instance
   function getRunsForInstance(instanceId) {
-    return runs.value[instanceId] || []
+    return configs.value[instanceId] || []
   }
 
   // Toggle instance expansion
@@ -160,7 +160,7 @@ export const useRunStore = defineStore('runs', () => {
     const data = {
       version: 1,
       exportDate: new Date().toISOString(),
-      runs: runs.value
+      runs: configs.value
     }
     const json = JSON.stringify(data, null, 2)
     
@@ -179,7 +179,7 @@ export const useRunStore = defineStore('runs', () => {
       const data = JSON.parse(text)
       
       if (data.runs && typeof data.runs === 'object') {
-        runs.value = data.runs
+        configs.value = data.runs
         return { success: true, count: Object.keys(data.runs).length }
       } else {
         throw new Error('Format invalide')
@@ -190,7 +190,7 @@ export const useRunStore = defineStore('runs', () => {
   }
 
   return {
-    runs,
+    configs,
     expandedInstances,
     addRun,
     removeRun,

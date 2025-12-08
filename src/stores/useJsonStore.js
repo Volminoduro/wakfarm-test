@@ -15,7 +15,7 @@ export const useJsonStore = defineStore('data', {
     _rawPrices: {},
     _bossMapping: {},
     _hasConfigWatcher: false,
-    _instancesBase: []
+    instancesBase: []
   }),
   getters: {
     priceMap() {
@@ -158,8 +158,7 @@ export const useJsonStore = defineStore('data', {
           players
         }
       })
-      console.log('Instances de base initialisées', instancesBase)
-      this._instancesBase = instancesBase
+      this.instancesBase = instancesBase
     },
 
     async loadPricesWithDate(server) {

@@ -62,7 +62,7 @@ export function _shouldIncludeLoot(lootEntry, itemRarity, config) {
 }
 
 // Process loots and build per-item breakdown
-export function _processLoots(loots, config, priceMap = {}, itemRarityMap = {}, runConfig = null){
+export function _processLoots(loots, config, itemRarityMap = {}, runConfig = null){
   // Calculate BonusPP multiplier
   const bonusPPMultiplier = loots.reduce((acc, l) => {
     if (l.itemId === 99999) {
@@ -116,7 +116,7 @@ export function _processLoots(loots, config, priceMap = {}, itemRarityMap = {}, 
 export function calculateInstanceForRun(instanceId, runConfig) {
   // Utiliser directement l'instance de base
   const jsonStore = useJsonStore()
-  const baseInstance = jsonStore._instancesBase.find(i => i.id === instanceId)
+  const baseInstance = jsonStore.instancesBase.find(i => i.id === instanceId)
   if (!baseInstance) return null
 
   const appStore = useAppStore()
@@ -133,11 +133,10 @@ export function calculateInstanceForRun(instanceId, runConfig) {
     return { ...l, quantity: finalQuantity, price: priceMap[l.itemId] || 0 }
   })
 
-  const perItem = _processLoots(allLoots, runConfig, priceMap, itemRarityMap, runConfig)
+  const perItem = _processLoots(allLoots, runConfig, itemRarityMap, runConfig)
   const minProfit = appStore.config.minItemProfit || 0
   const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
   const itemsBreakdown = _filterAndSortItems(perItem, minProfit, minDropRate)
-
   const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
 
   return {
@@ -145,44 +144,18 @@ export function calculateInstanceForRun(instanceId, runConfig) {
     level: baseInstance.level,
     bossId: baseInstance.bossId || null,
     players: baseInstance.players,
+    isDungeon: baseInstance.isDungeon,
+    isUltimate: baseInstance.isUltimate,
     items: itemsBreakdown,
     totalKamas: Math.floor(totalKamas)
   }
 }
 
-// Helper: compute enriched instances on demand from the base cache and a given config
-export function computeEnrichedFromConfig(config) {
-  const jsonStore = useJsonStore()
-  const priceMap = jsonStore.priceMap
-  const itemRarityMap = jsonStore.itemRarityMap
-  const minProfit = config.minItemProfit || 0
-  const minDropRate = (config.minDropRatePercent || 0) / 100
-
-  const enriched = jsonStore._instancesBase.map(inst => {
-    const allLoots = (inst.loots || []).map(l => {
-      const itemRarity = itemRarityMap[l.itemId] || 0
-      const finalQuantity = _calculateFinalQuantity(l, itemRarity, l.monsterQuantity, inst.players)
-      return { ...l, quantity: finalQuantity, price: priceMap[l.itemId] || 0 }
-    })
-
-    const perItem = _processLoots(allLoots, config, priceMap, itemRarityMap)
-    const itemsBreakdown = _filterAndSortItems(perItem, minProfit, minDropRate)
-    const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
-
-    return {
-      id: inst.id,
-      level: inst.level,
-      players: inst.players,
-      isDungeon: inst.isDungeon,
-      isUltimate: inst.isUltimate,
-      bossId: inst.bossId || null,
-      loots: allLoots,
-      items: itemsBreakdown,
-      totalKamas: Math.floor(totalKamas)
-    }
-  })
-
-  return enriched.filter(inst => instancePassesFilters(inst))
+export function calculateInstanceForRunAndPassFilters(instanceId, runConfig) {
+  const enrichedInstance = calculateInstanceForRun(instanceId, runConfig)
+  if (!enrichedInstance) return null
+  if (!instancePassesFilters(enrichedInstance)) return null
+  return enrichedInstance
 }
 
 export function instancePassesFilters(instanceData) {
