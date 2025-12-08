@@ -94,7 +94,7 @@ import InstanceCard from '@/components/Instance/InstanceCard.vue'
 import ToggleAllButton from '@/components/ToggleAllButton.vue'
 import { COLOR_CLASSES } from '@/constants/colors'
 import { useLocalStorage } from '@/composables/useLocalStorage'
-import { calculateInstanceForRunAndPassFilters } from '@/utils/instanceProcessor'
+import { calculateInstanceForRunWithPricesAndPassFilters } from '@/utils/instanceProcessor'
 
 
 const appStore = useAppStore()
@@ -115,7 +115,7 @@ const sortedInstances = computed(() => {
   if (!jsonStore.loaded) return []
 
   const enriched = jsonStore.instancesBase.map(inst => {
-    const result = calculateInstanceForRunAndPassFilters(inst.id, appStore.config)
+    const result = calculateInstanceForRunWithPricesAndPassFilters(inst.id, appStore.config, jsonStore.priceMap)
     return result
   }).filter(inst => inst && inst.isDungeon)
 

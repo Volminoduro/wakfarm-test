@@ -5,18 +5,23 @@ import { formatConfigRun, getNbCyclesForConfig } from './runHelpers'
 
 
 // module-level cache
-const instanceCache = new Map()
+const calculatedInstanceCache = new Map()
+const calculatedInstanceWithPriceCache = new Map()
 
 // Calculate final quantity for a loot entry
-export function _calculateHopedQuantity(lootEntry, itemRarity, players, totalIterations) {
+export function _calculateHopedQuantity(loot, itemRarity, players, totalIterations) {
 
-  if (lootEntry.itemId === 99999) return lootEntry.quantity
-  const baseQuantity = lootEntry.quantity * totalIterations
-  return itemRarity === 5 ? baseQuantity * lootEntry.monsterQuantity * totalIterations * lootEntry.rate : baseQuantity * ((players * lootEntry.monsterQuantity) * totalIterations) * lootEntry.rate
+  if (loot.itemId === 99999) return loot.quantity
+  const baseQuantity = loot.quantity * totalIterations
+  return itemRarity === 5 ? baseQuantity * loot.monsterQuantity * totalIterations * loot.rate : baseQuantity * ((players * loot.monsterQuantity) * totalIterations) * loot.rate
 }
 
 // Filter and sort items breakdown
-export function _filterAndSortItems(perItem, minProfit, minDropRate) {
+export function _filterAndSortItems(perItem) {
+  const appStore = useAppStore()
+  const minProfit = appStore.config.minItemProfit || 0
+  const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
+
   return Array.from(perItem.values())
     .filter(it => it.subtotal >= minProfit && (it.rate || 0) >= minDropRate)
     .sort((a, b) => {
@@ -119,16 +124,16 @@ export function _processLoots(loots, config, itemRarityMap = {}, nbPlayers = 1, 
 }
 
 export function _calculateInstanceForRun(instanceId, runConfig) {
-  const key = _makeCacheKey(instanceId, runConfig)
-  if (instanceCache.has(key)) {
-    return instanceCache.get(key)
+  const key = _makeCalculatedInstanceCacheKey(instanceId, runConfig)
+  if (calculatedInstanceCache.has(key)) {
+    console.info('Using cached instance for key', key)
+    return calculatedInstanceCache.get(key)
   }
 
   const jsonStore = useJsonStore()
   const baseInstance = jsonStore.instancesBase.find(i => i.id === instanceId)
   if (!baseInstance) return null
 
-  const appStore = useAppStore()
   const itemRarityMap = jsonStore.itemRarityMap
   const priceMap = jsonStore.priceMap
 
@@ -142,10 +147,7 @@ export function _calculateInstanceForRun(instanceId, runConfig) {
 
   const perItem = _processLoots(allLoots, runConfig, itemRarityMap, baseInstance.players, getNbCyclesForConfig(runConfig))
 
-  const minProfit = appStore.config.minItemProfit || 0
-  const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
-  const itemsBreakdown = _filterAndSortItems(perItem, minProfit, minDropRate)
-  const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
+  const itemsArray = Array.from(perItem.values())
 
   const result = {
     id: baseInstance.id,
@@ -154,20 +156,45 @@ export function _calculateInstanceForRun(instanceId, runConfig) {
     players: baseInstance.players,
     isDungeon: baseInstance.isDungeon,
     isUltimate: baseInstance.isUltimate,
-    items: itemsBreakdown,
-    totalKamas: Math.floor(totalKamas)
+    items: itemsArray
   }
 
-  instanceCache.set(_makeCacheKey(instanceId, runConfig), result)
-
+  calculatedInstanceCache.set(key, result)
   return result
 }
 
-export function calculateInstanceForRunAndPassFilters(instanceId, runConfig) {
-  const enrichedInstance = _calculateInstanceForRun(instanceId, runConfig)
-  if (!enrichedInstance) return null
-  if (!_instancePassesFilters(enrichedInstance)) return null
-  return enrichedInstance
+export function calculateInstanceForRunWithPricesAndPassFilters(instanceId, runConfig, priceMap) {
+  const appStore = useAppStore()
+  const calculatedInstance = _calculateInstanceForRun(instanceId, runConfig)
+  if (!calculatedInstance) return null
+  const key = _makeCalculatedInstanceWithPricesCacheKey(instanceId, runConfig)
+  
+  let result = null
+
+  if (calculatedInstanceWithPriceCache.has(key)) {
+    console.info('Using cached instance with prices for key', key)
+    result = calculatedInstanceWithPriceCache.get(key)
+  } else {
+    const itemsWithPrices = (calculatedInstance.items || []).map(it => {
+      const price = (priceMap && priceMap[it.itemId]) || 0
+      const quantity = it.quantity || 0
+      const rate = it.rate || 0
+      const subtotal = Math.floor(price * rate * quantity)
+
+      return { ...it, price, subtotal }
+    })
+
+    result = { ...calculatedInstance, items: itemsWithPrices }
+    calculatedInstanceWithPriceCache.set(key, result)
+  }
+
+  const itemsBreakdown = _filterAndSortItems(result.items)
+  const totalKamas = itemsBreakdown.reduce((sum, it) => sum + (it.subtotal || 0), 0)
+
+  result = { ...result, items: itemsBreakdown, totalKamas: Math.floor(totalKamas) }
+
+  if (!_instancePassesFilters(result)) return null
+  return result
 }
 
 export function _instancePassesFilters(instanceData) {
@@ -193,7 +220,7 @@ export function _instancePassesFilters(instanceData) {
   return true
 }
 
-function _makeCacheKey(instanceId, config) {
+function _makeCalculatedInstanceCacheKey(instanceId, config) {
   const relevant = {
     formatConfigRun: formatConfigRun(config),
     nbCycles: getNbCyclesForConfig(config)
@@ -201,13 +228,26 @@ function _makeCacheKey(instanceId, config) {
   return `${instanceId}|${JSON.stringify(relevant)}`
 }
 
-// invalidation helpers
-export function clearInstanceCache() {
-  instanceCache.clear()
+function _makeCalculatedInstanceWithPricesCacheKey(instanceId, config) {
+  const jsonStore = useJsonStore()
+  const relevant = {
+    formatConfigRun: formatConfigRun(config),
+    nbCycles: getNbCyclesForConfig(config),
+    // include price version so cache invalidates when prices change
+    priceVersion: jsonStore.pricesLastUpdate || 'none'
+  }
+
+  return `${instanceId}|${JSON.stringify(relevant)}|${useAppStore().config.server || 'default'}`
 }
 
-export function clearInstanceCacheForInstance(instanceId) {
-  for (const k of instanceCache.keys()) {
-    if (k.startsWith(`${instanceId}|`)) instanceCache.delete(k)
+
+export function clearCalculatedInstanceCacheWithPricesForInstance(instanceId) {
+  for (const k of calculatedInstanceWithPriceCache.keys()) {
+    if (k.startsWith(`${instanceId}|`)) calculatedInstanceWithPriceCache.delete(k)
   }
+}
+
+// invalidation helpers
+export function clearCalculatedInstanceWithPricesCache() {
+  calculatedInstanceWithPriceCache.clear()
 }

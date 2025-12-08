@@ -134,7 +134,7 @@ import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constant
 import RunConfigCard from '@/components/RunConfig/RunConfigCard.vue'
 import InstanceCard from '@/components/Instance/InstanceCard.vue'
 import ToggleAllButton from '@/components/ToggleAllButton.vue'
-import { calculateInstanceForRunAndPassFilters } from '@/utils/instanceProcessor'
+import { calculateInstanceForRunWithPricesAndPassFilters } from '@/utils/instanceProcessor'
 
 const jsonStore = useJsonStore()
 const nameStore = useNameStore()
@@ -227,7 +227,7 @@ const sortedHourRuns = computed(() => {
   // Iterate through all configured runs
   Object.entries(configRunStore.configs).forEach(([instanceId, runs]) => {
     runs.forEach(config => {
-      const instanceData = calculateInstanceForRunAndPassFilters(parseInt(instanceId), config)
+      const instanceData = calculateInstanceForRunWithPricesAndPassFilters(parseInt(instanceId), config, jsonStore.priceMap)
       
           if (instanceData && config.time > 0) {
         allRuns.push({
