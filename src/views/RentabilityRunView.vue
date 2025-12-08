@@ -119,7 +119,7 @@ const sortedInstances = computed(() => {
     return result
   }).filter(inst => inst && inst.isDungeon)
 
-  return (enriched || []).filter(inst => inst.isDungeon)
+  return (enriched || [])
     .map(inst => ({
       ...inst,
       key: `global_${inst.id}`

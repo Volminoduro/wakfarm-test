@@ -1,7 +1,11 @@
 import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS, LEVEL_RANGES } from '@/constants'
 import { useJsonStore } from '../stores/useJsonStore'
 import { useAppStore } from '../stores/useAppStore'
-import { useLocalStorage } from '@/composables/useLocalStorage'
+import { formatConfigRun, getNbCyclesForConfig } from './runHelpers'
+
+
+// module-level cache
+const instanceCache = new Map()
 
 // Calculate final quantity for a loot entry
 export function _calculateHopedQuantity(lootEntry, itemRarity, players, totalIterations) {
@@ -64,8 +68,8 @@ export function _isLootLegit(lootEntry, itemRarity, config) {
 }
 
 // Process loots and build per-item breakdown
-export function _processLoots(loots, config, itemRarityMap = {}, runConfig = null, nbPlayers = 1) {
-  // Calculate BonusPP multiplier
+export function _processLoots(loots, config, itemRarityMap = {}, nbPlayers = 1, nbCycles = 1) {
+
   const bonusPPMultiplier = loots.reduce((acc, loot) => {
     if (loot.itemId === 99999) {
       const adjustedRate = _computeAdjustedRate(loot.rate || 0, config)
@@ -85,18 +89,7 @@ export function _processLoots(loots, config, itemRarityMap = {}, runConfig = nul
     adjustedRate = Math.min(adjustedRate * (1 + bonusPPMultiplier), 1.0)
     loot.rate = adjustedRate
 
-  // TODO : Mettre à jour l'espérance (DropRate * tentatives, max 100%)
-  // TODO : Mettre à jour la quantité selon (DropRate * (players x quantity monstre x (iterations selon temps))
-
-    let nbCycles = runConfig?.time ? Math.floor(useLocalStorage('wakfarm_time_period', 60).value / runConfig.time) : 1
-    if (runConfig?.isRift) {
-      const wavesCompleted = runConfig.wavesCompleted || 1
-      nbCycles *= wavesCompleted
-    }
     const finalQuantity = _calculateHopedQuantity(loot, itemRarity, nbPlayers, nbCycles)
-    console.log('finalQuantity', finalQuantity, 'nbCycles', nbCycles, 'nbPlayers', nbPlayers, 'loot.monsterQuantity', loot.monsterQuantity)
-
-    console.log('Loot processing', loot, 'Adjusted Rate:', adjustedRate, 'Final Quantity:', finalQuantity)
 
     const price = loot.price || 0
     
@@ -116,18 +109,21 @@ export function _processLoots(loots, config, itemRarityMap = {}, runConfig = nul
     }
 
     const item = perItem.get(itemId)
-    // TODO : Il suffit d'additionner les espérances entre elles
+
     item.rate = Math.min(item.rate + adjustedRate, 1.0)
     item.quantity += finalQuantity
     item.subtotal += value
   })
 
-
-
   return perItem
 }
 
 export function _calculateInstanceForRun(instanceId, runConfig) {
+  const key = _makeCacheKey(instanceId, runConfig)
+  if (instanceCache.has(key)) {
+    return instanceCache.get(key)
+  }
+
   const jsonStore = useJsonStore()
   const baseInstance = jsonStore.instancesBase.find(i => i.id === instanceId)
   if (!baseInstance) return null
@@ -144,14 +140,14 @@ export function _calculateInstanceForRun(instanceId, runConfig) {
     return { ...l, price: priceMap[l.itemId] || 0 }
   })
 
-  const perItem = _processLoots(allLoots, runConfig, itemRarityMap, runConfig, baseInstance.players)
+  const perItem = _processLoots(allLoots, runConfig, itemRarityMap, baseInstance.players, getNbCyclesForConfig(runConfig))
 
   const minProfit = appStore.config.minItemProfit || 0
   const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
   const itemsBreakdown = _filterAndSortItems(perItem, minProfit, minDropRate)
   const totalKamas = itemsBreakdown.reduce((sum, it) => sum + it.subtotal, 0)
 
-  return {
+  const result = {
     id: baseInstance.id,
     level: baseInstance.level,
     bossId: baseInstance.bossId || null,
@@ -161,6 +157,10 @@ export function _calculateInstanceForRun(instanceId, runConfig) {
     items: itemsBreakdown,
     totalKamas: Math.floor(totalKamas)
   }
+
+  instanceCache.set(_makeCacheKey(instanceId, runConfig), result)
+
+  return result
 }
 
 export function calculateInstanceForRunAndPassFilters(instanceId, runConfig) {
@@ -191,4 +191,23 @@ export function _instancePassesFilters(instanceData) {
   }
 
   return true
+}
+
+function _makeCacheKey(instanceId, config) {
+  const relevant = {
+    formatConfigRun: formatConfigRun(config),
+    nbCycles: getNbCyclesForConfig(config)
+  }
+  return `${instanceId}|${JSON.stringify(relevant)}`
+}
+
+// invalidation helpers
+export function clearInstanceCache() {
+  instanceCache.clear()
+}
+
+export function clearInstanceCacheForInstance(instanceId) {
+  for (const k of instanceCache.keys()) {
+    if (k.startsWith(`${instanceId}|`)) instanceCache.delete(k)
+  }
 }

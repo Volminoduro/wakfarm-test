@@ -37,7 +37,7 @@ import { computed, ref } from 'vue'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 import { useAppStore } from '@/stores/useAppStore'
 import { formatNumber, formatQuantity, formatRate } from '@/utils/formatters'
-import { formatRunConfig } from '@/utils/runHelpers'
+import { formatConfigRun } from '@/utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '@/utils/itemHelpers'
 import { COLOR_CLASSES } from '@/constants/colors'
 import InstanceBaseCard from './InstanceBaseCard.vue'
@@ -141,7 +141,7 @@ const instanceTitle = computed(() => {
 
   // If there is a runConfig (manual or run-mode), include config/time and iterations
   if (props.config) {
-    const configStr = formatRunConfig(props.config)
+    const configStr = formatConfigRun(props.config)
     const timeStr = props.config.time ? `${props.config.time}min` : '?'
     const iters = iterationsPerPeriod.value || 0
     return `${baseName} (${levelText} ${level}) • ${configStr} • ${timeStr} • ${iters}×`
