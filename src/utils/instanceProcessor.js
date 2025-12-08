@@ -1,12 +1,14 @@
 import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED, BOOSTER_BONUS, LEVEL_RANGES } from '@/constants'
 import { useJsonStore } from '../stores/useJsonStore'
 import { useAppStore } from '../stores/useAppStore'
+import { useLocalStorage } from '@/composables/useLocalStorage'
 
 // Calculate final quantity for a loot entry
-export function _calculateFinalQuantity(lootEntry, itemRarity, monsterNumber, players) {
+export function _calculateHopedQuantity(lootEntry, itemRarity, players, totalIterations) {
+
   if (lootEntry.itemId === 99999) return lootEntry.quantity
-  const baseQuantity = lootEntry.quantity * monsterNumber
-  return itemRarity === 5 ? baseQuantity : baseQuantity * players
+  const baseQuantity = lootEntry.quantity * totalIterations
+  return itemRarity === 5 ? baseQuantity * lootEntry.monsterQuantity * totalIterations * lootEntry.rate : baseQuantity * ((players * lootEntry.monsterQuantity) * totalIterations) * lootEntry.rate
 }
 
 // Filter and sort items breakdown
@@ -37,7 +39,7 @@ export function _computeAdjustedRate(baseRate, config) {
 }
 
 // Check if loot should be included based on config
-export function _shouldIncludeLoot(lootEntry, itemRarity, config) {
+export function _isLootLegit(lootEntry, itemRarity, config) {
   if (config.isRift) {
     if (itemRarity >= 5) {
       const requiredWaves = config.isUltimate ? 4 : 9
@@ -62,27 +64,43 @@ export function _shouldIncludeLoot(lootEntry, itemRarity, config) {
 }
 
 // Process loots and build per-item breakdown
-export function _processLoots(loots, config, itemRarityMap = {}, runConfig = null){
+export function _processLoots(loots, config, itemRarityMap = {}, runConfig = null, nbPlayers = 1) {
   // Calculate BonusPP multiplier
-  const bonusPPMultiplier = loots.reduce((acc, l) => {
-    if (l.itemId === 99999) {
-      const adjustedRate = _computeAdjustedRate(l.rate || 0, config)
-      return acc + adjustedRate * (l.quantity / 100)
+  const bonusPPMultiplier = loots.reduce((acc, loot) => {
+    if (loot.itemId === 99999) {
+      const adjustedRate = _computeAdjustedRate(loot.rate || 0, config)
+      return acc + adjustedRate * (loot.quantity / 100)
     }
     return acc
   }, 0)
 
   const perItem = new Map()
-
-  loots.forEach(l => {
-    const itemId = l.itemId
+  loots.forEach(loot => {
+    const itemId = loot.itemId
     if (itemId === 99999) return
 
-    const price = l.price || 0
-    const qty = l.quantity || 0
-    let adjustedRate = _computeAdjustedRate(l.rate || 0, config)
+    const itemRarity = itemRarityMap[loot.itemId] || 0
+
+    let adjustedRate = _computeAdjustedRate(loot.rate || 0, config)
     adjustedRate = Math.min(adjustedRate * (1 + bonusPPMultiplier), 1.0)
-    const value = Math.floor(price * adjustedRate * qty)
+    loot.rate = adjustedRate
+
+  // TODO : Mettre à jour l'espérance (DropRate * tentatives, max 100%)
+  // TODO : Mettre à jour la quantité selon (DropRate * (players x quantity monstre x (iterations selon temps))
+
+    let nbCycles = runConfig?.time ? Math.floor(useLocalStorage('wakfarm_time_period', 60).value / runConfig.time) : 1
+    if (runConfig?.isRift) {
+      const wavesCompleted = runConfig.wavesCompleted || 1
+      nbCycles *= wavesCompleted
+    }
+    const finalQuantity = _calculateHopedQuantity(loot, itemRarity, nbPlayers, nbCycles)
+    console.log('finalQuantity', finalQuantity, 'nbCycles', nbCycles, 'nbPlayers', nbPlayers, 'loot.monsterQuantity', loot.monsterQuantity)
+
+    console.log('Loot processing', loot, 'Adjusted Rate:', adjustedRate, 'Final Quantity:', finalQuantity)
+
+    const price = loot.price || 0
+    
+    const value = Math.floor(price * adjustedRate * finalQuantity)
 
     if (!perItem.has(itemId)) {
       perItem.set(itemId, {
@@ -91,30 +109,25 @@ export function _processLoots(loots, config, itemRarityMap = {}, runConfig = nul
         price,
         quantity: 0,
         subtotal: 0,
-        stele: l.stele || 0,
-        steleIntervention: l.steleIntervention || 0,
-        rarity: itemRarityMap[itemId] || 0
+        stele: loot.stele || 0,
+        steleIntervention: loot.steleIntervention || 0,
+        rarity: itemRarity || 0
       })
     }
 
     const item = perItem.get(itemId)
-    item.quantity += qty
+    // TODO : Il suffit d'additionner les espérances entre elles
+    item.rate = Math.min(item.rate + adjustedRate, 1.0)
+    item.quantity += finalQuantity
     item.subtotal += value
   })
 
-  if (runConfig?.isRift) {
-    const wavesCompleted = runConfig.wavesCompleted || 1
-    perItem.forEach(item => {
-      item.quantity *= wavesCompleted
-      item.subtotal *= wavesCompleted
-    })
-  }
+
 
   return perItem
 }
 
-export function calculateInstanceForRun(instanceId, runConfig) {
-  // Utiliser directement l'instance de base
+export function _calculateInstanceForRun(instanceId, runConfig) {
   const jsonStore = useJsonStore()
   const baseInstance = jsonStore.instancesBase.find(i => i.id === instanceId)
   if (!baseInstance) return null
@@ -126,14 +139,13 @@ export function calculateInstanceForRun(instanceId, runConfig) {
   // Filtrer et recalculer les loots selon la config du run
   const allLoots = (baseInstance.loots || []).filter(l => {
     const itemRarity = itemRarityMap[l.itemId] || 0
-    return _shouldIncludeLoot(l, itemRarity, runConfig)
+    return _isLootLegit(l, itemRarity, runConfig)
   }).map(l => {
-    const itemRarity = itemRarityMap[l.itemId] || 0
-    const finalQuantity = _calculateFinalQuantity(l, itemRarity, l.monsterQuantity, baseInstance.players)
-    return { ...l, quantity: finalQuantity, price: priceMap[l.itemId] || 0 }
+    return { ...l, price: priceMap[l.itemId] || 0 }
   })
 
-  const perItem = _processLoots(allLoots, runConfig, itemRarityMap, runConfig)
+  const perItem = _processLoots(allLoots, runConfig, itemRarityMap, runConfig, baseInstance.players)
+
   const minProfit = appStore.config.minItemProfit || 0
   const minDropRate = (appStore.config.minDropRatePercent || 0) / 100
   const itemsBreakdown = _filterAndSortItems(perItem, minProfit, minDropRate)
@@ -152,13 +164,13 @@ export function calculateInstanceForRun(instanceId, runConfig) {
 }
 
 export function calculateInstanceForRunAndPassFilters(instanceId, runConfig) {
-  const enrichedInstance = calculateInstanceForRun(instanceId, runConfig)
+  const enrichedInstance = _calculateInstanceForRun(instanceId, runConfig)
   if (!enrichedInstance) return null
-  if (!instancePassesFilters(enrichedInstance)) return null
+  if (!_instancePassesFilters(enrichedInstance)) return null
   return enrichedInstance
 }
 
-export function instancePassesFilters(instanceData) {
+export function _instancePassesFilters(instanceData) {
   if (!instanceData) return false
 
   const appStore = useAppStore()
@@ -166,7 +178,6 @@ export function instancePassesFilters(instanceData) {
   const activeLevelRanges = appStore.config.levelRanges || []  
 
   if (activeLevelRanges.length === 0) return false
-
   if ((instanceData.totalKamas || 0) < minInstanceTotal) return false
 
   if (activeLevelRanges.length < LEVEL_RANGES.length) {

@@ -223,7 +223,6 @@ const sortedHourRuns = computed(() => {
   if (!jsonStore.loaded) return []
   
   const allRuns = []
-  const period = timePeriod.value || 60
   
   // Iterate through all configured runs
   Object.entries(configRunStore.configs).forEach(([instanceId, runs]) => {
@@ -231,22 +230,17 @@ const sortedHourRuns = computed(() => {
       const instanceData = calculateInstanceForRunAndPassFilters(parseInt(instanceId), config)
       
           if (instanceData && config.time > 0) {
-        const iterations = Math.floor(period / config.time)
-        const kamasPerPeriod = Math.floor(instanceData.totalKamas * iterations)
-        
         allRuns.push({
           key: `${instanceId}_${config.id}`,
           instance:instanceData,
-          config: config,
-          kamasPerPeriod,
-          iterations
+          config: config
         })
       }
     })
   })
   
   // Sort by kamas/period descending
-  return allRuns.sort((a, b) => b.kamasPerPeriod - a.kamasPerPeriod)
+  return allRuns.sort((a, b) => b.instance.totalKamas - a.instance.totalKamas)
 })
 
 const allHourRunsExpanded = computed(() => {

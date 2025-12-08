@@ -43,7 +43,6 @@ import { COLOR_CLASSES } from '@/constants/colors'
 import InstanceBaseCard from './InstanceBaseCard.vue'
 import { useNameStore } from '@/stores/useNameStore'
 import { getInstanceName } from '../../utils/getInstanceName'
-import { calculateInstanceForRun } from '@/utils/instanceProcessor'
 
 
 const props = defineProps({
@@ -65,7 +64,7 @@ const isConfigRunMode = computed(() => !!props.config)
 
 const storageKey = computed(() => {
   if (isConfigRunMode.value) {
-    return `${props.instance.instanceId}_${props.config.id}`
+    return `${props.instance.id}_${props.config.id}`
   }
   // prefer an explicit uniqueKey if provided, otherwise derive from id
   return props.instance?.uniqueKey || `global_${props.instance?.id}`
@@ -134,16 +133,16 @@ const toggleShowAll = () => {
 }
 
 const instanceTitle = computed(() => {
-  const inst = displayInstance.value
-  if (!inst) return ''
-  const baseName = getInstanceName(inst.id) || ('Instance ' + inst.id)
-  const level = inst.level
+  const displayInst = displayInstance.value
+  if (!displayInst) return ''
+  const baseName = getInstanceName(displayInst.id) || ('Instance ' + displayInst.id)
+  const level = displayInst.level
   const levelText = nameStore.names.divers?.['niveau_reduit'] || 'Niv.'
 
   // If there is a runConfig (manual or run-mode), include config/time and iterations
-  if (inst.runConfig) {
-    const configStr = formatRunConfig(inst.runConfig)
-    const timeStr = inst.runConfig.time ? `${inst.runConfig.time}min` : '?'
+  if (props.config) {
+    const configStr = formatRunConfig(props.config)
+    const timeStr = props.config.time ? `${props.config.time}min` : '?'
     const iters = iterationsPerPeriod.value || 0
     return `${baseName} (${levelText} ${level}) • ${configStr} • ${timeStr} • ${iters}×`
   }
