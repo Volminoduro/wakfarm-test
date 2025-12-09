@@ -70,6 +70,29 @@ export function _isLootLegit(lootEntry, itemRarity, config) {
   return true
 }
 
+export function _instancePassesFilters(instanceData) {
+  if (!instanceData) return false
+
+  const appStore = useAppStore()
+  const minInstanceTotal = appStore.config.minInstanceTotal || 0
+  const activeLevelRanges = appStore.config.levelRanges || []  
+
+  if (activeLevelRanges.length === 0) return false
+  if ((instanceData.totalKamas || 0) < minInstanceTotal) return false
+
+  if (activeLevelRanges.length < LEVEL_RANGES.length) {
+    const level = instanceData.level || 0
+    const inRange = activeLevelRanges.some(rangeIndex => {
+      const range = LEVEL_RANGES[rangeIndex]
+      if (!range) return false
+      return level >= range.min && level <= range.max
+    })
+    if (!inRange) return false
+  }
+
+  return true
+}
+
 // Process loots and build per-item breakdown
 export function _processLoots(loots, config, itemRarityMap = {}, nbPlayers = 1, nbCycles = 1) {
 
@@ -184,29 +207,6 @@ export function calculateInstanceForRunWithPricesAndPassFilters(instanceId, runC
 
   if (!_instancePassesFilters(result)) return null
   return result
-}
-
-export function _instancePassesFilters(instanceData) {
-  if (!instanceData) return false
-
-  const appStore = useAppStore()
-  const minInstanceTotal = appStore.config.minInstanceTotal || 0
-  const activeLevelRanges = appStore.config.levelRanges || []  
-
-  if (activeLevelRanges.length === 0) return false
-  if ((instanceData.totalKamas || 0) < minInstanceTotal) return false
-
-  if (activeLevelRanges.length < LEVEL_RANGES.length) {
-    const level = instanceData.level || 0
-    const inRange = activeLevelRanges.some(rangeIndex => {
-      const range = LEVEL_RANGES[rangeIndex]
-      if (!range) return false
-      return level >= range.min && level <= range.max
-    })
-    if (!inRange) return false
-  }
-
-  return true
 }
 
 function _makeCalculatedInstanceCacheKey(instanceId, config) {

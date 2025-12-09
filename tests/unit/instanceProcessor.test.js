@@ -203,6 +203,46 @@ describe('_isLootLegit helpers', () => {
   })
 })
 
+describe('_instancePassesFilters helpers', () => {
+  it('returns false for null/undefined instance', async () => {
+    mockedUseAppStore.mockReturnValue({ config: { minInstanceTotal: 0, levelRanges: [0] } })
+    const { _instancePassesFilters } = await import('@/utils/instanceProcessor')
+    expect(_instancePassesFilters(null)).toBe(false)
+    expect(_instancePassesFilters(undefined)).toBe(false)
+  })
+
+  it('fails when level not in active ranges', async () => {
+    // choose active range index 1 (21-35) and level 10 which is outside
+    mockedUseAppStore.mockReturnValue({ config: { minInstanceTotal: 0, levelRanges: [1] } })
+    const { _instancePassesFilters } = await import('@/utils/instanceProcessor')
+    const inst = { totalKamas: 1000, level: 10 }
+    expect(_instancePassesFilters(inst)).toBe(false)
+  })
+
+  it('returns false when activeLevelRanges is empty', async () => {
+    mockedUseAppStore.mockReturnValue({ config: { minInstanceTotal: 0, levelRanges: [] } })
+    const { _instancePassesFilters } = await import('@/utils/instanceProcessor')
+    const inst = { totalKamas: 100, level: 10 }
+    expect(_instancePassesFilters(inst)).toBe(false)
+  })
+
+  it('returns false when totalKamas below minInstanceTotal', async () => {
+    mockedUseAppStore.mockReturnValue({ config: { minInstanceTotal: 200, levelRanges: [0] } })
+    const { _instancePassesFilters } = await import('@/utils/instanceProcessor')
+    const inst = { totalKamas: 150, level: 10 }
+    expect(_instancePassesFilters(inst)).toBe(false)
+  })
+
+  it('passes when totalKamas >= min and level in active ranges', async () => {
+    mockedUseAppStore.mockReturnValue({ config: { minInstanceTotal: 50, levelRanges: [0] } })
+    const { _instancePassesFilters } = await import('@/utils/instanceProcessor')
+    const inst = { totalKamas: 100, level: 10 }
+    expect(_instancePassesFilters(inst)).toBe(true)
+  })
+
+
+})
+
 
 
 // Cas à tester :
@@ -215,9 +255,5 @@ describe('_isLootLegit helpers', () => {
 // - Gestion du taux de loot par stèles bonusPP
 // - Gestion du taux de loot par stasis / booster
 // - Pour les rifts
-// Gestion des items inéligibles au loot (pas bon stasis) :
-//    - Items épiques nécessitant un certain nombre de vagues ou de stasis
-//    - Items avec stasis spécifié
-// - Filtrage des items par profit minimum et taux de drop minimum
 // - Vérification du cache pour les instances déjà calculées
 // - Vérification du cache pour les instances déjà calculées avec prix
