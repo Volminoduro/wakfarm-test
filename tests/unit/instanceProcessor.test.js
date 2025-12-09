@@ -366,6 +366,91 @@ describe('_calculateInstanceForRun integration', () => {
 })
 
 
+describe('calculateInstanceForRunWithPricesAndPassFilters integration', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('returns null when no base instance exists', async () => {
+    vi.resetModules()
+    vi.doMock('@/stores/useJsonStore', () => ({ useJsonStore: () => ({ instancesBase: [], itemRarityMap: {}, priceMap: {}, pricesLastUpdate: 'pv1' }) }))
+    vi.doMock('@/stores/useAppStore', () => ({ useAppStore: vi.fn(() => ({ config: {} })) }))
+
+    const { calculateInstanceForRunWithPricesAndPassFilters } = await import('@/utils/instanceProcessor')
+    const res = calculateInstanceForRunWithPricesAndPassFilters(12345, {}, { 1: 10 })
+    expect(res).toBeNull()
+  })
+
+  it('attaches prices, computes subtotals and totalKamas', async () => {
+    vi.resetModules()
+    vi.doMock('@/stores/useJsonStore', () => ({
+      useJsonStore: () => ({
+        instancesBase: [{ id: 60, level: 1, players: 2, loots: [
+          { itemId: 7, quantity: 1, monsterQuantity: 1, rate: 0.4, price: 50 },
+          { itemId: 7, quantity: 1, monsterQuantity: 1, rate: 0.3, price: 50 },
+          { itemId: 11, quantity: 1, monsterQuantity: 1, rate: 1},
+        ] }],
+        itemRarityMap: { 7: 1 },
+        priceMap: { 7: 50, 11: 50 },
+        pricesLastUpdate: 'pv2'
+      })
+    }))
+    vi.doMock('@/stores/useAppStore', () => ({ useAppStore: vi.fn(() => ({ config: { minInstanceTotal: 0, levelRanges: [0], minItemProfit: null, minDropRatePercent: null } })) }))
+
+    const { calculateInstanceForRunWithPricesAndPassFilters } = await import('@/utils/instanceProcessor')
+    const priceArg = { 7: 50, 11: 50 }
+    const res = calculateInstanceForRunWithPricesAndPassFilters(60, { isRift: false, isModulated: true, stasis: 2, isBooster: false }, priceArg)
+    expect(res).toBeTruthy()
+    expect(res.items).toHaveLength(2)
+    const it = res.items[1]
+    expect(it.price).toBe(50)
+    // Two loots from different monsters with rates 0.4 and 0.3 and players=2
+    // quantity per loot = 1 * 2 * 1 * 1 * rate -> 0.8 and 0.6 => total 1.4
+    expect(it.quantity).toBeCloseTo(1.4, 6)
+    // aggregated rate = 0.4 + 0.3 = 0.7
+    expect(it.rate).toBeCloseTo(0.7, 6)
+    // subtotal = floor(price * quantity) = floor(50 * 1.4) = 70
+    expect(it.subtotal).toBe(70)
+    expect(res.totalKamas).toBe(170)
+  })
+
+  it('returns null when instance filtered out by _instancePassesFilters', async () => {
+    vi.resetModules()
+    vi.doMock('@/stores/useJsonStore', () => ({ useJsonStore: () => ({ instancesBase: [{ id: 70, level: 1, players: 1, loots: [] }], itemRarityMap: {}, priceMap: {}, pricesLastUpdate: 'pv3' }) }))
+    // Set minInstanceTotal high so it will be filtered out
+    vi.doMock('@/stores/useAppStore', () => ({ useAppStore: vi.fn(() => ({ config: { minInstanceTotal: 10000, levelRanges: [0] } })) }))
+
+    const { calculateInstanceForRunWithPricesAndPassFilters } = await import('@/utils/instanceProcessor')
+    const res = calculateInstanceForRunWithPricesAndPassFilters(70, {}, {})
+    expect(res).toBeNull()
+  })
+
+  it('reuses priced cache on subsequent calls (console.info spy)', async () => {
+    vi.resetModules()
+    const findSpy = vi.fn(() => ({ id: 80, level: 1, players: 1, loots: [] }))
+    vi.doMock('@/stores/useJsonStore', () => ({
+      useJsonStore: () => ({
+        instancesBase: { find: findSpy },
+        itemRarityMap: {},
+        priceMap: {},
+        pricesLastUpdate: 'pv4'
+      })
+    }))
+    vi.doMock('@/stores/useAppStore', () => ({ useAppStore: vi.fn(() => ({ config: { server: 'pandora', minInstanceTotal: 0, levelRanges: [0], minItemProfit: null, minDropRatePercent: null } })) }))
+
+    const { calculateInstanceForRunWithPricesAndPassFilters } = await import('@/utils/instanceProcessor')
+
+    const first = calculateInstanceForRunWithPricesAndPassFilters(80, {}, {})
+    const second = calculateInstanceForRunWithPricesAndPassFilters(80, {}, {})
+    // The returned payloads should be deeply equal (cache semantics)
+    expect(first).toStrictEqual(second)
+    // ensure underlying lookup was only performed once -> priced cache used
+    expect(findSpy).toHaveBeenCalledTimes(1)
+  })
+
+})
+
+
 
 // Cas à tester :
 // - Vérification du cache pour les instances déjà calculées
