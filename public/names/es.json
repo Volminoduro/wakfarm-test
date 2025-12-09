@@ -37509,6 +37509,10 @@
             "name": "Ningún run configurado. Haz clic aquí para acceder a la pestaña Configuración."
         },
         {
+            "id": "kamas_hour_no_runs_matching_filters",
+            "name": "Ningún run configurado coincide con los filtros actuales. Revisa tus filtros o ve a la pestaña Configuración."
+        },
+        {
             "id": "runs_export",
             "name": "Exportar"
         },

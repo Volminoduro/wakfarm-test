@@ -88,11 +88,20 @@
         <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ t('loading') }}</p>
       </div>
       <div v-else-if="sortedHourRuns.length === 0" :class="[COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard, 'rounded-lg p-6']">
+        <!-- No runs configured at all -->
         <p 
+          v-if="!hasAnyRuns"
           :class="[COLOR_CLASSES.textSecondary, 'cursor-pointer hover:underline']"
           @click="subTab = 'config'"
         >
           {{ t('kamas_hour_no_runs') || 'Aucun run configuré. Allez dans l\'onglet "Configuration" pour en créer.' }}
+        </p>
+
+        <!-- Runs exist but none pass current filters -->
+        <p
+          v-else
+          :class="[COLOR_CLASSES.textSecondary]">
+          {{ t('kamas_hour_no_runs_matching_filters') || 'Aucun run configuré ne correspond aux filtres actuels. Vérifiez vos filtres ou rendez-vous dans l\'onglet "Configuration".' }}
         </p>
       </div>
       <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
