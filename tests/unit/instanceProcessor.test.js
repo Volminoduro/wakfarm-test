@@ -287,6 +287,85 @@ describe('_processLoots helpers', () => {
 })
 
 
+describe('_calculateInstanceForRun integration', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('returns null when instance id not found', async () => {
+    vi.resetModules()
+    vi.doMock('@/stores/useJsonStore', () => ({ useJsonStore: () => ({ instancesBase: [], itemRarityMap: {}, priceMap: {} }) }))
+    vi.doMock('@/stores/useAppStore', () => ({ useAppStore: vi.fn(() => ({ config: {} })) }))
+
+    const { _calculateInstanceForRun } = await import('@/utils/instanceProcessor')
+    expect(_calculateInstanceForRun(9999, {})).toBeNull()
+  })
+
+  it('returns instance with empty items array when base has no loots', async () => {
+    vi.resetModules()
+    vi.doMock('@/stores/useJsonStore', () => ({ useJsonStore: () => ({ instancesBase: [{ id: 20, level: 5, loots: [], players: 2 }], itemRarityMap: {}, priceMap: {}, pricesLastUpdate: 'v1' }) }))
+    vi.doMock('@/stores/useAppStore', () => ({ useAppStore: vi.fn(() => ({ config: {} })) }))
+
+    const { _calculateInstanceForRun } = await import('@/utils/instanceProcessor')
+    const res = _calculateInstanceForRun(20, {})
+    expect(res).toBeTruthy()
+    expect(res.items).toBeInstanceOf(Array)
+    expect(res.items.length).toBe(0)
+  })
+
+  it('processes loots and aggregates items (quantity and capped rate)', async () => {
+    vi.resetModules()
+    vi.doMock('@/stores/useJsonStore', () => {
+      return {
+        useJsonStore: () => ({
+          instancesBase: [{ id: 30, level: 10, players: 3, loots: [
+            { itemId: 5, quantity: 1, monsterQuantity: 1, rate: 0.5, price: 10 },
+            { itemId: 5, quantity: 1, monsterQuantity: 1, rate: 0.7, price: 10 }
+          ] }],
+          itemRarityMap: { 5: 1 },
+          priceMap: { 5: 10 },
+          pricesLastUpdate: 'v2'
+        })
+      }
+    })
+    vi.doMock('@/stores/useAppStore', () => ({ useAppStore: vi.fn(() => ({ config: {} })) }))
+
+    const { _calculateInstanceForRun } = await import('@/utils/instanceProcessor')
+    const res = _calculateInstanceForRun(30, { isRift: false, isModulated: false, stasis: 2, isBooster: false })
+    expect(res).toBeTruthy()
+    expect(res.items).toHaveLength(1)
+    const item = res.items[0]
+    // _processLoots sets loot.quantity = _calculateHopedQuantity(...)
+    // For each loot: quantity = 1 * players(3) * monsterQuantity(1) * nbCycles(1) * rate
+    // => first: 1 * 3 * 1 * 1 * 0.5 = 1.5 ; second: 1 * 3 * 1 * 1 * 0.7 = 2.1
+    // total quantity = 3.6 ; total rate raw = 1.2 but capped to 1.0
+    expect(item.rate).toBe(1)
+    expect(item.quantity).toBeCloseTo(3.6, 6)
+  })
+
+  it('reuses cached instance on subsequent calls', async () => {
+    vi.resetModules()
+    const findSpy = vi.fn(() => ({ id: 40, level: 1, loots: [], players: 1 }))
+    vi.doMock('@/stores/useJsonStore', () => ({
+      useJsonStore: () => ({
+        instancesBase: { find: findSpy },
+        itemRarityMap: {},
+        priceMap: {},
+        pricesLastUpdate: 'v3'
+      })
+    }))
+    vi.doMock('@/stores/useAppStore', () => ({ useAppStore: vi.fn(() => ({ config: {} })) }))
+
+    const { _calculateInstanceForRun } = await import('@/utils/instanceProcessor')
+    const a = _calculateInstanceForRun(40, {})
+    const b = _calculateInstanceForRun(40, {})
+    expect(a).toBe(b)
+    // ensure the underlying lookup was performed only once -> cache used
+    expect(findSpy).toHaveBeenCalledTimes(1)
+  })
+})
+
+
 
 // Cas à tester :
 // - Vérification du cache pour les instances déjà calculées
