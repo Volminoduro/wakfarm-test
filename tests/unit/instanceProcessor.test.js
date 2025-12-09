@@ -15,7 +15,7 @@ vi.mock('@/stores/useAppStore', () => {
   return { useAppStore: vi.fn(() => ({ config: {} })) }
 })
 
-import { _computeAdjustedRate, _calculateHopedQuantity, _filterAndSortItems } from '@/utils/instanceProcessor'
+import { _computeAdjustedRate, _calculateHopedQuantity, _filterAndSortItems, _isLootLegit } from '@/utils/instanceProcessor'
 import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED } from '@/constants'
 import { useAppStore } from '@/stores/useAppStore'
 
@@ -158,6 +158,49 @@ describe('_filterAndSortItems helpers', () => {
     expect(expected.map(r => r.itemId)).toEqual([3, 2, 1])
   })
 
+})
+
+describe('_isLootLegit helpers', () => {
+  it('returns true for rift non-epic items', () => {
+    const loot = { itemId: 1 }
+    const cfg = { isRift: true, isUltimate: false, wavesCompleted: 0 }
+    expect(_isLootLegit(loot, 1, cfg)).toBe(true)
+  })
+
+  it('returns false for epic rift items when not enough waves', () => {
+    const loot = { itemId: 2 }
+    const cfg = { isRift: true, isUltimate: false, wavesCompleted: 8 }
+    expect(_isLootLegit(loot, 5, cfg)).toBe(false)
+  })
+
+  it('returns true for epic rift items when enough waves (ultimate vs non-ultimate)', () => {
+    // non-ultimate requires 9
+    const cfg1 = { isRift: true, isUltimate: false, wavesCompleted: 9 }
+    expect(_isLootLegit({ itemId: 3 }, 5, cfg1)).toBe(true)
+
+    // ultimate requires 4
+    const cfg2 = { isRift: true, isUltimate: true, wavesCompleted: 4 }
+    expect(_isLootLegit({ itemId: 3 }, 5, cfg2)).toBe(true)
+  })
+
+  it('filters out by stele and steleIntervention in non-rift', () => {
+    const cfg = { isRift: false, steles: 1, steleIntervention: 0, stasis: 3 }
+    expect(_isLootLegit({ stele: 2 }, 1, cfg)).toBe(false)
+    expect(_isLootLegit({ stele: 1, steleIntervention: 1 }, 1, cfg)).toBe(false)
+  })
+
+  it('filters out by loot stasis and rarity vs config stasis', () => {
+    const cfg = { isRift: false, steles: 0, steleIntervention: 0, stasis: 2 }
+    expect(_isLootLegit({ stasis: 3 }, 1, cfg)).toBe(false)
+    // item rarity >3 requires config stasis >=3
+    expect(_isLootLegit({ stasis: 0 }, 4, cfg)).toBe(false)
+  })
+
+  it('returns true when all conditions satisfied', () => {
+    const cfg = { isRift: false, steles: 2, steleIntervention: 1, stasis: 5 }
+    const loot = { stele: 1, steleIntervention: 1, stasis: 3 }
+    expect(_isLootLegit(loot, 2, cfg)).toBe(true)
+  })
 })
 
 
