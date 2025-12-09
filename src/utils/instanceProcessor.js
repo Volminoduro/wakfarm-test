@@ -89,29 +89,26 @@ export function _processLoots(loots, config, itemRarityMap = {}, nbPlayers = 1, 
     const itemRarity = itemRarityMap[loot.itemId] || 0
 
     let adjustedRate = _computeAdjustedRate(loot.rate || 0, config)
-    adjustedRate = Math.min(adjustedRate * (1 + bonusPPMultiplier), 1.0)
-    loot.rate = adjustedRate
+    loot.rate = Math.min(adjustedRate * (1 + bonusPPMultiplier), 1.0)
 
-    
-
-    const finalQuantity = _calculateHopedQuantity(loot, itemRarity, nbPlayers, nbCycles)
+    loot.quantity = _calculateHopedQuantity(loot, itemRarity, nbPlayers, nbCycles)
 
     if (!perItem.has(itemId)) {
       perItem.set(itemId, {
         itemId,
-        rate: adjustedRate,
+        rate: loot.rate,
         price: loot.price || 0,
-        quantity: 0,
+        quantity: loot.quantity,
         stele: loot.stele || 0,
         steleIntervention: loot.steleIntervention || 0,
         rarity: itemRarity || 0
       })
+    } else {
+      const item = perItem.get(itemId)
+      item.rate = Math.min(item.rate + loot.rate, 1.0)
+      item.quantity += loot.quantity
     }
 
-    const item = perItem.get(itemId)
-
-    item.rate = Math.min(item.rate + adjustedRate, 1.0)
-    item.quantity += finalQuantity
   })
 
   return perItem
