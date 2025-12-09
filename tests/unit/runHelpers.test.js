@@ -34,8 +34,14 @@ describe('getNbCyclesForConfig', () => {
     expect(getNbCyclesForConfig(cfg)).toBe(6)
   })
 
+  it('computes cycles from period and config.time, rounding down if decimal', () => {
+    const cfg = { time: 12 } // local period mocked to 60 => 5 cycles
+    expect(getNbCyclesForConfig(cfg)).toBe(5)
+  })
+
   it('multiplies cycles for rift wavesCompleted', () => {
     const cfg = { time: 10, isRift: true, wavesCompleted: 2 }
     expect(getNbCyclesForConfig(cfg)).toBe(12) // 6 * 2
   })
+  
 })
