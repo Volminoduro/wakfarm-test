@@ -10,10 +10,8 @@ const calculatedInstanceWithPriceCache = new Map()
 
 // Calculate final quantity for a loot entry
 export function _calculateHopedQuantity(loot, itemRarity, players, totalIterations) {
-
   if (loot.itemId === 99999) return loot.quantity
-  const baseQuantity = loot.quantity * totalIterations
-  return itemRarity === 5 ? baseQuantity * loot.monsterQuantity * totalIterations * loot.rate : baseQuantity * ((players * loot.monsterQuantity) * totalIterations) * loot.rate
+  return itemRarity === 5 ? loot.quantity * loot.monsterQuantity * totalIterations * loot.rate : loot.quantity * players * loot.monsterQuantity * totalIterations * loot.rate
 }
 
 // Filter and sort items breakdown
@@ -94,19 +92,16 @@ export function _processLoots(loots, config, itemRarityMap = {}, nbPlayers = 1, 
     adjustedRate = Math.min(adjustedRate * (1 + bonusPPMultiplier), 1.0)
     loot.rate = adjustedRate
 
-    const finalQuantity = _calculateHopedQuantity(loot, itemRarity, nbPlayers, nbCycles)
-
-    const price = loot.price || 0
     
-    const value = Math.floor(price * adjustedRate * finalQuantity)
+
+    const finalQuantity = _calculateHopedQuantity(loot, itemRarity, nbPlayers, nbCycles)
 
     if (!perItem.has(itemId)) {
       perItem.set(itemId, {
         itemId,
         rate: adjustedRate,
-        price,
+        price: loot.price || 0,
         quantity: 0,
-        subtotal: 0,
         stele: loot.stele || 0,
         steleIntervention: loot.steleIntervention || 0,
         rarity: itemRarity || 0
@@ -117,7 +112,6 @@ export function _processLoots(loots, config, itemRarityMap = {}, nbPlayers = 1, 
 
     item.rate = Math.min(item.rate + adjustedRate, 1.0)
     item.quantity += finalQuantity
-    item.subtotal += value
   })
 
   return perItem
@@ -164,7 +158,6 @@ export function _calculateInstanceForRun(instanceId, runConfig) {
 }
 
 export function calculateInstanceForRunWithPricesAndPassFilters(instanceId, runConfig, priceMap) {
-  const appStore = useAppStore()
   const calculatedInstance = _calculateInstanceForRun(instanceId, runConfig)
   if (!calculatedInstance) return null
   const key = _makeCalculatedInstanceWithPricesCacheKey(instanceId, runConfig)
@@ -178,8 +171,7 @@ export function calculateInstanceForRunWithPricesAndPassFilters(instanceId, runC
     const itemsWithPrices = (calculatedInstance.items || []).map(it => {
       const price = (priceMap && priceMap[it.itemId]) || 0
       const quantity = it.quantity || 0
-      const rate = it.rate || 0
-      const subtotal = Math.floor(price * rate * quantity)
+      const subtotal = Math.floor(price * quantity)
 
       return { ...it, price, subtotal }
     })
