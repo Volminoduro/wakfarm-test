@@ -12,10 +12,13 @@ vi.mock('@/stores/useJsonStore', () => {
 })
 
 vi.mock('@/stores/useAppStore', () => {
-  return { useAppStore: () => ({ config: {} }) }
+  return { useAppStore: vi.fn(() => ({ config: {} })) }
 })
 
-import { _computeAdjustedRate, _calculateHopedQuantity } from '@/utils/instanceProcessor'
+import { _computeAdjustedRate, _calculateHopedQuantity, _filterAndSortItems } from '@/utils/instanceProcessor'
+import { useAppStore } from '@/stores/useAppStore'
+
+const mockedUseAppStore = vi.mocked(useAppStore)
 
 describe('instanceProcessor helpers', () => {
   it('_computeAdjustedRate returns a number in range', () => {
@@ -33,12 +36,12 @@ describe('instanceProcessor helpers', () => {
 })
 
 describe('_calculateHopedQuantity helpers', () => {
-  it('_calculateHopedQuantity handle 99999 item', () => {
+  it('handle 99999 item', () => {
     const loot = { itemId: 99999, quantity: 2 }
     expect(_calculateHopedQuantity(loot, 1, 4, 1)).toBe(2)
   })
 
-  it('_calculateHopedQuantity rarity 5 only 1 per team', () => {
+  it('rarity 5 item only 1 per team', () => {
     let loot = { itemId: 1, quantity: 1, monsterQuantity : 1, rate : 1 }
     expect(_calculateHopedQuantity(loot, 5, 3, 2)).toBe(2)
 
@@ -46,7 +49,7 @@ describe('_calculateHopedQuantity helpers', () => {
     expect(_calculateHopedQuantity(loot, 5, 3, 1)).toBe(2)
   })
 
-  it('_calculateHopedQuantity standard case', () => {
+  it('standard case', () => {
     let loot = { itemId: 1, quantity: 1, monsterQuantity : 2, rate : 1 }
     expect(_calculateHopedQuantity(loot, 1, 3, 2)).toBe(12)
 
@@ -57,6 +60,51 @@ describe('_calculateHopedQuantity helpers', () => {
     expect(_calculateHopedQuantity(loot, 1, 3, 2)).toBe(12)
   })
 })
+
+describe('_filterAndSortItems helpers', () => {
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('filters items by minItemProfit', () => {
+    mockedUseAppStore.mockReturnValue({ config: { minItemProfit: 50, minDropRatePercent: null } })
+
+    const perItem = new Map()
+    perItem.set(1, { itemId: 1, subtotal: 60, rate: 0.5, quantity: 2 })
+    perItem.set(2, { itemId: 2, subtotal: 40, rate: 0.8, quantity: 1 })
+
+    const expected = _filterAndSortItems(perItem)
+    expect(expected.length).toBe(1)
+    expect(expected[0].itemId).toBe(1)
+  })
+
+  it('filters items by minDropRatePercent', () => {
+    mockedUseAppStore.mockReturnValue({ config: { minItemProfit: null, minDropRatePercent: 70 } })
+
+    const perItem = new Map()
+    perItem.set(1, { itemId: 1, subtotal: 60, rate: 0.5, quantity: 2 })
+    perItem.set(2, { itemId: 2, subtotal: 40, rate: 0.8, quantity: 1 })
+
+    const expected = _filterAndSortItems(perItem)
+    expect(expected.length).toBe(1)
+    expect(expected[0].itemId).toBe(2)
+  })
+
+  it('sorts items by subtotal, then rate, then quantity', () => {
+    mockedUseAppStore.mockReturnValue({ config: { minItemProfit: null, minDropRatePercent: null } })
+
+    const perItem = new Map()
+    perItem.set(1, { itemId: 1, subtotal: 100, rate: 0.5, quantity: 1 })
+    perItem.set(2, { itemId: 2, subtotal: 100, rate: 0.6, quantity: 1 })
+    perItem.set(3, { itemId: 3, subtotal: 100, rate: 0.6, quantity: 2 })
+
+    const expected = _filterAndSortItems(perItem)
+    expect(expected.map(r => r.itemId)).toEqual([3, 2, 1])
+  })
+
+})
+
 
 
 // Cas à tester :
