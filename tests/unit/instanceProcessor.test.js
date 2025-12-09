@@ -15,7 +15,7 @@ vi.mock('@/stores/useAppStore', () => {
   return { useAppStore: vi.fn(() => ({ config: {} })) }
 })
 
-import { _computeAdjustedRate, _calculateHopedQuantity, _filterAndSortItems, _isLootLegit } from '@/utils/instanceProcessor'
+import { _computeAdjustedRate, _calculateHopedQuantity, _filterAndSortItems, _isLootLegit, _processLoots } from '@/utils/instanceProcessor'
 import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED } from '@/constants'
 import { useAppStore } from '@/stores/useAppStore'
 
@@ -243,17 +243,51 @@ describe('_instancePassesFilters helpers', () => {
 
 })
 
+describe('_processLoots helpers', () => {
+  it('applies bonusPP multiplier and accumulates quantities and rates for same item', () => {
+    const cfg = { isRift: false, isModulated: false, stasis: 2, isBooster: false }
+    const loots = [
+      { itemId: 99999, quantity: 50, rate: 1 }, // bonusPP 50%
+      { itemId: 1, quantity: 2, monsterQuantity: 1, rate: 0.4, price: 10 },
+      { itemId: 1, quantity: 1, monsterQuantity: 2, rate: 0.2, price: 10 }
+    ]
+
+    const perItem = _processLoots(loots, cfg, { 1: 1 }, 1, 1)
+    const item = perItem.get(1)
+    // first loot: adjustedRate=0.4 -> *1.5 = 0.6 -> qty = 2 * 1 * 1 * 0.6 = 1.2
+    // second loot: adjustedRate=0.2 -> *1.5 = 0.3 -> qty = 1 * 2 * 1 * 0.3 = 0.6
+    // total qty = 1.8, total rate = 0.6 + 0.3 = 0.9
+    expect(item).toBeDefined()
+    expect(item.itemId).toBe(1)
+    expect(item.price).toBe(10)
+    expect(item.rarity).toBe(1)
+    expect(item.quantity).toBeCloseTo(1.8, 6)
+    expect(item.rate).toBeCloseTo(0.9, 6)
+  })
+
+  it('caps aggregated rate at 1.0', () => {
+    const cfg = { isRift: false, isModulated: false, stasis: 2, isBooster: false }
+    const loots = [
+      { itemId: 2, quantity: 1, monsterQuantity: 1, rate: 0.7 },
+      { itemId: 2, quantity: 1, monsterQuantity: 1, rate: 0.6 }
+    ]
+
+    const perItem = _processLoots(loots, cfg, { 2: 1 }, 1, 1)
+    const item = perItem.get(2)
+    expect(item.rate).toBe(1)
+    expect(item.quantity).toBeCloseTo(1.3, 6)
+  })
+
+  it('does not include itemId 99999 in the perItem map', () => {
+    const cfg = { isRift: false, isModulated: false, stasis: 2, isBooster: false }
+    const loots = [ { itemId: 99999, quantity: 100, rate: 1 } ]
+    const perItem = _processLoots(loots, cfg, {}, 1, 1)
+    expect(perItem.has(99999)).toBe(false)
+  })
+})
+
 
 
 // Cas à tester :
-// - Calcul de l'espérance sur plusieurs runs
-//    - Addition des quantités pour un même item sur différents monstres (même taux de drop)
-//    - Addition des espérances pour un même item sur différents monstres (différent taux de drop)
-// - Calcul de l'espérance sur un run
-//   - Cas simple
-// - Gestion correct du l'item épique
-// - Gestion du taux de loot par stèles bonusPP
-// - Gestion du taux de loot par stasis / booster
-// - Pour les rifts
 // - Vérification du cache pour les instances déjà calculées
 // - Vérification du cache pour les instances déjà calculées avec prix
