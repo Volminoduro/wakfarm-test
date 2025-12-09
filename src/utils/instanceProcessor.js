@@ -37,7 +37,7 @@ export function _computeAdjustedRate(baseRate, config) {
     const finalWave = (config.startingWave || 1) + (config.wavesCompleted || 0)
     const bonusPerWave = config.isUltimate ? 18 : 8
     const waveBonus = 1 + ((finalWave - 1) * bonusPerWave) / 100
-    return baseRate * waveBonus * boosterBonus
+    return Math.min(1, baseRate * waveBonus * boosterBonus)
   }
 
   const bonusMap = config.isModulated ? STASIS_BONUS_MODULATED : STASIS_BONUS_NON_MODULATED

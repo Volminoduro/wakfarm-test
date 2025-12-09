@@ -16,6 +16,7 @@ vi.mock('@/stores/useAppStore', () => {
 })
 
 import { _computeAdjustedRate, _calculateHopedQuantity, _filterAndSortItems } from '@/utils/instanceProcessor'
+import { STASIS_BONUS_MODULATED, STASIS_BONUS_NON_MODULATED } from '@/constants'
 import { useAppStore } from '@/stores/useAppStore'
 
 const mockedUseAppStore = vi.mocked(useAppStore)
@@ -32,6 +33,60 @@ describe('instanceProcessor helpers', () => {
   it('_calculateHopedQuantity handles special itemId 99999', () => {
     const loot = { itemId: 99999, quantity: 2 }
     expect(_calculateHopedQuantity(loot, 1, 4, 1)).toBe(2)
+  })
+})
+
+describe('_computeAdjustedRate helpers', () => {
+  it('applies wave bonus for non-ultimate rift without booster', () => {
+    const cfg = { isRift: true, startingWave: 2, wavesCompleted: 3, isUltimate: false, isBooster: false, isModulated: true, stasis: 10}
+    // finalWave = 2 + 3 = 5 => (finalWave -1) = 4 ; bonusPerWave = 8 => waveBonus = 1 + 32/100 = 1.32
+    const baseRate = 0.1
+    const expected = baseRate * 1.32
+    const result = _computeAdjustedRate(baseRate, cfg)
+    expect(result).toBeCloseTo(expected, 6)
+  })
+
+  it('applies larger wave bonus for ultimate rift', () => {
+    const cfg = { isRift: true, startingWave: 1, wavesCompleted: 3, isUltimate: true, isBooster: false, isModulated: true, stasis: 10 }
+    // finalWave = 1 + 3 = 4 => (4-1)=3 ; bonusPerWave = 18 => waveBonus = 1 + 54/100 = 1.54
+    const baseRate = 0.2
+    const expected = baseRate * 1.54
+    const result = _computeAdjustedRate(baseRate, cfg)
+    expect(result).toBeCloseTo(expected, 6)
+  })
+
+  it('modulated stasis yields below-1 rate', () => {
+    const stasis = 3
+    const cfg = { isRift: false, isModulated: true, stasis, isBooster: false }
+    const baseRate = 0.2
+    const stasisFactor = STASIS_BONUS_MODULATED[stasis]
+    const expected = baseRate * stasisFactor
+    const res = _computeAdjustedRate(baseRate, cfg)
+    expect(res).toBeCloseTo(expected, 6)
+  })
+
+  it('non-modulated stasis yields below-1 rate', () => {
+    const stasis = 5
+    const cfg = { isRift: false, isModulated: false, stasis, isBooster: false }
+    const baseRate = 0.2
+    const stasisFactor = STASIS_BONUS_NON_MODULATED[stasis]
+    const expected = Math.min(1, baseRate * stasisFactor)
+    const res = _computeAdjustedRate(baseRate, cfg)
+    expect(res).toBeCloseTo(expected, 6)
+  })
+
+  it('caps at 1 for both dungeon and rift scenarios', () => {
+    // Dungeon (non-rift) should be capped by _computeAdjustedRate itself
+    const dungeonCfg = { isRift: false, isModulated: true, stasis: 10, isBooster: true, server: 'pandora' }
+    const baseRateDungeon = 0.99
+    const resDungeon = _computeAdjustedRate(baseRateDungeon, dungeonCfg)
+    expect(resDungeon).toBe(1)
+
+    // Rift: compute adjusted rate, then simulate downstream bonusPPMultiplier application
+    const riftCfg = { isRift: true, startingWave: 1, wavesCompleted: 10, isUltimate: false, isBooster: true, server: 'pandora' }
+    const baseRateRift = 0.99
+    const adjustedRift = _computeAdjustedRate(baseRateRift, riftCfg)
+    expect(adjustedRift).toBe(1)
   })
 })
 
