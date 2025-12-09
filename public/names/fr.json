@@ -37217,6 +37217,14 @@
             "name": "niv."
         },
         {
+            "id": "display_detailed",
+            "name": "Affichage détaillé"
+        },
+        {
+            "id": "display_simple",
+            "name": "Affichage simple"
+        },
+        {
             "id": "config_title",
             "name": "Paramètres (défaut)"
         },

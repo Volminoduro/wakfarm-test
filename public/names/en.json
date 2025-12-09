@@ -37217,6 +37217,14 @@
             "name": "lvl."
         },
         {
+            "id": "display_detailed",
+            "name": "Detailed view"
+        },
+        {
+            "id": "display_simple",
+            "name": "Simple view"
+        },
+        {
             "id": "config_title",
             "name": "Settings (default)"
         },

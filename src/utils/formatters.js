@@ -36,7 +36,7 @@ export function parseFormattedNumber(value) {
  */
 export function formatQuantity(num) {
   if (num === null || num === undefined) return ''
-  return Number(num.toFixed(2)).toString()
+  return Number(num.toFixed(4)).toString()
 }
 
 /**

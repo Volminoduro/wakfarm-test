@@ -14,7 +14,9 @@
             <div class="flex items-center gap-3">
               <div :class="COLOR_CLASSES.textNormal">
                 <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">{{ nameStore.names.items[item.itemId] || ('#' + item.itemId) }}</span>
-                <span> x{{ formatQuantity(item.quantity) }} ({{ formatRate(item.rate) }}%{{ getSteleInfo(item) }})</span>
+                <template v-if="detailedView">
+                  <span> x{{ formatQuantity(item.quantity) }} ({{ formatRate(item.rate) }}%{{ getSteleInfo(item) }})</span>
+                </template>
               </div>
             </div>
             <div :class="['font-semibold', COLOR_CLASSES.textKamas]">{{ formatNumber(item.subtotal) }} ₭</div>
@@ -43,7 +45,6 @@ import { COLOR_CLASSES } from '@/constants/colors'
 import InstanceBaseCard from './InstanceBaseCard.vue'
 import { useNameStore } from '@/stores/useNameStore'
 import { getInstanceName } from '../../utils/getInstanceName'
-
 
 const props = defineProps({
   instance: {
@@ -115,6 +116,9 @@ const displayInstance = computed(() => {
     runConfig: props.config
   }
 })
+
+// Respect global detailed/minimal view toggle
+const detailedView = useLocalStorage('wakfarm_detailed_view', false)
 
 const displayedItems = computed(() => {
   if (!displayInstance.value?.items) return []

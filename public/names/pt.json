@@ -7,6 +7,14 @@
         {
             "id": 29236,
             "name": "!\"(-è@)\""
+        {
+            "id": "display_detailed",
+            "name": "Exibição detalhada"
+        },
+        {
+            "id": "display_simple",
+            "name": "Exibição simples"
+        },
         },
         {
             "id": 25090,

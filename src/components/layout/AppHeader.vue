@@ -9,7 +9,10 @@
         <HeaderAlerts />
       </div>
       
-      <LanguageSelector />
+      <div class="flex items-center gap-3">
+        <DisplayToggle />
+        <LanguageSelector />
+      </div>
     </div>
     
     <FloatingFilter />
@@ -43,6 +46,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import LanguageSelector from '@/components/LanguageSelector.vue'
 import FloatingFilter from '@/components/FloatingFilter.vue'
 import HeaderAlerts from '@/components/HeaderAlerts.vue'
+import DisplayToggle from '@/components/DetailedToggle.vue'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
 import { useNameStore } from '@/stores/useNameStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
