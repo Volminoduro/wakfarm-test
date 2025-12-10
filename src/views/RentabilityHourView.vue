@@ -224,8 +224,13 @@ const timePeriod = useLocalStorage('wakfarm_time_period', 60)
 // Validate time period input
 function validateTimePeriod(event) {
   const value = event.target.value
-  timePeriod.value = value === '' ? null : Math.max(1, Math.min(999, parseInt(value) || 60))
+  // When input is cleared, reset to default 60 (so cards update predictably)
+  if (value === '' || value === null) {
+    timePeriod.value = 60
+  }
+  timePeriod.value = Math.max(1, Math.min(999, parseInt(value) || 60))
 }
+
 
 // Build all runs with their kamas/period calculation
 const sortedHourRuns = computed(() => {

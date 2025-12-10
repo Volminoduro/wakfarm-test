@@ -97,9 +97,10 @@ const appStore = useAppStore()
 const localTimePeriod = useLocalStorage('wakfarm_time_period', 60)
 
 const iterationsPerPeriod = computed(() => {
-  if (!props.config?.time || props.config.time === 0) return 0
-  // Prefer central value from appStore.config.timePeriod if present, otherwise fallback to local storage
-  const period = (appStore.config && appStore.config.timePeriod) || localTimePeriod.value || 60
+  if (!props.config?.time || props.config.time === 0) return 0  
+  const rawPeriod = (localTimePeriod.value ?? (appStore.config && appStore.config.timePeriod) ?? 60)
+  const period = Number(rawPeriod) || 60
+
   return Math.floor(period / props.config.time)
 })
 
@@ -148,7 +149,7 @@ const instanceTitle = computed(() => {
     const configStr = formatConfigRun(props.config)
     const timeStr = props.config.time ? `${props.config.time}min` : '?'
     const iters = iterationsPerPeriod.value || 0
-    return `${baseName} (${levelText} ${level}) • ${configStr} • ${timeStr} • ${iters}×`
+    return `${baseName} (${levelText} ${level}) • ${configStr}  • ${iters}× • ${timeStr}`
   }
 
   return `${baseName} (${levelText} ${level})`
