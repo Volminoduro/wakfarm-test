@@ -36658,6 +36658,20 @@
         }
     ],
     "instances": [
+        { "id": 203, "name": "Cœur de l'horloge de Nox" },
+    { "id": 207, "name": "Néo-Pâturages des Bouftous" },
+    { "id": 208, "name": "Néo-Piou Lahoupe" },
+    { "id": 209, "name": "Néo-Papaturage Royal" },
+    { "id": 210, "name": "Néo-Donjon Marteaux-Aigris" },
+    { "id": 211, "name": "Néo-Domaine du Petit Groin" },
+    { "id": 212, "name": "Néo-Château de Wagnar" },
+    { "id": 213, "name": "Néo-Antre du Corbeau Noir" },
+    { "id": 214, "name": "Néo-Aile de l'Ambassadrice" },
+    { "id": 215, "name": "Néo-Donjon Abraknyde" },
+    { "id": 216, "name": "Néo-Château du Wa Wabbit" },
+    { "id": 217, "name": "Néo-Roub'Bar" },
+    { "id": 218, "name": "Néo-Cité Interdite" },
+    { "id": 219, "name": "Néo-Pointe du Mont Zinit" },
         {
             "id": 70,
             "name": "Chez la Mère Michou"

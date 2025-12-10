@@ -36658,6 +36658,20 @@
         }
     ],
     "instances": [
+        { "id": 203, "name": "Heart of Nox's Clock" },
+    { "id": 207, "name": "Neo Gobball Pastures" },
+    { "id": 208, "name": "Neo Hoola Hoopiwi" },
+    { "id": 209, "name": "Neo Royal Pasturizer" },
+    { "id": 210, "name": "Neo Bitter-Hammer Dungeon" },
+    { "id": 211, "name": "Neo Boarthroom Estate" },
+    { "id": 212, "name": "Neo Wagnar's Castle" },
+    { "id": 213, "name": "Neo Black Crow's Lair" },
+    { "id": 214, "name": "Neo Ambassador's Wing" },
+    { "id": 215, "name": "Neo Treechnid Dungeon" },
+    { "id": 216, "name": "Neo Wa Wabbit's Castle" },
+    { "id": 217, "name": "Neo Bistrogue" },
+    { "id": 218, "name": "Neo Forbidden City" },
+    { "id": 219, "name": "Neo Mount Zinit Peak" },
         {
             "id": 70,
             "name": "Grandmeow's House"

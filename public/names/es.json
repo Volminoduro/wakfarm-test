@@ -7,14 +7,6 @@
         {
             "id": 29236,
             "name": "!\"(-è@)\""
-        {
-            "id": "display_detailed",
-            "name": "Vista detallada"
-        },
-        {
-            "id": "display_simple",
-            "name": "Vista simple"
-        },
         },
         {
             "id": 25090,
@@ -36666,6 +36658,20 @@
         }
     ],
     "instances": [
+        { "id": 203, "name": "Corazón del Reloj de Nox" },
+    { "id": 207, "name": "Neopastos de los Jalatós" },
+    { "id": 208, "name": "Neopío Lajop" },
+    { "id": 209, "name": "Neopasto Real" },
+    { "id": 210, "name": "Neomazmorra Martilloseco" },
+    { "id": 211, "name": "Neohacienda de la Balinería" },
+    { "id": 212, "name": "Neocastillo de Wagnar" },
+    { "id": 213, "name": "Neoantro del Cuervo Negro" },
+    { "id": 214, "name": "Neoala de la Embajadora" },
+    { "id": 215, "name": "Neomazmorra Abráknida" },
+    { "id": 216, "name": "Neocastillo del Wey Wabbit" },
+    { "id": 217, "name": "Neotymabar" },
+    { "id": 218, "name": "Neociudad Prohibida" },
+    { "id": 219, "name": "Neopico del Monte Zinit" },
         {
             "id": 70,
             "name": "Casa de la Miaubuelita"
@@ -37531,6 +37537,14 @@
         {
             "id": "runs_config",
             "name": "Configuración"
+        },
+        {
+            "id": "display_detailed",
+            "name": "Vista detallada"
+        },
+        {
+            "id": "display_simple",
+            "name": "Vista simple"
         }
     ]
 }
