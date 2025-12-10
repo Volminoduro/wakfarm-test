@@ -93,7 +93,7 @@ export const useJsonStore = defineStore('data', {
         this.rawItems = itemRes.data
         this._rawMapping = mappingRes.data
         this._rawLoots = lootRes.data
-        await this.loadPricesWithDate(server)
+        await this.loadPricesWithLatestDate(server)
         this._bossMapping = bossMappingRes.data
 
         this.rawInstances = this.rawInstances.map(inst => ({
@@ -110,7 +110,7 @@ export const useJsonStore = defineStore('data', {
             () => appStore.config.server,
             async (newServer, oldServer) => {
               if (newServer !== oldServer) {
-                await this.loadPricesWithDate(newServer)
+                await this.loadPricesWithLatestDate(newServer)
               }
             }
           )
@@ -161,31 +161,147 @@ export const useJsonStore = defineStore('data', {
       this.instancesBase = instancesBase
     },
 
-    async loadPricesWithDate(server) {
+    async _selectLatestPriceFilename(server, serverInfo, basePath) {
+      try {
+        const indexRes = await axios.get(`${basePath}data/prices/price_index.json`)
+        const indexData = indexRes.data
+        let fileList = []
+
+        if (Array.isArray(indexData)) {
+          fileList = indexData.slice()
+        } else if (indexData && typeof indexData === 'object') {
+          if (Array.isArray(indexData[server])) {
+            fileList = indexData[server].slice()
+          } else if (serverInfo && serverInfo.name && Array.isArray(indexData[serverInfo.name])) {
+            fileList = indexData[serverInfo.name].slice()
+          } else {
+            fileList = Object.keys(indexData)
+          }
+        }
+
+        fileList = fileList.map(f => (typeof f === 'string' ? f.split('/').pop() : '')).filter(Boolean)
+
+        const serverPrefix = serverInfo?.price_prefix || `${server}_`
+        const filtered = fileList.filter(f => f.startsWith(serverPrefix) || f.includes(`${server}_`) || f === `${server}.json`)
+        const candidates = filtered.length ? filtered : fileList
+
+        if (candidates.length) {
+          const parseKey = f => {
+            const m = f.match(/(\d{8})_(\d{4})/)
+            if (m) return `${m[1]}${m[2]}`
+            return f
+          }
+          candidates.sort((a, b) => {
+            const ka = parseKey(a)
+            const kb = parseKey(b)
+            if (ka < kb) return 1
+            if (ka > kb) return -1
+            return 0
+          })
+          return candidates[0]
+        }
+
+        return null
+      } catch (err) {
+        return null
+      }
+    },
+
+    async loadPricesWithLatestDate(server) {
       try {
         const basePath = import.meta.env.BASE_URL
         const serverInfo = this.servers.find(s => s.id === server)
-        const priceFilename = serverInfo?.price_file || `${server}.json`
 
-        const priceRes = await axios.get(`${basePath}data/prices/${priceFilename}`)
-        const filenameMatch = priceFilename.match(/(\w+)_(\d{8})_(\d{4})/)
+        // Default fallback filename
+        let priceFilename = serverInfo?.price_file || `${server}.json`
 
-        if (filenameMatch && filenameMatch[2] && filenameMatch[3]) {
-          const dateStr = filenameMatch[2]
-          const timeStr = filenameMatch[3]
-          const year = dateStr.substring(0, 4)
-          const month = dateStr.substring(4, 6)
-          const day = dateStr.substring(6, 8)
-          const hour = timeStr.substring(0, 2)
-          const minute = timeStr.substring(2, 4)
-
-          this.pricesLastUpdate = `${day}.${month}.${year} ${hour}:${minute}`
-        } else {
-          this.pricesLastUpdate = null
+        // Try to select latest filename from index
+        try {
+          const selected = await this._selectLatestPriceFilename(server, serverInfo, basePath)
+          if (selected) priceFilename = selected
+        } catch (err) {
+          // ignore and keep fallback
         }
 
-        this._rawPrices = priceRes.data
-        return priceRes.data
+        // localStorage key for this server
+        const storageKey = `wakfarm_prices_${server}`
+        const cachedRaw = (() => {
+          try {
+            const raw = localStorage.getItem(storageKey)
+            return raw ? JSON.parse(raw) : null
+          } catch (err) {
+            return null
+          }
+        })()
+
+        const getFilenameDateKey = (fn) => {
+          if (!fn || typeof fn !== 'string') return null
+          const m = fn.match(/(\d{8})_(\d{4})/)
+          if (!m) return null
+          return `${m[1]}${m[2]}` // YYYYMMDDHHMM as string
+        }
+
+        // If we have a cached entry, and it's the exact same filename, use it
+        if (cachedRaw && cachedRaw.filename === priceFilename && cachedRaw.data) {
+          console.info(`Using cached prices for server ${server} (filename ${priceFilename})`)
+          this._rawPrices = cachedRaw.data
+          this.pricesLastUpdate = cachedRaw.pricesLastUpdate || null
+          return cachedRaw.data
+        }
+
+        // If cache exists and its date is newer or equal than the selected filename, use cache
+        const selectedDateKey = getFilenameDateKey(priceFilename)
+        const cachedDateKey = cachedRaw && cachedRaw.filename ? getFilenameDateKey(cachedRaw.filename) : null
+        if (cachedRaw && cachedRaw.data && cachedDateKey && selectedDateKey && cachedDateKey >= selectedDateKey) {
+          console.info(`Using cached prices for server ${server} because cache is newer or equal (cached ${cachedRaw.filename} >= selected ${priceFilename})`)
+          this._rawPrices = cachedRaw.data
+          this.pricesLastUpdate = cachedRaw.pricesLastUpdate || null
+          return cachedRaw.data
+        }
+
+        // Otherwise attempt to fetch the selected file. If fetch fails and cache exists, fall back to cache.
+        try {
+          const priceRes = await axios.get(`${basePath}data/prices/${priceFilename}`)
+
+          const filenameMatch = (priceFilename || '').match(/(\d{8})_(\d{4})/)
+          if (filenameMatch && filenameMatch[1] && filenameMatch[2]) {
+            const dateStr = filenameMatch[1]
+            const timeStr = filenameMatch[2]
+            const year = dateStr.substring(0, 4)
+            const month = dateStr.substring(4, 6)
+            const day = dateStr.substring(6, 8)
+            const hour = timeStr.substring(0, 2)
+            const minute = timeStr.substring(2, 4)
+            this.pricesLastUpdate = `${day}.${month}.${year} ${hour}:${minute}`
+          } else {
+            this.pricesLastUpdate = null
+          }
+
+          this._rawPrices = priceRes.data
+
+          // Cache the fetched data
+          try {
+            const toStore = {
+              filename: priceFilename,
+              pricesLastUpdate: this.pricesLastUpdate,
+              data: priceRes.data
+            }
+            localStorage.setItem(storageKey, JSON.stringify(toStore))
+          } catch (err) {
+            // ignore storage errors
+          }
+
+          return priceRes.data
+        } catch (errFetch) {
+          // Fetch failed — if we have any cache, use it, even if filename differs
+          if (cachedRaw && cachedRaw.data) {
+            console.info(`Falling back to cached prices for server ${server} (cached filename ${cachedRaw.filename}) after fetch error`)
+            this._rawPrices = cachedRaw.data
+            this.pricesLastUpdate = cachedRaw.pricesLastUpdate || null
+            return cachedRaw.data
+          }
+          throw errFetch
+        }
       } catch (e) {
         console.error("Erreur chargement prix", e)
         this.pricesLastUpdate = null
