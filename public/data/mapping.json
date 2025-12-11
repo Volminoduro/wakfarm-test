@@ -3168,5 +3168,14 @@
         "number": 2.0
       }
     ]
+  },
+  {
+    "instanceId": 203,
+    "monsters": [
+      {
+        "monsterId": 5664,
+        "number": 1.0
+      }
+    ]
   }
 ]
