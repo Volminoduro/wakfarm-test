@@ -36655,7 +36655,3390 @@
         {
             "id": 32500,
             "name": ""
-        }
+        },
+        
+    {
+      "id": 2675,
+      "name": "Varita de Maderucha"
+    },
+    {
+      "id": 3663,
+      "name": "Patatas fritas de topinambo"
+    },
+    {
+      "id": 3745,
+      "name": "Patas de arakna a la brasa"
+    },
+    {
+      "id": 3864,
+      "name": "Albóndiga de tofu"
+    },
+    {
+      "id": 4145,
+      "name": "Escudo de maderucha"
+    },
+    {
+      "id": 5010,
+      "name": "Potaje de cardos"
+    },
+    {
+      "id": 6588,
+      "name": "Pala de maderucha"
+    },
+    {
+      "id": 6598,
+      "name": "Arco de maderucha"
+    },
+    {
+      "id": 6663,
+      "name": "Aguja de maderucha"
+    },
+    {
+      "id": 6946,
+      "name": "Bebida de fwescuwa"
+    },
+    {
+      "id": 7343,
+      "name": "Solomillo de milubo al papillote"
+    },
+    {
+      "id": 7977,
+      "name": "Morcilla negra con ñiamzamas"
+    },
+    {
+      "id": 8047,
+      "name": "Pan de Farle"
+    },
+    {
+      "id": 8048,
+      "name": "Panpío"
+    },
+    {
+      "id": 8054,
+      "name": "Jalapán"
+    },
+    {
+      "id": 8055,
+      "name": "Hogaza rubia"
+    },
+    {
+      "id": 8056,
+      "name": "Cruasangre"
+    },
+    {
+      "id": 8057,
+      "name": "Pan lewdo"
+    },
+    {
+      "id": 8058,
+      "name": "Focaccia"
+    },
+    {
+      "id": 8059,
+      "name": "Pan redondo"
+    },
+    {
+      "id": 8087,
+      "name": "La Nekru"
+    },
+    {
+      "id": 8095,
+      "name": "Chamustarta"
+    },
+    {
+      "id": 8096,
+      "name": "Bizcocho pequeño"
+    },
+    {
+      "id": 8204,
+      "name": "Falucha Libre"
+    },
+    {
+      "id": 8205,
+      "name": "Bizcocho dorado"
+    },
+    {
+      "id": 8207,
+      "name": "Bolsita de brutzels"
+    },
+    {
+      "id": 8208,
+      "name": "Towta de Wey"
+    },
+    {
+      "id": 8209,
+      "name": "Pan Dala"
+    },
+    {
+      "id": 8210,
+      "name": "Tristepán"
+    },
+    {
+      "id": 8211,
+      "name": "Pan integral"
+    },
+    {
+      "id": 8212,
+      "name": "Pan de cementeno"
+    },
+    {
+      "id": 8213,
+      "name": "Capitán Brioch"
+    },
+    {
+      "id": 8214,
+      "name": "Taharta"
+    },
+    {
+      "id": 8215,
+      "name": "Fab'huritu con nata"
+    },
+    {
+      "id": 8228,
+      "name": "Sopa de pescado"
+    },
+    {
+      "id": 8229,
+      "name": "Píorrillo empanado"
+    },
+    {
+      "id": 8230,
+      "name": "Tártaro marino"
+    },
+    {
+      "id": 8231,
+      "name": "Raya babosa a las finas hierbas"
+    },
+    {
+      "id": 8232,
+      "name": "Bamga cocida"
+    },
+    {
+      "id": 8233,
+      "name": "Salamón a la cwema"
+    },
+    {
+      "id": 8359,
+      "name": "Pan de Xav el panadero"
+    },
+    {
+      "id": 9247,
+      "name": "BenKO"
+    },
+    {
+      "id": 9251,
+      "name": "Cerveza de Amakna"
+    },
+    {
+      "id": 9368,
+      "name": "Bastón de maderucha"
+    },
+    {
+      "id": 9409,
+      "name": "Hachita de maderucha"
+    },
+    {
+      "id": 9419,
+      "name": "Martillo de maderucha"
+    },
+    {
+      "id": 9578,
+      "name": "La Guilah"
+    },
+    {
+      "id": 9618,
+      "name": "Bobollabesa"
+    },
+    {
+      "id": 9684,
+      "name": "Cerveza de Bonta"
+    },
+    {
+      "id": 9685,
+      "name": "Cerveza de Brakmar"
+    },
+    {
+      "id": 9686,
+      "name": "Cerveza de Sufokia"
+    },
+    {
+      "id": 9690,
+      "name": "Mohitauro"
+    },
+    {
+      "id": 9691,
+      "name": "Café Bilbyza"
+    },
+    {
+      "id": 9692,
+      "name": "Filete muuugrñón"
+    },
+    {
+      "id": 9694,
+      "name": "Trasero dorado con ñiamzamas"
+    },
+    {
+      "id": 9724,
+      "name": "Hada artificial"
+    },
+    {
+      "id": 9734,
+      "name": "Chuleta de Álibert"
+    },
+    {
+      "id": 9744,
+      "name": "Leche Humbre"
+    },
+    {
+      "id": 9753,
+      "name": "Compota"
+    },
+    {
+      "id": 9758,
+      "name": "Tortikuri Kuri"
+    },
+    {
+      "id": 9759,
+      "name": "Escalope de champiñón"
+    },
+    {
+      "id": 9760,
+      "name": "Estofado de kuatrokarnes"
+    },
+    {
+      "id": 9802,
+      "name": "Jalató churruscado"
+    },
+    {
+      "id": 9803,
+      "name": "Crema de morros"
+    },
+    {
+      "id": 9808,
+      "name": "Linterna"
+    },
+    {
+      "id": 9811,
+      "name": "Caramelo de sabiduría"
+    },
+    {
+      "id": 9812,
+      "name": "Caramelo añejo"
+    },
+    {
+      "id": 9865,
+      "name": "Caramelo de prospección"
+    },
+    {
+      "id": 9866,
+      "name": "Caramelo Leya"
+    },
+    {
+      "id": 9867,
+      "name": "Caramelo Melo"
+    },
+    {
+      "id": 9958,
+      "name": "Cerveza Sepulcral"
+    },
+    {
+      "id": 10219,
+      "name": "Encantadora hada artificial violeta"
+    },
+    {
+      "id": 10220,
+      "name": "Encantadora hada artificial verde"
+    },
+    {
+      "id": 10221,
+      "name": "Encantadora hada artificial roja"
+    },
+    {
+      "id": 10222,
+      "name": "Encantadora hada artificial amarilla"
+    },
+    {
+      "id": 10223,
+      "name": "Encantadora hada artificial rosa"
+    },
+    {
+      "id": 10332,
+      "name": "Cerveza de Astrub"
+    },
+    {
+      "id": 10360,
+      "name": "Champiñón Luidjeet"
+    },
+    {
+      "id": 10363,
+      "name": "La Charcorona"
+    },
+    {
+      "id": 10373,
+      "name": "Hada artificial corrupta"
+    },
+    {
+      "id": 10374,
+      "name": "Caramelo de Haluín"
+    },
+    {
+      "id": 10380,
+      "name": "Croqueta maléfica"
+    },
+    {
+      "id": 10556,
+      "name": "Trufa de Nawidad"
+    },
+    {
+      "id": 10591,
+      "name": "Hada artificial de Nawidad roja"
+    },
+    {
+      "id": 10592,
+      "name": "Hada artificial de Nawidad verde"
+    },
+    {
+      "id": 10593,
+      "name": "Hada artificial de Nawidad blanca"
+    },
+    {
+      "id": 10595,
+      "name": "Papá Nowel de chocolate"
+    },
+    {
+      "id": 10598,
+      "name": "Dragopavo de Nawidad"
+    },
+    {
+      "id": 10657,
+      "name": "Rayuarius"
+    },
+    {
+      "id": 11285,
+      "name": "Bandera del pionero"
+    },
+    {
+      "id": 11359,
+      "name": "Caramelo duro"
+    },
+    {
+      "id": 11360,
+      "name": "Praliné relleno"
+    },
+    {
+      "id": 11361,
+      "name": "Regaliz retorcido"
+    },
+    {
+      "id": 11362,
+      "name": "Corazón de azúcar rosa"
+    },
+    {
+      "id": 11366,
+      "name": "Poweramelo"
+    },
+    {
+      "id": 11368,
+      "name": "Cerveza de trébol"
+    },
+    {
+      "id": 11369,
+      "name": "Galleta de trébol"
+    },
+    {
+      "id": 11376,
+      "name": "Jalatín de chocolate"
+    },
+    {
+      "id": 11377,
+      "name": "Escara de chocolate"
+    },
+    {
+      "id": 11379,
+      "name": "Tofu de chocolate"
+    },
+    {
+      "id": 11380,
+      "name": "Pischis de chocolate"
+    },
+    {
+      "id": 11919,
+      "name": "Pan con Avellanella"
+    },
+    {
+      "id": 11920,
+      "name": "Jalarepa"
+    },
+    {
+      "id": 11924,
+      "name": "Foie Gras"
+    },
+    {
+      "id": 11925,
+      "name": "Paté de cangwejo"
+    },
+    {
+      "id": 11926,
+      "name": "Chikharrones"
+    },
+    {
+      "id": 11927,
+      "name": "Guiso Bo-Rancho"
+    },
+    {
+      "id": 11928,
+      "name": "Mejillones sin patatas"
+    },
+    {
+      "id": 11929,
+      "name": "Filete de muuugresa con puré de col"
+    },
+    {
+      "id": 11930,
+      "name": "Kokoleche"
+    },
+    {
+      "id": 11931,
+      "name": "Kokosoda"
+    },
+    {
+      "id": 11932,
+      "name": "Enchalada marinera"
+    },
+    {
+      "id": 11934,
+      "name": "Que'Chatún"
+    },
+    {
+      "id": 11935,
+      "name": "Waterzozio"
+    },
+    {
+      "id": 11936,
+      "name": "Paté de cangwejo imperial"
+    },
+    {
+      "id": 11939,
+      "name": "Anguila en piedra"
+    },
+    {
+      "id": 12232,
+      "name": "Caramelo del sabio"
+    },
+    {
+      "id": 12233,
+      "name": "Caramelo mimoso"
+    },
+    {
+      "id": 12234,
+      "name": "Caramelo próspero"
+    },
+    {
+      "id": 12235,
+      "name": "Caramelo afortunado"
+    },
+    {
+      "id": 12464,
+      "name": "Kwelsh cuérbico"
+    },
+    {
+      "id": 12465,
+      "name": "Queso de cuerbok"
+    },
+    {
+      "id": 12584,
+      "name": "Solomillo a la pimienta"
+    },
+    {
+      "id": 12608,
+      "name": "Pan de monjes"
+    },
+    {
+      "id": 12609,
+      "name": "Queso Monje"
+    },
+    {
+      "id": 12626,
+      "name": "Yema de santa Teresa"
+    },
+    {
+      "id": 12642,
+      "name": "Pisto"
+    },
+    {
+      "id": 12835,
+      "name": "Escudo del minino"
+    },
+    {
+      "id": 12866,
+      "name": "Muertadela"
+    },
+    {
+      "id": 12867,
+      "name": "Mamaliga"
+    },
+    {
+      "id": 13108,
+      "name": "Castañas de maracajú asadas"
+    },
+    {
+      "id": 13219,
+      "name": "Boquerones en aceite"
+    },
+    {
+      "id": 13222,
+      "name": "Pan de molde"
+    },
+    {
+      "id": 13224,
+      "name": "Pan baza"
+    },
+    {
+      "id": 13225,
+      "name": "Pan de salvado de avena"
+    },
+    {
+      "id": 13226,
+      "name": "Palmerita"
+    },
+    {
+      "id": 13227,
+      "name": "Manjugo"
+    },
+    {
+      "id": 13228,
+      "name": "Pan de centeno"
+    },
+    {
+      "id": 13229,
+      "name": "Torta de arroz"
+    },
+    {
+      "id": 13230,
+      "name": "Petisú"
+    },
+    {
+      "id": 13231,
+      "name": "Pan de cereales"
+    },
+    {
+      "id": 13232,
+      "name": "Pan de maíz"
+    },
+    {
+      "id": 13233,
+      "name": "Pan de melón"
+    },
+    {
+      "id": 13234,
+      "name": "Pan sol"
+    },
+    {
+      "id": 13235,
+      "name": "Sandipán"
+    },
+    {
+      "id": 13343,
+      "name": "Caramelo de sabiduría de Fortuna"
+    },
+    {
+      "id": 13344,
+      "name": "Caramelo Leya de fortuna"
+    },
+    {
+      "id": 13347,
+      "name": "Hada artificial de fortuna"
+    },
+    {
+      "id": 13361,
+      "name": "Caramelo del sabio de fortuna"
+    },
+    {
+      "id": 13362,
+      "name": "Caramelo añejo de fortuna"
+    },
+    {
+      "id": 13363,
+      "name": "Caramelo anutrof de fortuna"
+    },
+    {
+      "id": 13364,
+      "name": "Gran caramelo de fortuna"
+    },
+    {
+      "id": 13440,
+      "name": "Pan Dala secreto"
+    },
+    {
+      "id": 13551,
+      "name": "Pócima Mea Culpable"
+    },
+    {
+      "id": 13621,
+      "name": "Kuakuá de goma"
+    },
+    {
+      "id": 13622,
+      "name": "Batido con nata"
+    },
+    {
+      "id": 13623,
+      "name": "Milksheik"
+    },
+    {
+      "id": 13624,
+      "name": "Algodón dulce"
+    },
+    {
+      "id": 13625,
+      "name": "Ñiamzama dulce"
+    },
+    {
+      "id": 13626,
+      "name": "Bebida de Espanto"
+    },
+    {
+      "id": 13627,
+      "name": "Cucurucho de helado"
+    },
+    {
+      "id": 13628,
+      "name": "Gofre con azúcar"
+    },
+    {
+      "id": 13629,
+      "name": "Patatas fritas de pohoyo"
+    },
+    {
+      "id": 13630,
+      "name": "Madalena rellena"
+    },
+    {
+      "id": 13685,
+      "name": "Globo"
+    },
+    {
+      "id": 13689,
+      "name": "Caramelo anutrof de prospección"
+    },
+    {
+      "id": 13719,
+      "name": "Caramelo anutrof de sabiduría"
+    },
+    {
+      "id": 13855,
+      "name": "Pestiño"
+    },
+    {
+      "id": 13858,
+      "name": "Tarta de hojaldre"
+    },
+    {
+      "id": 13862,
+      "name": "Buñuelo lelo"
+    },
+    {
+      "id": 13865,
+      "name": "Pan de pueblo"
+    },
+    {
+      "id": 13870,
+      "name": "Merengue"
+    },
+    {
+      "id": 13877,
+      "name": "Ñoquis"
+    },
+    {
+      "id": 13882,
+      "name": "Ponche"
+    },
+    {
+      "id": 13886,
+      "name": "Puré con carne"
+    },
+    {
+      "id": 13893,
+      "name": "Neskafé Salé"
+    },
+    {
+      "id": 13904,
+      "name": "Encantadora hada bolada"
+    },
+    {
+      "id": 13905,
+      "name": "Hada de bengala dorada"
+    },
+    {
+      "id": 13906,
+      "name": "Hada tificiera"
+    },
+    {
+      "id": 13907,
+      "name": "Hada explosiva"
+    },
+    {
+      "id": 13908,
+      "name": "Hada superplosiva"
+    },
+    {
+      "id": 13909,
+      "name": "Encantadora hada rellena"
+    },
+    {
+      "id": 13945,
+      "name": "Cerveza de jalabolista"
+    },
+    {
+      "id": 14055,
+      "name": "Caramelo Kurasana"
+    },
+    {
+      "id": 14087,
+      "name": "Caramelo Melokedo"
+    },
+    {
+      "id": 14204,
+      "name": "Título: Guardián de las artes"
+    },
+    {
+      "id": 14210,
+      "name": "Manifestar"
+    },
+    {
+      "id": 14254,
+      "name": "Miaulvavisco"
+    },
+    {
+      "id": 14255,
+      "name": "Gostomorfo"
+    },
+    {
+      "id": 14315,
+      "name": "Bibliotransporte"
+    },
+    {
+      "id": 14336,
+      "name": "Kroscaja"
+    },
+    {
+      "id": 14337,
+      "name": "Kroscaja \"Prestigio\""
+    },
+    {
+      "id": 14338,
+      "name": "Pica Chups"
+    },
+    {
+      "id": 14986,
+      "name": "Krosbolsa de la Hermandad del Tofu"
+    },
+    {
+      "id": 14987,
+      "name": "Krosbolsa Krosmaster 1"
+    },
+    {
+      "id": 15133,
+      "name": "Llave de la casa de Papá Nowel"
+    },
+    {
+      "id": 15188,
+      "name": "Pergamino de absolución"
+    },
+    {
+      "id": 15272,
+      "name": "Arco de Guiller Motel"
+    },
+    {
+      "id": 15273,
+      "name": "Espada de Yoko Agular"
+    },
+    {
+      "id": 15274,
+      "name": "Martillo de Perceblando"
+    },
+    {
+      "id": 15275,
+      "name": "Varita de Berta Dine"
+    },
+    {
+      "id": 15276,
+      "name": "Bastón de Klor Ofila"
+    },
+    {
+      "id": 15277,
+      "name": "Cartas de Quentin Flush"
+    },
+    {
+      "id": 15278,
+      "name": "Espada de Patt Hapum"
+    },
+    {
+      "id": 15279,
+      "name": "Espada de Morora"
+    },
+    {
+      "id": 15301,
+      "name": "Título: Hombre del saco"
+    },
+    {
+      "id": 15585,
+      "name": "Ñiamzama dorada"
+    },
+    {
+      "id": 15711,
+      "name": "Título \"Miss y Míster Amakna 970\""
+    },
+    {
+      "id": 15712,
+      "name": "Título \"Miss y Míster Bonta 970\""
+    },
+    {
+      "id": 15713,
+      "name": "Título \"Miss y Míster Brakmar 970\""
+    },
+    {
+      "id": 15714,
+      "name": "Título \"Miss y Míster Sufokia 970\""
+    },
+    {
+      "id": 15745,
+      "name": "Título \"Rose de La Fontaine\""
+    },
+    {
+      "id": 15769,
+      "name": "Título \"Oscariñito 970\""
+    },
+    {
+      "id": 15812,
+      "name": "Caramelito de sabiduría"
+    },
+    {
+      "id": 15813,
+      "name": "Caramelo de sabiduría"
+    },
+    {
+      "id": 15814,
+      "name": "Caramelo de prospección"
+    },
+    {
+      "id": 15815,
+      "name": "Caramelito de prospección"
+    },
+    {
+      "id": 15850,
+      "name": "Título \"Fanático bisiesto\""
+    },
+    {
+      "id": 15856,
+      "name": "Botella de ron"
+    },
+    {
+      "id": 15863,
+      "name": "Frasco emplumado"
+    },
+    {
+      "id": 15927,
+      "name": "Hada artificial de un año"
+    },
+    {
+      "id": 15982,
+      "name": "Pergamino del fénix"
+    },
+    {
+      "id": 15998,
+      "name": "Señor{[1*]?a:} de renombre"
+    },
+    {
+      "id": 15999,
+      "name": "Comendador emérito"
+    },
+    {
+      "id": 16000,
+      "name": "Monje copista"
+    },
+    {
+      "id": 16001,
+      "name": "Caballero errante"
+    },
+    {
+      "id": 16002,
+      "name": "Escudero fiel"
+    },
+    {
+      "id": 16129,
+      "name": "Corazón de slimsis"
+    },
+    {
+      "id": 16136,
+      "name": "Carne de slimsis"
+    },
+    {
+      "id": 16770,
+      "name": "Cóctel real"
+    },
+    {
+      "id": 16824,
+      "name": "Cóctel energético"
+    },
+    {
+      "id": 16944,
+      "name": "H Up!"
+    },
+    {
+      "id": 17059,
+      "name": "Pastilla de menta"
+    },
+    {
+      "id": 17061,
+      "name": "Título \"Carcelero de Sombra\""
+    },
+    {
+      "id": 17266,
+      "name": "Bebida blackenewgética"
+    },
+    {
+      "id": 17351,
+      "name": "Leffe fouw dead"
+    },
+    {
+      "id": 17445,
+      "name": "Bento zollo"
+    },
+    {
+      "id": 17446,
+      "name": "Té de losas"
+    },
+    {
+      "id": 17522,
+      "name": "Justiciólogo"
+    },
+    {
+      "id": 17529,
+      "name": "Zanahowias confitadas"
+    },
+    {
+      "id": 17530,
+      "name": "Cawota wey"
+    },
+    {
+      "id": 17534,
+      "name": "Título \"Descriptor\""
+    },
+    {
+      "id": 17535,
+      "name": "Zumo de zanahowia negwa"
+    },
+    {
+      "id": 17728,
+      "name": "Pócima de superguerrero"
+    },
+    {
+      "id": 17760,
+      "name": "Filete de jalató muy poco hecho"
+    },
+    {
+      "id": 17863,
+      "name": "Pan del abuelito Ditocas"
+    },
+    {
+      "id": 17867,
+      "name": "Pócima de arcaólogo"
+    },
+    {
+      "id": 17914,
+      "name": "Ronda de Gerar"
+    },
+    {
+      "id": 17918,
+      "name": "Pan de salida"
+    },
+    {
+      "id": 18014,
+      "name": "Petardo de la fiesta de la primavera"
+    },
+    {
+      "id": 18015,
+      "name": "Sobre rojo"
+    },
+    {
+      "id": 18050,
+      "name": "Pastel de arroz"
+    },
+    {
+      "id": 18066,
+      "name": "Towta de Wey"
+    },
+    {
+      "id": 18198,
+      "name": "Duna de terfez"
+    },
+    {
+      "id": 18199,
+      "name": "Cactugo"
+    },
+    {
+      "id": 18200,
+      "name": "Revuelto iluminado"
+    },
+    {
+      "id": 18201,
+      "name": "Cóctel esporulado"
+    },
+    {
+      "id": 18202,
+      "name": "Pan luminoso"
+    },
+    {
+      "id": 18203,
+      "name": "Rollo con mermelada de luciseta"
+    },
+    {
+      "id": 18204,
+      "name": "Cactrufa"
+    },
+    {
+      "id": 18205,
+      "name": "Pantrufa"
+    },
+    {
+      "id": 18232,
+      "name": "Artificio fab'huritu I"
+    },
+    {
+      "id": 18245,
+      "name": "Artificio fab'huritu II"
+    },
+    {
+      "id": 18248,
+      "name": "Artificio fab'huritu III"
+    },
+    {
+      "id": 18249,
+      "name": "Artificio fab'huritu IV"
+    },
+    {
+      "id": 18250,
+      "name": "Artificio fab'huritu V"
+    },
+    {
+      "id": 18252,
+      "name": "Artificio fab'huritu VI"
+    },
+    {
+      "id": 18283,
+      "name": "Pergamino de absolución absoluta"
+    },
+    {
+      "id": 18292,
+      "name": "Cambio de sexo y de apariencia"
+    },
+    {
+      "id": 18293,
+      "name": "Artificio fab'huritu VII"
+    },
+    {
+      "id": 18294,
+      "name": "Artificio fab'huritu VIII"
+    },
+    {
+      "id": 18295,
+      "name": "Artificio fab'huritu IX"
+    },
+    {
+      "id": 18351,
+      "name": "Frasco de sabiduría"
+    },
+    {
+      "id": 18355,
+      "name": "Frasco de prospección"
+    },
+    {
+      "id": 18358,
+      "name": "Bollo de leche"
+    },
+    {
+      "id": 18359,
+      "name": "Bollo de leche dorado"
+    },
+    {
+      "id": 18360,
+      "name": "Bollo de leche con azúcar"
+    },
+    {
+      "id": 18361,
+      "name": "Bollo de leche glaseado"
+    },
+    {
+      "id": 18390,
+      "name": "Título \"El plan de Sombría\""
+    },
+    {
+      "id": 18391,
+      "name": "Título \"La sabiduría de Anathar\""
+    },
+    {
+      "id": 18392,
+      "name": "Título \"El poder de Rubilax\""
+    },
+    {
+      "id": 18393,
+      "name": "Título \"Los privilegios de Rushu\""
+    },
+    {
+      "id": 18401,
+      "name": "Pócima de Sabiduría"
+    },
+    {
+      "id": 18406,
+      "name": "Pócima de Prospección"
+    },
+    {
+      "id": 18422,
+      "name": "Cóctel de energía vital"
+    },
+    {
+      "id": 18572,
+      "name": "Pan de Sramvil"
+    },
+    {
+      "id": 18573,
+      "name": "Pan sobao"
+    },
+    {
+      "id": 18574,
+      "name": "Sombrijuelo dulzamargo"
+    },
+    {
+      "id": 18575,
+      "name": "Pócima macabrasiva"
+    },
+    {
+      "id": 18576,
+      "name": "Kamabert sin acompañamiento"
+    },
+    {
+      "id": 18577,
+      "name": "Pócima blindada"
+    },
+    {
+      "id": 18621,
+      "name": "Título \"Pasante\""
+    },
+    {
+      "id": 18622,
+      "name": "Título \"Aventurero de Steam\""
+    },
+    {
+      "id": 18701,
+      "name": "Artificio fab'huritu X"
+    },
+    {
+      "id": 18773,
+      "name": "Pizzarva"
+    },
+    {
+      "id": 18860,
+      "name": "Pócima Dragogibus"
+    },
+    {
+      "id": 18938,
+      "name": "Título \"Centinela\""
+    },
+    {
+      "id": 18939,
+      "name": "Título \"Explorador\""
+    },
+    {
+      "id": 18940,
+      "name": "Título \"Guerrero\""
+    },
+    {
+      "id": 18941,
+      "name": "Título \"Capitán\""
+    },
+    {
+      "id": 18942,
+      "name": "Título \"Estratega\""
+    },
+    {
+      "id": 18943,
+      "name": "Título \"Comandante\""
+    },
+    {
+      "id": 18944,
+      "name": "Título \"Campeón\""
+    },
+    {
+      "id": 18945,
+      "name": "Título \"Conquistador\""
+    },
+    {
+      "id": 18946,
+      "name": "Título \"Héroe\""
+    },
+    {
+      "id": 18947,
+      "name": "Título \"Leyenda\""
+    },
+    {
+      "id": 19016,
+      "name": "Pergamino de teletransportación a Amakna"
+    },
+    {
+      "id": 19017,
+      "name": "Pergamino de teletransportación a Bonta"
+    },
+    {
+      "id": 19018,
+      "name": "Pergamino de teletransportación a Sufokia"
+    },
+    {
+      "id": 19019,
+      "name": "Pergamino de teletransportación a Brakmar"
+    },
+    {
+      "id": 19020,
+      "name": "Pergamino de teletransportación genérica de nación"
+    },
+    {
+      "id": 19021,
+      "name": "Pergamino de teletransportación a Astrub"
+    },
+    {
+      "id": 19022,
+      "name": "Pergamino del fénix"
+    },
+    {
+      "id": 19023,
+      "name": "Pócima pompota"
+    },
+    {
+      "id": 19024,
+      "name": "Perrito caliente"
+    },
+    {
+      "id": 19025,
+      "name": "Brebaje bancal"
+    },
+    {
+      "id": 19026,
+      "name": "Caramelo Dragunibus"
+    },
+    {
+      "id": 19027,
+      "name": "Chicle fotasmagórico"
+    },
+    {
+      "id": 19095,
+      "name": "Paté de miaumiau"
+    },
+    {
+      "id": 19096,
+      "name": "Piolován"
+    },
+    {
+      "id": 19097,
+      "name": "Pizzarva de Fenrata"
+    },
+    {
+      "id": 19098,
+      "name": "Ragú de jalató crujiente"
+    },
+    {
+      "id": 19099,
+      "name": "Ragú de jalató cremoso"
+    },
+    {
+      "id": 19100,
+      "name": "Ragú de jalató agridulce"
+    },
+    {
+      "id": 19101,
+      "name": "Ragú de jalató empanado"
+    },
+    {
+      "id": 19102,
+      "name": "Tofurneado con cereales"
+    },
+    {
+      "id": 19103,
+      "name": "Tofurneado dulce-salado"
+    },
+    {
+      "id": 19104,
+      "name": "Tofurneado picante"
+    },
+    {
+      "id": 19105,
+      "name": "Tofurneado a la marinera"
+    },
+    {
+      "id": 19106,
+      "name": "Carbonada brakmariana"
+    },
+    {
+      "id": 19107,
+      "name": "Encantártaro bontariano"
+    },
+    {
+      "id": 19108,
+      "name": "Fabadomia amakneana"
+    },
+    {
+      "id": 19109,
+      "name": "Brullabesa sufokeña"
+    },
+    {
+      "id": 19110,
+      "name": "Pócima de regalo de Nawidad"
+    },
+    {
+      "id": 19154,
+      "name": "Comida original"
+    },
+    {
+      "id": 19155,
+      "name": "Pócima de anticipación"
+    },
+    {
+      "id": 19156,
+      "name": "Pan intemporal"
+    },
+    {
+      "id": 19159,
+      "name": "Papilla de roscas"
+    },
+    {
+      "id": 19160,
+      "name": "Pan temporal"
+    },
+    {
+      "id": 19161,
+      "name": "Licor de Gonzalo Zanía"
+    },
+    {
+      "id": 19164,
+      "name": "Cambio de clase (nivel 1-80)"
+    },
+    {
+      "id": 19165,
+      "name": "Cambio de clase (nivel 1-150)"
+    },
+    {
+      "id": 19166,
+      "name": "Cambio de clase (nivel 1-245)"
+    },
+    {
+      "id": 19196,
+      "name": "Título: Helaventurero"
+    },
+    {
+      "id": 19197,
+      "name": "Título: Bergkönig"
+    },
+    {
+      "id": 19198,
+      "name": "Título \"Gipfelstürmer\""
+    },
+    {
+      "id": 19199,
+      "name": "Título \"Klettermaxe\""
+    },
+    {
+      "id": 19200,
+      "name": "Título de \"Viajero del espejo\""
+    },
+    {
+      "id": 19254,
+      "name": "Tarta Tar"
+    },
+    {
+      "id": 19255,
+      "name": "Almóndigas"
+    },
+    {
+      "id": 19265,
+      "name": "Título \"La justicia está en marcha\""
+    },
+    {
+      "id": 19310,
+      "name": "Cesta sorpresa de Pazcuak"
+    },
+    {
+      "id": 19472,
+      "name": "Guisado de cuerpicok a la grápula"
+    },
+    {
+      "id": 19595,
+      "name": "Hada de agua"
+    },
+    {
+      "id": 19668,
+      "name": "Título de Semihéroe de la nación"
+    },
+    {
+      "id": 19737,
+      "name": "Pócima congeladora"
+    },
+    {
+      "id": 19745,
+      "name": "Bomba koko"
+    },
+    {
+      "id": 19748,
+      "name": "Zurcateleportación"
+    },
+    {
+      "id": 19914,
+      "name": "Pex on the beach"
+    },
+    {
+      "id": 19915,
+      "name": "Bamgas a la escamecha"
+    },
+    {
+      "id": 19917,
+      "name": "Pan cetta"
+    },
+    {
+      "id": 20019,
+      "name": "Título: héroe aguerrido de nación"
+    },
+    {
+      "id": 20034,
+      "name": "Turbo Craft 30"
+    },
+    {
+      "id": 20088,
+      "name": "Caja misteriosa"
+    },
+    {
+      "id": 20089,
+      "name": "Caja misteriosa"
+    },
+    {
+      "id": 20090,
+      "name": "Caja misteriosa"
+    },
+    {
+      "id": 20091,
+      "name": "Caja misteriosa"
+    },
+    {
+      "id": 20092,
+      "name": "Caja misteriosa"
+    },
+    {
+      "id": 20170,
+      "name": "Sopa de champiñones"
+    },
+    {
+      "id": 20239,
+      "name": "Título: Héroe curtido de nación"
+    },
+    {
+      "id": 20265,
+      "name": "Churrasco de tofu salvaje"
+    },
+    {
+      "id": 20447,
+      "name": "Reinicio de características"
+    },
+    {
+      "id": 20461,
+      "name": "Título: Pigmalión"
+    },
+    {
+      "id": 20471,
+      "name": "Apósito Co"
+    },
+    {
+      "id": 20474,
+      "name": "Título: Profesor Giraguijoles"
+    },
+    {
+      "id": 20475,
+      "name": "Título: Sir Alamén Torcarido"
+    },
+    {
+      "id": 20479,
+      "name": "Título: Mentor neófito"
+    },
+    {
+      "id": 20482,
+      "name": "Pócima de artesano veloz"
+    },
+    {
+      "id": 20483,
+      "name": "Pócima de recolector veloz"
+    },
+    {
+      "id": 20484,
+      "name": "Transformación en castillo de arena"
+    },
+    {
+      "id": 20508,
+      "name": "Título: Aquí estoy yo"
+    },
+    {
+      "id": 20509,
+      "name": "Título: Untador profesional"
+    },
+    {
+      "id": 20510,
+      "name": "Título: Fardón de la fábrica"
+    },
+    {
+      "id": 20511,
+      "name": "Título: Seductor de guardias"
+    },
+    {
+      "id": 20513,
+      "name": "Título: Buscapeleas"
+    },
+    {
+      "id": 20514,
+      "name": "Título: Degollabworks"
+    },
+    {
+      "id": 20515,
+      "name": "Título: Experto en bworks"
+    },
+    {
+      "id": 20516,
+      "name": "Título: Rey estrujador de Brakmar"
+    },
+    {
+      "id": 20534,
+      "name": "Soy una galletita"
+    },
+    {
+      "id": 20691,
+      "name": "Pergamino of Farmergency"
+    },
+    {
+      "id": 20782,
+      "name": "Título: Héroe tenaz de nación"
+    },
+    {
+      "id": 20783,
+      "name": "Título: Takoyakitorista"
+    },
+    {
+      "id": 20824,
+      "name": "Artepócima excepcional"
+    },
+    {
+      "id": 20966,
+      "name": "Chocolate de trébol"
+    },
+    {
+      "id": 21513,
+      "name": "Hada de corazón"
+    },
+    {
+      "id": 21591,
+      "name": "Hada artificial de los cinco años"
+    },
+    {
+      "id": 21597,
+      "name": "Título: ¡Choca esos cinco!"
+    },
+    {
+      "id": 21620,
+      "name": "Título de Zinitud"
+    },
+    {
+      "id": 22044,
+      "name": "Hot-dog"
+    },
+    {
+      "id": 22146,
+      "name": "Pócima de experiencia usada"
+    },
+    {
+      "id": 22151,
+      "name": "Pan Elf'Hico"
+    },
+    {
+      "id": 22490,
+      "name": "Pócima de botín usada"
+    },
+    {
+      "id": 22491,
+      "name": "Pócima de regeneración"
+    },
+    {
+      "id": 22574,
+      "name": "Pan dracónico"
+    },
+    {
+      "id": 22575,
+      "name": "Huevos revueltos"
+    },
+    {
+      "id": 22578,
+      "name": "Pan planchado"
+    },
+    {
+      "id": 22579,
+      "name": "Pan negwo"
+    },
+    {
+      "id": 22580,
+      "name": "Pan parapán"
+    },
+    {
+      "id": 22581,
+      "name": "Pan divino"
+    },
+    {
+      "id": 22582,
+      "name": "Pan semitemporal"
+    },
+    {
+      "id": 22583,
+      "name": "Taguela"
+    },
+    {
+      "id": 22584,
+      "name": "Pan vudú"
+    },
+    {
+      "id": 22585,
+      "name": "Pan del Zinit"
+    },
+    {
+      "id": 22586,
+      "name": "Bizcocho de las playas"
+    },
+    {
+      "id": 22587,
+      "name": "Tarta de moras"
+    },
+    {
+      "id": 24246,
+      "name": "Título: Usurpador de los regalos de Nawidad"
+    },
+    {
+      "id": 24265,
+      "name": "Venda de momia"
+    },
+    {
+      "id": 24280,
+      "name": "Sarcófago"
+    },
+    {
+      "id": 24369,
+      "name": "Cofre de batalla pequeño 80"
+    },
+    {
+      "id": 24370,
+      "name": "Cofre de batalla 80"
+    },
+    {
+      "id": 24371,
+      "name": "Cofre de batalla grande 80"
+    },
+    {
+      "id": 24372,
+      "name": "Cofre de batalla gigante 80"
+    },
+    {
+      "id": 24741,
+      "name": "Cofre de batalla pequeño 110"
+    },
+    {
+      "id": 24742,
+      "name": "Cofre de batalla 110"
+    },
+    {
+      "id": 24743,
+      "name": "Cofre de batalla grande 110"
+    },
+    {
+      "id": 24744,
+      "name": "Cofre de batalla gigante 110"
+    },
+    {
+      "id": 24746,
+      "name": "Cofre de batalla pequeño 140"
+    },
+    {
+      "id": 24747,
+      "name": "Cofre de batalla 140"
+    },
+    {
+      "id": 24748,
+      "name": "Cofre de batalla grande 140"
+    },
+    {
+      "id": 24749,
+      "name": "Cofre de batalla gigante 140"
+    },
+    {
+      "id": 24750,
+      "name": "Cofre de batalla pequeño 170"
+    },
+    {
+      "id": 24751,
+      "name": "Cofre de batalla 170"
+    },
+    {
+      "id": 24752,
+      "name": "Cofre de batalla grande 170"
+    },
+    {
+      "id": 24753,
+      "name": "Cofre de batalla gigante 170"
+    },
+    {
+      "id": 24754,
+      "name": "Cofre de batalla pequeño 200"
+    },
+    {
+      "id": 24755,
+      "name": "Cofre de batalla 200"
+    },
+    {
+      "id": 24756,
+      "name": "Cofre de batalla grande 200"
+    },
+    {
+      "id": 24757,
+      "name": "Cofre de batalla gigante 200"
+    },
+    {
+      "id": 24836,
+      "name": "Pergamino de neutralidad"
+    },
+    {
+      "id": 25057,
+      "name": "Título: Patrón de las artes"
+    },
+    {
+      "id": 25100,
+      "name": "Cambio de escudo de gremio"
+    },
+    {
+      "id": 25101,
+      "name": "Cambio de nombre de gremio"
+    },
+    {
+      "id": 25102,
+      "name": "Título: Corazón derretido"
+    },
+    {
+      "id": 25235,
+      "name": "Título: El inmortal"
+    },
+    {
+      "id": 25236,
+      "name": "Título: El vengador"
+    },
+    {
+      "id": 25237,
+      "name": "Título: ¡El fuego de las tinieblas!"
+    },
+    {
+      "id": 25238,
+      "name": "Título: ¡No ha zido fázil!"
+    },
+    {
+      "id": 25239,
+      "name": "Título: Pájaro de mal agüero"
+    },
+    {
+      "id": 25240,
+      "name": "Título: Se escapó de Ful Moon"
+    },
+    {
+      "id": 25241,
+      "name": "Título: Fuerte como Nogord"
+    },
+    {
+      "id": 26276,
+      "name": "Título: Mercenari{[1*]?a:o} supersónic{[1*]?a:o}"
+    },
+    {
+      "id": 26277,
+      "name": "Título: Amigo de los charcosos"
+    },
+    {
+      "id": 26328,
+      "name": "Leleche de Kamuuumila"
+    },
+    {
+      "id": 26354,
+      "name": "Cazador de yokais"
+    },
+    {
+      "id": 26367,
+      "name": "Título: El ritmo en la sangre"
+    },
+    {
+      "id": 26479,
+      "name": "Título: {[1*]?Princesa :Príncipe} de las flores"
+    },
+    {
+      "id": 26480,
+      "name": "Título: De las tierras heladas"
+    },
+    {
+      "id": 26679,
+      "name": "Título: De cero a héroe"
+    },
+    {
+      "id": 26680,
+      "name": "Título: Guerrero de la tormenta potente"
+    },
+    {
+      "id": 26681,
+      "name": "Título: Héroe de Anjatan"
+    },
+    {
+      "id": 27069,
+      "name": "Título \"Gran costurero de los Doce\""
+    },
+    {
+      "id": 27347,
+      "name": "Ensalada de plantala"
+    },
+    {
+      "id": 27348,
+      "name": "Paté de pandisidente"
+    },
+    {
+      "id": 27349,
+      "name": "Carbonada de plaguepardo"
+    },
+    {
+      "id": 27511,
+      "name": "Título: Cazador de enigmas 977"
+    },
+    {
+      "id": 27558,
+      "name": "Llave de intervención del conde Kontatrás"
+    },
+    {
+      "id": 27571,
+      "name": "Título: Maestro de enigmas 977"
+    },
+    {
+      "id": 27576,
+      "name": "Pócima de experiencia"
+    },
+    {
+      "id": 27577,
+      "name": "Pócima de botín"
+    },
+    {
+      "id": 27579,
+      "name": "Pócima de recolección"
+    },
+    {
+      "id": 27922,
+      "name": "Llave de intervención de Aguabrial"
+    },
+    {
+      "id": 27988,
+      "name": "Cofre de batalla pequeño 230"
+    },
+    {
+      "id": 27989,
+      "name": "Cofre de batalla 230"
+    },
+    {
+      "id": 27990,
+      "name": "Cofre de batalla grande 230"
+    },
+    {
+      "id": 27991,
+      "name": "Cofre de batalla gigante 230"
+    },
+    {
+      "id": 28028,
+      "name": "Encantamiento imperfecto de Feca"
+    },
+    {
+      "id": 28029,
+      "name": "Encantamiento eterno de Feca"
+    },
+    {
+      "id": 28030,
+      "name": "Encantamiento divino de Feca"
+    },
+    {
+      "id": 28032,
+      "name": "Pan de Osamosa"
+    },
+    {
+      "id": 28033,
+      "name": "Pikatoste"
+    },
+    {
+      "id": 28034,
+      "name": "Craipe"
+    },
+    {
+      "id": 28789,
+      "name": "Llave de la brecha definitiva de Frigost"
+    },
+    {
+      "id": 28790,
+      "name": "Llave de la brecha definitiva del Zinit"
+    },
+    {
+      "id": 28821,
+      "name": "Cofre de la brecha de Tainela"
+    },
+    {
+      "id": 28935,
+      "name": "Cofre de la brecha de Sufokia"
+    },
+    {
+      "id": 28936,
+      "name": "Cofre de la brecha definitiva de Frigost"
+    },
+    {
+      "id": 28937,
+      "name": "Cofre de la brecha de Bonta"
+    },
+    {
+      "id": 28938,
+      "name": "Cofre de la brecha de Moon"
+    },
+    {
+      "id": 28939,
+      "name": "Cofre de la brecha definitiva del Monte Zinit"
+    },
+    {
+      "id": 28941,
+      "name": "Título: Loco del gatillo"
+    },
+    {
+      "id": 28986,
+      "name": "Cofre de la brecha de Amakna"
+    },
+    {
+      "id": 28987,
+      "name": "Cofre de la brecha de Osamosa"
+    },
+    {
+      "id": 29042,
+      "name": "Pan infernal"
+    },
+    {
+      "id": 29043,
+      "name": "Pan tagrama"
+    },
+    {
+      "id": 29237,
+      "name": "\".#@)é"
+    },
+    {
+      "id": 29238,
+      "name": "\".#@)é"
+    },
+    {
+      "id": 29411,
+      "name": "Llave de intervención de Anathar"
+    },
+    {
+      "id": 29421,
+      "name": "Título: Insumiso"
+    },
+    {
+      "id": 29549,
+      "name": "Llave del palacio de Rushu"
+    },
+    {
+      "id": 29594,
+      "name": "Llave de la brecha definitiva de la Fab'hugruta"
+    },
+    {
+      "id": 29598,
+      "name": "Cofre de la brecha de la Fab'hugruta"
+    },
+    {
+      "id": 29599,
+      "name": "Cofre de la brecha de la Fab'hugruta"
+    },
+    {
+      "id": 29616,
+      "name": "Llave del Pico del Monte Zinit"
+    },
+    {
+      "id": 29668,
+      "name": "Pócima excarnada"
+    },
+    {
+      "id": 29669,
+      "name": "Luna Llena"
+    },
+    {
+      "id": 29670,
+      "name": "Símbolo del Antro del Cuervo Negro"
+    },
+    {
+      "id": 29671,
+      "name": "Llave del Antro de Jálrog"
+    },
+    {
+      "id": 29672,
+      "name": "Llave del Antro del Dragocerdo"
+    },
+    {
+      "id": 29673,
+      "name": "Símbolo de la Meseta de los Altos Vuelos"
+    },
+    {
+      "id": 29674,
+      "name": "Tótem de Moon"
+    },
+    {
+      "id": 29675,
+      "name": "Llave del Antro de Nogord, el Alado"
+    },
+    {
+      "id": 29676,
+      "name": "Pócima sombría"
+    },
+    {
+      "id": 29709,
+      "name": "Fragmento de la llave de la Brecha de Tainela"
+    },
+    {
+      "id": 29710,
+      "name": "Fragmento de llave de la Brecha de Sufokia"
+    },
+    {
+      "id": 29711,
+      "name": "Fragmento de llave de la Brecha de Amakna"
+    },
+    {
+      "id": 29712,
+      "name": "Fragmento de llave de la Brecha de Bonta"
+    },
+    {
+      "id": 29713,
+      "name": "Fragmento de llave de la Brecha de Moon"
+    },
+    {
+      "id": 29714,
+      "name": "Encantamiento bruto de Feca"
+    },
+    {
+      "id": 29715,
+      "name": "Encantamiento sólido de Feca"
+    },
+    {
+      "id": 29716,
+      "name": "Encantamiento duradero de Feca"
+    },
+    {
+      "id": 29717,
+      "name": "Encantamiento refinado de Feca"
+    },
+    {
+      "id": 29718,
+      "name": "Encantamiento exquisito de Feca"
+    },
+    {
+      "id": 29719,
+      "name": "Encantamiento místico de Feca"
+    },
+    {
+      "id": 30015,
+      "name": "Cofre de la Casa de la Miaubuelita"
+    },
+    {
+      "id": 30024,
+      "name": "Título de Míster Sufokia"
+    },
+    {
+      "id": 30032,
+      "name": "Cofre de la Mazmorra Jalató"
+    },
+    {
+      "id": 30033,
+      "name": "Cofre de la mazmorra Tofullero"
+    },
+    {
+      "id": 30034,
+      "name": "Cofre de la mazmorra Larventura"
+    },
+    {
+      "id": 30035,
+      "name": "Cofre de la Mazmorra Abrakna"
+    },
+    {
+      "id": 30036,
+      "name": "Cofre de la Mazmorra de los Esqueletos"
+    },
+    {
+      "id": 30037,
+      "name": "Cofre de la mazmorra Pío Lajop"
+    },
+    {
+      "id": 30038,
+      "name": "Cofre de la mazmorra Pasto Real"
+    },
+    {
+      "id": 30039,
+      "name": "Cofre de la mazmorra Montaña Conohos"
+    },
+    {
+      "id": 30040,
+      "name": "Cofre de la mazmorra de las plantas"
+    },
+    {
+      "id": 30041,
+      "name": "Cofre de la Torre Mineral 36"
+    },
+    {
+      "id": 30042,
+      "name": "Cofre de la mazmorra Perluca Negra"
+    },
+    {
+      "id": 30043,
+      "name": "Cofre de la mazmorra Antro de la Bestia"
+    },
+    {
+      "id": 30044,
+      "name": "Cofre de la mazmorra Trinchera de Huelguerreros"
+    },
+    {
+      "id": 30045,
+      "name": "Cofre de la mazmorra Dique Eskuálido"
+    },
+    {
+      "id": 30046,
+      "name": "Cofre de la Mazmorra Kaskarlusca"
+    },
+    {
+      "id": 30047,
+      "name": "Cofre de la mazmorra Kokolost Island"
+    },
+    {
+      "id": 30048,
+      "name": "Cofre de la Mazmorra del Cangwejo Real"
+    },
+    {
+      "id": 30049,
+      "name": "Cofre de la mazmorra Ratacumbas"
+    },
+    {
+      "id": 30050,
+      "name": "Cofre de la mazmorra de los grápulas"
+    },
+    {
+      "id": 30051,
+      "name": "Cofre de la mazmorra Cuerbokueva"
+    },
+    {
+      "id": 30052,
+      "name": "Cofre de la mazmorra Pestrucería Abandonada"
+    },
+    {
+      "id": 30053,
+      "name": "Cofre de la mazmorra Balinería"
+    },
+    {
+      "id": 30054,
+      "name": "Cofre de la Mazmorra Booskito"
+    },
+    {
+      "id": 30055,
+      "name": "Cofre de la Mazmorra Milubo"
+    },
+    {
+      "id": 30056,
+      "name": "Cofre de la Mazmorra Arakna"
+    },
+    {
+      "id": 30057,
+      "name": "Cofre de la mazmorra Sliptorium"
+    },
+    {
+      "id": 30058,
+      "name": "Cofre de la mazmorra de los zombizarros"
+    },
+    {
+      "id": 30059,
+      "name": "Cofre de la mazmorra del Castillo de Wagnar"
+    },
+    {
+      "id": 30060,
+      "name": "Cofre de la mazmorra Factor Trool"
+    },
+    {
+      "id": 30061,
+      "name": "Señor de la mazmorra Bilbyplaya"
+    },
+    {
+      "id": 30062,
+      "name": "Cofre de la mazmorra Caverna Brizlónica"
+    },
+    {
+      "id": 30063,
+      "name": "Cofres de la Mazmorra de los Escarahojas"
+    },
+    {
+      "id": 30064,
+      "name": "Cofre de la Mazmorra de los Chafers"
+    },
+    {
+      "id": 30065,
+      "name": "Cofre de la mazmorra Guarida de los Supervillanos"
+    },
+    {
+      "id": 30066,
+      "name": "Señor de la mazmorra Arena Danzante"
+    },
+    {
+      "id": 30067,
+      "name": "Cofre de la mazmorra Glaciar Cornudo"
+    },
+    {
+      "id": 30068,
+      "name": "Cofre de la mazmorra Caseta del Yech'Ti'Wawa"
+    },
+    {
+      "id": 30069,
+      "name": "Cofre de la Mazmorra Gelatinada"
+    },
+    {
+      "id": 30070,
+      "name": "Cofre de la Mazmorra de los Riktus"
+    },
+    {
+      "id": 30071,
+      "name": "Cofre de la mazmorra de los susurradores"
+    },
+    {
+      "id": 30072,
+      "name": "Cofre de la mazmorra Cono de Crújian Jerry"
+    },
+    {
+      "id": 30073,
+      "name": "Cofre de la mazmorra Ala de la Embajadora"
+    },
+    {
+      "id": 30074,
+      "name": "Cofre de la Mazmorra Mekafábrica"
+    },
+    {
+      "id": 30075,
+      "name": "Cofre de la mazmorra Meseta Pikapik"
+    },
+    {
+      "id": 30076,
+      "name": "Cofre de la Mazmorra Atormentada"
+    },
+    {
+      "id": 30077,
+      "name": "Cofre de la mazmorra Caverna Samaraciosa"
+    },
+    {
+      "id": 30078,
+      "name": "Cofre de la Mazmorra del Charcoso Real"
+    },
+    {
+      "id": 30079,
+      "name": "Cofre de la mazmorra La Pischina"
+    },
+    {
+      "id": 30080,
+      "name": "Cofre de la mazmorra Templo del Empeladol Zollo"
+    },
+    {
+      "id": 30081,
+      "name": "Cofre de la Mazmorra de los Black Wabbits"
+    },
+    {
+      "id": 30082,
+      "name": "Cofre del Jawdín de la Weina"
+    },
+    {
+      "id": 30083,
+      "name": "Cofre de la Mazmorra Fanática"
+    },
+    {
+      "id": 30084,
+      "name": "Cofre de la Mazmorra Negraspora"
+    },
+    {
+      "id": 30085,
+      "name": "Cofre de la Hacienda de la Topera Oculta"
+    },
+    {
+      "id": 30086,
+      "name": "Cofre de la Mazmorra Abráknida"
+    },
+    {
+      "id": 30087,
+      "name": "Cofre de la Mazmorra de los Viticultistas"
+    },
+    {
+      "id": 30088,
+      "name": "Cofre de la mazmorra Castillo del Wey Wabbit"
+    },
+    {
+      "id": 30089,
+      "name": "Cofre de la Mazmorra de los Zombbits"
+    },
+    {
+      "id": 30090,
+      "name": "Cofre de la Mazmorra de Sramvil"
+    },
+    {
+      "id": 30091,
+      "name": "Cofre de la Mazmorra de Anutropía"
+    },
+    {
+      "id": 30092,
+      "name": "Cofre de la Mazmorra de los Blops"
+    },
+    {
+      "id": 30093,
+      "name": "Cofre de la Mazmorra de las Plantalas"
+    },
+    {
+      "id": 30094,
+      "name": "Cofre de la mazmorra de los xelots"
+    },
+    {
+      "id": 30095,
+      "name": "Cofre de la mazmorra de los bulots"
+    },
+    {
+      "id": 30096,
+      "name": "Cofre de la mazmorra Guarida de Kali"
+    },
+    {
+      "id": 30097,
+      "name": "Cofre de la Mazmorra Riktus de Élite"
+    },
+    {
+      "id": 30098,
+      "name": "Cofre de la Mazmorra de los Tymadores"
+    },
+    {
+      "id": 30099,
+      "name": "Cofre de la Mazmorra de los Encapuchados"
+    },
+    {
+      "id": 30100,
+      "name": "Cofre de la mazmorra Patapinxería"
+    },
+    {
+      "id": 30101,
+      "name": "Cofre de la mazmorra de los cocodrails"
+    },
+    {
+      "id": 30102,
+      "name": "Cofre de la Mazmorra de las Kanívoras"
+    },
+    {
+      "id": 30103,
+      "name": "Cofre de la Mazmorra Kaníbola"
+    },
+    {
+      "id": 30104,
+      "name": "Cofre de la Mazmorra Tropikoko"
+    },
+    {
+      "id": 30105,
+      "name": "Cofre de la mazmorra de los pandisidentes"
+    },
+    {
+      "id": 30106,
+      "name": "Cofre de la Mazmorra Gerbilinda"
+    },
+    {
+      "id": 30107,
+      "name": "Cofre de la mazmorra Guarida de los Tejaroxores"
+    },
+    {
+      "id": 30108,
+      "name": "Cofre de la Mazmorra de Dor'Mor"
+    },
+    {
+      "id": 30109,
+      "name": "Cofre de la mazmorra Santuario de los Dragohuevos"
+    },
+    {
+      "id": 30110,
+      "name": "Cofre de la Mazmorra Éterno"
+    },
+    {
+      "id": 30111,
+      "name": "Cofre de la Torre Mineral 186"
+    },
+    {
+      "id": 30112,
+      "name": "Cofre de la Mazmorra Fantasmas de Pandala"
+    },
+    {
+      "id": 30113,
+      "name": "Cofre de la mazmorra de los plaguepardos"
+    },
+    {
+      "id": 30114,
+      "name": "Cofre de la Mazmorra Buhatrás"
+    },
+    {
+      "id": 30115,
+      "name": "Cofre de la Torre Mineral 201"
+    },
+    {
+      "id": 30116,
+      "name": "Cofre de la Mazmorra Nievajas"
+    },
+    {
+      "id": 30117,
+      "name": "Cofre de la Mazmorra Crustariscos"
+    },
+    {
+      "id": 30118,
+      "name": "Cofre de la Mazmorra Solgazanes"
+    },
+    {
+      "id": 30119,
+      "name": "Cofre de la Mazmorra Vandalienados"
+    },
+    {
+      "id": 30120,
+      "name": "Cofre de la Mazmorra de los Plantiguardias"
+    },
+    {
+      "id": 30121,
+      "name": "Cofre de la Mazmorra de los Güinos"
+    },
+    {
+      "id": 30122,
+      "name": "Cofre de la Mazmorra de los Escapatarazones"
+    },
+    {
+      "id": 30123,
+      "name": "Cofre de la Mazmorra de los Fitoformes"
+    },
+    {
+      "id": 30124,
+      "name": "Cofre de la Mazmorra de los Vaciantes"
+    },
+    {
+      "id": 30125,
+      "name": "Cofre de la Mazmorra de los Demorribles"
+    },
+    {
+      "id": 30126,
+      "name": "Cofre de la Mazmorra de los Idos"
+    },
+    {
+      "id": 30127,
+      "name": "Cofre de la Mazmorra de los Devastadores"
+    },
+    {
+      "id": 30128,
+      "name": "Cofre de jefe supremo rústico"
+    },
+    {
+      "id": 30129,
+      "name": "Cofre de jefe supremo bruto"
+    },
+    {
+      "id": 30130,
+      "name": "Cofre de jefe supremo sólido"
+    },
+    {
+      "id": 30131,
+      "name": "Cofre de jefe supremo duradero"
+    },
+    {
+      "id": 30132,
+      "name": "Cofre de jefe supremo exquisito"
+    },
+    {
+      "id": 30133,
+      "name": "Cofre de jefe supremo místico"
+    },
+    {
+      "id": 30134,
+      "name": "Cofre de jefe supremo eterno"
+    },
+    {
+      "id": 30135,
+      "name": "Cofre de jefe supremo infernal"
+    },
+    {
+      "id": 30136,
+      "name": "Título Exterminador de nuevos horizontes"
+    },
+    {
+      "id": 30705,
+      "name": "Título: Artista 2D WAKFU"
+    },
+    {
+      "id": 30722,
+      "name": "Llave de intervención de Cire Momore anquilosado"
+    },
+    {
+      "id": 30766,
+      "name": "Título: Vencedor de la Wakfu Warriors: 10 years edition"
+    },
+    {
+      "id": 30776,
+      "name": "Llave de intervención de Cire Momore"
+    },
+    {
+      "id": 30811,
+      "name": "Cofre de la Mazmorra Tripulación del Pulpo"
+    },
+    {
+      "id": 30820,
+      "name": "Cofre de la Mazmorra Fallecinerados"
+    },
+    {
+      "id": 30821,
+      "name": "Cofre de la Mazmorra Martilloseco"
+    },
+    {
+      "id": 30822,
+      "name": "Cofre de la Mazmorra Pezgajosos Abisales"
+    },
+    {
+      "id": 30823,
+      "name": "Cofre de la Mazmorra Steamers"
+    },
+    {
+      "id": 30937,
+      "name": "Cofre de la mazmorra de las Miss Adefesio"
+    },
+    {
+      "id": 31011,
+      "name": "Encantamiento frágil de Feca"
+    },
+    {
+      "id": 31015,
+      "name": "Pócima de recolección del flujo"
+    },
+    {
+      "id": 31159,
+      "name": "Frasco de regeneración"
+    },
+    {
+      "id": 31166,
+      "name": "Pócima de recolección"
+    },
+    {
+      "id": 31218,
+      "name": "Encantamiento precioso de Feca"
+    },
+    {
+      "id": 31389,
+      "name": "Llave de la tumba de Tal Kasha"
+    },
+    {
+      "id": 31451,
+      "name": "Cofre de la Mazmorra Verdutante"
+    },
+    {
+      "id": 31452,
+      "name": "Cofre de la Mazmorra Arenóptero"
+    },
+    {
+      "id": 31507,
+      "name": "Cofre de jefe supremo valioso"
+    },
+    {
+      "id": 31573,
+      "name": "Encantamiento infernal de Feca"
+    },
+    {
+      "id": 31574,
+      "name": "Cofre del Necromundo"
+    },
+    {
+      "id": 31805,
+      "name": "Encantamiento ancestral de Feca"
+    },
+    {
+      "id": 32320,
+      "name": "Cofre de la Mazmorra de los Ferocirraptores"
+    },
+    {
+      "id": 32321,
+      "name": "Cofre de la Mazmorra de los Primacizos perturbado"
+    },
+    {
+      "id": 32322,
+      "name": "Cofre de la Mazmorra de los Sabanastrales perturbado"
+    },
+    {
+      "id": 32323,
+      "name": "Cofre de la Mazmorra Bwork perturbado"
+    },
+    {
+      "id": 32324,
+      "name": "Cofre de la Mazmorra de las Máquinas de Nox perturbado"
+    },
+    {
+      "id": 32327,
+      "name": "Cofre de batalla pequeño 245"
+    },
+    {
+      "id": 32328,
+      "name": "Cofre de batalla 245"
+    },
+    {
+      "id": 32329,
+      "name": "Cofre de batalla grande 245"
+    },
+    {
+      "id": 32330,
+      "name": "Cofre de batalla gigante 245"
+    },
+    {
+      "id": 32351,
+      "name": "Dofus Ébano"
+    },
+    {
+      "id": 32356,
+      "name": "Pan granaje"
+    },
+    {
+      "id": 32357,
+      "name": "Pang-pong"
+    },
+    {
+      "id": 32358,
+      "name": "Serapán"
+    },
+    {
+      "id": 32359,
+      "name": "Pansalva"
+    },
+    {
+      "id": 32366,
+      "name": "Llave del Corazón del Reloj de Nox"
+    },
+    {
+      "id": 32418,
+      "name": "Cofre del Teatro Intemporal"
+    },
+    {
+      "id": 32468,
+      "name": "Cofre de la Mazmorra de los Primacizos"
+    },
+    {
+      "id": 32469,
+      "name": "Cofre de la Mazmorra de los Sabanastrales"
+    },
+    {
+      "id": 32470,
+      "name": "Cofre de la Mazmorra del Clan de Bworkana"
+    },
+    {
+      "id": 32471,
+      "name": "Cofre de la Mazmorra de las Máquinas de Nox"
+    },
+    {
+      "id": 32473,
+      "name": "Esquirlas de Wakfu"
+    },
+    {
+      "id": 32540,
+      "name": "Anillo susurrín ancestral"
+    },
+    {
+      "id": 32541,
+      "name": "Anillo susurrín ancestral"
+    },
+    {
+      "id": 32542,
+      "name": "Recuerdo ancestral"
+    },
+    {
+      "id": 32543,
+      "name": "Recuerdo ancestral"
+    },
+    {
+      "id": 32544,
+      "name": "Botas de Noke ancestrales"
+    },
+    {
+      "id": 32545,
+      "name": "Botas de Noke ancestrales"
+    },
+    {
+      "id": 32546,
+      "name": "Actibotas ancestrales"
+    },
+    {
+      "id": 32547,
+      "name": "Actibotas ancestrales"
+    },
+    {
+      "id": 32548,
+      "name": "Mekapa ancestral"
+    },
+    {
+      "id": 32549,
+      "name": "Mekapa ancestral"
+    },
+    {
+      "id": 32550,
+      "name": "Capuela ancestral"
+    },
+    {
+      "id": 32551,
+      "name": "Capuela ancestral"
+    },
+    {
+      "id": 32552,
+      "name": "Monóculo ancestral"
+    },
+    {
+      "id": 32553,
+      "name": "Monóculo ancestral"
+    },
+    {
+      "id": 32554,
+      "name": "Cascañoso ancestral"
+    },
+    {
+      "id": 32555,
+      "name": "Cascañoso ancestral"
+    },
+    {
+      "id": 32556,
+      "name": "Gelaturón ancestral"
+    },
+    {
+      "id": 32557,
+      "name": "Gelaturón ancestral"
+    },
+    {
+      "id": 32558,
+      "name": "La sombra apretada ancestral"
+    },
+    {
+      "id": 32559,
+      "name": "La sombra apretada ancestral"
+    },
+    {
+      "id": 32560,
+      "name": "Las Cegatas ancestrales"
+    },
+    {
+      "id": 32561,
+      "name": "Las Cegatas ancestrales"
+    },
+    {
+      "id": 32562,
+      "name": "Homblelas del Empeladol ancestrales"
+    },
+    {
+      "id": 32563,
+      "name": "Homblelas del Empeladol ancestrales"
+    },
+    {
+      "id": 32564,
+      "name": "Armonía ancestral"
+    },
+    {
+      "id": 32565,
+      "name": "Armonía ancestral"
+    },
+    {
+      "id": 32566,
+      "name": "El reloj de arena de Xelor ancestral"
+    },
+    {
+      "id": 32567,
+      "name": "El reloj de arena de Xelor ancestral"
+    },
+    {
+      "id": 32568,
+      "name": "Coraza del Corazón Ardiente ancestal"
+    },
+    {
+      "id": 32569,
+      "name": "Coraza del Corazón Ardiente ancestal"
+    },
+    {
+      "id": 32570,
+      "name": "Torso ancestral"
+    },
+    {
+      "id": 32571,
+      "name": "Torso ancestral"
+    },
+    {
+      "id": 32580,
+      "name": "Carne sabrosa"
+    },
+    {
+      "id": 32581,
+      "name": "Albóndigas de carne kitea"
+    },
+    {
+      "id": 32582,
+      "name": "Sandwinamita"
+    },
+    {
+      "id": 32583,
+      "name": "Brocheta karnívora"
+    },
+    {
+      "id": 32584,
+      "name": "Pekobowl"
+    },
+    {
+      "id": 32613,
+      "name": "Emblema de relojero I"
+    },
+    {
+      "id": 32614,
+      "name": "Emblema de relojero II"
+    },
+    {
+      "id": 32615,
+      "name": "Emblema de relojero III"
+    },
+    {
+      "id": 32616,
+      "name": "Emblema de relojero IV"
+    },
+    {
+      "id": 32617,
+      "name": "Emblema de relojero V"
+    },
+    {
+      "id": 32618,
+      "name": "Emblema de relojero VI"
+    },
+    {
+      "id": 32624,
+      "name": "Cofre de jefe supremo ancestral"
+    },
+    {
+      "id": 32625,
+      "name": "Fragmento de hopalanda de Nox"
+    },
+    {
+      "id": 32627,
+      "name": "Adrezo secundario I"
+    },
+    {
+      "id": 32628,
+      "name": "Adrezo secundario II"
+    },
+    {
+      "id": 32629,
+      "name": "Adrezo secundario III"
+    },
+    {
+      "id": 32630,
+      "name": "Bote I"
+    },
+    {
+      "id": 32631,
+      "name": "Bote II"
+    },
+    {
+      "id": 32632,
+      "name": "Bote III"
+    },
+    {
+      "id": 32633,
+      "name": "Juicio I"
+    },
+    {
+      "id": 32634,
+      "name": "Juicio II"
+    },
+    {
+      "id": 32635,
+      "name": "Juicio III"
+    },
+    {
+      "id": 32636,
+      "name": "Diagnóstico I"
+    },
+    {
+      "id": 32637,
+      "name": "Diagnóstico II"
+    },
+    {
+      "id": 32638,
+      "name": "Diagnóstico III"
+    },
+    {
+      "id": 32639,
+      "name": "Guardado crítico II"
+    },
+    {
+      "id": 32640,
+      "name": "Sello de Wakfu"
+    },
+    {
+      "id": 32641,
+      "name": "Anticipación única"
+    },
+    {
+      "id": 32642,
+      "name": "Absolución"
+    },
+    {
+      "id": 32643,
+      "name": "Castigo"
+    },
+    {
+      "id": 32644,
+      "name": "Secreto crítico"
+    },
+    {
+      "id": 32674,
+      "name": "Neolana real"
+    },
+    {
+      "id": 32675,
+      "name": "Pluma real"
+    },
+    {
+      "id": 32676,
+      "name": "Neoleleche de Muuugresa Real"
+    },
+    {
+      "id": 32677,
+      "name": "Neoojo del gólem"
+    },
+    {
+      "id": 32678,
+      "name": "Neocolmillo del Balí Real"
+    },
+    {
+      "id": 32679,
+      "name": "Neopurpurina"
+    },
+    {
+      "id": 32680,
+      "name": "Neopluma del Cuervo Negro"
+    },
+    {
+      "id": 32681,
+      "name": "Neobastoncillo helado"
+    },
+    {
+      "id": 32682,
+      "name": "Neocorteza de Abráknido Ancestral"
+    },
+    {
+      "id": 32683,
+      "name": "Neomanojo zanahowio"
+    },
+    {
+      "id": 32684,
+      "name": "Neofragmento de Remington"
+    },
+    {
+      "id": 32685,
+      "name": "Neocaja de Pandora"
+    },
+    {
+      "id": 32686,
+      "name": "Pelos de Ogrest"
+    },
+    {
+      "id": 32687,
+      "name": "Neoaura del Jalató Real"
+    },
+    {
+      "id": 32688,
+      "name": "Neoaura del Pío Real"
+    },
+    {
+      "id": 32689,
+      "name": "Neoaura de la Muuugresa Real"
+    },
+    {
+      "id": 32690,
+      "name": "Neoaura de Goel el Gólem"
+    },
+    {
+      "id": 32691,
+      "name": "Neoaura del Balí Real"
+    },
+    {
+      "id": 32692,
+      "name": "Neoaura de Vampyro"
+    },
+    {
+      "id": 32693,
+      "name": "Neoaura del Cuervo Negro"
+    },
+    {
+      "id": 32694,
+      "name": "Neoaura de Kya, Mizz Frizz"
+    },
+    {
+      "id": 32695,
+      "name": "Neoaura del Roble Blando"
+    },
+    {
+      "id": 32696,
+      "name": "Neoaura del Wey Wabbit"
+    },
+    {
+      "id": 32697,
+      "name": "Neoaura de Remington Smis"
+    },
+    {
+      "id": 32698,
+      "name": "Neoaura de Pandora"
+    },
+    {
+      "id": 32699,
+      "name": "Neoaura de Ogrest"
+    },
+    {
+      "id": 32700,
+      "name": "Carta del poeta al sabio"
+    },
+    {
+      "id": 32701,
+      "name": "Neopócima de regeneración"
+    },
+    {
+      "id": 32702,
+      "name": "Superneopócima de regeneración"
+    },
+    {
+      "id": 32729,
+      "name": "Título 'He hecho que se caiga el servidor (otra vez)'"
+    },
+    {
+      "id": 32730,
+      "name": "Título 'Neohéroe aguerrido'"
+    },
+    {
+      "id": 32731,
+      "name": "Título 'Neohéroe mítico'"
+    },
+    {
+      "id": 32732,
+      "name": "Título 'Neohéroe legendario'"
+    },
+    {
+      "id": 32733,
+      "name": "Título 'Neoparangón feca'"
+    },
+    {
+      "id": 32734,
+      "name": "Título 'Neoparangón osamodas'"
+    },
+    {
+      "id": 32735,
+      "name": "Título 'Neoparangón anutrof'"
+    },
+    {
+      "id": 32736,
+      "name": "Título 'Neoparangón sram'"
+    },
+    {
+      "id": 32737,
+      "name": "Título 'Neoparangón xelor'"
+    },
+    {
+      "id": 32738,
+      "name": "Título 'Neoparangón zurcarák'"
+    },
+    {
+      "id": 32739,
+      "name": "Título 'Neoparangón aniripsa'"
+    },
+    {
+      "id": 32740,
+      "name": "Título 'Neoparangón yopuka'"
+    },
+    {
+      "id": 32741,
+      "name": "Título 'Neoparangón ocra'"
+    },
+    {
+      "id": 32742,
+      "name": "Título 'Neoparangón sadida'"
+    },
+    {
+      "id": 32743,
+      "name": "Título 'Neoparangón sacrógrito'"
+    },
+    {
+      "id": 32744,
+      "name": "Título 'Neoparangón pandawa'"
+    },
+    {
+      "id": 32745,
+      "name": "Título 'Neoparangón tymador'"
+    },
+    {
+      "id": 32746,
+      "name": "Título 'Neoparangón zobal'"
+    },
+    {
+      "id": 32747,
+      "name": "Título 'Neoparangón uginak'"
+    },
+    {
+      "id": 32748,
+      "name": "Título 'Neoparangón steamer'"
+    },
+    {
+      "id": 32749,
+      "name": "Título 'Neoparangón selotrop'"
+    },
+    {
+      "id": 32750,
+      "name": "Título 'Neoparangón hipermago'"
+    },
+    {
+      "id": 32751,
+      "name": "Título 'Neogobernador primordial de Brakmar'"
+    },
+    {
+      "id": 32752,
+      "name": "Título 'Neogobernador primordial de Bonta'"
+    },
+    {
+      "id": 32753,
+      "name": "Título 'Neogobernador primordial de Sufokia'"
+    },
+    {
+      "id": 32754,
+      "name": "Título 'Neogobernador primordial de Amakna'"
+    },
+    {
+      "id": 32755,
+      "name": "Título 'Neoleñador original'"
+    },
+    {
+      "id": 32756,
+      "name": "Título 'Neoherbolario original'"
+    },
+    {
+      "id": 32757,
+      "name": "Título 'Neominero original'"
+    },
+    {
+      "id": 32758,
+      "name": "Título 'Neocampesino original'"
+    },
+    {
+      "id": 32759,
+      "name": "Título 'Neopescador original'"
+    },
+    {
+      "id": 32760,
+      "name": "Título 'Neopeletero original'"
+    },
+    {
+      "id": 32761,
+      "name": "Título 'Neorrecolector'"
+    },
+    {
+      "id": 32762,
+      "name": "Título 'Neotrabajador incansable'"
+    },
+    {
+      "id": 32763,
+      "name": "Título 'Neotrabajador'"
+    },
+    {
+      "id": 32764,
+      "name": "Título 'Neoarmero original'"
+    },
+    {
+      "id": 32765,
+      "name": "Título 'Neojoyero original'"
+    },
+    {
+      "id": 32766,
+      "name": "Título 'Neopanadero original'"
+    },
+    {
+      "id": 32767,
+      "name": "Título 'Neococinero original'"
+    },
+    {
+      "id": 32768,
+      "name": "Título 'Neoebanista original'"
+    },
+    {
+      "id": 32769,
+      "name": "Título 'Neomaestro de armas original'"
+    },
+    {
+      "id": 32770,
+      "name": "Título 'Neoarroquinero original'"
+    },
+    {
+      "id": 32771,
+      "name": "Título 'Neosastre original'"
+    },
+    {
+      "id": 32772,
+      "name": "Título 'Neoartesano'"
+    },
+    {
+      "id": 32773,
+      "name": "Título 'Neoexterminador'"
+    },
+    {
+      "id": 32774,
+      "name": "Título 'Neoexterminador supremo'"
+    },
+    {
+      "id": 32775,
+      "name": "Título 'Neoguardián del equilibrio'"
+    },
+    {
+      "id": 32776,
+      "name": "Título 'Neosalvador del Mundo de los Doce'"
+    },
+    {
+      "id": 32804,
+      "name": null
+    },
+    {
+      "id": 32805,
+      "name": null
+    },
+    {
+      "id": 32806,
+      "name": null
+    },
+    {
+      "id": 32807,
+      "name": null
+    },
+    {
+      "id": 32808,
+      "name": null
+    },
+    {
+      "id": 32809,
+      "name": null
+    },
+    {
+      "id": 32810,
+      "name": null
+    },
+    {
+      "id": 32811,
+      "name": null
+    },
+    {
+      "id": 32812,
+      "name": null
+    },
+    {
+      "id": 32813,
+      "name": null
+    },
+    {
+      "id": 32814,
+      "name": null
+    },
+    {
+      "id": 32815,
+      "name": null
+    },
+    {
+      "id": 32816,
+      "name": null
+    },
+    {
+      "id": 32818,
+      "name": null
+    },
+    {
+      "id": 32819,
+      "name": null
+    },
+    {
+      "id": 32820,
+      "name": null
+    },
+    {
+      "id": 32821,
+      "name": null
+    },
+    {
+      "id": 32822,
+      "name": null
+    },
+    {
+      "id": 32823,
+      "name": null
+    },
+    {
+      "id": 32824,
+      "name": null
+    },
+    {
+      "id": 32825,
+      "name": null
+    },
+    {
+      "id": 32826,
+      "name": null
+    },
+    {
+      "id": 32827,
+      "name": null
+    },
+    {
+      "id": 32828,
+      "name": null
+    },
+    {
+      "id": 32829,
+      "name": null
+    },
+    {
+      "id": 32830,
+      "name": null
+    },
+    {
+      "id": 32831,
+      "name": null
+    },
+    {
+      "id": 32832,
+      "name": null
+    },
+    {
+      "id": 32833,
+      "name": null
+    },
+    {
+      "id": 32834,
+      "name": null
+    },
+    {
+      "id": 32835,
+      "name": null
+    },
+    {
+      "id": 32838,
+      "name": "Neotransporte"
+    }
+  
+    
     ],
     "instances": [
         { "id": 203, "name": "Corazón del Reloj de Nox" },
