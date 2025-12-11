@@ -96275,5 +96275,4726 @@
         "steleIntervention": 0
       }
     ]
+  },
+  {
+    "monsterId": 5664,
+    "loots": [
+      {
+        "itemId": 32473,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32303,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32303,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32303,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32303,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32303,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32625,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32473,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32625,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32625,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32473,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32473,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32625,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32473,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32625,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32625,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32473,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32473,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32625,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32625,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32473,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32474,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32476,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32478,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32480,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32482,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32484,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32488,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32490,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32492,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32494,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32511,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32505,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32507,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32509,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32503,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32513,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32515,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32517,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32556,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32564,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32552,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32548,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32568,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32560,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32544,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32540,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32558,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32566,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32554,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32550,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32570,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32562,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32546,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32542,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32627,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32630,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32633,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32636,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32639,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32496,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32498,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32500,
+        "rate": 0.016,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32475,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32477,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32479,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32481,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32483,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32485,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32487,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32489,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32491,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32493,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32495,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32512,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32506,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32508,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32510,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32504,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32514,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32516,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32518,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32557,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32565,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32553,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32549,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32569,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32561,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32545,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32541,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32559,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32567,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32555,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32551,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32571,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32563,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32547,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32543,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32628,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32631,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32634,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32637,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32497,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32499,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32613,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32614,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32615,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32616,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32617,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32618,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32629,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32632,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32635,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32638,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32501,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29851,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5791,
+    "loots": [
+      {
+        "itemId": 12686,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9256,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32674,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9253,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9489,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9392,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9507,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9495,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 10654,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 10653,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32687,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29848,
+        "rate": 0.00025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5792,
+    "loots": [
+      {
+        "itemId": 20672,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9550,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32675,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 2214,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9319,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9242,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 9552,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20667,
+        "rate": 0.008,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 10652,
+        "rate": 0.003,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32688,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29848,
+        "rate": 0.00025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5793,
+    "loots": [
+      {
+        "itemId": 20968,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26400,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32676,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25156,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25158,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25162,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25157,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25164,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25159,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25160,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25163,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25161,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24185,
+        "rate": 0.008,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32689,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29848,
+        "rate": 0.00025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5794,
+    "loots": [
+      {
+        "itemId": 21001,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30388,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30651,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32677,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30406,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30419,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30411,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30408,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30429,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30402,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30414,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30424,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30392,
+        "rate": 0.008,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32690,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30393,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29848,
+        "rate": 0.00025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5795,
+    "loots": [
+      {
+        "itemId": 21002,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29694,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26588,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32678,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26418,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25437,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25439,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25443,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25442,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25444,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25445,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25441,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25440,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25438,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26573,
+        "rate": 0.0025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32691,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26508,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29848,
+        "rate": 0.00025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5796,
+    "loots": [
+      {
+        "itemId": 21003,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32679,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 12873,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29691,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23368,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 13547,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 13545,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23367,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23369,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 13548,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 13544,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23366,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 12887,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30137,
+        "rate": 0.008,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 12888,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32692,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29848,
+        "rate": 0.00025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5797,
+    "loots": [
+      {
+        "itemId": 32680,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 12483,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 14144,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 8248,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23175,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 12489,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23176,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 14140,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29812,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23177,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 14142,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26263,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23178,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 14143,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23179,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 14141,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23174,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29814,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26566,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32693,
+        "rate": 0.004,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29851,
+        "rate": 0.0005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5799,
+    "loots": [
+      {
+        "itemId": 15983,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 15980,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 21005,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32681,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 18001,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 15829,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 16052,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 16044,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 16045,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23061,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 16047,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 16046,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23059,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23065,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 16053,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23066,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23064,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23058,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23060,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23062,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23063,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26571,
+        "rate": 0.0025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32694,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17544,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29849,
+        "rate": 0.00025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5800,
+    "loots": [
+      {
+        "itemId": 21006,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 21006,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 21006,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26466,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26466,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26590,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26590,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31591,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31591,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31591,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32682,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25773,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25766,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25763,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 28880,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30746,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25774,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25771,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25769,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25767,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25764,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25776,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27162,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30747,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31665,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26465,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26581,
+        "rate": 0.008,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25765,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26333,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 28881,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25775,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25777,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25772,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25770,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25768,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 30748,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32695,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26498,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29848,
+        "rate": 0.0003,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5803,
+    "loots": [
+      {
+        "itemId": 21007,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17316,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17324,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31378,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32683,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22758,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22759,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22768,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22763,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22766,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22772,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 18643,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22771,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17328,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17320,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17321,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17319,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17330,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17329,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17331,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 18644,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17318,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17317,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17322,
+        "rate": 0.008,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17332,
+        "rate": 0.008,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17365,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22764,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17327,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22776,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22761,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22760,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22757,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22770,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22769,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22767,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22773,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22762,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 17326,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22765,
+        "rate": 0.0025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32696,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31310,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29850,
+        "rate": 0.00017500000000000003,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5804,
+    "loots": [
+      {
+        "itemId": 21008,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32684,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29698,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26591,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26596,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25974,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25981,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25971,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25977,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25979,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25982,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25972,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25975,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25984,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25976,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25973,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25983,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25980,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25978,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 25985,
+        "rate": 0.0025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32697,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26504,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29849,
+        "rate": 0.0004,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5805,
+    "loots": [
+      {
+        "itemId": 19796,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32685,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27048,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27079,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26851,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26854,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26861,
+        "rate": 0.08,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 28840,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26859,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26857,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26855,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26852,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26862,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26864,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27141,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27138,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27123,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27028,
+        "rate": 0.008,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27278,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27279,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27277,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27276,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26858,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26860,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26863,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26856,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26853,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 28841,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 26865,
+        "rate": 0.0025,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32698,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27030,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29850,
+        "rate": 0.000225,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5806,
+    "loots": [
+      {
+        "itemId": 32686,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29621,
+        "rate": 1.0,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23977,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24011,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24001,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29622,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29634,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29624,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24005,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29626,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24008,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29632,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23973,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23975,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23969,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23967,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23965,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23971,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24002,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29628,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23979,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29630,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24007,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24000,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29642,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23985,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23981,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24009,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29636,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23983,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24012,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29640,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24006,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23987,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23991,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24010,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29638,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24794,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23989,
+        "rate": 0.04,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24004,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24003,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29645,
+        "rate": 0.02,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24027,
+        "rate": 0.016,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29644,
+        "rate": 0.016,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23974,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24014,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23978,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24015,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29623,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29635,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29625,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24019,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29627,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24022,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29633,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23986,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23976,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23970,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23968,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23966,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23972,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24016,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29629,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23980,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29631,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29643,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24023,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29637,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23984,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24026,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29641,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24021,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24020,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23988,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23982,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23992,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24025,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 28410,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27066,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27065,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 28409,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24024,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29639,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24795,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23990,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27064,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29646,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24018,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23998,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23999,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23997,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23996,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23995,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 23994,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24017,
+        "rate": 0.005,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29455,
+        "rate": 0.004,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24028,
+        "rate": 0.004,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32699,
+        "rate": 0.002,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29851,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5815,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32818,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5831,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32819,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5832,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 28028,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32820,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5833,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31011,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32821,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5834,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32822,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5835,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29714,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32823,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5836,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29715,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32824,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5837,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27283,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29716,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32825,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5838,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27283,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29717,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32826,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5839,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27283,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31218,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32827,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5840,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27283,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29718,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32828,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22568,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22572,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22571,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22567,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22570,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22569,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5841,
+    "loots": [
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27283,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 29719,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32830,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19904,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19808,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20236,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19907,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19802,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19810,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20233,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19909,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19906,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19806,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19809,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20172,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19905,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20175,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20173,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20174,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20230,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20171,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20234,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19901,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19916,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19903,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20235,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19804,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20237,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20231,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19902,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 20232,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19811,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 19908,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5842,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27283,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 28029,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32830,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22538,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22548,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22537,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22542,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22539,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22546,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 22544,
+        "rate": 0.001,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5843,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27283,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 28030,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32831,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5844,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31573,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32832,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
+  },
+  {
+    "monsterId": 5845,
+    "loots": [
+      {
+        "itemId": 27093,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 27083,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 24029,
+        "rate": 0.2,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32723,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32725,
+        "rate": 0.1,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 31805,
+        "rate": 0.05,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      },
+      {
+        "itemId": 32833,
+        "rate": 0.01,
+        "quantity": 1,
+        "stele": 0,
+        "steleIntervention": 0
+      }
+    ]
   }
 ]
