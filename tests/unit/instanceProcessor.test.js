@@ -201,6 +201,26 @@ describe('_isLootLegit helpers', () => {
     const loot = { stele: 1, steleIntervention: 1, stasis: 3 }
     expect(_isLootLegit(loot, 2, cfg)).toBe(true)
   })
+
+    it('filters by steleArchi: only loots with steleArchi=1 are accepted if config.steleArchi=1', () => {
+      const cfg = { isRift: false, steles: 2, steleIntervention: 1, stasis: 5, isSteleArchi: true }
+      const loot1 = { stele: 1, steleIntervention: 1, stasis: 3, isSteleArchi: 1 }
+      const loot2 = { stele: 1, steleIntervention: 1, stasis: 3, isSteleArchi: 0 }
+      const loot3 = { stele: 1, steleIntervention: 1, stasis: 3 }
+      expect(_isLootLegit(loot1, 2, cfg)).toBe(true)
+      expect(_isLootLegit(loot2, 2, cfg)).toBe(true)
+      expect(_isLootLegit(loot3, 2, cfg)).toBe(true)
+    })
+
+    it('does not filter by steleArchi if config.steleArchi=0', () => {
+      const cfg = { isRift: false, steles: 2, steleIntervention: 1, stasis: 5, isSteleArchi: false }
+      const loot1 = { stele: 1, steleIntervention: 1, stasis: 3, isSteleArchi: 1 }
+      const loot2 = { stele: 1, steleIntervention: 1, stasis: 3, isSteleArchi: 0 }
+      const loot3 = { stele: 1, steleIntervention: 1, stasis: 3 }
+      expect(_isLootLegit(loot1, 2, cfg)).toBe(false)
+      expect(_isLootLegit(loot2, 2, cfg)).toBe(true)
+      expect(_isLootLegit(loot3, 2, cfg)).toBe(true)
+    })
 })
 
 describe('_instancePassesFilters helpers', () => {

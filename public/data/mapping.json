@@ -66,6 +66,10 @@
       {
         "monsterId": 2368,
         "number": 1.0
+      },
+      {
+        "monsterId": 2384,
+        "number": 1.0
       }
     ]
   },
@@ -187,6 +191,10 @@
       {
         "monsterId": 2313,
         "number": 1.0
+      },
+      {
+        "monsterId": 4481,
+        "number": 1.0
       }
     ]
   },
@@ -245,6 +253,10 @@
       {
         "monsterId": 1636,
         "number": 1.0
+      },
+      {
+        "monsterId": 5005,
+        "number": 1.0
       }
     ]
   },
@@ -289,6 +301,10 @@
       },
       {
         "monsterId": 1187,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4100,
         "number": 1.0
       }
     ]
@@ -360,6 +376,10 @@
       {
         "monsterId": 5,
         "number": 4.0
+      },
+      {
+        "monsterId": 4101,
+        "number": 1
       }
     ]
   },
@@ -380,6 +400,10 @@
       },
       {
         "monsterId": 4240,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4255,
         "number": 1.0
       }
     ]
@@ -402,6 +426,10 @@
       {
         "monsterId": 4244,
         "number": 1.0
+      },
+      {
+        "monsterId": 4267,
+        "number": 1.0
       }
     ]
   },
@@ -422,6 +450,10 @@
       },
       {
         "monsterId": 5107,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5109,
         "number": 1.0
       }
     ]
@@ -444,6 +476,10 @@
       {
         "monsterId": 5114,
         "number": 1.0
+      },
+      {
+        "monsterId": 5127,
+        "number": 1.0
       }
     ]
   },
@@ -464,6 +500,10 @@
       },
       {
         "monsterId": 1786,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4388,
         "number": 1.0
       }
     ]
@@ -540,6 +580,10 @@
       {
         "monsterId": 2100,
         "number": 1.0
+      },
+      {
+        "monsterId": 2489,
+        "number": 1.0
       }
     ]
   },
@@ -569,6 +613,10 @@
       },
       {
         "monsterId": 2363,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4381,
         "number": 1.0
       }
     ]
@@ -616,6 +664,10 @@
       {
         "monsterId": 125,
         "number": 5.0
+      },
+      {
+        "monsterId": 4097,
+        "number": 1.0
       }
     ]
   },
@@ -636,6 +688,10 @@
       },
       {
         "monsterId": 2570,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5532,
         "number": 1.0
       }
     ]
@@ -686,6 +742,10 @@
       },
       {
         "monsterId": 2354,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4390,
         "number": 1.0
       }
     ]
@@ -779,6 +839,10 @@
       {
         "monsterId": 2556,
         "number": 1.0
+      },
+      {
+        "monsterId": 2630,
+        "number": 1.0
       }
     ]
   },
@@ -803,6 +867,10 @@
       },
       {
         "monsterId": 2605,
+        "number": 1.0
+      },
+      {
+        "monsterId": 2743,
         "number": 1.0
       }
     ]
@@ -875,6 +943,10 @@
       {
         "monsterId": 2764,
         "number": 4.0
+      },
+      {
+        "monsterId": 4371,
+        "number": 1.0
       }
     ]
   },
@@ -925,6 +997,10 @@
       {
         "monsterId": 2972,
         "number": 1.0
+      },
+      {
+        "monsterId": 2992,
+        "number": 1.0
       }
     ]
   },
@@ -950,6 +1026,10 @@
       {
         "monsterId": 2977,
         "number": 1.0
+      },
+      {
+        "monsterId": 4372,
+        "number": 1.0
       }
     ]
   },
@@ -970,6 +1050,10 @@
       },
       {
         "monsterId": 3048,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4391,
         "number": 1.0
       }
     ]
@@ -996,6 +1080,10 @@
       {
         "monsterId": 3080,
         "number": 1.0
+      },
+      {
+        "monsterId": 3098,
+        "number": 1.0
       }
     ]
   },
@@ -1016,6 +1104,10 @@
       },
       {
         "monsterId": 3094,
+        "number": 1.0
+      },
+      {
+        "monsterId": 3175,
         "number": 1.0
       }
     ]
@@ -1041,6 +1133,10 @@
       },
       {
         "monsterId": 3696,
+        "number": 1.0
+      },
+      {
+        "monsterId": 3701,
         "number": 1.0
       }
     ]
@@ -1092,6 +1188,10 @@
       {
         "monsterId": 44,
         "number": 1.0
+      },
+      {
+        "monsterId": 4086,
+        "number": 1.0
       }
     ]
   },
@@ -1142,6 +1242,14 @@
       {
         "monsterId": 3398,
         "number": 1.0
+      },
+      {
+        "monsterId": 4357,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4480,
+        "number": 1.0
       }
     ]
   },
@@ -1163,6 +1271,10 @@
       {
         "monsterId": 3399,
         "number": 1.0
+      },
+      {
+        "monsterId": 4358,
+        "number": 1.0
       }
     ]
   },
@@ -1183,6 +1295,10 @@
       },
       {
         "monsterId": 3587,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4370,
         "number": 1.0
       }
     ]
@@ -1213,6 +1329,10 @@
       },
       {
         "monsterId": 3735,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4393,
         "number": 1.0
       }
     ]
@@ -1362,6 +1482,10 @@
       {
         "monsterId": 4217,
         "number": 1.0
+      },
+      {
+        "monsterId": 4304,
+        "number": 1.0
       }
     ]
   },
@@ -1382,6 +1506,10 @@
       },
       {
         "monsterId": 4251,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4280,
         "number": 1.0
       }
     ]
@@ -1404,6 +1532,10 @@
       {
         "monsterId": 4231,
         "number": 1.0
+      },
+      {
+        "monsterId": 4235,
+        "number": 1.0
       }
     ]
   },
@@ -1424,6 +1556,10 @@
       },
       {
         "monsterId": 4254,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4269,
         "number": 1.0
       }
     ]
@@ -1450,6 +1586,10 @@
       {
         "monsterId": 4078,
         "number": 4.0
+      },
+      {
+        "monsterId": 4098,
+        "number": 1.0
       }
     ]
   },
@@ -1474,6 +1614,10 @@
       },
       {
         "monsterId": 99114,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4329,
         "number": 1.0
       }
     ]
@@ -1500,6 +1644,10 @@
       {
         "monsterId": 99115,
         "number": 1.0
+      },
+      {
+        "monsterId": 4330,
+        "number": 1.0
       }
     ]
   },
@@ -1525,6 +1673,10 @@
       {
         "monsterId": 99117,
         "number": 1.0
+      },
+      {
+        "monsterId": 4261,
+        "number": 1.0
       }
     ]
   },
@@ -1549,6 +1701,10 @@
       },
       {
         "monsterId": 99116,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4220,
         "number": 1.0
       }
     ]
@@ -1640,6 +1796,10 @@
       {
         "monsterId": 4519,
         "number": 1.0
+      },
+      {
+        "monsterId": 4368,
+        "number": 1.0
       }
     ]
   },
@@ -1660,6 +1820,10 @@
       },
       {
         "monsterId": 4758,
+        "number": 1.0
+      },
+      {
+        "monsterId": 1632,
         "number": 1.0
       }
     ]
@@ -1707,6 +1871,10 @@
       {
         "monsterId": 4520,
         "number": 1.0
+      },
+      {
+        "monsterId": 5010,
+        "number": 1.0
       }
     ]
   },
@@ -1731,6 +1899,10 @@
       },
       {
         "monsterId": 4538,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5012,
         "number": 1.0
       }
     ]
@@ -1757,6 +1929,10 @@
       {
         "monsterId": 4754,
         "number": 1.0
+      },
+      {
+        "monsterId": 4752,
+        "number": 1.0
       }
     ]
   },
@@ -1778,6 +1954,10 @@
       {
         "monsterId": 4731,
         "number": 1.0
+      },
+      {
+        "monsterId": 4737,
+        "number": 1.0
       }
     ]
   },
@@ -1798,6 +1978,10 @@
       },
       {
         "monsterId": 4720,
+        "number": 1.0
+      },
+      {
+        "monsterId": 1633,
         "number": 1.0
       }
     ]
@@ -1824,6 +2008,14 @@
       {
         "monsterId": 4727,
         "number": 1.0
+      },
+      {
+        "monsterId": 1638,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4889,
+        "number": 1.0
       }
     ]
   },
@@ -1848,6 +2040,10 @@
       },
       {
         "monsterId": 2016,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5017,
         "number": 1.0
       }
     ]
@@ -1899,6 +2095,10 @@
       {
         "monsterId": 4763,
         "number": 1.0
+      },
+      {
+        "monsterId": 4765,
+        "number": 1.0
       }
     ]
   },
@@ -1945,6 +2145,10 @@
       {
         "monsterId": 4871,
         "number": 1.0
+      },
+      {
+        "monsterId": 1631,
+        "number": 1.0
       }
     ]
   },
@@ -1966,6 +2170,10 @@
       {
         "monsterId": 4918,
         "number": 1.0
+      },
+      {
+        "monsterId": 1639,
+        "number": 1.0
       }
     ]
   },
@@ -1986,6 +2194,10 @@
       },
       {
         "monsterId": 4874,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4998,
         "number": 1.0
       }
     ]
@@ -2029,6 +2241,10 @@
       {
         "monsterId": 4924,
         "number": 1.0
+      },
+      {
+        "monsterId": 5015,
+        "number": 1.0
       }
     ]
   },
@@ -2062,6 +2278,14 @@
       {
         "monsterId": 4739,
         "number": 1.0
+      },
+      {
+        "monsterId": 5019,
+        "number": 1.0
+      },
+      {
+        "monsterId": 1750,
+        "number": 1.0
       }
     ]
   },
@@ -2083,6 +2307,10 @@
       {
         "monsterId": 4911,
         "number": 7.0
+      },
+      {
+        "monsterId": 1749,
+        "number": 1.0
       }
     ]
   },
@@ -2103,6 +2331,10 @@
       },
       {
         "monsterId": 4780,
+        "number": 1.0
+      },
+      {
+        "monsterId": 4782,
         "number": 1.0
       }
     ]
@@ -2125,6 +2357,10 @@
       {
         "monsterId": 4923,
         "number": 1.0
+      },
+      {
+        "monsterId": 4853,
+        "number": 1.0
       }
     ]
   },
@@ -2146,6 +2382,10 @@
       {
         "monsterId": 5036,
         "number": 9.0
+      },
+      {
+        "monsterId": 5039,
+        "number": 1.0
       }
     ]
   },
@@ -2166,6 +2406,10 @@
       },
       {
         "monsterId": 5046,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5045,
         "number": 1.0
       }
     ]
@@ -2209,6 +2453,10 @@
       {
         "monsterId": 5052,
         "number": 1.0
+      },
+      {
+        "monsterId": 5051,
+        "number": 1.0
       }
     ]
   },
@@ -2233,6 +2481,14 @@
       },
       {
         "monsterId": 5059,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5058,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5102,
         "number": 1.0
       }
     ]
@@ -2259,6 +2515,10 @@
       {
         "monsterId": 99113,
         "number": 1.0
+      },
+      {
+        "monsterId": 5133,
+        "number": 1.0
       }
     ]
   },
@@ -2284,6 +2544,10 @@
       {
         "monsterId": 99118,
         "number": 1.0
+      },
+      {
+        "monsterId": 5139,
+        "number": 1.0
       }
     ]
   },
@@ -2304,6 +2568,10 @@
       },
       {
         "monsterId": 5170,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5172,
         "number": 1.0
       }
     ]
@@ -2326,6 +2594,10 @@
       {
         "monsterId": 5176,
         "number": 1.0
+      },
+      {
+        "monsterId": 5178,
+        "number": 1.0
       }
     ]
   },
@@ -2347,6 +2619,10 @@
       {
         "monsterId": 5182,
         "number": 1.0
+      },
+      {
+        "monsterId": 5184,
+        "number": 1.0
       }
     ]
   },
@@ -2367,6 +2643,10 @@
       },
       {
         "monsterId": 5188,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5190,
         "number": 1.0
       }
     ]
@@ -2410,6 +2690,10 @@
       {
         "monsterId": 5235,
         "number": 1.0
+      },
+      {
+        "monsterId": 5237,
+        "number": 1.0
       }
     ]
   },
@@ -2431,6 +2715,10 @@
       {
         "monsterId": 5241,
         "number": 1.0
+      },
+      {
+        "monsterId": 5243,
+        "number": 1.0
       }
     ]
   },
@@ -2451,6 +2739,10 @@
       },
       {
         "monsterId": 5247,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5249,
         "number": 1.0
       }
     ]
@@ -2579,6 +2871,10 @@
       {
         "monsterId": 99119,
         "number": 1.0
+      },
+      {
+        "monsterId": 5279,
+        "number": 1.0
       }
     ]
   },
@@ -2603,6 +2899,10 @@
       },
       {
         "monsterId": 99120,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5285,
         "number": 1.0
       }
     ]
@@ -2629,6 +2929,10 @@
       {
         "monsterId": 99121,
         "number": 1.0
+      },
+      {
+        "monsterId": 5291,
+        "number": 1.0
       }
     ]
   },
@@ -2654,6 +2958,10 @@
       {
         "monsterId": 99122,
         "number": 1.0
+      },
+      {
+        "monsterId": 5297,
+        "number": 1.0
       }
     ]
   },
@@ -2678,6 +2986,10 @@
       },
       {
         "monsterId": 99123,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5303,
         "number": 1.0
       }
     ]
@@ -2876,6 +3188,10 @@
       {
         "monsterId": 5478,
         "number": 1.0
+      },
+      {
+        "monsterId": 5480,
+        "number": 1.0
       }
     ]
   },
@@ -2908,6 +3224,10 @@
       },
       {
         "monsterId": 5471,
+        "number": 1.0
+      },
+      {
+        "monsterId": 5473,
         "number": 1.0
       }
     ]

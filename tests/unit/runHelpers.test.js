@@ -18,13 +18,13 @@ describe('formatConfigRun', () => {
   })
 
   it('formats dungeon config with optional flags', () => {
-    const cfg = { isModulated: true, stasis: 4, steles: 2, steleIntervention: 1, isBooster: true }
+    const cfg = { isModulated: true, stasis: 4, steles: 2, steleIntervention: 1, isBooster: true, isSteleArchi : true }
     const s = formatConfigRun(cfg)
     expect(s).toContain('M')
     expect(s).toContain('S4')
     expect(s).toContain('ST2')
     expect(s).toContain('STI1')
-    expect(s).toContain('B')
+    expect(s).toContain('SA')
   })
 })
 

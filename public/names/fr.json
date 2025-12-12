@@ -40635,6 +40635,10 @@
             "id": "config_stele_intervention",
             "name": "Stèles Interv."
         },
+           {
+               "id": "config_stele_archi",
+               "name": "Stèle Archi"
+           },
         {
             "id": "config_booster",
             "name": "Booster"

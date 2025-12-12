@@ -40629,6 +40629,10 @@
             "id": "config_stele_intervention",
             "name": "Estelas Interv."
         },
+           {
+               "id": "config_stele_archi",
+               "name": "Estela Archi"
+           },
         {
             "id": "config_booster",
             "name": "Booster"

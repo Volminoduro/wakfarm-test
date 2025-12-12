@@ -1,7 +1,7 @@
 <template>
   <!-- Rift (Brèche) Configuration -->
-  <div v-if="run.isRift" :class="['px-4 py-3 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
-    <div class="flex items-center gap-2 flex-1">
+  <div v-if="run.isRift" :class="['px-1 py-3 border-t border-[#363634] flex items-center', COLOR_CLASSES.bgSecondary]">
+    <div class="flex items-center gap-1 flex-1">
       <!-- Booster -->
       <div class="flex justify-center" style="width: 60px;">
         <input 
@@ -66,7 +66,7 @@
   </div>
 
   <!-- Dungeon Configuration -->
-  <div v-else :class="['px-4 py-3 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
+  <div v-else :class="['px-2 py-3 border-t border-[#363634] flex items-center', COLOR_CLASSES.bgSecondary]">
     <div class="flex items-center gap-2 flex-1">
       <!-- Modulé -->
       <div class="flex justify-center" style="width: 60px;">
@@ -119,6 +119,16 @@
           style="width: 50px;">
           <option v-for="n in 4" :key="n - 1" :value="n - 1">{{ n - 1 }}</option>
         </select>
+      </div>
+
+       <!-- Stèle Archi -->
+      <div class="flex flex-col items-center justify-center" style="width: 60px;">
+        <input
+          type="checkbox"
+          :checked="run.isSteleArchi"
+          @change="updateField('isSteleArchi', $event.target.checked)"
+          class="custom-checkbox-small"
+        />
       </div>
 
       <!-- Temps (minutes) -->

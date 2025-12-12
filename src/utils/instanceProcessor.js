@@ -66,6 +66,7 @@ export function _isLootLegit(lootEntry, itemRarity, config) {
   if (lootSteleIntervention > configSteleIntervention) return false
   if (configStasis < lootStasis) return false
   if (itemRarity > 3 && configStasis < 3) return false
+  if (lootEntry.isSteleArchi === 1 && !config.isSteleArchi) return false
 
   return true
 }

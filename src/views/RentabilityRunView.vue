@@ -59,6 +59,15 @@
                 <option v-for="n in 4" :key="n" :value="n - 1">{{ n - 1 }}</option>
               </select>
             </div>
+             <!-- Stèle Archi -->
+             <div class="flex flex-col items-center gap-1">
+               <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ t('config_stele_archi') }}</label>
+               <input
+                 type="checkbox"
+                 v-model="appStore.config.isSteleArchi"
+                 class="custom-checkbox"
+               />
+             </div>
           </div>
         </div>
       </div>

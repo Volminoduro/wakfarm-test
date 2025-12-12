@@ -71,7 +71,7 @@
         </div>
 
         <!-- Header row with labels - Dungeon -->
-        <div v-else :class="['px-4 py-2 border-t border-[#363634] flex items-center gap-3', COLOR_CLASSES.bgSecondary]">
+        <div v-else :class="['px-2 py-2 border-t border-[#363634] flex items-center', COLOR_CLASSES.bgSecondary]">
           <div class="flex items-center gap-2 flex-1">
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
               {{ t('config_modulated') }}
@@ -88,6 +88,9 @@
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 80px; text-align: center;">
               {{ t('config_stele_intervention') }}
             </div>
+             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
+               {{ t('config_stele_archi') }}
+             </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
               {{ t('config_time') }}
             </div>

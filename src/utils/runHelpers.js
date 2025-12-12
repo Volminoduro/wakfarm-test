@@ -22,8 +22,8 @@ export function formatConfigRun(config) {
   if (config.steleIntervention > 0) {
     parts.push(`STI${config.steleIntervention}`)
   }
-  if (config.isBooster) {
-    parts.push('B')
+  if (config.isSteleArchi) {
+    parts.push('SA')
   }
   
   return parts.join(' ')
